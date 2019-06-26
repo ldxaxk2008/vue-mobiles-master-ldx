@@ -53,6 +53,11 @@ export default new Router({
       path: '/Home/Detail',
       name: 'Detail',
       component: (resolve) => require(['@/pages/detail'], resolve)
+    },
+    {
+      path: '/User/Task',
+      name: 'Task',
+      component: (resolve) => require(['@/pages/user/task'], resolve)
     }
   ]
 })

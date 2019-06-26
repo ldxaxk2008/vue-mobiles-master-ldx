@@ -38,6 +38,9 @@ export default {
   color: #2c3e50;
 }
 .Router {
+  display: flex;
+  flex-direction: column;
+
   position: absolute;
   top: 0;
   left: 0;
