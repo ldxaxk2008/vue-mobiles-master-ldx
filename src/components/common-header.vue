@@ -1,5 +1,5 @@
 <template>
-    <div class="header-box">
+    <div class="header-box" :style="{ backgroundColor: headerColor}">
       <div class="left-icon">
         <span v-if="showback" @click="back" class="icon-back"></span>
       </div>
@@ -22,6 +22,10 @@ export default {
     return {}
   },
   props: {
+    headerColor: {
+      type: String,
+      default: '#191927'
+    },
     showright: {
       type: Boolean,
       default: false
