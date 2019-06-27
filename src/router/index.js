@@ -58,6 +58,11 @@ export default new Router({
       path: '/Levelup',
       name: 'Levelup',
       component: (resolve) => require(['@/pages/levelup'], resolve)
+    },
+    {
+      path: '/User/Task',
+      name: 'Task',
+      component: (resolve) => require(['@/pages/user/task'], resolve)
     }
   ]
 })
