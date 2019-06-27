@@ -3,11 +3,7 @@
     <common-header :tittle="tittle" :headerColor="headerColor" :showmore="false"></common-header>
     <div class="task-content">
       <taskSynopsis :information="information"></taskSynopsis>
-      <taskSynopsis :information="information"></taskSynopsis>
-      <taskSynopsis :information="information"></taskSynopsis>
-      <taskSynopsis :information="information"></taskSynopsis>
-      <taskSynopsis :information="information"></taskSynopsis>
-      <taskSynopsis :information="information"></taskSynopsis>
+      <taskStage :information="information" :down="down"></taskStage>
     </div>
     <div class="task-footer">
       <ul>
@@ -20,10 +16,12 @@
 <script>
 import commonHeader from 'common/common-header'
 import taskSynopsis from './synopsis'
+import taskStage from './stage'
 export default {
   components: {
     commonHeader,
-    taskSynopsis
+    taskSynopsis,
+    taskStage
   },
   data() {
     return {
@@ -36,8 +34,22 @@ export default {
         number: '18',
         logoImg: require('@/assets/imgs/user-img.png'),
         aboutUs: '公司介绍多看看出席第公司介绍多看看出席第公司介绍多看看出席第公司介绍多看看出席第公司介绍多看看出席第公司介绍多看看出席第公司介绍多看看出席第公司介绍多看看出席第公司介绍多看看出席第公司介绍多看看出席第',
-        days: 3
+        days: 3,
+        tasksNum: 35,
+        pay: '$355555'
       },
+      down: [
+        {
+          imgSrc: '',
+          title: '设计案例1.psd',
+          downSrc: 'www.baidu.com'
+        },
+        {
+          imgSrc: '',
+          title: '设计案例1.word',
+          downSrc: 'www.baidu.com'
+        }
+      ],
       navList: [
         {
           label: '取消发布',
@@ -87,12 +99,12 @@ export default {
 .task-content{
   flex: 1;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 .task-footer {
   .padding(30,20,30,20);
   background:#222230;
-  display: sticky;
-  position: fixed;
+  position: sticky;
   bottom: 0;
   left:0;
   width:100%;
