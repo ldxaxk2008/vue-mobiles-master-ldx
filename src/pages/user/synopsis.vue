@@ -44,6 +44,7 @@ export default {
 @import "~styles/variable.less";
 .task-synopsis{
   .padding(30,30,30,30);
+  .mb(10);
   background: #191927;
   .synopsis-head{
     color: #fff;
