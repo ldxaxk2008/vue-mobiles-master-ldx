@@ -51,6 +51,7 @@ export default {
     display: flex;
     .logo{
       .w(200);
+      .h(200);
       .b-radius(125);
     }
     .contenr{

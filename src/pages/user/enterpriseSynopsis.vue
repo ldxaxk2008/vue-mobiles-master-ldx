@@ -32,7 +32,7 @@ export default {
   props: {
     imgShow: {
       type: Boolean,
-      default: true
+      default: false
     },
     information: {
       type: Object,
