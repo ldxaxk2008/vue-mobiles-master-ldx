@@ -68,6 +68,11 @@ export default new Router({
       path: '/Register',
       name: 'Register',
       component: (resolve) => require(['@/pages/register'], resolve)
+    },
+    {
+      path: '/taskeditor',
+      name: 'taskeditor',
+      component: (resolve) => require(['@/pages/taskEditor/task'], resolve)
     }
   ]
 })
