@@ -178,7 +178,6 @@ export default {
       }
       li{
           display: inline;
-          .w(30);
           .pl(20);
           .pr(20);
           .pt(10);

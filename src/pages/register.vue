@@ -174,6 +174,7 @@ export default {
        .mb(60);
       //  .pb(50);
        input{
+        //  display: block;
         .mt(30);
         .pr(120);
         .pl(120);
@@ -207,11 +208,13 @@ export default {
        position: relative;
        #register-content__info--word{
         position: absolute;
-        .left(380);
+        .left(390);
         .top(30);
-        .w(150);
+        // .w(150);
         .pt(14);
         .pb(14);
+        .pl(15);
+        .pr(15);
          border: 1px solid #165972;
          border-top-right-radius:20px;
          border-bottom-right-radius:20px;
@@ -220,10 +223,10 @@ export default {
      }
    }
    #register-content__info--phone{
-     .w(120);
+    //  .w(120);
      .pr(100);
-     .pl(100);
-     .mr(150);
+     .pl(0);
+     .mr(143);
      z-index: 100;
     text-align: left !important;
     border-top-right-radius:0px;
