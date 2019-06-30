@@ -25,6 +25,10 @@ export default {
           'name': '任务'
         },
         {
+          'path': '/taskeditor',
+          'name': '编辑任务'
+        },
+        {
           'path': '/user',
           'name': '我的'
         }
@@ -57,7 +61,7 @@ export default {
     footer {
       font-size: 0;
       border-bottom: 1px solid #F8F8F8;
-      background-color: #191927;
+      background-color: #fff;
       .pt(10);
       line-height: 1.2;
       width: 100%;

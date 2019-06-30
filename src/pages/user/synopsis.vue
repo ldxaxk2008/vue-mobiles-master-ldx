@@ -45,9 +45,9 @@ export default {
 .task-synopsis{
   .padding(30,30,30,30);
   .mb(10);
-  background: #191927;
+  background: #fff;
   .synopsis-head{
-    color: #fff;
+    color: #000;
     display: flex;
     .logo{
       .w(200);
@@ -59,7 +59,7 @@ export default {
       display: flex;
       .left,.right{
         .assets{
-          color:#155966 ;
+          color:#d887b1 ;
         }
         .mt(30);
         display: flex;
@@ -76,12 +76,12 @@ export default {
           border:none;
         }
         .apply{
-          background: #148A96;
+          background: #f7c724;
           color: #fff;
         }
         .cancel{
-          background: #1E384A;
-          color: #2E9DAE;
+          background: #c0c0c0;
+          color: #fff;
         }
       }
     }
@@ -89,7 +89,6 @@ export default {
   .about-us{
     text-align: left;
     .mt(40);
-    color: #fff;
     h4{
       .fs(30);
       .mb(20);

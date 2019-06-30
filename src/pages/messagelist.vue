@@ -1,6 +1,6 @@
 <template>
     <div class="message-box">
-       <common-header :headerColor="headerColor" :tittle="tittle" :showback="true" :showmore='true'></common-header>
+       <common-header :tittle="tittle" :showback="true" :showmore='true'></common-header>
        <div class="evaluate">
             <ul>
             <li v-for="(item,index) in evaluate" :key="index">
@@ -28,7 +28,6 @@ export default {
   data() {
     return {
       tittle: '消息列表',
-      headerColor: '#222230',
       evaluate: [
         {
           imgSrc: require('@/assets/imgs/user-img.png'),
@@ -47,8 +46,7 @@ export default {
           data: '今天 2019-11-21',
           remark: '新的设计稿已经上传了,请注意查收',
           name: '长沙果子坚食品有限公司'
-        },
-        {}
+        }
       ]
     }
   }
@@ -59,7 +57,7 @@ export default {
 @import "~styles/variable.less";
 .message-box{
     * { touch-action: pan-y; }
-    background-color: #191927;
+    background-color: #fff;
     .evaluate{
     ul{
         li{
@@ -69,7 +67,7 @@ export default {
         .mr(30);
         .ml(30);
         .padding(20,20,20,20);
-        background-color: #222230;
+        background-color: #f5f5f5;
         .b-radius(30);
         img{
             .h(130);
@@ -83,7 +81,7 @@ export default {
         .time-name{
           .mt(10);
            display: inline-block;
-           color: white;
+           color: #000;
           .fs(26);
         }
         .time-data{
@@ -97,7 +95,7 @@ export default {
            .fs(18);
            .mt(45);
            display: inline-block;
-           color: white;
+           color: #000;
         }
       }
     }

@@ -1,6 +1,6 @@
 <template>
   <div class="list">
-    <common-header :tittle="tittle" :headerColor="headerColor"></common-header>
+    <common-header :tittle="tittle"></common-header>
     <div class="list-main">
       <div class="company-introduce">
         <companyIntorduce :information="information" :imgShow="true"/>
@@ -41,7 +41,6 @@ export default {
   data() {
     return {
       tittle: '',
-      headerColor: '#222230',
       information: {
         name: '深圳益康电子',
         industry: '人工智能',
@@ -101,31 +100,31 @@ export default {
 @import "~styles/index.less";
 @import "~styles/variable.less";
 .list{
-  background: #7a7a82;
+  background: #f5f5f5;
   .list-main{
     overflow-x: hidden;
     overflow-y: auto;
     flex:1;
   }
   .company-introduce{
-    background: #222230;
+    background: #fff;
     .padding(30,20,30,20);
     .mb(10);
   }
   .current-task,.done-task,.evaluate-list{
-    background: #191927;
+    background: #fff;
     color: #fff;
     .mt(10);
     .padding(30,20,30,20);
     text-align: left;
     h4{
-      color: #0f7f9b;
+      color: #000;
       .mb(20);
     }
   }
   .task-footer {
     .padding(30,20,30,20);
-    background:#141531;
+    background:#fff;
     position: sticky;
     bottom: 0;
     left:0;
@@ -138,7 +137,7 @@ export default {
       li{
         .b-radius(500);
         color: #fff;
-        background: #C5494C;
+        background: #b92671;
         width: 100%;
         .pt(10);
         .pb(10);

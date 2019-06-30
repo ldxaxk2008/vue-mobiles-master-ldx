@@ -39,7 +39,7 @@ export default {
 @import "~styles/index.less";
 @import "~styles/variable.less";
 .image-view{
-  background: #191927;
+  background: #fff;
   .padding(30,20,30,20);
   .big-img{
     width: 100%;

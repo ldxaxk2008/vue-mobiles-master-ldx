@@ -47,7 +47,7 @@ export default {
 @import "~styles/variable.less";
 .enterprise{
   .synopsis-head{
-    color: #fff;
+    color: #000;
     display: flex;
     .logo{
       .w(200);
@@ -84,7 +84,7 @@ export default {
   .about-us{
     text-align: left;
     .mt(40);
-    color: #fff;
+    color: #000;
     p{
       .mb(20);
       text-indent: 24px;

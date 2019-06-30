@@ -33,6 +33,11 @@ export default new Router({
   routes: [
     {
       path: '/',
+      name: 'levelup',
+      component: (resolve) => require(['@/pages/levelup'], resolve)
+    },
+    {
+      path: '/index',
       name: 'index',
       component: (resolve) => require(['@/pages/index'], resolve),
       redirect: '/home',
@@ -49,16 +54,11 @@ export default new Router({
         }
       ]
     },
-    {
-      path: '/Home/Detail',
-      name: 'Detail',
-      component: (resolve) => require(['@/pages/detail'], resolve)
-    },
-    {
-      path: '/Levelup',
-      name: 'Levelup',
-      component: (resolve) => require(['@/pages/levelup'], resolve)
-    },
+    // {
+    //   path: '/Home/Detail',
+    //   name: 'Detail',
+    //   component: (resolve) => require(['@/pages/detail'], resolve)
+    // },
     {
       path: '/User/Task',
       name: 'Task',

@@ -1,5 +1,5 @@
 <template>
-    <div class="register" :style="backgroundimg">
+    <div class="register">
         <img :src="headimg" alt="logo" class="logo">
           <div class="register-content">
               <p class="register-content__describe">添加一张您的头像</p>
@@ -70,43 +70,57 @@ export default {
       this.backgroundimg.backgroundImage = 'url(' + require('@/assets/imgs/timgs.jpeg') + ')'
     },
     addlevel() {
-      var phoneReg = /^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,3,5-8])|(18[0-9])|166|198|199|(147))\d{8}$/
-      var nameReg = /^[\u4E00-\u9FA5\uf900-\ufa2d·s]{2,20}$/ // 验证姓名正则
-      var codeReg = /^(?![A-Z]+$)(?![a-z]+$)(?!\d+$)\S{8,}$/ // 密码校验
-      if (this.registerlist.name === '') {
-        alert('请输入姓名')
-      } else if (!nameReg.test(this.registerlist.name)) {
-        alert('请输入正确格式')
-      }
-      if (this.registerlist.school === '') {
-        alert('请输入学校')
-      }
-      if (this.registerlist.grade === '') {
-        alert('请输入年级')
-      }
-      if (this.registerlist.phone === '') {
-        alert('请输入电话号码')
-      } else if (!phoneReg.test(this.registerlist.phone)) {
-        alert('请输入正确电话号码')
-      } else if (this.registerlist.phone.toString().length !== 11) {
-        alert('电话号码必须是11位')
-      }
-      if (this.registerlist.code === '') {
-        alert('请输入验证码')
-      }
-      if (this.registerlist.username === '') {
-        alert('请输入登录用户名')
-      }
-      if (this.registerlist.loginword === '') {
-        alert('请输入登录密码')
-      } else if (!codeReg.test(this.registerlist.loginword)) {
-        alert('密码至少为8位,字母、数字')
-      }
-      if (this.registerlist.confirmword === '') {
-        alert('请确认登录密码')
-      } else if (this.registerlist.confirmword !== this.registerlist.loginword) {
-        alert('两次密码不一致')
-      }
+      // var phoneReg = /^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,3,5-8])|(18[0-9])|166|198|199|(147))\d{8}$/
+      // var nameReg = /^[\u4E00-\u9FA5\uf900-\ufa2d·s]{2,20}$/ // 验证姓名正则
+      // var codeReg = /^(?![A-Z]+$)(?![a-z]+$)(?!\d+$)\S{8,}$/ // 密码校验
+      // if (this.registerlist.name === '') {
+      //   alert('请输入姓名')
+      //   return
+      // } else if (!nameReg.test(this.registerlist.name)) {
+      //   alert('请输入正确格式')
+      //   return
+      // }
+      // if (this.registerlist.school === '') {
+      //   alert('请输入学校')
+      //   return
+      // }
+      // if (this.registerlist.grade === '') {
+      //   alert('请输入年级')
+      //   return
+      // }
+      // if (this.registerlist.phone === '') {
+      //   alert('请输入电话号码')
+      //   return
+      // } else if (!phoneReg.test(this.registerlist.phone)) {
+      //   alert('请输入正确电话号码')
+      //   return
+      // } else if (this.registerlist.phone.toString().length !== 11) {
+      //   alert('电话号码必须是11位')
+      //   return
+      // }
+      // if (this.registerlist.code === '') {
+      //   alert('请输入验证码')
+      //   return
+      // }
+      // if (this.registerlist.username === '') {
+      //   alert('请输入登录用户名')
+      //   return
+      // }
+      // if (this.registerlist.loginword === '') {
+      //   alert('请输入登录密码')
+      //   return
+      // } else if (!codeReg.test(this.registerlist.loginword)) {
+      //   alert('密码至少为8位,字母、数字')
+      //   return
+      // }
+      // if (this.registerlist.confirmword === '') {
+      //   alert('请确认登录密码')
+      //   return
+      // } else if (this.registerlist.confirmword !== this.registerlist.loginword) {
+      //   alert('两次密码不一致')
+      //   return
+      // }
+      this.$router.push('/index')
     }
   }
 }
@@ -136,7 +150,7 @@ export default {
       .ml(80);
       .mr(80);
       .b-radius(60);
-      background-color: rgba(89, 81, 88,0.2);
+      background-color: #f5f5f5;
       position:static;
       .register-content__describe{
           .pt(100);
@@ -183,18 +197,18 @@ export default {
         .b-radius(30);
         border: 1px solid #165972;
         background-color:transparent;
-        color: white;
+        color: #000;
         text-align: center;
        }
    }
    .register-footer{
      .pt(26);
      .pb(25);
-     background-color:#222230;
+     background-color:#f5f5f5;
      position:relitave;
      .register-footer--btn{
         margin:0 auto;
-        background-color:#17626F;
+        background-color:#c54f8b;
         color:white;
         .fs(25);
         .pl(80);
@@ -215,11 +229,11 @@ export default {
         .pb(14);
         .pl(15);
         .pr(15);
-         border: 1px solid #165972;
+         border: 1px solid #c54f8b;
          border-top-right-radius:20px;
          border-bottom-right-radius:20px;
-         background-color:rgb(79, 118, 113);
-         color: grey;
+         background-color:#c54f8b;
+         color: #fff;
      }
    }
    #register-content__info--phone{

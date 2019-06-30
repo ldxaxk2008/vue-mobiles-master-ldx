@@ -27,7 +27,7 @@ export default {
     background-size: cover;
   }
   .search{
-    background-color: #1E363C;
+    background-color: #f5f5f5;
     .b-radius(30);
     .h(50);
     .lh(50);

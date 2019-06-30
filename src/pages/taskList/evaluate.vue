@@ -40,6 +40,7 @@ export default {
       }
       .remark{
         display: flex;
+        color: #000;
         .h(150);
         flex-direction: column;
         span:nth-child(1){

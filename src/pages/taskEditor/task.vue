@@ -1,6 +1,6 @@
 <template>
     <div class="task-editor">
-       <common-header :headerColor="headerColor" :tittle="tittle" :showback="true" ></common-header>
+       <common-header :tittle="tittle" :showback="true" ></common-header>
        <div class="task-editor--select">
           <input class="task-editor--input" type="text" placeholder="请选择任务类型">
        </div>
@@ -53,7 +53,6 @@ export default {
   data() {
     return {
       tittle: '返回首页',
-      headerColor: '#222230',
       inputTitle: '',
       inputContent: '',
       arr: [],
@@ -118,7 +117,7 @@ export default {
 @import "~styles/variable.less";
 .task-editor{
     * { touch-action: pan-y; }
-    background-color: #191927;
+    background-color: #fff;
     .task-editor--select{
         .mt(40);
         .mb(40);
@@ -129,7 +128,7 @@ export default {
         .pt(15);
         .pb(15);
         .b-radius(50);
-        background-color: rgb(21,40,54);
+        background-color: #fafafa;
       }
     }
     .task-editor--describe{
@@ -138,7 +137,7 @@ export default {
     .task--describe__title{
         display: block;
         background-color:transparent;
-        border-bottom: 3px solid #4F4F57;
+        border-bottom: 3px solid #d8d8d8;
         .w(650);
         .pt(20);
         .pb(10);
@@ -153,7 +152,7 @@ export default {
         border-top:0px;
         border-left:0px;
         border-right:0px;
-        border-bottom: 3px solid #4F4F57;
+        border-bottom: 3px solid #d8d8d8;
         .w(650);
         .h(250);
         .pt(20);
@@ -229,7 +228,7 @@ export default {
             color:#898798;
             .mt(25);
             .b-radius(50);
-            background-color: #1A2A2F;
+            background-color: #e7e7e7;
             .pl(30);
             .pr(30);
             .pt(15);
@@ -248,7 +247,6 @@ export default {
          font-weight: bold;
       }
       .task-editor--ft{
-        color: #ffffff;
         .ml(80);
         .fs(20);
       }
@@ -256,7 +254,6 @@ export default {
     .van-icon{
         .mt(20);
         .fs(60);
-        color: white;
       }
       .task-foot{
         color: #ffffff;

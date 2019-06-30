@@ -47,7 +47,7 @@ export default {
   right: 0;
   width: 100%;
   height: 100%;
-  background-color: @body-bg-color;;
+  background-color: @body-bg-color;
   transition: all .5s ease;
   -webkit-transition: all .5s ease;
   -moz-transition: all .5s ease;

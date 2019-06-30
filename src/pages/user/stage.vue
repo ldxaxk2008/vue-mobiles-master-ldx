@@ -53,7 +53,7 @@ export default {
 @import "~styles/variable.less";
 .task-stage{
   .padding(30,30,30,30);
-  background: #191927;
+  background: #fff;
   .stage-head{
     display: flex;
     align-items: center;
@@ -62,7 +62,7 @@ export default {
     .name{
       display: flex;
       flex-direction: column;
-      color: #fff;
+      color: #000;
       span:nth-child(1){
         .fs(30);
       }
@@ -70,7 +70,7 @@ export default {
     .more{
       .van-icon{
         .fs(50);
-        color: #fff;
+        color: #000;
       }
     }
   }
@@ -84,7 +84,7 @@ export default {
       color: #fff;
       border:none;
       .padding(10,20,10,20);
-      background: #368174;
+      background: #c44c89;
     }
   }
 }

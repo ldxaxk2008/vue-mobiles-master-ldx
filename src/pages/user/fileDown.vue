@@ -37,8 +37,8 @@ export default {
 @import "~styles/variable.less";
 .down{
   .b-radius(30);
-  background: #1D1D2B;
-  color: #fff;
+  background: #fafafa;
+  color: #000;
   text-align: left;
   .padding(20,20,20,20);
   display: flex;
@@ -59,8 +59,8 @@ export default {
       }
       .down-click{
         .b-radius(30);
-        background:#1E384A;
-        color: #2E9DAE;
+        background:#18acb6;
+        color: #fff;
         .padding(4,20,4,20);
       }
     }
@@ -68,7 +68,7 @@ export default {
   .more{
     display: flex;
     align-items: center;
-    color: #3093D8;
+    color: #b1b1b1;
     .van-icon{
       .fs(40);
     }

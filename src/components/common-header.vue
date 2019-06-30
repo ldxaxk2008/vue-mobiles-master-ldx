@@ -1,7 +1,8 @@
 <template>
     <div class="header-box" :style="{ backgroundColor: headerColor}">
       <div class="left-icon">
-        <span v-if="showback" @click="back" class="icon-back"></span>
+        <!-- <span v-if="showback" @click="back" class="icon-back"></span> -->
+        <van-icon name="arrow-left" v-if="showback" @click="back" class="icon-back"/>
       </div>
       <div class="header-tittle">
         <span v-if="showinput">
@@ -10,7 +11,8 @@
         <span v-if="!showinput">{{tittle}}</span>
       </div>
       <div class="right-icon">
-        <span v-if="showmore" class="icon"></span>
+        <!-- <span v-if="showmore" class="icon"></span> -->
+        <van-icon name="ellipsis" v-if="showmore" class="icon"/>
       </div>
     </div>
 </template>
@@ -24,7 +26,7 @@ export default {
   props: {
     headerColor: {
       type: String,
-      default: '#191927'
+      default: '#f5f5f5'
     },
     showright: {
       type: Boolean,
@@ -72,7 +74,7 @@ export default {
   width: 100%;
   .h(100);
   .lh(100);
-  background-color: #191927;
+  background-color: #979797;
   color: @base-header-color;
   .fs(@base-header-size);
   display: flex;
@@ -87,12 +89,15 @@ export default {
       .h(50);
       .left(25);
       .top(25);
-      background-image: url("../assets/imgs/w-back.svg");
-      background-size: cover;
+      .fs(50);
+      color: #363636;
+      // background-image: url("../assets/imgs/w-back.svg");
+      // background-size: cover;
     }
   }
   .header-tittle{
     flex: 3;
+    color: #363636;
   }
   .right-icon{
     position: relative;
@@ -104,8 +109,10 @@ export default {
       .h(50);
       .right(25);
       .top(25);
-      background-image: url("../assets/imgs/more.svg");
-      background-size: cover;
+      // background-image: url("../assets/imgs/more.svg");
+      // background-size: cover;
+      .fs(50);
+      color: #363636;
     }
   }
 }

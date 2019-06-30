@@ -1,6 +1,6 @@
 <template>
   <div class="content-box">
-    <common-header :showinput="true" :showback="false"></common-header>
+    <common-header :showinput="true" :headerColor="headerColor" :showback="false"></common-header>
     <div class="page-content">
       <!-- <mt-button @click="todetail">home</mt-button> -->
       <div class="page-map">
@@ -44,6 +44,7 @@ import currentList from '@/pages/taskList/currentTaskList'
 export default {
   data () {
     return {
+      headerColor: '#fff',
       currentList: [
         {
           name: '设计',
@@ -168,7 +169,6 @@ export default {
         // .mt(5);
         .fs(30);
         .mr(10);
-        color: white;
       }
     }
     .page-map--ul{
@@ -196,7 +196,7 @@ export default {
     .mt(30);
   }
   .page-map--tab{
-    background: #191927;
+    background: #fff;
     color: #fff;
     .mt(10);
     .padding(30,20,30,20);
@@ -210,7 +210,7 @@ export default {
 </style>
 <style>
 .van-tabs__line {
-    background-color: rgb(76, 159, 227);
+    background-color: #f5f5f5;
 }
   .van-tabs__wrap {
     position: relative;
@@ -224,12 +224,12 @@ export default {
     display: -webkit-box;
     display: -webkit-flex;
     display: flex;
-    background-color: #191927;
+    background-color: #fff;
     -webkit-user-select: none;
     user-select: none;
 }
 .van-hairline--top-bottom::after {
-    border-top: 10px solid #67666E;
+    border-top: 10px solid #f5f5f5;
     border-bottom: 3px solid white;
 }
 .van-tab--active {

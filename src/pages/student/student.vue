@@ -1,6 +1,6 @@
 <template>
   <div class="student">
-    <common-header :tittle="tittle" :headerColor="headerColor"></common-header>
+    <common-header :tittle="tittle"></common-header>
     <div class="student-main">
       <div class="company-introduce">
         <companyIntorduce :information="information" :imgShow="true"/>
@@ -42,7 +42,6 @@ export default {
   data() {
     return {
       tittle: '',
-      headerColor: '#222230',
       information: {
         name: '沙田伊莱莎',
         industry: '北京理工大学',
@@ -115,7 +114,7 @@ export default {
 @import "~styles/index.less";
 @import "~styles/variable.less";
 .student{
-  background: #7a7a82;
+  background: #f2f2f2;
   .student-main{
     overflow-x: hidden;
     overflow-y: auto;
@@ -125,24 +124,24 @@ export default {
     .mt(10);
   }
   .company-introduce{
-    background: #222230;
+    background: #fff;
     .padding(30,20,30,20);
     .mb(10);
   }
   .done-task,.evaluate-list{
-    background: #191927;
+    background: #fff;
     color: #fff;
     .mt(10);
     .padding(30,20,30,20);
     text-align: left;
     h4{
-      color: #0f7f9b;
+      color: #000;
       .mb(20);
     }
   }
   .task-footer {
     .padding(30,20,30,20);
-    background:#141531;
+    background:#fff;
     position: sticky;
     bottom: 0;
     left:0;
@@ -155,7 +154,7 @@ export default {
       li{
         .b-radius(500);
         color: #fff;
-        background: #148a96;
+        background: #c14182;
         width: 100%;
         .pt(10);
         .pb(10);

@@ -17,7 +17,7 @@
       <span class="done" v-if="done">已完成</span>
     </div>
     <div class="more">
-      <van-icon name="arrow-up" />
+      <van-icon name="arrow-down" />
       <span>查看更多</span>
     </div>
   </div>
@@ -44,9 +44,10 @@ export default {
 .current-list {
   .b-radius(30);
   .current{
+    color: #363636;
     overflow: hidden;
     .mb(20);
-    background: #222230;
+    background: #f5f5f5;
     .b-radius(30);
     position: relative;
     .done{
@@ -67,21 +68,8 @@ export default {
     .pt(20);
     .pb(10);
     .task-name {
-      position: relative;
+      .fs(30);
       .padding(10, 10, 10, 10);
-      background: #1e384a;
-    }
-    .task-name:after {
-      content: "";
-      position: absolute;
-      bottom: -0.3rem;
-      left: 0;
-      width: 100%;
-      height: 0;
-      border-left: 0.4rem solid transparent;
-      border-right: 0.4rem solid transparent;
-      border-top: 0.3rem solid #1e384a;
-      box-sizing: border-box;
     }
     .task-details {
       flex: 1;

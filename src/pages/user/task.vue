@@ -1,6 +1,6 @@
 <template>
   <div class="task-box">
-    <common-header :tittle="tittle" :headerColor="headerColor" :showmore="false"></common-header>
+    <common-header :tittle="tittle" :showmore="false"></common-header>
     <div class="task-content">
       <taskSynopsis :information="information"></taskSynopsis>
       <taskStage :information="information" :down="down"></taskStage>
@@ -25,7 +25,6 @@ export default {
   },
   data() {
     return {
-      headerColor: '#222230',
       tittle: 'LOGO设计',
       information: {
         name: '深圳益康电子',
@@ -94,7 +93,7 @@ export default {
 @import "~styles/index.less";
 @import "~styles/variable.less";
 .task-box{
-  background: #7A7A82;
+  background: #f5f5f5;
 }
 .task-content{
   flex: 1;
@@ -117,10 +116,13 @@ export default {
       .padding(12,30,12,30);
       .b-radius(500);
       color: #fff;
-      background: #177582;
+      background: #f7c724;
     }
     li:nth-child(1){
-      background: #C5494C;
+      background: #c0c0c0;
+    }
+    li:nth-child(2){
+      background: #18acb6;
     }
   }
 }

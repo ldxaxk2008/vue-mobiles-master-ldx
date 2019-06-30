@@ -1,6 +1,6 @@
 <template>
   <div class="content-box">
-    <common-header :tittle="tittle" :headerColor="headerColor" :showback="true" :showmore='true'></common-header>
+    <common-header :tittle="tittle" :showback="true" :showmore='true'></common-header>
     <div class="user-main">
       <h4 class="user-nick-name">{{nickName}}</h4>
       <div class="user-label-name">{{labelName}}</div>
@@ -8,7 +8,7 @@
     <div class="user-list">
       <img class="user-img" :src="userImg" alt="" srcset="">
       <ul>
-        <li v-for="(item,index) in userList" :key="index" :style="{backgroundColor:item.bg}">
+        <li v-for="(item,index) in userList" :key="index" :style="{backgroundColor:item.bg}" @click="handelClick(item.path)">
           <span :style="{color:item.color}" class="text">{{item.label}}</span>
           <span v-if="item.tips" class="tips">{{item.tips}}</span>
         </li>
@@ -24,31 +24,34 @@ export default {
   data() {
     return {
       tittle: '',
-      headerColor: '#222230',
       num: 0,
       nickName: '你的昵称',
       labelName: '炫酷的标签名称',
       userImg: require('@/assets/imgs/user-img.png'),
       userList: [
         {
-          bg: '#1e384a',
-          color: '#1283a0',
-          label: '简历'
+          bg: '#f9ce20',
+          color: '#fff',
+          path: '/User/Student',
+          label: '个人简介'
         },
         {
-          bg: '#423432',
-          color: '#FF9F44',
+          bg: '#b92671',
+          color: '#fff',
+          path: '/User/Task',
           label: '我的任务'
         },
         {
-          bg: '#1e363c',
-          color: '#15A885',
+          bg: '#f9ce20',
+          color: '#fff',
+          path: '/message',
           label: '消息',
           tips: 6
         },
         {
-          bg: '#402834',
-          color: '#EE5353',
+          bg: '#b92671',
+          color: '#fff',
+          path: '/User/taskList',
           label: '客服'
         }
       ]
@@ -61,6 +64,9 @@ export default {
     }),
     todetail() {
       this.$router.togo('/Home/Detail')
+    },
+    handelClick(val) {
+      this.$router.push(val)
     }
   },
   components: {
@@ -85,19 +91,19 @@ export default {
 .user-main {
   .h(300);
   .pt(20);
-  background: #222230;
+  background: #f5f5f5;
   .user-nick-name {
     .fs(@base-header-size);
     color: @base-font-color;
   }
   .user-label-name{
     .fs(18);
-    color: #1283a0;
+    color: #000;
     .margin(20,100,20,100);
     .pt(10);
     .pb(10);
     .b-radius(50);
-    background: #1e384a;
+    background: #bfbfbf;
   }
 }
 .user-list{
@@ -107,7 +113,7 @@ export default {
     .mt(-150);
     .mb(40);
     .b-radius(500);
-    border: 10px solid #222230;
+    border: 10px solid #f5f5f5;
   }
   li{
     position: relative;
