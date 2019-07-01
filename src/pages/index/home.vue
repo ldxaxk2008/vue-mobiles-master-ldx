@@ -52,6 +52,7 @@ export default {
           money: 500,
           days: 3,
           ask: '任务要求任务要求任务要求任务要求任务要求',
+          label: ['设计', '教育培训'],
           data: '2019年10月20日'
         },
         {
@@ -60,6 +61,7 @@ export default {
           money: 30000,
           days: 30,
           ask: '大是大非路上看见法律上的看了看',
+          label: ['设计', '教育培训'],
           data: '2019年1月20日'
         }
       ],
@@ -70,6 +72,7 @@ export default {
           money: 30000,
           days: 30,
           ask: '大是大非路上看见法律上的看了看',
+          label: ['设计', '教育培训'],
           data: '2019年1月20日'
         },
         {
@@ -78,6 +81,7 @@ export default {
           money: 500,
           days: 3,
           ask: '任务要求任务要求任务要求任务要求任务要求',
+          label: ['设计', '教育培训'],
           data: '2019年10月20日'
         }
       ],

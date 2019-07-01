@@ -11,12 +11,14 @@
     </div>
     <EnterpriseSynopsis :information="information"></EnterpriseSynopsis>
     <div class="slider">
-      <van-slider
+      <!-- <van-slider
         v-model="rangeValue"
         bar-height="4px"
         active-color="#f44"
-      />
+      /> -->
+      <progressBar/>
       <button class="confirm">进行阶段确认</button>
+      <button class="deliver">任务交付</button>
     </div>
     <FileDown :down="down"/>
   </div>
@@ -25,6 +27,8 @@
 <script>
 import EnterpriseSynopsis from './enterpriseSynopsis'
 import FileDown from './fileDown'
+import progressBar from 'common/progressBar'
+
 export default {
   props: {
     information: {
@@ -38,7 +42,8 @@ export default {
   },
   components: {
     EnterpriseSynopsis,
-    FileDown
+    FileDown,
+    progressBar
   },
   data() {
     return {
@@ -85,6 +90,14 @@ export default {
       border:none;
       .padding(10,20,10,20);
       background: #c44c89;
+    }
+    .deliver{
+      .mt(40);
+      .b-radius(200);
+      color: #fff;
+      border:none;
+      .padding(10,20,10,20);
+      background: #C0C0C0;
     }
   }
 }

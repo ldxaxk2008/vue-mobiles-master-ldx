@@ -1,18 +1,24 @@
 <template>
   <div class="current-list">
     <div class="current" v-for="(item,index) in currentList" :key="index">
-      <div class="current-head">
+      <!-- <div class="current-head">
         <div class="task-name">{{item.name}}</div>
         <div class="task-details">{{item.people}} 人正在申请 {{item.money}}RMB</div>
-      </div>
-      <div class="line"></div>
+      </div> -->
+      <!-- <div class="line"></div> -->
       <div class="task-main">
         <div class="task-main-head">
           <div class="task-title">任务标题</div>
-          <div class="deadline">距离截至日期还有：{{item.days}} 天</div>
+          <div class="deadline">{{item.people}} 人正在申请 {{item.money}}RMB</div>
         </div>
         <div class="task-main-container">任务要求：{{item.ask}}</div>
-        <div class="task-time">发布日期：{{item.data}}</div>
+        <div class="task-labels">
+          <span v-for="(ele,i) in item.label" :key="i">{{ele}}</span>
+        </div>
+        <div class="days">
+          <div class="task-time">发布日期：{{item.data}}</div>
+          <div>距离截至日期还有：{{item.days}} 天</div>
+        </div>
       </div>
       <span class="done" v-if="done">已完成</span>
     </div>
@@ -81,7 +87,7 @@ export default {
     background-image: linear-gradient(left, #368dd2 0%, #2ecda8 100%);
   }
   .task-main {
-    .padding(30, 20, 30, 20);
+    .padding(30, 30, 30, 30);
     .task-main-head {
       display: flex;
       justify-content: space-between;
@@ -90,8 +96,28 @@ export default {
         .fs(30);
       }
     }
-    .task-time {
+    .days{
       .mt(30);
+      display: flex;
+      font-size: 10px;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .task-labels{
+      .mt(20);
+      span{
+        .padding(5,10,5,10);
+        .mr(10);
+        .b-radius(100);
+        color: #fff;
+      }
+      span:nth-child(1){
+        background:#18ACB6;
+      }
+      span:nth-child(2){
+        color:#FBBE84;
+        border:1px solid #FBBE84;
+      }
     }
   }
   .more{

@@ -97,6 +97,10 @@ export default {
       .mb(20);
       text-indent: 24px;
     }
+    span{
+      display: block;
+      text-align: right;
+    }
   }
 }
 </style>

@@ -51,6 +51,7 @@ export default {
         aboutUs: '北京大学在读生，性格开朗。精通6们语言，熟练掌握模拟芯片技术，是个不可多得的人才。',
         days: 3,
         tasksNum: 35,
+        label: ['设计', '教育培训'],
         pay: '$355555'
       },
       currentList: [
@@ -60,7 +61,8 @@ export default {
           money: 500,
           days: 3,
           ask: '任务要求任务要求任务要求任务要求任务要求',
-          data: '2019年10月20日'
+          data: '2019年10月20日',
+          label: ['设计', '教育培训']
         },
         {
           name: '代码',
@@ -68,6 +70,7 @@ export default {
           money: 30000,
           days: 30,
           ask: '大是大非路上看见法律上的看了看',
+          label: ['设计', '教育培训'],
           data: '2019年1月20日'
         }
       ],
