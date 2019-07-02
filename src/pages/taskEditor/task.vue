@@ -2,7 +2,12 @@
     <div class="task-editor">
        <common-header :tittle="tittle" :showback="true" ></common-header>
        <div class="task-editor--select">
-          <input class="task-editor--input" type="text" placeholder="请选择任务类型">
+          <input class="task-editor--input" v-model="invalue" type="text" placeholder="请输入选择类型" @focus="changedata"><van-icon class="task-editor-secicon" name="arrow-down"/>
+          <van-action-sheet
+            v-model="show"
+            :actions="actions"
+            @select="onSelect"
+          />
        </div>
        <div class="task-editor--describe">
           <input class="task--describe__title" v-model="inputTitle" type="text"  name="" id="" placeholder="标题 输入吸引热度的标题">
@@ -19,7 +24,7 @@
        <div class="task-editor--tool">
            <div class="task-editor--tool__left">
                <div class="task-editor__top">
-                   <p>适合工具</p><van-icon name="add-o"/>
+                   <p>适合工具</p><van-icon class="task-editor-toolicon" name="add-o"/>
                </div>
                <div class="task-editor__t">
                   <span>1</span><span>1</span><span>1</span>
@@ -35,7 +40,7 @@
        </div>
         <div class="task-editor--time">
           <p>截止日期</p>
-           <van-icon name="send-gift-o"/>
+           <van-icon class="task-editor-timeicon" name="send-gift-o"/>
            <p class="task-editor--ft">上传相关文件</p>
            <p class="task-editor--ft">详细需求文档</p>
            <p class="task-editor--ft">风格示例</p>
@@ -52,6 +57,13 @@ export default {
   },
   data() {
     return {
+      invalue: '',
+      show: false,
+      actions: [
+        { name: '选项1' },
+        { name: '选项2' },
+        { name: '选项3' }
+      ],
       tittle: '返回首页',
       inputTitle: '',
       inputContent: '',
@@ -108,6 +120,14 @@ export default {
           this.filedlist[index].disable = false
         }
       })
+    },
+    onSelect(item) {
+      // 点击选项时默认不会关闭菜单，可以手动关闭
+      this.show = false
+      this.invalue = item.name
+    },
+    changedata(val) {
+      this.show = true
     }
   }
 }
@@ -119,48 +139,46 @@ export default {
     * { touch-action: pan-y; }
     background-color: #fff;
     .task-editor--select{
-        .mt(40);
-        .mb(40);
-      .task-editor--input{
-        .w(500);
-        .pl(30);
-        .pr(30);
-        .pt(15);
-        .pb(15);
+        .margin(40,50,40,50);
+        .padding(5,20,5,20);
+        height: 30px;
+        display: flex;
+        justify-content:space-between;
+        align-items: center;
         .b-radius(50);
-        background-color: #fafafa;
+        background-color: rgb(245,245,245);
+        .task-editor--input{
+          background: none;
+          outline: none;
+        }
+      .task-editor-secicon{
+        .fs(30);
+        color: gray;
       }
     }
     .task-editor--describe{
-        width: 100%;
-    }
-    .task--describe__title{
-        display: block;
+        .task--describe__title{
+        display: flex;
+        box-sizing: border-box;
         background-color:transparent;
         border-bottom: 3px solid #d8d8d8;
-        .w(650);
-        .pt(20);
-        .pb(10);
-        .pl(50);
-        .pr(45);
+        width: 100%;
+        .padding(0,50,20,20);
         .fs(24);
-        font-weight: bold;
+      }
     }
     .task--describe__con{
-        display:block;
+        width: 100%;
+        display: flex;
+        box-sizing: border-box;
         background-color:transparent;
         border-top:0px;
         border-left:0px;
         border-right:0px;
         border-bottom: 3px solid #d8d8d8;
-        .w(650);
         .h(250);
-        .pt(20);
-        .pb(10);
-        .pl(50);
-        .pr(45);
+        .padding(20,50,0,50);
         .fs(24);
-        font-weight: bold;
     }
     .task-editor--filed{
       color:#898798;
@@ -176,14 +194,11 @@ export default {
          .mb(25);
       }
       li{
-          display: inline;
-          .pl(20);
-          .pr(20);
-          .pt(10);
-          .pb(10);
-          .mr(20);
-          .fs(25);
-          font-weight: bold;
+        display: inline;
+        .padding(10,20,10,20);
+        .mr(20);
+        .fs(25);
+        font-weight: bold;
       }
     }
     .task-editor--tool{
@@ -202,7 +217,7 @@ export default {
           .task-editor__top{
              display: flex;
           }
-          .van-icon{
+          .task-editor-toolicon{
             .mt(5);
             .fs(30);
             color: #2CA2A9;
@@ -229,10 +244,7 @@ export default {
             .mt(25);
             .b-radius(50);
             background-color: #e7e7e7;
-            .pl(30);
-            .pr(30);
-            .pt(15);
-            .pb(15);
+            .padding(15,30,15,30);
           }
       }
     }
@@ -251,12 +263,12 @@ export default {
         .fs(20);
       }
     }
-    .van-icon{
+    .task-editor-timeicon{
         .mt(20);
         .fs(60);
       }
       .task-foot{
-        color: #ffffff;
+        @base-font-color:#000;
       }
 }
 </style>

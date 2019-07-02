@@ -88,6 +88,16 @@ export default new Router({
       path: '/message',
       name: 'message',
       component: (resolve) => require(['@/pages/messagelist'], resolve)
+    },
+    {
+      path: '/error',
+      name: 'error',
+      component: (resolve) => require(['@/pages/taskpage/error'], resolve)
+    },
+    {
+      path: '/success',
+      name: 'success',
+      component: (resolve) => require(['@/pages/taskpage/success'], resolve)
     }
   ]
 })

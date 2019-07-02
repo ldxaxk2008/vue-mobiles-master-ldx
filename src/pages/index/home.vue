@@ -160,33 +160,29 @@ export default {
 .page-content{
   .mb(98);
   .page-map{
-    text-align: left;
-    .ml(80);
+    // .ml(80);
     .page-map--van{
-      .mt(10);
+      .ml(80);
       display: flex;
      p{
       .fs(20);
       color:#898798;
     }
     .van-icon{
-        // .mt(5);
         .fs(30);
         .mr(10);
       }
     }
     .page-map--ul{
-      .ml(-50);
-      .mt(20);
+      .mt(30);
+      .pl(20);
+      .pr(20);
       display: flex;
-      li{
-        text-align: center;
-        .mr(10);
-      }
+      justify-content: space-between;
         img{
-          .w(120);
-          .h(120);
-           border:3px solid #898798;
+          box-sizing: border-box;
+          width: 100%;
+          border:3px solid #898798;
         }
         .page-map--p{
           .fs(25);
@@ -214,7 +210,7 @@ export default {
 </style>
 <style>
 .van-tabs__line {
-    background-color: #f5f5f5;
+    background-color: #BDBEBE;
 }
   .van-tabs__wrap {
     position: relative;
@@ -234,7 +230,7 @@ export default {
 }
 .van-hairline--top-bottom::after {
     border-top: 10px solid #f5f5f5;
-    border-bottom: 3px solid white;
+    border-bottom: 5px solid #f5f5f5;
 }
 .van-tab--active {
     color: #7d7e80;
