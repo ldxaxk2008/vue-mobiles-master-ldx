@@ -75,6 +75,11 @@ export default new Router({
       component: (resolve) => require(['@/pages/student/student'], resolve)
     },
     {
+      path: '/User/acceptTask',
+      name: 'acceptTask',
+      component: (resolve) => require(['@/pages/acceptTask/acceptTask'], resolve)
+    },
+    {
       path: '/Register',
       name: 'Register',
       component: (resolve) => require(['@/pages/register'], resolve)

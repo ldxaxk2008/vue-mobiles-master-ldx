@@ -6,11 +6,12 @@
         <companyIntorduce :information="information" :imgShow="true"/>
       </div>
       <div class="done-task">
-        <h4>过往任务浏览 已完成20组任务</h4>
-          <currentList :currentList="currentList" :done="true"/>
+        <h4 style="color:#18ACB6">过往任务浏览 已完成20组任务</h4>
+        <currentList :currentList="currentList" :done="true"/>
       </div>
       <div class="img-view">
         <imgView :imgList="imgList"/>
+        <fileDown :down="down"/>
       </div>
       <div class="evaluate-list">
         <h4>公司评价</h4>
@@ -31,13 +32,15 @@ import companyIntorduce from '@/pages/user/enterpriseSynopsis'
 import currentList from '@/pages/taskList/currentTaskList'
 import evaluate from '@/pages/taskList/evaluate'
 import imgView from '@/pages/student/imgView'
+import fileDown from '@/pages/user/fileDown'
 export default {
   components: {
     commonHeader,
     companyIntorduce,
     currentList,
     evaluate,
-    imgView
+    imgView,
+    fileDown
   },
   data() {
     return {
@@ -54,6 +57,18 @@ export default {
         label: ['设计', '教育培训'],
         pay: '$355555'
       },
+      down: [
+        {
+          imgSrc: '',
+          title: '设计案例1.psd',
+          downSrc: 'www.baidu.com'
+        },
+        {
+          imgSrc: '',
+          title: '设计案例1.word',
+          downSrc: 'www.baidu.com'
+        }
+      ],
       currentList: [
         {
           name: '设计',
