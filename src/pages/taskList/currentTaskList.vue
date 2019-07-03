@@ -20,7 +20,7 @@
           <div>距离截至日期还有：{{item.days}} 天</div>
         </div>
       </div>
-      <span class="done" v-if="done">已完成</span>
+      <span class="done" v-if="done"><img src="@/assets/imgs/done.png" alt=""></span>
     </div>
     <div class="more">
       <van-icon name="arrow-down" />
@@ -53,16 +53,19 @@ export default {
     color: #363636;
     overflow: hidden;
     .mb(20);
-    background: #f5f5f5;
+    background: #F5F5F5;
     .b-radius(30);
     position: relative;
     .done{
       position: absolute;
       .right(0);
-      .bottom(-20);
-      .fs(90);
+      .bottom(0);
       opacity: .2;
       z-index: 99;
+      img{
+        .w(300);
+        .h(300);
+      }
     }
   }
   .current-head {
