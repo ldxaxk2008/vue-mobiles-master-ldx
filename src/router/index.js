@@ -98,6 +98,11 @@ export default new Router({
       path: '/success',
       name: 'success',
       component: (resolve) => require(['@/pages/taskpage/success'], resolve)
+    },
+    {
+      path: '/evaluate',
+      name: 'evaluate',
+      component: (resolve) => require(['@/pages/evaluate'], resolve)
     }
   ]
 })

@@ -2,7 +2,7 @@
     <div class="taskpage-error">
         <common-header :tittle="tittle" :showback="false" :showmore='false'></common-header>
         <div class="taskpage-error--img">
-             <img src="@/assets/imgs/tu2.png" alt="">
+             <img src="@/assets/imgs/nonetwork.png" alt="">
         </div>
         <div class="taskpage-error--con">
            <p class="taskpage--con__title">任务失败</p>
@@ -32,11 +32,10 @@ export default {
 .taskpage-error{
     background-color: #ffffff;
     .taskpage-error--img{
-        .mt(30);
+        .mt(80);
         width: 100%;
         img{
-            .w(600);
-            .h(700);
+            width: 50%
         }
     }
     .taskpage-error--con{
