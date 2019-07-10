@@ -34,22 +34,22 @@ export default {
       flex-direction: column;
       position: relative;
       img{
-        .w(100);
-        .h(100);
+        .w(150);
+        .h(150);
         .mb(20);
       }
       span{
         position: absolute;
-        .top(-15);
-        .right(-20);
+        .top(20);
+        .right(10);
         color: #ffffff;
         .b-radius(500);
         background: #c14182;
         // .padding(10,10,10,10)
-        .w(50);
-        .h(50);
+        .w(40);
+        .h(40);
         text-align: center;
-        .lh(50);
+        .lh(40);
       }
     }
   }

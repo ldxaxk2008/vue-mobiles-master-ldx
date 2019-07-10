@@ -49,17 +49,17 @@ export default {
           },
           commentList: [
             {
-              imgUrl: require('@/assets/imgs/verySatisfied.png'),
+              imgUrl: require('@/assets/imgs/verySatisfied.svg'),
               num: 99,
               ask: '符合要求'
             },
             {
-              imgUrl: require('@/assets/imgs/Satisfied.png'),
+              imgUrl: require('@/assets/imgs/Satisfied.svg'),
               num: 88,
               ask: '比较满意'
             },
             {
-              imgUrl: require('@/assets/imgs/Dissatisfied.png'),
+              imgUrl: require('@/assets/imgs/Dissatisfied.svg'),
               num: 11,
               ask: '远超预期'
             }
@@ -76,17 +76,17 @@ export default {
           },
           commentList: [
             {
-              imgUrl: require('@/assets/imgs/verySatisfied.png'),
+              imgUrl: require('@/assets/imgs/verySatisfied.svg'),
               num: 33,
               ask: '符合要求'
             },
             {
-              imgUrl: require('@/assets/imgs/Satisfied.png'),
+              imgUrl: require('@/assets/imgs/Satisfied.svg'),
               num: 22,
               ask: '比较满意'
             },
             {
-              imgUrl: require('@/assets/imgs/Dissatisfied.png'),
+              imgUrl: require('@/assets/imgs/Dissatisfied.svg'),
               num: 11,
               ask: '远超预期'
             }
@@ -103,17 +103,17 @@ export default {
           },
           commentList: [
             {
-              imgUrl: require('@/assets/imgs/verySatisfied.png'),
+              imgUrl: require('@/assets/imgs/verySatisfied.svg'),
               num: 11,
               ask: '符合要求'
             },
             {
-              imgUrl: require('@/assets/imgs/Satisfied.png'),
+              imgUrl: require('@/assets/imgs/Satisfied.svg'),
               num: 22,
               ask: '比较满意'
             },
             {
-              imgUrl: require('@/assets/imgs/Dissatisfied.png'),
+              imgUrl: require('@/assets/imgs/Dissatisfied.svg'),
               num: 0,
               ask: '远超预期'
             }

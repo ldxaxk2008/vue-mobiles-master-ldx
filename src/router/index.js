@@ -72,6 +72,11 @@ export default new Router({
       component: (resolve) => require(['@/pages/user/task'], resolve)
     },
     {
+      path: '/Pay',
+      name: 'Pay',
+      component: (resolve) => require(['@/pages/pay/pay'], resolve)
+    },
+    {
       path: '/User/TaskList',
       name: 'TaskList',
       component: (resolve) => require(['@/pages/taskList/taskList'], resolve)
