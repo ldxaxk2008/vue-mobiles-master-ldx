@@ -6,6 +6,7 @@ import App from './App'
 import Vuex from 'vuex'
 import store from './store'
 import router from './router'
+import SvgIcon from'@/components/SvgIcon'
 // import Mint from 'mint-ui'
 // import 'mint-ui/lib/style.css'
 import Vant from 'vant';
@@ -57,6 +58,7 @@ window.addEventListener('popstate', function(e) {
 
 Vue.use(Vant)
 Vue.use(Vuex)
+Vue.component('svg-icon', SvgIcon)
 Vue.config.productionTip = false
 FastClick.attach(document.body)
 

@@ -93,7 +93,7 @@ export default {
   .margin(50,40,0,40);
   .pt(40);
   .pb(40);
-  .h(600);
+  .h(530);
   .b-radius(10);
   background: #f5f5ff;
   .pay-money{
