@@ -71,11 +71,11 @@ export default {
       })
       if (index !== this.showIndex) { // 当点击一次的时候
         this.evaluatelist[index].disable = true
-        this.evaluatelist[index].img = require(`@/assets/imgs/facered${index}.png`)
+        this.evaluatelist[index].img = require(`@/assets/imgs/facered${index}.svg`)
       } else if (index === this.showIndex) {
         this.evaluatelist[index].disable = !this.evaluatelist[index].disable
         if (this.evaluatelist[index].disable) { // 当点击多次的时候
-          this.evaluatelist[index].img = require(`@/assets/imgs/facered${index}.png`)
+          this.evaluatelist[index].img = require(`@/assets/imgs/facered${index}.svg`)
         }
       }
       this.showIndex = index
@@ -104,11 +104,13 @@ export default {
       .evaluate-content--img{
         .pt(50);
         .pb(50);
-        width: 100%;
+        // width: 100%;
         display: flex;
         justify-content: space-between;
         img{
-            width: 80%;
+            // width: 100%;
+            .w(150);
+            .h(150);
             .pb(10);
         }
       }
@@ -146,12 +148,17 @@ export default {
         position: sticky;
         bottom: 0;
         left:0;
+        display: flex;
         .evaluate-footer--btn{
+            flex:1;
             margin:0 auto;
             background-color:#c54f8b;
             color:white;
             .fs(25);
-            .padding(10,80,10,80);
+            .pt(10);
+            .pb(10);
+            .ml(20);
+            .mr(20);
             font-weight: bold;
             border:none;
             .b-radius(50);

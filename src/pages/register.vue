@@ -157,6 +157,7 @@ export default {
   //全局样式样式去掉
    * { touch-action: pan-y; }
     background-color: hsl(0, 0%, 100%);
+    .mb(100);
     .register-logoborder{
       .w(200);
       .h(200);
@@ -241,12 +242,17 @@ export default {
      width: 100%;
      background-color:#f5f5f5;
      box-sizing: border-box;
+     display: flex;
      .register-footer--btn{
+        flex: 1;
         margin:0 auto;
         background-color:#c54f8b;
         color:white;
         .fs(25);
-        .padding(10,80,10,80);
+        .pt(10);
+        .pb(10);
+        .ml(20);
+        .mr(20);
         font-weight: bold;
      }
    }

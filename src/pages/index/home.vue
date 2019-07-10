@@ -89,23 +89,23 @@ export default {
       num: 0,
       maplist: [
         {
-          img: require('@/assets/imgs/user-img.png'),
+          img: require('@/assets/imgs/copy1.png'),
           name: '文案'
         },
         {
-          img: require('@/assets/imgs/user-img.png'),
+          img: require('@/assets/imgs/copy2.png'),
           name: '设计'
         },
         {
-          img: require('@/assets/imgs/user-img.png'),
+          img: require('@/assets/imgs/copy3.png'),
           name: '代码'
         },
         {
-          img: require('@/assets/imgs/user-img.png'),
+          img: require('@/assets/imgs/copy4.png'),
           name: '手绘'
         },
         {
-          img: require('@/assets/imgs/user-img.png'),
+          img: require('@/assets/imgs/copy5.png'),
           name: 'PPT'
         }
       ]
@@ -181,8 +181,7 @@ export default {
       justify-content: space-between;
         img{
           box-sizing: border-box;
-          width: 100%;
-          border:3px solid #898798;
+          width: 80%;
         }
         .page-map--p{
           .fs(25);

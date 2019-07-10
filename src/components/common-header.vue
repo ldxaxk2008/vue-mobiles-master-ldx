@@ -96,7 +96,7 @@ export default {
     }
   }
   .header-tittle{
-    flex: 3;
+    flex: 6;
     color: #363636;
   }
   .right-icon{
