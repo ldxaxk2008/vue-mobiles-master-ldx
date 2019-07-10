@@ -33,8 +33,15 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'levelup',
-      component: (resolve) => require(['@/pages/levelup'], resolve)
+      name: 'levelup', // 引导页专用
+      component: (resolve) => require(['@/pages/levelup'], resolve),
+      redirect: '/levelup/experience',
+      children: [
+        {
+          path: '/levelup/:id',
+          name: 'experience',
+          component: (resolve) => require(['@/pages/levelup'], resolve)
+        }]
     },
     {
       path: '/index',
@@ -83,6 +90,11 @@ export default new Router({
       path: '/Register',
       name: 'Register',
       component: (resolve) => require(['@/pages/register'], resolve)
+    },
+    {
+      path: '/Registercom',
+      name: 'Registercom',
+      component: (resolve) => require(['@/pages/registercom'], resolve)
     },
     {
       path: '/taskeditor',

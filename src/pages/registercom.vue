@@ -5,9 +5,9 @@
               <img :src="headimg" alt="logo" class="logo">
             </div>
               <p class="register-content__describe">添加一张您的头像</p>
-              <div class="register-content__sex">
+              <!-- <div class="register-content__sex">
                   <button class="male" ref="male" @click="male">男生</button><button class="famale" ref="famale"  @click="famale">女生</button>
-              </div>
+              </div> -->
               <div>
                 <form class="register-content__info" ref="registerform" :model="registerlist" >
                   <div><input type="text" v-model="registerlist.name" placeholder="姓名"></div>
@@ -32,9 +32,6 @@ export default {
   data() {
     return {
       headimg: require('@/assets/imgs/user-img.png'),
-      // backgroundimg: {
-      //   backgroundImage: 'url(' + require('@/assets/imgs/timg.jpeg') + ')'
-      // },
       registerlist: {
         name: '',
         school: '',
@@ -48,25 +45,25 @@ export default {
     }
   },
   methods: {
-    male() {
-      if (this.headimg === 'url(' + require('@/assets/imgs/user-img.png') + ')') {
-        this.$refs.male.style.backgroundColor = '#182B2A'
-        this.$refs.male.style.color = '#167057'
-      } else {
-        this.$refs.male.style.backgroundColor = '#182B2A'
-        this.$refs.male.style.color = '#167057'
-        this.$refs.famale.style.backgroundColor = '#E65155'
-        this.$refs.famale.style.color = 'white'
-        this.headimg = require('@/assets/imgs/user-img.png')
-      }
-    },
-    famale() {
-      this.$refs.male.style.backgroundColor = '#3CB371'
-      this.$refs.male.style.color = 'white'
-      this.$refs.famale.style.backgroundColor = '#5D252E'
-      this.$refs.famale.style.color = '#7F2932'
-      this.headimg = require('@/assets/imgs/img.jpeg')
-    },
+    // male() {
+    //   if (this.headimg === 'url(' + require('@/assets/imgs/user-img.png') + ')') {
+    //     this.$refs.male.style.backgroundColor = '#182B2A'
+    //     this.$refs.male.style.color = '#167057'
+    //   } else {
+    //     this.$refs.male.style.backgroundColor = '#182B2A'
+    //     this.$refs.male.style.color = '#167057'
+    //     this.$refs.famale.style.backgroundColor = '#E65155'
+    //     this.$refs.famale.style.color = 'white'
+    //     this.headimg = require('@/assets/imgs/user-img.png')
+    //   }
+    // },
+    // famale() {
+    //   this.$refs.male.style.backgroundColor = '#3CB371'
+    //   this.$refs.male.style.color = 'white'
+    //   this.$refs.famale.style.backgroundColor = '#5D252E'
+    //   this.$refs.famale.style.color = '#7F2932'
+    //   this.headimg = require('@/assets/imgs/img.jpeg')
+    // },
     addlevel() {
       // var phoneReg = /^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,3,5-8])|(18[0-9])|166|198|199|(147))\d{8}$/
       // var nameReg = /^[\u4E00-\u9FA5\uf900-\ufa2d·s]{2,20}$/ // 验证姓名正则
@@ -175,7 +172,7 @@ export default {
       border: 5px solid #ffffff;
     }
     .register-content{
-      .margin(150,80,30,80);
+      .margin(200,80,30,80);
       .pl(30);
       .pr(30);
       .b-radius(60);
@@ -186,10 +183,10 @@ export default {
         color:#c54f8b;
       }
     }
-    .register-content__sex{
-      .mt(25);
-      .mb(25);
-    }
+    // .register-content__sex{
+    //   .mt(25);
+    //   .mb(25);
+    // }
     button{
       .mr(10);
       .ml(10);
@@ -197,16 +194,16 @@ export default {
       .b-radius(50);
       border:none;
     }
-    .male{
-      font-weight:bold;
-      background-color:#182B2A;
-      color:#167057;
-    }
-    .famale{
-      font-weight:bold;
-      background-color: #E65155;
-      color:white;
-    }
+    // .male{
+    //   font-weight:bold;
+    //   background-color:#182B2A;
+    //   color:#167057;
+    // }
+    // .famale{
+    //   font-weight:bold;
+    //   background-color: #E65155;
+    //   color:white;
+    // }
    .register-content__info{
       .mb(60);
       div{

@@ -6,7 +6,7 @@
        <div class="evaluate-content">
            <p class="evaluate-content--serve">请问你如何评价这次服务</p>
            <ul class="evaluate-content--img">
-               <li v-for="(item,index) in evaluatelist" :key="index" @click="change(index,item.disable)">
+               <li v-for="(item,index) in evaluatelist" :key="index" :class="info"  @click="handelClick(index,item.disable)">
                    <img :src="item.img" alt="">
                    <p>{{item.name}}</p>
                </li>
@@ -36,20 +36,23 @@ export default {
   },
   data() {
     return {
+      showIndex: -1,
       tittle: '',
       evaluatelist: [
         {
-          img: require('@/assets/imgs/face2.png'),
+          img: require('@/assets/imgs/face0.png'),
           name: '符合要求',
           disable: false
         },
         {
-          img: require('@/assets/imgs/face3.png'),
+          img: require('@/assets/imgs/face1.png'),
           name: '比较满意',
           disable: false
         },
         {
           img: require('@/assets/imgs/face2.png'),
+          // info: require('@/assets/imgs/face2.png'),
+          // active: require('@/assets/imgs/facered2.png'),
           name: '远超预期',
           disable: false
         }
@@ -57,13 +60,25 @@ export default {
     }
   },
   methods: {
-    change(index, bol) {
-      console.log(index, bol)
-    //   this.evaluatelist.forEach(item => {
-    //     console.log(item, 88888)
-    //     // item.img = 'url(' + require('@/assets/imgs/face1.png') + ')'
-    //     item.img = require('@/assets/imgs/face1.png')
-    //   })
+    addlevel() {
+
+    },
+    handelClick(index, bol) {
+      // ev.className = ev.className === 'info' ? 'active' : 'info'
+      // ev.children[0].src = ev.className === 'info' ? index.active : index.info
+      this.evaluatelist.forEach((item, index) => {
+        item.img = require(`@/assets/imgs/face${index}.png`)
+      })
+      if (index !== this.showIndex) { // 当点击一次的时候
+        this.evaluatelist[index].disable = true
+        this.evaluatelist[index].img = require(`@/assets/imgs/facered${index}.png`)
+      } else if (index === this.showIndex) {
+        this.evaluatelist[index].disable = !this.evaluatelist[index].disable
+        if (this.evaluatelist[index].disable) { // 当点击多次的时候
+          this.evaluatelist[index].img = require(`@/assets/imgs/facered${index}.png`)
+        }
+      }
+      this.showIndex = index
     }
   }
 }
@@ -72,6 +87,7 @@ export default {
 @import "~styles/index.less";
 @import "~styles/variable.less";
 .evaluate{
+   * { touch-action: pan-y; }
     background-color: #fff;
     .evaluate-content{
        flex: 1;
