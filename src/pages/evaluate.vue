@@ -6,11 +6,9 @@
        <div class="evaluate-content">
            <p class="evaluate-content--serve">请问你如何评价这次服务</p>
            <ul class="evaluate-content--img">
-               <li v-for="(item,index) in evaluatelist" :key="index" :class="{'active':item.disable,'disables':!item.disable}"  @click="handelClick(index,item.disable)">
-                   <!-- <img :src="item.img" alt=""> -->
-                   <!-- <svg-icon :name="item.img" size="100" :fill="{'active':item.disable,'disables':!item.disable}"></svg-icon> -->
-                   <svg-icon :name="item.img" size="100" class="aaa"></svg-icon>
-                   <p>{{item.name}}</p>
+               <li v-for="(item,index) in evaluatelist" :key="index" @click="handelClick(index,item.disable)">
+                   <svg-icon :name="item.img" size="80" ref="svg_icon"></svg-icon>
+                   <p ref="svg_p">{{item.name}}</p>
                </li>
            </ul>
            <p class="evaluate-content--serve">请为该学生添加标签</p>
@@ -68,26 +66,29 @@ export default {
     },
     handelClick(index, bol) {
       // if (!bol) {
-      //   console.log(this.evaluatelist[index], 888)
       //   this.evaluatelist[index].disable = true
+      //   this.$refs.svg_p[index].style.color = '#c54f8b'
+      //   this.$refs.svg_icon[index].fill = '#c54f8b'
       // } else {
       //   this.evaluatelist[index].disable = false
+      //   this.$refs.svg_p[index].style.color = ''
+      //   this.$refs.svg_icon[index].fill = ''
       // }
-      // ev.className = ev.className === 'info' ? 'active' : 'info'
-      // ev.children[0].src = ev.className === 'info' ? index.active : index.info
-      // this.evaluatelist.forEach((item, index) => {
-      //   item.img = require(`@/assets/imgs/face${index}.png`)
-      // })
-      // if (index !== this.showIndex) { // 当点击一次的时候
-      //   this.evaluatelist[index].disable = true
-      //   this.evaluatelist[index].img = require(`@/assets/imgs/facered${index}.svg`)
-      // } else if (index === this.showIndex) {
-      //   this.evaluatelist[index].disable = !this.evaluatelist[index].disable
-      //   if (this.evaluatelist[index].disable) { // 当点击多次的时候
-      //     this.evaluatelist[index].img = require(`@/assets/imgs/facered${index}.svg`)
-      //   }
-      // }
-      // this.showIndex = index
+      this.evaluatelist.forEach((item, index) => {
+        this.$refs.svg_icon[index].fill = ''
+        this.$refs.svg_p[index].style.color = ''
+      })
+      if (index !== this.showIndex) {
+        this.$refs.svg_icon[index].fill = '#c54f8b'
+        this.$refs.svg_p[index].style.color = '#c54f8b'
+      } else if (index === this.showIndex) {
+        this.evaluatelist[index].disable = !this.evaluatelist[index].disable
+        if (this.evaluatelist[index].disable) { // 当点击多次的时候
+          this.$refs.svg_icon[index].fill = '#c54f8b'
+          this.$refs.svg_p[index].style.color = '#c54f8b'
+        }
+      }
+      this.showIndex = index
     }
   }
 }
@@ -113,16 +114,8 @@ export default {
       .evaluate-content--img{
         .pt(50);
         .pb(50);
-        // width: 100%;
         display: flex;
         justify-content: space-between;
-
-        // img{
-        //     // width: 100%;
-        //     .w(150);
-        //     .h(150);
-        //     .pb(10);
-        // }
       }
       .evaluate--input{
           border: 1px solid;
@@ -161,7 +154,6 @@ export default {
         display: flex;
         .evaluate-footer--btn{
             flex:1;
-            margin:0 auto;
             background-color:#c54f8b;
             color:white;
             .fs(25);
@@ -173,12 +165,6 @@ export default {
             border:none;
             .b-radius(50);
           }
-        }
-        .active{
-          color: red
-        }
-        .disables{
-          color: gray
         }
 }
 </style>

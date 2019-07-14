@@ -16,11 +16,6 @@
        </div>
        <div class="task-editor--filed">
           <button class="evaluate-footer--btn">设计</button>
-            <!-- <ul>
-                <li v-for="(item,index) in filedlist " :key="item" :style="{background:item.bg,color:item.color}" @click="change(index,item.disable)">
-                   {{item.name}}
-                </li>
-            </ul> -->
             <ul class="page-map--ul">
           <li v-for="item in maplist" :key="item">
             <img :src="item.img" alt="">
@@ -28,34 +23,34 @@
           </li>
         </ul>
        </div>
-    </div>
-       <!-- <div class="task-editor--tool">
+       <div class="task-editor--tool">
            <div class="task-editor--tool__left">
                <div class="task-editor__top">
                    <p>适合工具</p><van-icon class="task-editor-toolicon" name="add-o"/>
                </div>
-               <div class="task-editor__t">
-                  <span>1</span><span>1</span><span>1</span>
+            </div>
+            <div>
+               <div class="task-editor--tool__right">
+                  <p>报酬 RMB</p>
+                  <input class="tool-input" type="text">
                </div>
-               <div class="task-editor__b">
-                  <span>1</span><span>1</span>
+               <div>
+                  <p class="tool-input--time">截止日期</p>
+                  <div class="task-tool__input">
+                      <input class="task-editor--input" v-model="invalue" type="text" @focus="changedata"><van-icon class="task-editor-secicon" name="arrow-down"/>
+                      <van-action-sheet
+                        v-model="show"
+                        :actions="actions"
+                        @select="onSelect"
+                      />
+                  </div>
                </div>
             </div>
-           <div class="task-editor--tool__right">
-               <p>报酬 RMB</p>
-               <input class="tool-input" type="text">
-            </div>
+
        </div>
-        <div class="task-editor--time">
-          <p>截止日期</p>
-           <van-icon class="task-editor-timeicon" name="send-gift-o"/>
-           <p class="task-editor--ft">上传相关文件</p>
-           <p class="task-editor--ft">详细需求文档</p>
-           <p class="task-editor--ft">风格示例</p>
-       </div> -->
-       <!-- <div class="task-foot">发布</div> -->
+       </div>
         <div class="evaluate-footer">
-                 <button  class="evaluate-footer--btn">发布</button>
+            <button  class="evaluate-footer--btn">发布</button>
        </div>
     </div>
 </template>
@@ -102,38 +97,6 @@ export default {
           name: 'PPT'
         }
       ]
-      // filedlist: [
-      //   {
-      //     bg: '#182A38',
-      //     name: '文案',
-      //     disable: false,
-      //     color: '#1E7685'
-      //   },
-      //   {
-      //     bg: '#17282D',
-      //     name: '设计',
-      //     disable: false,
-      //     color: '#267B56'
-      //   },
-      //   {
-      //     bg: '#182A38',
-      //     name: '代码',
-      //     disable: false,
-      //     color: '#1E7685'
-      //   },
-      //   {
-      //     bg: '#17282D',
-      //     name: '手绘',
-      //     disable: false,
-      //     color: '#267B56'
-      //   },
-      //   {
-      //     bg: '#321E28',
-      //     name: 'PPT',
-      //     disable: false,
-      //     color: '#BA762E'
-      //   }
-      // ]
     }
   },
   methods: {
@@ -228,7 +191,7 @@ export default {
             color:white;
             .fs(25);
             .padding(10,30,10,30);
-            font-weight: bold;
+            // font-weight: bold;
             border:none;
             .b-radius(10);
           }
@@ -249,32 +212,16 @@ export default {
           text-align: center
         }
     }
-      // p{
-      //   .fs(28);
-      //    font-weight: bold;
-      // }
-      // ul{
-      //    .mt(25);
-      //    .mb(25);
-      // }
-      // li{
-      //   display: inline;
-      //   .padding(10,20,10,20);
-      //   .mr(20);
-      //   .fs(25);
-      //   font-weight: bold;
-      // }
     }
     .task-editor--tool{
-      .mt(40);
-      .ml(50);
+      .margin(50,50,0,50);
       display: flex;
       justify-content: flex-start;
       text-align: left;
+      box-sizing: border-box;
       p{
         .fs(28);
-         font-weight: bold;
-        color:#898798;
+         color: #363636;
       }
       .task-editor--tool__left{
           width: 50%;
@@ -286,54 +233,39 @@ export default {
             .fs(30);
             color: #2CA2A9;
         }
-        .task-editor__t{
-            .ml(20);
-            .mt(30);
-        }
-        .task-editor__b{
-            .ml(60);
-        }
-        span{
-            display: inline-block;
-            .w(60);
-            .h(60);
-            color:gray;
-            border: 1px solid;
-        }
       }
       .task-editor--tool__right{
           width: 50%;
           .tool-input{
-            color:#898798;
             .mt(25);
             .b-radius(50);
             background-color: #e7e7e7;
-            .padding(15,30,15,30);
+            .padding(10,30,10,30);
+          }
+        }
+        .tool-input--time{
+          .mt(20);
+          .mb(10);
+           color: #363636;
+        }
+        .task-tool__input{
+            .padding(10,20,10,10);
+            display: flex;
+            flex: 1;
+            justify-content:space-between;
+            align-items: center;
+            .b-radius(50);
+            background-color: #e7e7e7;
+            .task-editor--input{
+              background: none;
+              outline: none;
+            }
+          .task-editor-secicon{
+            .fs(30);
+            color: gray;
           }
       }
     }
-    .task-editor--time{
-     .mt(40);
-     .mb(30);
-      color:#898798;
-      .ml(50);
-      text-align: left;
-      p{
-        .fs(28);
-         font-weight: bold;
-      }
-      .task-editor--ft{
-        .ml(80);
-        .fs(20);
-      }
-    }
-    .task-editor-timeicon{
-        .mt(20);
-        .fs(60);
-      }
-      .task-foot{
-        @base-font-color:#000;
-      }
       .evaluate-footer{
         .pt(30);
         .pb(30);

@@ -1,10 +1,13 @@
 <template>
     <div class="register">
-          <div class="register-content">
-            <div class="register-logoborder">
-              <img :src="headimg" alt="logo" class="logo">
-            </div>
-              <p class="register-content__describe">添加一张您的头像</p>
+          <div style="flex:1;overflow:auto;">
+            <div class="register-content">
+              <div class="register-content--img">
+                 <div class="register-logoborder">
+                  <img :src="headimg" alt="logo" class="logo">
+                </div>
+                <p class="register-content__describe">添加一张您的头像</p>
+              </div>
               <div class="register-content__sex">
                   <button class="male" ref="male" @click="male">男生</button><button class="famale" ref="famale"  @click="famale">女生</button>
               </div>
@@ -21,6 +24,7 @@
                   <div><input type="text" v-model="registerlist.confirmword" placeholder="确认登录密码"></div>
                 </form>
               </div>
+          </div>
           </div>
           <div class="register-footer">
                  <button  class="register-footer--btn" @click="addlevel">加入Level up</button>
@@ -157,14 +161,16 @@ export default {
   //全局样式样式去掉
    * { touch-action: pan-y; }
     background-color: hsl(0, 0%, 100%);
-    .mb(100);
+     .register-content--img{
+      position: relative;
+      top:-40px;
+    }
     .register-logoborder{
       .w(200);
       .h(200);
       .b-radius(500);
       background: linear-gradient(to right,#AF002A,#E5D200);
       margin: 0 auto;
-      .mt(-100);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -188,8 +194,8 @@ export default {
       }
     }
     .register-content__sex{
-      .mt(25);
-      .mb(25);
+      .mt(-40);
+      .mb(40);
     }
     button{
       .mr(10);
@@ -209,7 +215,7 @@ export default {
       color:white;
     }
    .register-content__info{
-      .mb(60);
+      .pb(30);
       div{
         display: flex;
         justify-content: space-between;
@@ -235,7 +241,7 @@ export default {
       }
    }
    .register-footer{
-      position: fixed !important;
+      position: sticky !important;
       bottom: 0;
      .pt(30);
      .pb(30);

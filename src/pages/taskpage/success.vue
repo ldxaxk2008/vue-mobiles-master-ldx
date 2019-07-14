@@ -1,8 +1,10 @@
 <template>
     <div class="taskpage-success">
         <common-header :tittle="tittle" :showback="false" :showmore='false'></common-header>
-        <div class="taskpage-success--img">
-             <img src="@/assets/imgs/tu1.png" alt="">
+        <div style="flex:1;">
+          <div class="taskpage-success--img">
+             <img src="@/assets/imgs/network.png" alt="">
+          </div>
         </div>
         <div class="taskpage-success--con">
            <p class="taskpage--con__title">任务完成</p>
@@ -34,13 +36,9 @@ export default {
     .taskpage-success--img{
         .mt(150);
         width: 100%;
-        img{
-            .w(600);
-            .h(500);
-        }
     }
     .taskpage-success--con{
-      .mt(100);
+      .pb(60);
         .taskpage--con__title{
             color: #1A8C94;
             .fs(40);

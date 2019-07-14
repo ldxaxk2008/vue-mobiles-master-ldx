@@ -14,8 +14,9 @@
           </li>
         </ul>
       </div>
-      <div >
-        <van-tabs v-model="active" @click="onClick" class="page-map--search">
+      <div class="page-map-vantabs">
+        <div class="page-map--search">
+        <van-tabs v-model="active" @click="onClick" >
           <van-tab title="综合">
             <div class="page-map--tab">
                <currentList :currentList="currentList"/>
@@ -29,6 +30,8 @@
           <van-tab title="热度">
           </van-tab>
         </van-tabs>
+        </div>
+        <span class="page-map--p">筛选</span>
       </div>
     </div>
   </div>
@@ -190,11 +193,15 @@ export default {
         }
     }
   }
-  .page-map--search{
-    .pt(20);
-    .mt(30);
+  .page-map-vantabs{
+    display: flex;
   }
-  .page-map--tab{
+  .page-map--search{
+    flex: 6;
+     .page-map--tab{
+    position: absolute;
+    .w(700);
+    // width:140%;
     background: #fff;
     color: #fff;
     .mt(10);
@@ -205,6 +212,12 @@ export default {
       .mb(20);
     }
   }
+  }
+  .page-map--p{
+    flex: 3;
+    line-height: 44px;
+  }
+
 }
 </style>
 <style>
