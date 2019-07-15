@@ -7,11 +7,11 @@
       </div>
       <div class="current-task">
         <h4>当前进行的任务</h4>
-          <currentList :currentList="currentList"/>
+          <currentList :currentList="currentList" @more="more('current')"/>
       </div>
       <div class="done-task">
         <h4>过往任务浏览 已完成20组任务</h4>
-          <currentList :currentList="currentList" :done="true"/>
+          <currentList :currentList="currentList" :done="true" @more="more('done')"/>
       </div>
       <div class="evaluate-list">
         <h4>公司评价</h4>
@@ -93,8 +93,15 @@ export default {
         }
       ]
     }
+  },
+  methods: {
+    more(val) {
+      let obj = this.currentList[0]
+      for (let i = 0; i < 3; i++) {
+        this.currentList.push(obj)
+      }
+    }
   }
-
 }
 </script>
 

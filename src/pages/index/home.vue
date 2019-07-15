@@ -19,12 +19,12 @@
         <van-tabs v-model="active" @click="onClick" >
           <van-tab title="综合">
             <div class="page-map--tab">
-               <currentList :currentList="currentList"/>
+               <currentList :currentList="currentList" @more="more('currentList')"/>
             </div>
           </van-tab>
           <van-tab title="价格">
             <div class="page-map--tab">
-               <currentList :currentList="currentprice"/>
+               <currentList :currentList="currentprice" @more="more"/>
             </div>
           </van-tab>
           <van-tab title="热度">
@@ -124,6 +124,19 @@ export default {
     },
     onClick(index) {
       console.log(index)
+    },
+    more(val) {
+      if (val === 'currentList') {
+        let obj = this.currentList[0]
+        for (let i = 0; i < 3; i++) {
+          this.currentList.push(obj)
+        }
+      } else {
+        let obj = this.currentprice[0]
+        for (let i = 0; i < 3; i++) {
+          this.currentprice.push(obj)
+        }
+      }
     }
     // login() {
     //   let params = {
