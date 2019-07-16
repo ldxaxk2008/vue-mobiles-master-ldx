@@ -2,7 +2,8 @@
   <div class="image-view">
     <img class="big-img" :src="firstSrc" alt="">
     <div class="image-list">
-      <div class="small-img" v-for="(item,index) in imgList" :key="index" :class="{active:curtab===index}">
+      <div class="small-img" v-for="(item,index) in imgList" :key="index">
+        <span :class="{active:curtab===index}"></span>
         <img :src="item.imgSrc" @click="imgClick(item.imgSrc,index)" alt="">
       </div>
     </div>
@@ -49,6 +50,7 @@ export default {
   .image-list{
     display: flex;
     .small-img{
+      position: relative;
       border: 3px solid transparent;
       width: 20%;
       .h(150);
@@ -61,6 +63,11 @@ export default {
   }
 }
 .active{
-  border-color: aqua !important;
+  background-image:url('../../assets/imgs/imgBorder.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }
 </style>

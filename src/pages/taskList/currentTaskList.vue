@@ -8,7 +8,7 @@
       <!-- <div class="line"></div> -->
       <div class="task-main">
         <div class="task-main-head">
-          <div class="task-title">任务标题<van-icon v-if="!done" style="margin-left:10px;" name="fire" color="#EC6C3B"/></div>
+          <div class="task-title">任务标题<img v-if="!done" style="margin-left:10px;"  :src="imgUrl"/></div>
           <div class="deadline">{{item.people}} 人正在申请 {{item.money}}RMB</div>
         </div>
         <div class="task-main-container">任务要求：{{item.ask}}</div>
@@ -22,7 +22,7 @@
       </div>
       <span class="done" v-if="done"><img src="@/assets/imgs/done.png" alt=""></span>
     </div>
-    <div class="more">
+    <div class="more" @click="more">
       <van-icon name="arrow-down" />
       <span>查看更多</span>
     </div>
@@ -39,6 +39,16 @@ export default {
     done: {
       type: Boolean,
       default: false
+    }
+  },
+  data() {
+    return {
+      imgUrl: require('@/assets/imgs/hot.png')
+    }
+  },
+  methods: {
+    more() {
+      this.$emit('more')
     }
   }
 }

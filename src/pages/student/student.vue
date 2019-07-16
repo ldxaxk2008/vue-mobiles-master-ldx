@@ -7,7 +7,7 @@
       </div>
       <div class="done-task">
         <h4 style="color:#18ACB6">过往任务浏览 已完成20组任务</h4>
-        <currentList :currentList="currentList" :done="true"/>
+        <currentList :currentList="currentList" :done="true" @more="more"/>
       </div>
       <div class="img-view">
         <imgView :imgList="imgList"/>
@@ -123,8 +123,15 @@ export default {
         }
       ]
     }
+  },
+  methods: {
+    more(val) {
+      let obj = this.currentList[0]
+      for (let i = 0; i < 3; i++) {
+        this.currentList.push(obj)
+      }
+    }
   }
-
 }
 </script>
 

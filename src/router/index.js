@@ -72,6 +72,11 @@ export default new Router({
       component: (resolve) => require(['@/pages/user/task'], resolve)
     },
     {
+      path: '/Chat',
+      name: 'Chat',
+      component: (resolve) => require(['@/pages/chat/chatRoom'], resolve)
+    },
+    {
       path: '/Pay',
       name: 'Pay',
       component: (resolve) => require(['@/pages/pay/pay'], resolve)
