@@ -50,7 +50,7 @@
        </div>
        </div>
         <div class="evaluate-footer">
-            <button  class="evaluate-footer--btn">发布</button>
+            <button  class="evaluate-footer--btn" @click="publish">发布</button>
        </div>
     </div>
 </template>
@@ -100,30 +100,19 @@ export default {
     }
   },
   methods: {
-    //  知识领域颜色改变
-    change(index, bol) {
-      this.filedlist.forEach(item => {
-        console.log(item.bg)
-        this.arr.push(item.bg)
-        this.brr.push(item.color)
-        if (!bol) {
-          this.filedlist[index].bg = '#FFB400'
-          this.filedlist[index].color = 'white'
-          this.filedlist[index].disable = true
-        } else if (bol) {
-          this.filedlist[index].bg = this.arr[index]
-          this.filedlist[index].color = this.brr[index]
-          this.filedlist[index].disable = false
-        }
-      })
-    },
+    // 筛选
     onSelect(item) {
       // 点击选项时默认不会关闭菜单，可以手动关闭
       this.show = false
       this.invalue = item.name
     },
+    // 筛选
     changedata(val) {
       this.show = true
+    },
+    // 发布
+    publish() {
+      this.$router.push('/User/Task')
     }
   }
 }

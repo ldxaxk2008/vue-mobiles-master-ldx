@@ -28,10 +28,13 @@
             </div>
           </van-tab>
           <van-tab title="热度">
+              <div class="page-map--tab">
+               <currentList :currentList="currentList"/>
+              </div>
           </van-tab>
         </van-tabs>
         </div>
-        <span class="page-map--p">筛选</span>
+        <span class="page-map__p">筛选</span>
       </div>
     </div>
   </div>
@@ -195,17 +198,21 @@ export default {
   }
   .page-map-vantabs{
     display: flex;
+    justify-content: space-between;
+    border-top: 5px solid #f5f5f5;
+    border-bottom: 2px solid #f5f5f5;
+    margin:10px 0;
   }
   .page-map--search{
-    flex: 6;
-     .page-map--tab{
+    flex: 5;
+    .page-map--tab{
     position: absolute;
-    .w(700);
-    // width:140%;
+    width: calc(100vw - 10px);
+    box-sizing: border-box;
     background: #fff;
     color: #fff;
     .mt(10);
-    .padding(30,20,30,20);
+    .padding(20,40,20,20);
     text-align: left;
     h4{
       color: #0f7f9b;
@@ -213,11 +220,13 @@ export default {
     }
   }
   }
-  .page-map--p{
-    flex: 3;
+  .page-map__p{
+    flex: 4;
     line-height: 44px;
+    color: #7d7e80;
+    text-align: right;
+    .pr(40);
   }
-
 }
 </style>
 <style>
@@ -231,6 +240,13 @@ export default {
     left: 0;
     z-index: 99;
   }
+
+  /* .van-tabs--line .van-tabs__wrap {
+    height: 37px;
+  } */
+   .van-tab {
+    font-size: 12px;
+  }
   .van-tabs__nav {
     position: relative;
     display: -webkit-box;
@@ -239,10 +255,6 @@ export default {
     background-color: #fff;
     -webkit-user-select: none;
     user-select: none;
-}
-.van-hairline--top-bottom::after {
-    border-top: 10px solid #f5f5f5;
-    border-bottom: 5px solid #f5f5f5;
 }
 .van-tab--active {
     color: #7d7e80;
