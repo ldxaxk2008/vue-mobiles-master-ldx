@@ -15,7 +15,7 @@
       </div>
       <div class="evaluate-list">
         <h4>公司评价</h4>
-        <evaluate :evaluate="evaluate"/>
+        <evaluate :evaluate="evaluate" @evajump="evajump"/>
       </div>
     </div>
     <div class="task-footer">
@@ -100,6 +100,9 @@ export default {
       for (let i = 0; i < 3; i++) {
         this.currentList.push(obj)
       }
+    },
+    evajump() {
+      this.$router.push('/User/Student')
     }
   }
 }

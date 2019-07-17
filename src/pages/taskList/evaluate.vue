@@ -2,7 +2,7 @@
   <div class="evaluate">
     <ul>
       <li v-for="(item,index) in evaluate" :key="index">
-        <img :src="item.imgSrc" alt="">
+        <img :src="item.imgSrc" @click="evajump" alt="">
         <div class="remark">
           <span>{{item.remark}}</span>
           <span>{{item.data}}</span>
@@ -18,6 +18,11 @@ export default {
     evaluate: {
       type: Array,
       default: () => {}
+    }
+  },
+  methods: {
+    evajump() {
+      this.$emit('evajump')
     }
   }
 }

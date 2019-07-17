@@ -37,12 +37,18 @@
                <div>
                   <p class="tool-input--time">截止日期</p>
                   <div class="task-tool__input">
-                      <input class="task-editor--input" v-model="invalue" type="text" @focus="changedata"><van-icon class="task-editor-secicon" name="arrow-down"/>
-                      <van-action-sheet
-                        v-model="show"
-                        :actions="actions"
-                        @select="onSelect"
-                      />
+                      <input class="task-editor--input" v-model="timevalue" type="text" @focus="popup"><van-icon class="task-editor-secicon" name="arrow-down"/>
+                       <van-popup v-model="show" position="bottom" :overlay="true">
+                          <van-datetime-picker
+                              v-model="currentDate"
+                              type="date"
+                              :min-date="minDate"
+                              :max-date="maxDate"
+                              @change="timeSelect"
+                              @cancel="cancel"
+                              @confirm="confirm"
+                              />
+                        </van-popup>
                   </div>
                </div>
             </div>
@@ -64,6 +70,8 @@ export default {
   data() {
     return {
       invalue: '',
+      timevalue: '',
+      currentDate: new Date(),
       show: false,
       actions: [
         { name: '选项1' },
@@ -106,13 +114,41 @@ export default {
       this.show = false
       this.invalue = item.name
     },
-    // 筛选
+    // input框筛选
     changedata(val) {
       this.show = true
     },
     // 发布
     publish() {
       this.$router.push('/User/Task')
+    },
+    // input框筛选
+    popup() {
+      this.show = true
+    },
+    // 时间筛选chang事件
+    timeSelect(e) {
+      // let arr = e.getValues()
+      // this.timevalue = `${arr[0]}-${arr[1]}-${arr[2]}`
+      this.show = true
+      this.timevalue = ''
+    },
+    // 取消
+    cancel(value) {
+      this.timevalue = ''
+      this.show = false
+    },
+    formatDate(date) { // 转换为年月日的格式
+      console.log(date)
+      var year = date.getFullYear()
+      var month = date.getMonth() + 1
+      var day = date.getDate()
+      return year + '-' + month + '-' + day
+    },
+    // 确定
+    confirm(value) {
+      this.timevalue = this.formatDate(value)
+      this.show = false
     }
   }
 }
