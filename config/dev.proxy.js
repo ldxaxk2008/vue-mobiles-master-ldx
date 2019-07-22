@@ -1,6 +1,9 @@
 module.exports = {
 	'/root/': {
-		target: 'http://114.55.72.164:8091/',
-		changeOrigin: true
+		target: 'http://47.99.240.71:8000/',
+		changeOrigin: true,
+		pathRewrite: {
+			'^/root/': ''
+		}
 	}
 }

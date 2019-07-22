@@ -32,6 +32,7 @@
 <script>
 import { mapMutations, mapGetters, mapState } from 'vuex'
 import commonHeader from 'common/common-header'
+// import axios from 'axios'
 export default {
   data() {
     return {
@@ -55,7 +56,15 @@ export default {
       ]
     }
   },
-  created() {},
+  created() {
+    this.$post('/root/api/user/login/')
+      .then(function (response) {
+        console.log(response)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+  },
   methods: {
     ...mapMutations({
       setNum: 'SET_NUM'
