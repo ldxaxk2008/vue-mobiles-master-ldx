@@ -8,7 +8,7 @@
         <van-icon name="clock-o" /><p>平面设计 文案代码</p>
         </div>
         <ul class="page-map--ul">
-          <li v-for="item in maplist" :key="item">
+          <li v-for="(item,index) in maplist" :key="index">
             <img :src="item.img" alt="">
             <p class="page-map--p">{{item.name}}</p>
           </li>

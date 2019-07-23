@@ -4,6 +4,10 @@
     <div class="student-main">
       <div class="company-introduce">
         <companyIntorduce :information="information" :imgShow="true"/>
+        <div class="skill-main">
+          <skill :skillList="skillList" class="software">asdasdsad</skill>
+          <software class="skill-user"/>
+        </div>
       </div>
       <div class="done-task">
         <h4 style="color:#18ACB6">过往任务浏览 已完成20组任务</h4>
@@ -33,6 +37,8 @@ import currentList from '@/pages/taskList/currentTaskList'
 import evaluate from '@/pages/taskList/evaluate'
 import imgView from '@/pages/student/imgView'
 import fileDown from '@/pages/user/fileDown'
+import software from '@/pages/skillCommon/software'
+import skill from '@/pages/skillCommon/skill'
 export default {
   components: {
     commonHeader,
@@ -40,7 +46,9 @@ export default {
     currentList,
     evaluate,
     imgView,
-    fileDown
+    fileDown,
+    software,
+    skill
   },
   data() {
     return {
@@ -121,7 +129,17 @@ export default {
             return this.cancel(data)
           }
         }
-      ]
+      ],
+      skillList: [{
+        label: '作曲',
+        value: '30%'
+      }, {
+        label: '绘画',
+        value: '90%'
+      }, {
+        label: '写作',
+        value: '6%'
+      }]
     }
   },
   methods: {
@@ -185,6 +203,15 @@ export default {
         .pb(10);
       }
     }
+  }
+}
+.skill-main{
+  display: flex;
+  .skill-user{
+    flex:1;
+  }
+  .software{
+    flex:1;
   }
 }
 </style>
