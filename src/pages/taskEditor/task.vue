@@ -1,108 +1,124 @@
 <template>
-    <div class="task-editor">
-       <common-header :tittle="tittle" :showback="true" ></common-header>
-       <div class="task-editor--con">
-       <div class="task-editor--select">
-          <input class="task-editor--input" v-model="invalue" type="text" placeholder="请输入选择类型" @focus="changedata"><van-icon class="task-editor-secicon" name="arrow-down"/>
-          <van-action-sheet
-            v-model="show"
-            :actions="actions"
-            @select="onSelect"
-          />
-       </div>
-       <div class="task-editor--describe">
-          <input class="task--describe__title" v-model="inputTitle" type="text"  name="" id="" placeholder="标题 输入吸引热度的标题">
-          <textarea class="task--describe__con"  v-model="inputContent" ref="inputContent" value="inputContent" placeholder="详细内容 可以简略的概括所需情况和资料"></textarea>
-       </div>
-       <div class="task-editor--filed">
-          <button class="evaluate-footer--btn">设计</button>
-            <ul class="page-map--ul">
-          <li v-for="item in maplist" :key="item">
-            <img :src="item.img" alt="">
+  <div class="task-editor">
+    <common-header :tittle="tittle" :showback="true"></common-header>
+    <div class="task-editor--con">
+      <div class="task-editor--select">
+        <input
+          class="task-editor--input"
+          v-model="invalue"
+          type="text"
+          placeholder="请输入选择类型"
+          @focus="changedata"
+        />
+        <van-icon class="task-editor-secicon" name="arrow-down" />
+        <van-action-sheet v-model="show" :actions="actions" @select="onSelect" />
+      </div>
+      <div class="task-editor--describe">
+        <input
+          class="task--describe__title"
+          v-model="inputTitle"
+          type="text"
+          name
+          id
+          placeholder="标题 输入吸引热度的标题"
+        />
+        <textarea
+          class="task--describe__con"
+          v-model="inputContent"
+          ref="inputContent"
+          value="inputContent"
+          placeholder="详细内容 可以简略的概括所需情况和资料"
+        ></textarea>
+      </div>
+      <div class="task-editor--filed">
+        <button class="evaluate-footer--btn">设计</button>
+        <ul class="page-map--ul">
+          <li v-for="item in maplist" :key="item.value">
+            <img :src="item.img" alt />
             <p class="page-map--p">{{item.name}}</p>
           </li>
         </ul>
-       </div>
-       <div class="task-editor--tool">
-           <div class="task-editor--tool__left">
-               <div class="task-editor__top">
-                   <p>适合工具</p><van-icon class="task-editor-toolicon" name="add-o"/>
-               </div>
+      </div>
+      <div class="task-editor--tool">
+        <div class="task-editor--tool__left">
+          <div class="task-editor__top">
+            <p>适合工具</p>
+            <van-icon class="task-editor-toolicon" name="add-o" />
+          </div>
+        </div>
+        <div>
+          <div class="task-editor--tool__right">
+            <p>报酬 RMB</p>
+            <input class="tool-input" type="text" />
+          </div>
+          <div>
+            <p class="tool-input--time">截止日期</p>
+            <div class="task-tool__input">
+              <input class="task-editor--input" v-model="timevalue" type="text" @focus="popup" />
+              <van-icon class="task-editor-secicon" name="arrow-down" />
+              <van-popup v-model="disabled" position="bottom" :overlay="true">
+                <van-datetime-picker
+                  v-model="currentDate"
+                  type="date"
+                  :min-date="minDate"
+                  @change="timeSelect"
+                  @cancel="cancel"
+                  @confirm="confirm"
+                />
+              </van-popup>
             </div>
-            <div>
-               <div class="task-editor--tool__right">
-                  <p>报酬 RMB</p>
-                  <input class="tool-input" type="text">
-               </div>
-               <div>
-                  <p class="tool-input--time">截止日期</p>
-                  <div class="task-tool__input">
-                      <input class="task-editor--input" v-model="timevalue" type="text" @focus="popup"><van-icon class="task-editor-secicon" name="arrow-down"/>
-                       <van-popup v-model="show" position="bottom" :overlay="true">
-                          <van-datetime-picker
-                              v-model="currentDate"
-                              type="date"
-                              :min-date="minDate"
-                              :max-date="maxDate"
-                              @change="timeSelect"
-                              @cancel="cancel"
-                              @confirm="confirm"
-                              />
-                        </van-popup>
-                  </div>
-               </div>
-            </div>
-
-       </div>
-       </div>
-        <div class="evaluate-footer">
-            <button  class="evaluate-footer--btn" @click="publish">发布</button>
-       </div>
+          </div>
+        </div>
+      </div>
     </div>
+    <div class="evaluate-footer">
+      <button class="evaluate-footer--btn" @click="publish">发布</button>
+    </div>
+  </div>
 </template>
 <script>
 import commonHeader from 'common/common-header'
 export default {
   components: {
     commonHeader
-    // type
   },
   data() {
     return {
       invalue: '',
       timevalue: '',
+      minDate: new Date(),
       currentDate: new Date(),
       show: false,
-      actions: [
-        { name: '选项1' },
-        { name: '选项2' },
-        { name: '选项3' }
-      ],
+      disabled: false,
+      actions: [{ name: '选项1' }, { name: '选项2' }, { name: '选项3' }],
       tittle: '返回首页',
       inputTitle: '',
       inputContent: '',
-      arr: [],
-      brr: [],
       maplist: [
         {
           img: require('@/assets/imgs/copy1.png'),
-          name: '文案'
+          name: '文案',
+          value: '1'
         },
         {
           img: require('@/assets/imgs/copy2.png'),
-          name: '设计'
+          name: '设计',
+          value: '2'
         },
         {
           img: require('@/assets/imgs/copy3.png'),
-          name: '代码'
+          name: '代码',
+          value: '3'
         },
         {
           img: require('@/assets/imgs/copy4.png'),
-          name: '手绘'
+          name: '手绘',
+          value: '4'
         },
         {
           img: require('@/assets/imgs/copy5.png'),
-          name: 'PPT'
+          name: 'PPT',
+          value: '5'
         }
       ]
     }
@@ -124,21 +140,21 @@ export default {
     },
     // input框筛选
     popup() {
-      this.show = true
+      // this.show = true
+      this.disabled = true
     },
     // 时间筛选chang事件
     timeSelect(e) {
-      // let arr = e.getValues()
-      // this.timevalue = `${arr[0]}-${arr[1]}-${arr[2]}`
-      this.show = true
+      this.disabled = true
       this.timevalue = ''
     },
     // 取消
     cancel(value) {
       this.timevalue = ''
-      this.show = false
+      this.disabled = false
     },
-    formatDate(date) { // 转换为年月日的格式
+    formatDate(date) {
+      // 转换为年月日的格式
       console.log(date)
       var year = date.getFullYear()
       var month = date.getMonth() + 1
@@ -148,7 +164,7 @@ export default {
     // 确定
     confirm(value) {
       this.timevalue = this.formatDate(value)
-      this.show = false
+      this.disabled = false
     }
   }
 }
@@ -156,162 +172,164 @@ export default {
 <style scoped lang="less">
 @import "~styles/index.less";
 @import "~styles/variable.less";
-.task-editor{
-    * { touch-action: pan-y; }
-    background-color: #fff;
-    .task-editor--select{
-        .margin(40,50,40,50);
-        .padding(5,20,5,20);
-        height: 30px;
-        display: flex;
-        justify-content:space-between;
-        align-items: center;
-        .b-radius(50);
-        background-color: rgb(245,245,245);
-        .task-editor--input{
-          background: none;
-          outline: none;
-        }
-      .task-editor-secicon{
-        .fs(30);
-        color: gray;
-      }
+.task-editor {
+  * {
+    touch-action: pan-y;
+  }
+  background-color: #fff;
+  .task-editor--select {
+    .margin(40, 50, 40, 50);
+    .padding(5, 20, 5, 20);
+    height: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .b-radius(50);
+    background-color: rgb(245, 245, 245);
+    .task-editor--input {
+      background: none;
+      outline: none;
     }
-    .task-editor--con{
-      flex: 1;
-      overflow-x: hidden;
-      overflow-y: auto;
+    .task-editor-secicon {
+      .fs(30);
+      color: gray;
     }
-    .task-editor--describe{
-        .task--describe__title{
-        display: flex;
-        box-sizing: border-box;
-        background-color:transparent;
-        border-bottom: 3px solid #d8d8d8;
-        width: 100%;
-        .padding(0,50,20,20);
-        .fs(24);
-      }
+  }
+  .task-editor--con {
+    flex: 1;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+  .task-editor--describe {
+    .task--describe__title {
+      display: flex;
+      box-sizing: border-box;
+      background-color: transparent;
+      border-bottom: 3px solid #d8d8d8;
+      width: 100%;
+      .padding(0, 50, 20, 20);
+      .fs(24);
     }
-    .task--describe__con{
-        width: 100%;
-        display: flex;
-        box-sizing: border-box;
-        background-color:transparent;
-        border-top:0px;
-        border-left:0px;
-        border-right:0px;
-        border-bottom: 3px solid #d8d8d8;
-        .h(250);
-        .padding(20,50,0,50);
-        .fs(24);
+  }
+  .task--describe__con {
+    width: 100%;
+    display: flex;
+    box-sizing: border-box;
+    background-color: transparent;
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    border-bottom: 3px solid #d8d8d8;
+    .h(250);
+    .padding(20, 50, 0, 50);
+    .fs(24);
+  }
+  .task-editor--filed {
+    color: #898798;
+    .mt(40);
+    .evaluate-footer--btn {
+      .ml(40);
+      display: flex;
+      background-color: #c54f8b;
+      color: white;
+      .fs(25);
+      .padding(10, 30, 10, 30);
+      // font-weight: bold;
+      border: none;
+      .b-radius(10);
     }
-    .task-editor--filed{
-      color:#898798;
-      .mt(40);
-       .evaluate-footer--btn{
-          .ml(40);
-         display: flex;
-            background-color:#c54f8b;
-            color:white;
-            .fs(25);
-            .padding(10,30,10,30);
-            // font-weight: bold;
-            border:none;
-            .b-radius(10);
-          }
-       .page-map--ul{
+    .page-map--ul {
       .mt(30);
       .pl(20);
       .pr(20);
       display: flex;
       justify-content: space-between;
-        img{
-          box-sizing: border-box;
-          width: 80%;
-        }
-        .page-map--p{
-          .fs(25);
-          color:#898798;
-          font-weight: bold;
-          text-align: center
-        }
-    }
-    }
-    .task-editor--tool{
-      .margin(50,50,0,50);
-      display: flex;
-      justify-content: flex-start;
-      text-align: left;
-      box-sizing: border-box;
-      p{
-        .fs(28);
-         color: #363636;
+      img {
+        box-sizing: border-box;
+        width: 80%;
       }
-      .task-editor--tool__left{
-          width: 50%;
-          .task-editor__top{
-             display: flex;
-          }
-          .task-editor-toolicon{
-            .mt(5);
-            .fs(30);
-            color: #2CA2A9;
-        }
-      }
-      .task-editor--tool__right{
-          width: 50%;
-          .tool-input{
-            .mt(25);
-            .b-radius(50);
-            background-color: #e7e7e7;
-            .padding(10,30,10,30);
-          }
-        }
-        .tool-input--time{
-          .mt(20);
-          .mb(10);
-           color: #363636;
-        }
-        .task-tool__input{
-            .padding(10,20,10,10);
-            display: flex;
-            flex: 1;
-            justify-content:space-between;
-            align-items: center;
-            .b-radius(50);
-            background-color: #e7e7e7;
-            .task-editor--input{
-              background: none;
-              outline: none;
-            }
-          .task-editor-secicon{
-            .fs(30);
-            color: gray;
-          }
+      .page-map--p {
+        .fs(25);
+        color: #898798;
+        font-weight: bold;
+        text-align: center;
       }
     }
-      .evaluate-footer{
-        .pt(30);
-        .pb(30);
-        background-color:#f5f5f5;
-        position: sticky;
-        bottom: 0;
-        left:0;
+  }
+  .task-editor--tool {
+    .margin(50, 50, 0, 50);
+    display: flex;
+    justify-content: flex-start;
+    text-align: left;
+    box-sizing: border-box;
+    p {
+      .fs(28);
+      color: #363636;
+    }
+    .task-editor--tool__left {
+      width: 50%;
+      .task-editor__top {
         display: flex;
-        .evaluate-footer--btn{
-            flex:1;
-            background-color:#c54f8b;
-            color:white;
-            .fs(25);
-            font-weight: bold;
-            border:none;
-            .b-radius(50);
-            .pt(10);
-            .pb(10);
-            .ml(20);
-            .mr(20);
-          }
-        }
+      }
+      .task-editor-toolicon {
+        .mt(5);
+        .fs(30);
+        color: #2ca2a9;
+      }
+    }
+    .task-editor--tool__right {
+      width: 50%;
+      .tool-input {
+        .mt(25);
+        .b-radius(50);
+        background-color: #e7e7e7;
+        .padding(10, 30, 10, 30);
+      }
+    }
+    .tool-input--time {
+      .mt(20);
+      .mb(10);
+      color: #363636;
+    }
+    .task-tool__input {
+      .padding(10, 20, 10, 10);
+      display: flex;
+      flex: 1;
+      justify-content: space-between;
+      align-items: center;
+      .b-radius(50);
+      background-color: #e7e7e7;
+      .task-editor--input {
+        background: none;
+        outline: none;
+      }
+      .task-editor-secicon {
+        .fs(30);
+        color: gray;
+      }
+    }
+  }
+  .evaluate-footer {
+    .pt(30);
+    .pb(30);
+    background-color: #f5f5f5;
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    .evaluate-footer--btn {
+      flex: 1;
+      background-color: #c54f8b;
+      color: white;
+      .fs(25);
+      font-weight: bold;
+      border: none;
+      .b-radius(50);
+      .pt(10);
+      .pb(10);
+      .ml(20);
+      .mr(20);
+    }
+  }
 }
 </style>

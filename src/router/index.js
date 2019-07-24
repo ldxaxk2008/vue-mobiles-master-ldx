@@ -130,6 +130,16 @@ export default new Router({
       path: '/evaluate',
       name: 'evaluate',
       component: (resolve) => require(['@/pages/evaluate'], resolve)
+    },
+    {
+      path: '/loginpage',
+      name: 'loginpage',
+      component: (resolve) => require(['@/pages/loginPage'], resolve)
+    },
+    {
+      path: '/registpage',
+      name: 'registpage',
+      component: (resolve) => require(['@/pages/registPage'], resolve)
     }
   ]
 })
