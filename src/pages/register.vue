@@ -28,7 +28,8 @@
               <van-button slot="button" class="register-btn" size="small" type="primary">发送验证码</van-button>
             </van-field>
             <van-field  v-model="registerlist.code" placeholder="验证码" />
-            <van-field  v-model="registerlist.user_type" placeholder="登录用户名" />
+            <!-- <van-field  v-model="registerlist.user_type" placeholder="登录用户名" /> -->
+            <van-field placeholder="登录用户名" />
             <van-field  v-model="registerlist.password" type="password" placeholder="登录密码" />
             <van-field
               v-model="registerlist.confirm_password"
@@ -73,7 +74,7 @@ export default {
         grade: '',
         phone: '',
         // code: '',验证码
-        user_type: '',
+        user_type: 0,
         password: '',
         confirm_password: ''
       }
@@ -93,8 +94,7 @@ export default {
       this.registerlist.sex = item.label
     },
     onSelect(item) {
-      this.registerlist.grade = item.name
-      console.log(this.registerlist.grade)
+      this.registerlist.grade = item.value
       this.show = false
     },
     popup() {
@@ -102,19 +102,20 @@ export default {
       this.show = true
     },
     addlevel() {
-      var nameReg = /^[\u4E00-\u9FA5\uf900-\ufa2d·s]{2,20}$/ // 验证姓名正则
+      // var nameReg = /^[\u4E00-\u9FA5\uf900-\ufa2d·s]{2,20}$/ // 验证姓名正则
       var codeReg = /^(?![A-Z]+$)(?![a-z]+$)(?!\d+$)\S{8,}$/ // 密码校验
       if (this.registerlist.username === '') {
         this.$toast({
           message: '请输入姓名'
         })
         return
-      } else if (!nameReg.test(this.registerlist.username)) {
-        this.$toast({
-          message: '请输入正确格式'
-        })
-        return
       }
+      // else if (!nameReg.test(this.registerlist.username)) {
+      //   this.$toast({
+      //     message: '请输入正确格式'
+      //   })
+      //   return
+      // }
 
       if (this.registerlist.user_type === '') {
         this.$toast({
@@ -146,7 +147,14 @@ export default {
         })
         return
       }
-      this.$router.push('/levelup/enter')
+      console.log(this.registerlist)
+
+      this.$post('/root/api/user/register/', this.registerlist).then(res => {
+        console.log(res.data)
+        if (res.data.success === 'true') {
+          this.$router.push('/loginpage')
+        }
+      })
     }
   },
   mounted() {

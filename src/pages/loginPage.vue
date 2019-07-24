@@ -6,7 +6,7 @@
       </div>
        <form ref="registerform" class="login-form" :model="registerlist">
       <div class="login-input">
-          <van-field clearable v-model="registerlist.account" label="账号" placeholder="请输入账号" />
+          <van-field clearable v-model="registerlist.username" label="账号" placeholder="请输入账号" />
           <van-field clearable v-model="registerlist.password" label="密码" placeholder="请输入密码" />
       </div>
        <span class="forgetword" @click="hanleclick">忘记密码</span>
@@ -23,35 +23,47 @@
   </div>
 </template>
 <script>
+import {mapMutations} from 'vuex'
 export default {
   data() {
     return {
       registerlist: {
-        account: '',
+        username: '',
         password: ''
       }
     }
   },
   methods: {
+    ...mapMutations(['SET_TOKEN']),
     hanleclick() {
 
     },
     login() {
-      var codeReg = /^(?![A-Z]+$)(?![a-z]+$)(?!\d+$)\S{8,}$/
+      // var codeReg = /^(?![A-Z]+$)(?![a-z]+$)(?!\d+$)\S{8,}$/
       if (this.registerlist.password === '') {
         this.$toast({
           message: '请输入登录密码'
         })
-      } else if (!codeReg.test(this.registerlist.password)) {
-        this.$toast({
-          message: '密码至少为8位,字母、数字'
-        })
+        return
       }
-      if (this.registerlist.account === '') {
+      // else if (!codeReg.test(this.registerlist.password)) {
+      //   this.$toast({
+      //     message: '密码至少为8位,字母、数字'
+      //   })
+      // }
+      if (this.registerlist.username === '') {
         this.$toast({
           message: '请输入账号'
         })
+        return
       }
+      this.$post('/root/api/user/login/', this.registerlist).then(res => {
+        console.log(res.data)
+        if (res.data.success === 'true') {
+          this.SET_TOKEN(res.data.token)
+          this.$router.push('/home')
+        }
+      })
     },
     regist() {
 
