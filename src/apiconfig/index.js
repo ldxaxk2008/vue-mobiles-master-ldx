@@ -43,7 +43,7 @@ axios.interceptors.response.use(
   }
 )
 // 封装post请求
-export function fetchPost(requestUrl, data = '') {
+export function fetchPost(requestUrl, data = {}) {
   return axios({
     url: requestUrl,
     method: 'post',
@@ -51,13 +51,20 @@ export function fetchPost(requestUrl, data = '') {
   })
 }
 
-export function fetchGet(requestUrl, params = '') {
+export function fetchGet(requestUrl, params = {}) {
   return axios({
     url: requestUrl,
     method: 'get',
-    data: {
-      'body': params
-    }
+    params
   })
 }
+// export function fetch(requestUrl, params = '') {
+//   return axios({
+//     url: requestUrl,
+//     method: 'post',
+//     data: {
+//       'body': params
+//     }
+//   })
+// }
 
