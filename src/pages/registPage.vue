@@ -85,12 +85,12 @@ export default {
         this.$toast({
           message: '请确认登录密码'
         })
-      } else if (
-        this.registerlist.confirm_password !== this.registerlist.password
-      ) {
+        return false
+      } else if (this.registerlist.confirm_password !== this.registerlist.password) {
         this.$toast({
           message: '两次密码不一致'
         })
+        return false
       }
       this.$router.push('/loginpage')
     }

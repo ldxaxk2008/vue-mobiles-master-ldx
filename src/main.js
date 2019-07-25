@@ -3,7 +3,7 @@
 /*eslint-disable*/
 import Vue from 'vue'
 import App from './App'
-import Vuex from 'vuex'
+// import Vuex from 'vuex'
 import store from './store'
 import router from './router'
 import SvgIcon from'@/components/SvgIcon'
@@ -58,7 +58,7 @@ window.addEventListener('popstate', function(e) {
 // })
 
 Vue.use(Vant)
-Vue.use(Vuex)
+// Vue.use(Vuex)
 Vue.component('svg-icon', SvgIcon)
 Vue.config.productionTip = false
 FastClick.attach(document.body)

@@ -71,9 +71,10 @@ export default {
         name: '',
         username: '',
         school_name: '',
-        grade: Number,
+        grade: 1,
+        grades: '',
         phone: '',
-        // code: '',验证码
+        code: '',
         user_type: 0,
         password: '',
         confirm_password: ''
@@ -139,7 +140,14 @@ export default {
         })
         return
       }
-      this.$router.push('/levelup/enter')
+      console.log(this.registerlist)
+
+      this.$post('/root/api/user/register/', this.registerlist).then(res => {
+        console.log(res.data)
+        if (res.data.success === 'true') {
+          this.$router.push('/loginpage')
+        }
+      })
     }
   },
   mounted() {
