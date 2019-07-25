@@ -12,18 +12,19 @@
             <p class="register-content__describe">添加一张您的头像</p>
           </div>
           <div class="register-content__info">
-            <van-field v-model="registerlist.username" placeholder="公司名称" />
+            <van-field v-model="registerlist.company_name" placeholder="公司名称" />
             <van-field v-model="registerlist.code" placeholder="工商编号" />
             <van-field v-model="registerlist.contact_person" placeholder="联系人" />
-            <van-field v-model="registerlist.company_name" placeholder="联系邮箱" />
+            <van-field v-model="registerlist.email" placeholder="联系邮箱" />
             <van-field v-model="registerlist.phone" placeholder="联系电话">
               <van-button slot="button" class="register-btn" size="small" type="primary">发送验证码</van-button>
             </van-field>
             <van-field v-model="registerlist.vercode" placeholder="验证码" />
-            <van-field v-model="registerlist.user_type" placeholder="登录用户名" />
-            <van-field v-model="registerlist.password" placeholder="登录密码" />
+            <van-field v-model="registerlist.username" placeholder="登录用户名" />
+            <van-field v-model="registerlist.password"  type="password" placeholder="登录密码" />
             <van-field
               v-model="registerlist.confirm_password"
+              type="password"
               placeholder="确认登录密码"
             />
           </div>
@@ -39,16 +40,6 @@
 export default {
   data() {
     return {
-      sexlist: [
-        {
-          value: '男',
-          label: 'man'
-        },
-        {
-          value: '女',
-          label: 'woman'
-        }
-      ],
       registerlist: {
         headimg: require('@/assets/imgs/user-img.png'),
         sex: 'man',
@@ -56,8 +47,10 @@ export default {
         contact_person: '',
         company_name: '',
         phone: '',
-        user_type: '',
+        user_type: 1,
+        code: '',
         // vercode:'' 验证码
+        email: '',
         password: '',
         confirm_password: ''
       }
@@ -69,27 +62,12 @@ export default {
     },
     addlevel() {
       var phoneReg = /^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,3,5-8])|(18[0-9])|166|198|199|(147))\d{8}$/
-      var nameReg = /^[\u4E00-\u9FA5\uf900-\ufa2d·s]{2,20}$/ // 验证姓名正则
+      var nameReg = /^(?![^a-zA-Z]+$)(?!\D+$)(?![^_]+$).{3,16}$/ // 验证姓名正则
       var codeReg = /^(?![A-Z]+$)(?![a-z]+$)(?!\d+$)\S{8,}$/ // 密码校验
-      if (this.registerlist.username === '') {
-        this.$toast({
-          message: '请输入姓名'
-        })
-        return
-      } else if (!nameReg.test(this.registerlist.username)) {
-        this.$toast({
-          message: '请输入姓名正确格式'
-        })
-        return
-      }
+
       if (this.registerlist.contact_person === '') {
         this.$toast({
           message: '请输入联系人'
-        })
-        return
-      } else if (!nameReg.test(this.registerlist.contact_person)) {
-        this.$toast({
-          message: '请输入联系人正确格式'
         })
         return
       }
@@ -109,9 +87,14 @@ export default {
         })
         return
       }
-      if (this.registerlist.user_type === '') {
+      if (this.registerlist.username === '') {
         this.$toast({
-          message: '请输入登录用户名'
+          message: '请输入用户名'
+        })
+        return
+      } else if (!nameReg.test(this.registerlist.username)) {
+        this.$toast({
+          message: '用户名只能由数字、字母、下划线组成!'
         })
         return
       }

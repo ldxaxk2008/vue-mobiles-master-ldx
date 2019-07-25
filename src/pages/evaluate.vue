@@ -9,10 +9,10 @@
         <li
           v-for="(item,index) in evaluatelist"
           :key="index"
-          @click="handelClick(index,item.disable)"
+          @click="handelClick(index)"
         >
-          <svg-icon :name="item.img" size="80" ref="svg_icon"></svg-icon>
-          <p ref="svg_p">{{item.name}}</p>
+          <svg-icon :name="item.img" size="80"  :fill="item.disable?'#c54f8b':''" ref="svg_icon"></svg-icon>
+          <p :class="{'active':item.disable===true}">{{item.name}}</p>
         </li>
       </ul>
       <p class="evaluate-content--serve">请为该学生添加标签</p>
@@ -57,35 +57,22 @@ export default {
         {
           img: 'laugh',
           name: '远超预期',
-          disable: false
+          disable: true
         }
       ]
     }
   },
   methods: {
     addlevel() {},
-    handelClick(index, bol) {
-      this.evaluatelist.forEach((item, index) => {
-        // this.$refs.svg_icon[index].fill = ''
-        this.$refs.svg_p[index].style.color = ''
+    handelClick(index) {
+      this.evaluatelist.forEach(element => {
+        element.disable = false
       })
-      if (index !== this.showIndex) {
-        // this.$refs.svg_icon[index].fill = '#c54f8b'
-        this.$refs.svg_p[index].style.color = '#c54f8b'
-      } else if (index === this.showIndex) {
-        this.evaluatelist[index].disable = !this.evaluatelist[index].disable
-        if (this.evaluatelist[index].disable) {
-          // 当点击多次的时候
-          // this.$refs.svg_icon[index].fill = '#c54f8b'
-          this.$refs.svg_p[index].style.color = '#c54f8b'
-        }
-      }
-      this.showIndex = index
+      this.evaluatelist[index].disable = true
     }
   },
   mounted() {
-    // this.$refs.svg_icon[2].fill = '#c54f8b'
-    this.$refs.svg_p[2].style.color = '#c54f8b'
+
   }
 }
 </script>
@@ -163,6 +150,9 @@ export default {
       border: none;
       .b-radius(50);
     }
+  }
+  .active{
+    color:#c54f8b;
   }
 }
 </style>

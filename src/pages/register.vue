@@ -21,14 +21,14 @@
           </div>
           <van-action-sheet class="register-seclect" v-model="show" :actions="actions" @select="onSelect" />
           <div class="register-content__info">
-            <van-field v-model="registerlist.username" placeholder="姓名" />
+            <van-field v-model="registerlist.name" placeholder="姓名" />
             <van-field v-model="registerlist.school_name" placeholder="学校" />
-            <van-field v-model="registerlist.grade" placeholder="请选择年级" @click="popup" />
+            <van-field v-model="registerlist.grades" placeholder="请选择年级" @click="popup" />
             <van-field v-model="registerlist.phone" placeholder="联系电话">
               <van-button slot="button" class="register-btn" size="small" type="primary">发送验证码</van-button>
             </van-field>
             <van-field  v-model="registerlist.code" placeholder="验证码" />
-            <van-field  v-model="registerlist.user_type" placeholder="登录用户名" />
+            <van-field  v-model="registerlist.username" placeholder="登录用户名" />
             <van-field  v-model="registerlist.password" type="password" placeholder="登录密码" />
             <van-field
               v-model="registerlist.confirm_password"
@@ -68,12 +68,13 @@ export default {
       registerlist: {
         headimg: require('@/assets/imgs/user-img.png'),
         sex: 'man',
+        name: '',
         username: '',
         school_name: '',
-        grade: '',
+        grade: Number,
         phone: '',
         // code: '',验证码
-        user_type: '',
+        user_type: 0,
         password: '',
         confirm_password: ''
       }
@@ -93,32 +94,24 @@ export default {
       this.registerlist.sex = item.label
     },
     onSelect(item) {
-      this.registerlist.grade = item.name
-      console.log(this.registerlist.grade)
+      this.registerlist.grade = item.value
+      this.registerlist.grades = item.name
       this.show = false
     },
     popup() {
-      console.log(111)
       this.show = true
     },
     addlevel() {
-      var nameReg = /^[\u4E00-\u9FA5\uf900-\ufa2d·s]{2,20}$/ // 验证姓名正则
       var codeReg = /^(?![A-Z]+$)(?![a-z]+$)(?!\d+$)\S{8,}$/ // 密码校验
+      var nameReg = /^(?![^a-zA-Z]+$)(?!\D+$)(?![^_]+$).{3,16}$/
       if (this.registerlist.username === '') {
         this.$toast({
-          message: '请输入姓名'
+          message: '请输入登录用户名'
         })
         return
       } else if (!nameReg.test(this.registerlist.username)) {
         this.$toast({
-          message: '请输入正确格式'
-        })
-        return
-      }
-
-      if (this.registerlist.user_type === '') {
-        this.$toast({
-          message: '请输入登录用户名'
+          message: '用户名只能由数字、字母、下划线组成!'
         })
         return
       }
