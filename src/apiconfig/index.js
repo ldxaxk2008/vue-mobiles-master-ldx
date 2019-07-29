@@ -15,11 +15,11 @@ axios.defaults.timeout = TIME_OUT
 // 封装请求拦截
 axios.interceptors.request.use(
 	config => {
-		let token = sessionStorage.getItem('token')   // 获取token
+    let token = sessionStorage.getItem('token')   // 获取token
 		config.headers['Content-Type'] = 'application/json;charset=UTF-8'
 		config.headers['Authorization'] = ''
 		if(token != null){                          // 如果token不为null，否则传token给后台
-			config.headers['Authorization'] = token
+			config.headers['Authorization'] = `token ${token}`
 		}
 		return config
 	},
@@ -55,9 +55,7 @@ export function fetchGet(requestUrl, params = '') {
   return axios({
     url: requestUrl,
     method: 'get',
-    data: {
-      'body': params
-    }
+    params
   })
 }
 
