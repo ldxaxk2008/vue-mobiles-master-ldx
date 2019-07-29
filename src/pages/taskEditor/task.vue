@@ -136,7 +136,17 @@ export default {
     },
     // 发布
     publish() {
-      this.$router.push('/User/Task')
+      let params = {
+        resource_type: 1
+      }
+      this.$get('/api/task/resource/type/', params)
+        .then(function (response) {
+          console.log(response)
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+      // this.$router.push('/User/Task')
     },
     // input框筛选
     popup() {

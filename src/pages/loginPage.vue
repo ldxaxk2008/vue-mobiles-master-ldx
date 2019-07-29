@@ -1,32 +1,45 @@
 <template>
   <div class="login-page">
+    <common-header :tittle="tittle" :headerColor="headerColor" :showback="true"></common-header>
     <div style="flex:1;">
       <div class="login-img">
         <svg-icon name="logo" size="250" ref="svg_icon"></svg-icon>
       </div>
-       <form ref="registerform" class="login-form" :model="registerlist">
-      <div class="login-input">
-          <van-field clearable v-model="registerlist.username" label="账号" placeholder="请输入账号" />
-          <van-field clearable v-model="registerlist.password" label="密码" placeholder="请输入密码" />
+      <form ref="registerform" class="login-form" :model="registerlist">
+        <div class="login-input">
+          <!-- <van-field v-model="registerlist.username" placeholder="账号" />
+          <van-field v-model="registerlist.password" placeholder="密码" />-->
+          <div>
+            <input type="text" v-model="registerlist.username" placeholder="账号" />
+          </div>
+          <div>
+            <input type="text" v-model="registerlist.password" placeholder="密码" />
+          </div>
+        </div>
+        <span class="forgetword" @click="hanleclick">忘记密码</span>
+      </form>
+      <div class="login-btn">
+        <button class="p" @click="login">登录</button>
+        <button class="p" @click="regist">注册</button>
       </div>
-       <span class="forgetword" @click="hanleclick">忘记密码</span>
-       </form>
     </div>
-    <div class="login-btn">
-      <div>
-        <p @click="login">登录</p>
-      </div>
-      <div>
-        <p @click="regist">注册</p>
-      </div>
+    <div class="btn">
+      <p>为学生创造价值的平台</p>
     </div>
   </div>
 </template>
 <script>
-import {mapMutations} from 'vuex'
+import { mapMutations } from 'vuex'
+import commonHeader from 'common/common-header'
+
 export default {
+  components: {
+    commonHeader
+  },
   data() {
     return {
+      tittle: '',
+      headerColor: '#f9ce20',
       registerlist: {
         username: '',
         password: ''
@@ -35,9 +48,7 @@ export default {
   },
   methods: {
     ...mapMutations(['SET_TOKEN']),
-    hanleclick() {
-
-    },
+    hanleclick() {},
     login() {
       // var codeReg = /^(?![A-Z]+$)(?![a-z]+$)(?!\d+$)\S{8,}$/
       if (this.registerlist.password === '') {
@@ -65,9 +76,7 @@ export default {
         }
       })
     },
-    regist() {
-
-    }
+    regist() {}
   }
 }
 </script>
@@ -78,58 +87,90 @@ export default {
   * {
     touch-action: pan-y;
   }
+  color: #f5f5f5;
   background: linear-gradient(bottom, #b92671 0%, #f9ce20 90%, #f9ce20 100%);
   .login-img {
-    .mb(100);
+    .mt(-50);
     box-sizing: border-box;
   }
-  .login-form{
-     position: relative;
-     .forgetword{
-        position: absolute;
-        .right(60);
-        .bottom(10);
-      }
+  .login-form {
+    .mt(30);
+    position: relative;
+    .forgetword {
+      position: absolute;
+      .right(130);
+      .bottom(-50);
+    }
   }
   .login-input {
-    .mr(180);
-    .ml(180);
-    .mt(50);
+    .mr(120);
+    .ml(120);
     box-sizing: border-box;
-    .van-cell {
-      background-color: #f5f5f5;
-      .mt(30);
-    }
+    // .van-cell {
+    //   .mt(30);
+    //   outline: none;
+    //   background: none;
+    //   border: 1px solid #f5f5f5;
+    // }
     div {
       display: flex;
       justify-content: space-between;
-      border: 1px solid #f5f5f5;
-      color: #000;
-      height: 30px;
-      line-height: 30px;
-      .b-radius(60);
-      }
-  }
-  .login-btn {
-    .pb(150);
-    div {
-      display: flex;
-      .b-radius(60);
-      .mr(200);
-      .ml(200);
-    }
-    p {
-      flex: 1;
-      .pt(15);
-      .pb(15);
       .mb(30);
+      input {
+        flex: 1;
+        .pt(13);
+        .pb(13);
+        .pl(20);
+        .b-radius(60);
+        color: @base-font-color;
+        border: 1px solid #f5f5f5;
+        outline: none;
+        background: none;
+      }
+    }
+  }
+  .btn {
+    .pb(100);
+    letter-spacing: 10px;
+    .fs(10);
+  }
+
+  .login-btn {
+    display: flex;
+    .b-radius(60);
+    .mr(100);
+    .ml(100);
+    .mt(100);
+    .p {
+      flex: 1;
+      .pt(12);
+      .pb(12);
+      .mb(30);
+      .mr(20);
+      .ml(20);
       .b-radius(60);
       text-align: center;
       color: #fff;
       letter-spacing: 5px;
       font-weight: bold;
-      background-color: #c54f8b;
+      outline: none;
+      background-color: transparent;
+      border: 1px solid #f5f5f5;
     }
   }
 }
+</style>
+<style  lang="less">
+// .van-field__control::-webkit-input-placeholder {
+//   color: #f5f5f5;
+// }
+// .van-field__control {
+//   margin-left: 10px;
+// }
+.login-page {
+  input::placeholder{
+    color:#f5f5f5;
+  }
+}
+
 </style>
