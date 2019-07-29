@@ -14,7 +14,7 @@
                 <div>
                   <img :src="item.payImg" alt="">
                   <button :style="{background:item.bgColor}">立即支付</button>
-                  <van-icon :color="item.bgColor" class="pay-small" name="gift" />
+                  <!-- <van-icon :color="item.bgColor" class="pay-small" name="gift" /> -->
                 </div>
               </li>
             </ul>
@@ -57,7 +57,10 @@ export default {
     }
   },
   created() {
-    this.$post('/root/api/user/login/')
+    let params = {
+      resource_type: 2
+    }
+    this.$get('/root/api/task/resource/type/', params)
       .then(function (response) {
         console.log(response)
       })
@@ -101,7 +104,7 @@ export default {
 .pay-main{
   .margin(50,40,0,40);
   .pt(40);
-  .pb(40);
+  .pb(60);
   .h(530);
   .b-radius(10);
   background: #f5f5ff;
