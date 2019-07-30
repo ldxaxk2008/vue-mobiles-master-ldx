@@ -29,7 +29,7 @@ export default {
           name: '任务'
         },
         {
-          path: '/taskeditor',
+          path: '/taskeditor/post',
           name: '编辑任务'
         },
         {

@@ -16,7 +16,7 @@
       <div class="task-editor--describe">
         <input
           class="task--describe__title"
-          v-model="inputTitle"
+          v-model="valueData.title"
           type="text"
           name
           id
@@ -24,7 +24,7 @@
         />
         <textarea
           class="task--describe__con"
-          v-model="inputContent"
+          v-model="valueData.desc"
           ref="inputContent"
           value="inputContent"
           placeholder="详细内容 可以简略的概括所需情况和资料"
@@ -33,33 +33,42 @@
       <div class="task-editor--filed">
         <button class="evaluate-footer--btn">设计</button>
         <ul class="page-map--ul">
-          <li v-for="item in maplist" :key="item.value">
+          <li
+            v-for="(item,index) in maplist"
+            :key="item.value"
+            ref="pagep"
+            @click="hanleclick(item,index)"
+          >
             <img :src="item.img" alt />
-            <p class="page-map--p">{{item.name}}</p>
+            <p :class="{'active':item.disable===true}">{{item.name}}</p>
           </li>
         </ul>
       </div>
       <div class="task-editor--tool">
         <div class="task-editor--tool__left">
           <div class="task-editor__top">
-            <p>适合工具</p>
-            <van-icon class="task-editor-toolicon" name="add-o" />
+            <software class="skill-user" />
           </div>
         </div>
         <div>
           <div class="task-editor--tool__right">
             <p>报酬 RMB</p>
-            <input class="tool-input" type="text" />
+            <input class="tool-input" v-model="valueData.payment" type="text" />
           </div>
           <div>
             <p class="tool-input--time">截止日期</p>
             <div class="task-tool__input">
-              <input class="task-editor--input" v-model="timevalue" type="text" @focus="popup" />
+              <input
+                class="task-editor--input"
+                v-model="valueData.end_date"
+                type="text"
+                @focus="popup"
+              />
               <van-icon class="task-editor-secicon" name="arrow-down" />
               <van-popup v-model="disabled" position="bottom" :overlay="true">
                 <van-datetime-picker
                   v-model="currentDate"
-                  type="date"
+                  type="datetime"
                   :min-date="minDate"
                   @change="timeSelect"
                   @cancel="cancel"
@@ -78,47 +87,62 @@
 </template>
 <script>
 import commonHeader from 'common/common-header'
+import software from '@/pages/skillCommon/software'
+
 export default {
   components: {
-    commonHeader
+    commonHeader,
+    software
   },
   data() {
     return {
+      valueData: {
+        task_type_id: '',
+        design_id: '',
+        title: '',
+        desc: '',
+        payment: '',
+        end_date: '',
+        tool_list: [4, 5, 6]
+      },
       invalue: '',
-      timevalue: '',
       minDate: new Date(),
       currentDate: new Date(),
       show: false,
       disabled: false,
-      actions: [{ name: '选项1' }, { name: '选项2' }, { name: '选项3' }],
+      inputList: [],
+      actions: [],
       tittle: '返回首页',
-      inputTitle: '',
-      inputContent: '',
       maplist: [
         {
           img: require('@/assets/imgs/copy1.png'),
           name: '文案',
-          value: '1'
+          value: '1',
+          disable: false
         },
         {
           img: require('@/assets/imgs/copy2.png'),
           name: '设计',
-          value: '2'
+          value: '2',
+          disable: false
         },
         {
           img: require('@/assets/imgs/copy3.png'),
           name: '代码',
-          value: '3'
+          value: '3',
+          disable: false
         },
         {
           img: require('@/assets/imgs/copy4.png'),
           name: '手绘',
-          value: '4'
+          value: '4',
+          disable: false
         },
         {
           img: require('@/assets/imgs/copy5.png'),
           name: 'PPT',
-          value: '5'
+          value: '5',
+          disable: false
         }
       ]
     }
@@ -129,6 +153,7 @@ export default {
       // 点击选项时默认不会关闭菜单，可以手动关闭
       this.show = false
       this.invalue = item.name
+      this.valueData.task_type_id = item.id
     },
     // input框筛选
     changedata(val) {
@@ -136,46 +161,88 @@ export default {
     },
     // 发布
     publish() {
-      let params = {
-        resource_type: 1
-      }
-      this.$get('/api/task/resource/type/', params)
-        .then(function (response) {
-          console.log(response)
+      this.$post('/root/api/task/task/', this.valueData)
+        .then(res => {
+          if (res.data.success === true) {
+            this.$router.push('/User/Task')
+          }
         })
-        .catch(function (error) {
-          console.log(error)
-        })
-      // this.$router.push('/User/Task')
     },
     // input框筛选
     popup() {
-      // this.show = true
       this.disabled = true
     },
     // 时间筛选chang事件
     timeSelect(e) {
       this.disabled = true
-      this.timevalue = ''
+      this.valueData.end_date = ''
     },
     // 取消
     cancel(value) {
-      this.timevalue = ''
+      this.valueData.end_date = ''
       this.disabled = false
     },
-    formatDate(date) {
-      // 转换为年月日的格式
-      console.log(date)
-      var year = date.getFullYear()
-      var month = date.getMonth() + 1
-      var day = date.getDate()
-      return year + '-' + month + '-' + day
+    // 时间格式转换
+    timeFormat (timer) {
+      let date = new Date(timer)
+      let year = date.getFullYear()
+      let month = date.getMonth() + 1
+      let day = date.getDate()
+      let hour = date.getHours()
+      let minutes = date.getMinutes()
+      let seconds = date.getSeconds()
+      month = month < 10 ? '0' + month : month
+      day = day < 10 ? '0' + day : day
+      hour = hour < 10 ? '0' + hour : hour
+      minutes = minutes < 10 ? '0' + minutes : minutes
+      seconds = seconds < 10 ? '0' + seconds : seconds
+      return year + '-' + month + '-' + day + ' ' + hour + ':' + minutes + ':' + seconds
     },
     // 确定
     confirm(value) {
-      this.timevalue = this.formatDate(value)
+      this.valueData.end_date = this.timeFormat(value)
       this.disabled = false
+    },
+    // 设计选择
+    hanleclick(data, index) {
+      this.maplist.map(res => {
+        res.disable = false
+      })
+      this.maplist[index].disable = true
+      this.valueData.design_id = data.value
     }
+  },
+  mounted() {
+    // 获取数据类型
+    let params = {
+      resource_type: 1
+    }
+    let this_ = this
+    this.$get('/root/api/task/resource/type/', params)
+      .then(function (response) {
+        this_.inputList = response.data.data.results
+        this_.inputList.map(res => {
+          let obj = {
+            name: res.title,
+            id: res.id
+          }
+          this_.actions.push(obj)
+        })
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+    // 获取工具
+    let params1 = {
+      resource_type: 2
+    }
+    this.$get('/root/api/task/resource/type/', params1)
+      .then(function (response) {
+        console.log(response.data.data.results)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
   }
 }
 </script>
@@ -197,6 +264,7 @@ export default {
     .b-radius(50);
     background-color: rgb(245, 245, 245);
     .task-editor--input {
+      flex: 1;
       background: none;
       outline: none;
     }
@@ -340,6 +408,9 @@ export default {
       .ml(20);
       .mr(20);
     }
+  }
+  .active {
+    color: #c54f8b;
   }
 }
 </style>
