@@ -1,47 +1,49 @@
 <template>
   <div class="regist-page">
-    <div class="regist-img">
-      <svg-icon name="logo" size="250" ref="svg_icon"></svg-icon>
-    </div>
+    <common-header :tittle="tittle" :headerColor="headerColor" :showback="true"></common-header>
     <div style="flex:1;">
+      <div class="regist-img">
+        <svg-icon name="logo" size="250" ref="svg_icon"></svg-icon>
+      </div>
       <form ref="registerform" :model="registerlist">
         <div class="regist-input">
-            <van-field clearable v-model="registerlist.phone" label="手机号" placeholder="请输入手机号" />
-            <van-field
-              v-model="registerlist.sms"
-              label="验证码"
-              center
-              clearable
-              placeholder="请输入短信验证码"
-            >
-              <van-button class="regist-btn" slot="button" size="small" clearable type="primary">发送验证码</van-button>
-            </van-field>
-            <van-field
-              v-model="registerlist.password"
-              label="密码"
-              clearable
-              type="password"
-              placeholder="请输入密码"
-            />
-            <van-field
-              v-model="registerlist.confirm_password"
-              label="确认密码"
-              clearable
-              type="password"
-              placeholder="请输入密码"
-            />
+          <!-- <van-field clearable v-model="registerlist.phone" placeholder="注册手机号" />
+          <van-field v-model="registerlist.sms" center clearable placeholder="验证码" >
+            <van-button class="regist-btn" slot="button" size="small" clearable type="primary">发送验证码</van-button>
+          </van-field>
+          <van-field v-model="registerlist.password" clearable type="password" placeholder="新密码" />
+          <van-field
+            v-model="registerlist.confirm_password"
+            clearable
+            type="password"
+            placeholder="重复输入密码"
+          /> -->
+          <div><input type="text" v-model="registerlist.phone" placeholder="注册手机号"></div>
+          <div><input type="text" v-model="registerlist.sms" placeholder="验证码"><button class="regist-input--btn">发送验证码</button></div>
+          <div><input type="text" v-model="registerlist.password" placeholder="新密码"></div>
+          <div><input type="text" v-model="registerlist.confirm_password" placeholder="重复输入密码"></div>
         </div>
       </form>
+      <div class="register-footer">
+        <button class="register-footer--btn" @click="confirm">确认</button>
+      </div>
     </div>
-    <div class="register-footer">
-      <button class="register-footer--btn" @click="confirm">确认</button>
+    <div class="btn">
+      <p>为学生创造价值的平台</p>
     </div>
   </div>
 </template>
 <script>
+import commonHeader from 'common/common-header'
+
 export default {
+  components: {
+    commonHeader
+  },
   data() {
     return {
+      tittle: '',
+      headerColor: '#f9ce20',
       registerlist: {
         phone: '',
         sms: '',
@@ -50,9 +52,12 @@ export default {
       }
     }
   },
+  mounted() {
+    console.log(this.registerlist)
+  },
   methods: {
     confirm() {
-      var codeReg = /^(?![A-Z]+$)(?![a-z]+$)(?!\d+$)\S{8,}$/
+      var codeReg = /^(?![A-Z]+$)(?![a-z]+$)(?!\d+$)\S{3,}$/
       var phoneReg = /^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,3,5-8])|(18[0-9])|166|198|199|(147))\d{8}$/
       if (this.registerlist.phone === '') {
         this.$toast({
@@ -85,12 +90,14 @@ export default {
         this.$toast({
           message: '请确认登录密码'
         })
+        return false
       } else if (
         this.registerlist.confirm_password !== this.registerlist.password
       ) {
         this.$toast({
           message: '两次密码不一致'
         })
+        return false
       }
       this.$router.push('/loginpage')
     }
@@ -105,53 +112,90 @@ export default {
   * {
     touch-action: pan-y;
   }
+  color: #f5f5f5;
   background: linear-gradient(bottom, #b92671 0%, #f9ce20 90%, #f9ce20 100%);
-  .regist-input {
-    .mr(20);
-    .ml(20);
-    .mt(50);
+  .regist-img{
+    // .h(400);
+     .mt(-70);
     box-sizing: border-box;
-    .van-cell {
-      background-color: #f5f5f5;
-      .mt(30);
-    }
+  }
+  .regist-input {
+    .mr(120);
+    .ml(120);
+    box-sizing: border-box;
+    // .van-cell {
+    //   outline: none;
+    //   background-color: transparent;
+    //   border: 1px solid #f5f5f5;
+    //   .mt(30);
+    // }
     div {
       display: flex;
       justify-content: space-between;
-      border: 1px solid #f5f5f5;
-      color: #000;
-      height: 40px;
-      line-height: 40px;
-      .b-radius(60);
+      .mb(30);
+      input{
+        flex:1;
+        .pt(13);
+        .pb(13);
+        .pl(20);
+        .b-radius(60);
+        color: @base-font-color;
+        border: 1px solid #f5f5f5;
+        outline: none;
+        background: none;
       }
-      .regist-btn{
-        height: 40px;
-        border: 1px solid #07c160;
+      .regist-input--btn{
+        border: 1px solid #f5f5f5;
+        outline: none;
+        background: none;
+        .b-radius(60);
+        .ml(10);
       }
+    }
+    // .regist-btn {
+    //   height: 24px;
+    //   line-height: 24px;
+    //   border: 1px solid #07c160;
+    // }
   }
   .register-footer {
-    button {
-      .b-radius(500);
-    }
-    position: sticky !important;
-    bottom: 50px;
-    .pt(30);
-    .pb(30);
-    width: 100%;
-    box-sizing: border-box;
     display: flex;
+    .b-radius(60);
+    .mr(250);
+    .ml(250);
+    .mt(70);
     .register-footer--btn {
       flex: 1;
-      margin: 0 auto;
-      background-color: #07c160;
-      color: white;
-      .fs(25);
-      .pt(10);
-      .pb(10);
-      .ml(20);
-      .mr(20);
+      .pt(13);
+      .pb(13);
+      .b-radius(60);
+      text-align: center;
+      color: #fff;
+      letter-spacing: 5px;
       font-weight: bold;
+      outline: none;
+      background-color: transparent;
+      border: 1px solid #f5f5f5;
     }
   }
+  .btn {
+    .pb(100);
+    letter-spacing: 10px;
+    .fs(10);
+  }
 }
+</style>
+<style  lang="less">
+// .van-field__control::-webkit-input-placeholder {
+//   color: #f5f5f5;
+// }
+// .van-field__control {
+//   margin-left: 10px;
+// }
+.regist-page {
+  input::placeholder{
+    color:#f5f5f5;
+  }
+}
+
 </style>
