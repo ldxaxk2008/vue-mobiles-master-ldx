@@ -80,7 +80,6 @@ let serverObj = {
  * 依据命令执行不同的代理文件
  * 全局变量在package.json里配置
  */
-
 if (process.env.NODE_ENV === 'development') {
   if (process.env.DEV_ENV === 'local') {
     serverObj.dev.env = require('./dev.env')

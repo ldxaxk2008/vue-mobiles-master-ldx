@@ -32,7 +32,8 @@
 <script>
 import { mapMutations, mapGetters, mapState } from 'vuex'
 import commonHeader from 'common/common-header'
-// import axios from 'axios'
+import * as homeApi from 'api/home-api'
+import { ERR_OK } from 'config/index'
 export default {
   data() {
     return {
@@ -60,13 +61,21 @@ export default {
     let params = {
       resource_type: 2
     }
-    this.$get('/root/api/task/resource/type/', params)
-      .then(function (response) {
-        console.log(response)
-      })
-      .catch(function (error) {
-        console.log(error)
-      })
+    homeApi.loginUserNo(params).then((res) => {
+      let {data} = res
+      if (data.success === ERR_OK) {
+        // alert(data.value.token)
+      } else {
+      }
+    }).catch(() => {
+    })
+    // this.$get('/root/api/task/resource/type/', params)
+    //   .then(function (response) {
+    //     console.log(response)
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error)
+    //   })
   },
   methods: {
     ...mapMutations({

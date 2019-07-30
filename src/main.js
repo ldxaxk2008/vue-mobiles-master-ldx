@@ -13,7 +13,7 @@ import Vant from 'vant';
 import 'vant/lib/index.css';
 import FastClick from 'fastclick'
 import '../static/js/flexible.js'
-import {fetchGet,fetchPost} from '@/apiconfig/index.js'
+// import {fetchGet,fetchPost} from '@/apiconfig/index.js'
 if (process.env.MOCK) {    // 判断是否为mock模式
   require('./mock/index.js')
 }
@@ -62,8 +62,8 @@ Vue.use(Vant)
 Vue.component('svg-icon', SvgIcon)
 Vue.config.productionTip = false
 FastClick.attach(document.body)
-Vue.prototype.$get = fetchGet
-Vue.prototype.$post = fetchPost
+// Vue.prototype.$get = fetchGet
+// Vue.prototype.$post = fetchPost
 
 new Vue({
   el: '#app',

@@ -3,8 +3,8 @@
  * @param params
  * @returns {*}
  */
-import {fetch, baseUrl} from 'config/index'
+import {fetchGet, baseUrl} from 'config/index'
 // 登录接口
 export function loginUserNo(params) {
-  return fetch(`${baseUrl}/root/login/checkMemberLogin`, params)
+  return fetchGet(`${baseUrl}/api/task/resource/type/`, params)
 }
