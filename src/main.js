@@ -40,25 +40,27 @@ window.addEventListener('popstate', function(e) {
         }
       }
       if (arr1.length < arr2.length) {
-        // router.togoback()
-        console.log(11111111111111)
+        router.togoback()
       } else {
-        const isLogin = sessionStorage.getItem('token')
-        if (isLogin) {
-            next()
-        } else {
-          if (to.path === '/loginpage') { //这就是跳出循环的关键
-            next()
-          } else {
-            next('/loginpage')
-          }
-        } 
-        // router.togoin()
+        router.togoin()
       }
       next()
     })
   }
 }, false)
+
+router.beforeEach((to, from, next) => {
+  const isLogin = sessionStorage.getItem('token')
+  if (isLogin) {
+      next()
+  } else {
+    if (to.path === '/loginpage') { //这就是跳出循环的关键
+      next()
+    } else {
+      next('/loginpage')
+    }
+  } 
+})
 
 // app 修改状态栏颜色
 // document.addEventListener('plusready', function () {
