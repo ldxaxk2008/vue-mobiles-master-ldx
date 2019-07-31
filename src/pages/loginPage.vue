@@ -31,7 +31,8 @@
 <script>
 import { mapMutations } from 'vuex'
 import commonHeader from 'common/common-header'
-
+import {login} from 'api/login-api'
+import { ERR_OK } from 'config/index'
 export default {
   components: {
     commonHeader
@@ -68,12 +69,15 @@ export default {
         })
         return
       }
-      this.$post('/root/api/user/login/', this.registerlist).then(res => {
-        console.log(res.data)
-        if (res.data.success === 'true') {
+      login(this.registerlist).then((res) => {
+        if (res.data.success === ERR_OK) {
           this.SET_TOKEN(res.data.token)
+          this.$toast(res.data.msg)
           this.$router.push('/home')
+        } else {
+          this.$toast(res.data.msg)
         }
+      }).catch(() => {
       })
     },
     regist() {}
