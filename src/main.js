@@ -40,9 +40,20 @@ window.addEventListener('popstate', function(e) {
         }
       }
       if (arr1.length < arr2.length) {
-        router.togoback()
+        // router.togoback()
+        console.log(11111111111111)
       } else {
-        router.togoin()
+        const isLogin = sessionStorage.getItem('token')
+        if (isLogin) {
+            next()
+        } else {
+          if (to.path === '/loginpage') { //这就是跳出循环的关键
+            next()
+          } else {
+            next('/loginpage')
+          }
+        } 
+        // router.togoin()
       }
       next()
     })

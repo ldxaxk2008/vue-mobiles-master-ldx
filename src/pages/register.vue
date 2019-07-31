@@ -45,6 +45,9 @@
   </div>
 </template>
 <script>
+import { mapMutations } from 'vuex'
+import {register} from 'api/register-api'
+import { ERR_OK } from 'config/index'
 export default {
   data() {
     return {
@@ -82,6 +85,7 @@ export default {
     }
   },
   methods: {
+    ...mapMutations(['SET_TOKEN']),
     afterRead(file) {
       this.$refs.goodimg.src = file.content
     },
@@ -141,13 +145,22 @@ export default {
         return
       }
       console.log(this.registerlist)
-
-      this.$post('/root/api/user/register/', this.registerlist).then(res => {
-        console.log(res.data)
-        if (res.data.success === 'true') {
-          this.$router.push('/loginpage')
+      register(this.registerlist).then((res) => {
+        if (res.data.success === ERR_OK) {
+          this.SET_TOKEN(res.data.token)
+          this.$toast(res.data.msg)
+          this.$router.push('/home')
+        } else {
+          this.$toast(res.data.msg)
         }
+      }).catch(() => {
       })
+      // this.$post('/root/api/user/register/', this.registerlist).then(res => {
+      //   console.log(res.data)
+      //   if (res.data.success === 'true') {
+      //     this.$router.push('/loginpage')
+      //   }
+      // })
     }
   },
   mounted() {

@@ -49,7 +49,9 @@ export default {
   },
   methods: {
     ...mapMutations(['SET_TOKEN']),
-    hanleclick() {},
+    hanleclick() {
+      this.$router.push('/registpage')
+    },
     login() {
       // var codeReg = /^(?![A-Z]+$)(?![a-z]+$)(?!\d+$)\S{8,}$/
       if (this.registerlist.password === '') {
@@ -80,7 +82,9 @@ export default {
       }).catch(() => {
       })
     },
-    regist() {}
+    regist() {
+      this.$router.push('/levelup/experience')
+    }
   }
 }
 </script>
