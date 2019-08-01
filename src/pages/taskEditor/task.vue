@@ -421,6 +421,10 @@ export default {
       .mr(20);
     }
   }
+  .skill-user{
+    flex:1;
+    .mr(20);
+  }
   .active {
     color: #c54f8b;
   }

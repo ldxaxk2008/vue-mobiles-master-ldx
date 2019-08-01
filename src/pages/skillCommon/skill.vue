@@ -1,7 +1,7 @@
 <template>
   <div class="skill-box">
     <div class="skill-content">
-      <h4 class="personal-skill">个人技能<van-icon v-if="addShow" name="add-o" color="#c14182" @click="skillClick"/></h4>
+      <h4 class="personal-skill">个人技能<van-icon v-if="addShow" name="add-o" color="#c14182"/></h4>
       <ul>
         <li v-for="(item,index) in skillList" :key="index">
           {{item.label}}

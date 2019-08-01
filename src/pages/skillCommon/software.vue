@@ -1,7 +1,7 @@
 <template>
   <div class="skill-box">
     <div class="skill-content">
-      <h4 class="personal-skill">软件<van-icon v-if="addShow" name="add-o" color="#c14182" @click="skillClick"/></h4>
+      <h4 class="personal-skill">软件<van-icon v-if="addShow" name="add-o" color="#c14182"/></h4>
       <ul>
         <li v-for="(item,index) in 5" :key="index">
           {{item}}
@@ -63,7 +63,10 @@ export default {
 @import "~styles/index.less";
 @import "~styles/variable.less";
 .skill-content{
+  display: flex;
+  flex-direction: column;
   .personal-skill{
+    flex:1;
     display: flex;
     align-items: center;
     .van-icon{
@@ -78,7 +81,8 @@ export default {
       display: flex;
       justify-content: center;
       align-items: center;
-      .w(100);
+      width: 33%;
+      // .w(100);
       .h(105);
       background: url('../../assets/imgs/skill.png') no-repeat;
     }

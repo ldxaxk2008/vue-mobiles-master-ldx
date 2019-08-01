@@ -32,7 +32,7 @@
             </van-tab>
             <van-tab title="热度">
               <div class="page-map--tab">
-                <currentList :currentList="currentList" @more="more" />
+                <currentList :currentList="hostList" @more="more" />
               </div>
             </van-tab>
           </van-tabs>
@@ -48,32 +48,14 @@ import { mapMutations, mapGetters, mapState } from 'vuex'
 import commonHeader from 'common/common-header'
 import currentList from '@/pages/taskList/currentTaskList'
 
-// import * as homeApi from 'api/home-api'
+import {taskList} from 'api/home-api'
 // import { ERR_OK } from 'config/index'
 export default {
   data() {
     return {
       headerColor: '#fff',
-      currentList: [
-        {
-          name: '设计',
-          people: 18,
-          money: 500,
-          days: 3,
-          ask: '任务要求任务要求任务要求任务要求任务要求',
-          label: ['设计', '教育培训'],
-          data: '2019年10月20日'
-        },
-        {
-          name: '代码',
-          people: 118,
-          money: 30000,
-          days: 30,
-          ask: '大是大非路上看见法律上的看了看',
-          label: ['设计', '教育培训'],
-          data: '2019年1月20日'
-        }
-      ],
+      currentList: [],
+      hostList: [],
       currentprice: [
         {
           name: '代码',
@@ -154,22 +136,22 @@ export default {
           this.currentprice.push(obj)
         }
       }
+    },
+    getData() {
+      let params = {
+        resource_type: 1
+      }
+      taskList(params).then((res) => {
+        if (res.data.success) {
+          this.currentList = res.data.data.results
+        } else {
+        }
+      }).catch(() => {
+      })
     }
-    // login() {
-    //   let params = {
-    //     password: 'gs123456',
-    //     storeNo: '',
-    //     userName: '17326015487'
-    //   }
-    //   homeApi.loginUserNo(params).then((res) => {
-    //     let {data} = res
-    //     if (data.success === ERR_OK) {
-    //       alert(data.value.token)
-    //     } else {
-    //     }
-    //   }).catch(() => {
-    //   })
-    // }
+  },
+  mounted() {
+    this.getData()
   },
   components: {
     commonHeader,
