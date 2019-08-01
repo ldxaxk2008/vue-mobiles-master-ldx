@@ -58,6 +58,7 @@ export default {
     }
   },
   created() {
+    console.log(this.$route)
     let params = {
       resource_type: 2
     }
