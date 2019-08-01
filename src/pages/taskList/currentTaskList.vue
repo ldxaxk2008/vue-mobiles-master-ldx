@@ -1,23 +1,18 @@
 <template>
   <div class="current-list">
     <div class="current" v-for="(item,index) in currentList" :key="index" @click="handleclick(item)">
-      <!-- <div class="current-head">
-        <div class="task-name">{{item.name}}</div>
-        <div class="task-details">{{item.people}} 人正在申请 {{item.money}}RMB</div>
-      </div> -->
-      <!-- <div class="line"></div> -->
       <div class="task-main">
         <div class="task-main-head">
-          <div class="task-title">任务标题<img v-if="!done" style="margin-left:10px;"  :src="imgUrl"/></div>
-          <div class="deadline">{{item.people}} 人正在申请 {{item.money}}RMB</div>
+          <div class="task-title">{{item.title}}<img v-if="!done" style="margin-left:10px;"  :src="imgUrl"/></div>
+          <div class="deadline">{{item.apply_num}} 人正在申请 {{item.payment}}RMB</div>
         </div>
-        <div class="task-main-container">任务要求：{{item.ask}}</div>
+        <div class="task-main-container">任务要求：{{item.desc}}</div>
         <div class="task-labels">
           <span v-for="(ele,i) in item.label" :key="i">{{ele}}</span>
         </div>
         <div class="days">
-          <div class="task-time">发布日期：{{item.data}}</div>
-          <div>距离截至日期还有：{{item.days}} 天</div>
+          <div class="task-time">发布日期：{{item.publish_time}}</div>
+          <div>距离截至日期还有：{{item.rest_day}} 天</div>
         </div>
       </div>
       <span class="done" v-if="done"><img src="@/assets/imgs/done.png" alt=""></span>
@@ -48,8 +43,8 @@ export default {
   },
   methods: {
     handleclick(item) {
-      // this.$router.push({name: 'Task', params: {id: item}})
-      this.$router.push('/User/Task')
+      this.$router.push({name: 'Task', params: {id: item.id}})
+      // this.$router.push('/User/Task')
     },
     more() {
       this.$emit('more')
