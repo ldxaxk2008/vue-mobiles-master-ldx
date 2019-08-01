@@ -38,7 +38,7 @@ export default {
         {
           bg: '#b92671',
           color: '#fff',
-          path: '/User/Task',
+          path: '/mine',
           label: '我的任务'
         },
         {

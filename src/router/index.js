@@ -67,44 +67,22 @@ export default new Router({
           component: (resolve) => require(['@/pages/index/home'], resolve)
         },
         {
-          path: '/my',
-          name: 'my',
+          path: '/user',
+          name: 'user',
           component: (resolve) => require(['@/pages/index/user'], resolve)
         }
       ]
     },
-    {
-      path: '/User',
-      name: 'User',
-      redirect: '/User/Task',
-      children: [
-        {
-          path: '/User/Task',
-          name: 'Task',
-          component: (resolve) => require(['@/pages/user/task'], resolve)
-        },
-        {
-          path: '/User/TaskList',
-          name: 'TaskList',
-          component: (resolve) => require(['@/pages/taskList/taskList'], resolve)
-        },
-        {
-          path: '/User/Student',
-          name: 'student',
-          component: (resolve) => require(['@/pages/student/student'], resolve)
-        },
-        {
-          path: '/User/acceptTask',
-          name: 'acceptTask',
-          component: (resolve) => require(['@/pages/acceptTask/acceptTask'], resolve)
-        }
-      ]
-    },
     // {
-    //   path: '/User/Task',
-    //   name: 'Task',
-    //   component: (resolve) => require(['@/pages/user/task'], resolve)
+    //   path: '/Home/Detail',
+    //   name: 'Detail',
+    //   component: (resolve) => require(['@/pages/detail'], resolve)
     // },
+    {
+      path: '/User/Task',
+      name: 'Task',
+      component: (resolve) => require(['@/pages/user/task'], resolve)
+    },
     {
       path: '/Chat',
       name: 'Chat',
@@ -115,7 +93,21 @@ export default new Router({
       name: 'Pay',
       component: (resolve) => require(['@/pages/pay/pay'], resolve)
     },
-
+    {
+      path: '/User/TaskList',
+      name: 'TaskList',
+      component: (resolve) => require(['@/pages/taskList/taskList'], resolve)
+    },
+    {
+      path: '/User/Student',
+      name: 'student',
+      component: (resolve) => require(['@/pages/student/student'], resolve)
+    },
+    {
+      path: '/User/acceptTask',
+      name: 'acceptTask',
+      component: (resolve) => require(['@/pages/acceptTask/acceptTask'], resolve)
+    },
     {
       path: '/Register',
       name: 'Register',
@@ -142,7 +134,7 @@ export default new Router({
       component: (resolve) => require(['@/pages/taskpage/error'], resolve)
     },
     {
-      path: '/success',
+      path: '/success/:id',
       name: 'success',
       component: (resolve) => require(['@/pages/taskpage/success'], resolve)
     },

@@ -3,8 +3,12 @@
  * @param params
  * @returns {*}
  */
-import {fetchGet, baseUrl} from 'config/index'
+import {fetchGet, fetchGets, baseUrl} from 'config/index'
 // 登录接口
 export function taskList(params) {
-  return fetchGet(`${baseUrl}/api/task/resource/type/`, params)
+  // return fetchGet(`${baseUrl}/api/task/resource/type/`, params)
+  return fetchGet(`${baseUrl}/api/task/task/`, params)
+}
+export function taskDetails(params) {
+  return fetchGets(`${baseUrl}/api/task/task/${params}`)
 }

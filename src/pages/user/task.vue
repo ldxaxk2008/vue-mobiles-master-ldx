@@ -17,6 +17,8 @@
 import commonHeader from 'common/common-header'
 import taskSynopsis from './synopsis'
 import taskStage from './stage'
+import {taskDetails} from 'api/home-api'
+
 export default {
   components: {
     commonHeader,
@@ -84,7 +86,20 @@ export default {
     confirm() {
       console.log('确认申请人')
       this.$router.push('/User/acceptTask')
+    },
+    getData() {
+      taskDetails(this.$route.params.id.id).then((res) => {
+        if (res.data.success) {
+          this.currentList = res.data.data.results
+        } else {
+        }
+      }).catch(() => {
+      })
     }
+  },
+  mounted() {
+    console.log(this.$route)
+    this.getData()
   }
 }
 </script>

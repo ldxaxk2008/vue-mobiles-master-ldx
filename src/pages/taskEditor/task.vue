@@ -237,17 +237,17 @@ export default {
       })
     },
     // 获取工具
-    getTool() {
-      let params = {
-        resource_type: 2
-      }
-      gettype(params).then(response => {
-        console.log(response)
-        if (response.data.success === true) {
-          console.log(response.data.data.results)
-        }
-      })
-    },
+    // getTool() {
+    //   let params = {
+    //     resource_type: 2
+    //   }
+    //   gettype(params).then(response => {
+    //     console.log(response)
+    //     if (response.data.success === true) {
+    //       console.log(response.data.data.results)
+    //     }
+    //   })
+    // },
     // 发布任务
     publish() {
       if (!this.valueData.task_type_id) {
@@ -274,7 +274,7 @@ export default {
         })
         return
       }
-      var reg = new RegExp('^(0|[0-9][0-9]?|100)$')
+      var reg = new RegExp('^[0-9]+(.[0-9]{2})?$')
       if (!this.valueData.payment) {
         this.$toast({
           message: '请输入报酬'
@@ -294,8 +294,7 @@ export default {
       }
       publishtask(this.valueData).then(res => {
         if (res.data.success === true) {
-          this.$toast(res.data.msg)
-          this.$router.push('/success')
+          this.$router.push({name: 'success', params: {id: res.data.data}})
         } else {
           this.$toast(res.data.msg)
           this.$router.push('/error')
@@ -305,7 +304,7 @@ export default {
   },
   mounted() {
     this.getType()
-    this.getTool()
+    // this.getTool()
   }
 }
 </script>

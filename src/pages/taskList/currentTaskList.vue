@@ -44,12 +44,14 @@ export default {
   },
   methods: {
     handleclick(item) {
-      this.$router.push({name: 'Task', params: {id: item.id}})
+      this.$router.push({name: 'Task', params: {id: item}})
       // this.$router.push('/User/Task')
     },
     more() {
       this.$emit('more')
     }
+  },
+  mounted() {
   }
 }
 </script>
@@ -69,7 +71,7 @@ export default {
     .done{
       position: absolute;
       .right(0);
-      .bottom(0);
+      .bottom(-60);
       opacity: .2;
       z-index: 99;
       img{
