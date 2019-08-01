@@ -9,7 +9,7 @@
     <div class="taskpage-error--con">
       <p class="taskpage--con__title">任务失败</p>
       <p class="taskpage--con">可能是因为网络原因，请稍后再试</p>
-      <button>返回</button>
+      <button @click="prev">返回</button>
       <p class="taskpage--con__foot">感谢支持</p>
     </div>
   </div>
@@ -24,6 +24,11 @@ export default {
   data() {
     return {
       tittle: ''
+    }
+  },
+  methods: {
+    prev() {
+      this.$router.push('/taskeditor/post')
     }
   }
 }

@@ -6,26 +6,28 @@
     <div class="evaluate-content">
       <p class="evaluate-content--serve">请问你如何评价这次服务</p>
       <ul class="evaluate-content--img">
-        <li
-          v-for="(item,index) in evaluatelist"
-          :key="index"
-          @click="handelClick(index)"
-        >
-          <svg-icon :name="item.img" size="80"  :fill="item.disable?'#c54f8b':''" ref="svg_icon"></svg-icon>
+        <li v-for="(item,index) in evaluatelist" :key="index" @click="handelClick(index,item)">
+          <svg-icon :name="item.img" size="80" :fill="item.disable?'#c54f8b':''" ref="svg_icon"></svg-icon>
           <p :class="{'active':item.disable===true}">{{item.name}}</p>
         </li>
       </ul>
       <p class="evaluate-content--serve">请为该学生添加标签</p>
       <div class="evaluate-content--input">
-        <input class="evaluate--input" type="text" />
+        <span v-for="(item,index) in brr" :key="index" @click="del(index)">
+          {{item}}
+        </span>
       </div>
       <div class="evaluate-content--iocn">
-        <van-icon class="evaluate--iocn" name="clock-o" />
-        <p>效率高&nbsp;&nbsp; 质量过关</p>
+        <div
+          class="evaluate-icon--p"
+          v-for="(item,index) in evaluatedata"
+          :key="index"
+          @click="handelEav(index,item)"
+        >{{item.name}}</div>
       </div>
       <p class="evaluate-content--serve">请为您对本次服务做出点评价(选填)</p>
       <div class="evaluate-content--textarea">
-        <textarea class="evaluate--input" name id cols="30" rows="10"></textarea>
+        <textarea class="evaluate--input" v-model="evaluaObj.company_comment" name id cols="30" rows="10"></textarea>
       </div>
     </div>
     <div class="evaluate-footer">
@@ -35,45 +37,88 @@
 </template>
 <script>
 import commonHeader from 'common/common-header'
+// import { subevaluate } from 'api/evaluate-api'
+// import { ERR_OK } from 'config/index'
 export default {
   components: {
     commonHeader
   },
   data() {
     return {
+      arr: [],
+      brr: [],
       showIndex: -1,
       tittle: '',
+      evaluaObj: {
+        task_user_id: 1,
+        company_comment: '',
+        user_tag_list: [],
+        user_service: ''
+      },
       evaluatelist: [
         {
           img: 'angry',
           name: '符合要求',
-          disable: false
+          disable: false,
+          value: 1
         },
         {
           img: 'smile',
           name: '比较满意',
-          disable: false
+          disable: false,
+          value: 2
         },
         {
           img: 'laugh',
           name: '远超预期',
-          disable: true
+          disable: true,
+          value: 3
+        }
+      ],
+      evaluatedata: [
+        {
+          name: '效率高'
+        },
+        {
+          name: '质量过关'
+        },
+        {
+          name: '速度快'
         }
       ]
     }
   },
   methods: {
-    addlevel() {},
-    handelClick(index) {
+    // 提交评价
+    addlevel() {
+      console.log(this.evaluaObj, 7654)
+      // 接口报错500
+      // subevaluate(this.evaluaObj).then(res => {
+      //   console.log(res, 7564)
+      // })
+    },
+    handelClick(index, item) {
       this.evaluatelist.forEach(element => {
         element.disable = false
       })
       this.evaluatelist[index].disable = true
+      this.evaluaObj.user_service = item.value
+    },
+    // 数组去重
+    unique(arr) {
+      return Array.from(new Set(arr))
+    },
+    handelEav(index, item) {
+      this.arr.push(item.name)
+      this.brr = this.unique(this.arr)
+      this.evaluaObj.user_tag_list = this.brr
+    },
+    del(index) {
+      this.brr.splice(index, 1)
+      this.arr = []
     }
   },
-  mounted() {
-
-  }
+  mounted() {}
 }
 </script>
 <style scoped lang="less">
@@ -112,15 +157,28 @@ export default {
       outline: none;
     }
     .evaluate-content--input {
-      .pt(20);
-      .pb(20);
+      text-align: left;
+      .h(50);
+      height: 30px;
+      line-height: 30px;
+      .mt(20);
+      .mb(20);
+      border: 1px solid;
+      span {
+        .mr(10);
+        color:#c54f8b;
+        // border: 1px solid #c54f8b;
+        // background-color: #c54f8b;
+      }
     }
     .evaluate-content--iocn {
       display: flex;
       justify-content: flex-start;
       .mb(40);
-      .evaluate--iocn {
-        .fs(30);
+      .evaluate-icon--p {
+        border: 1px solid #c54f8b;
+        // background-color: #c54f8b;
+        .padding(5, 10, 5, 10);
         .mr(10);
       }
     }
@@ -151,8 +209,8 @@ export default {
       .b-radius(50);
     }
   }
-  .active{
-    color:#c54f8b;
+  .active {
+    color: #c54f8b;
   }
 }
 </style>

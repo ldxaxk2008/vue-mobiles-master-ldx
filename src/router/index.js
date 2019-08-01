@@ -147,6 +147,11 @@ export default new Router({
       path: '/registpage',
       name: 'registpage',
       component: (resolve) => require(['@/pages/registPage'], resolve)
+    },
+    {
+      path: '/mine',
+      name: 'mine',
+      component: (resolve) => require(['@/pages/mine'], resolve)
     }
   ]
 })
