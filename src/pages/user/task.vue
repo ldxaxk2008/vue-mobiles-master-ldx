@@ -27,7 +27,6 @@ export default {
   },
   data() {
     return {
-      disable: true,
       tittle: 'LOGO设计',
       information: {
         name: '深圳益康电子',
@@ -55,18 +54,21 @@ export default {
       navList: [
         {
           label: '取消发布',
+          disable: true,
           fun: data => {
             return this.cancel(data)
           }
         },
         {
           label: '再次编辑',
+          disable: false,
           fun: () => {
             return this.edit()
           }
         },
         {
           label: '确认申请人',
+          disable: false,
           fun: () => {
             return this.confirm()
           }
@@ -75,12 +77,6 @@ export default {
     }
   },
   methods: {
-    applytask() {
-      this.disable = false
-    },
-    canceltask() {
-      this.disable = true
-    },
     tohome() {
       this.$router.goBack()
     },
