@@ -2,7 +2,7 @@
   <div class="task-box">
     <common-header :tittle="tittle" :showmore="false"></common-header>
     <div class="task-content">
-      <taskSynopsis :information="information" :disable="disable" @applytask="applytask" @canceltask="canceltask"></taskSynopsis>
+      <taskSynopsis @taskSele="handelClick" :information="information"></taskSynopsis>
       <taskStage :information="information" :down="down"></taskStage>
     </div>
     <div class="task-footer">
@@ -17,7 +17,7 @@
 import commonHeader from 'common/common-header'
 import taskSynopsis from './synopsis'
 import taskStage from './stage'
-import {taskDetails} from 'api/home-api'
+import {taskDetails, applyTask, cancelTask} from 'api/home-api'
 
 export default {
   components: {
@@ -93,6 +93,27 @@ export default {
     confirm() {
       console.log('确认申请人')
       this.$router.push('/User/acceptTask')
+    },
+    handelClick(val) {
+      if (val === 'applyTask') {
+        applyTask({task_id: this.$route.params.id.id, user_id: 14}).then((res) => {
+          console.log(res)
+          if (res.data.success) {
+            // this.currentList = res.data.data.results
+          } else {
+          }
+        }).catch(() => {
+        })
+      } else {
+        cancelTask({task_id: this.$route.params.id.id, user_id: 14}).then((res) => {
+          console.log(res)
+          if (res.data.success) {
+            // this.currentList = res.data.data.results
+          } else {
+          }
+        }).catch(() => {
+        })
+      }
     },
     getData() {
       taskDetails(this.$route.params.id.id).then((res) => {

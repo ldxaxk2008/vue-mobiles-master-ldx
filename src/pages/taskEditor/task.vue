@@ -102,7 +102,7 @@ export default {
         design_id: '',
         title: '',
         desc: '',
-        payment: '',
+        payment: null,
         end_date: '',
         tool_list: [4, 5, 6]
       },
@@ -294,7 +294,7 @@ export default {
       }
       publishtask(this.valueData).then(res => {
         if (res.data.success === true) {
-          this.$router.push({name: 'success', params: {id: res.data.data}})
+          this.$router.push({name: 'success', params: {id: '90'}})
         } else {
           this.$toast(res.data.msg)
           this.$router.push('/error')
