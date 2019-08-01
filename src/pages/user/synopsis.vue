@@ -6,12 +6,12 @@
         <div class="left">
           <span class="name">{{information.name}}</span>
           <span class="industry">{{information.industry}}</span>
-          <button class="apply">申请任务</button>
+          <button class="apply" @click="applytask" v-if="disable===true">申请任务</button>
         </div>
         <div class="right">
           <span class="assets">{{information.assets}}</span>
           <span class="number">{{information.number}} 人在申请</span>
-          <button class="cancel">取消申请</button>
+          <button class="cancel"  @click="canceltask" v-if="disable===false">取消申请</button>
         </div>
       </div>
     </div>
@@ -29,11 +29,26 @@ export default {
     information: {
       type: Object,
       default: () => {}
+    },
+    disable: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
     return {
-
+    }
+  },
+  methods: {
+    applytask() {
+      console.log(111)
+      // this.disable = false
+      this.$emit('applytask')
+    },
+    canceltask() {
+      console.log(2221)
+      // this.disable = true
+      this.$emit('canceltask')
     }
   }
 }

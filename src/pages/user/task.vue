@@ -2,7 +2,7 @@
   <div class="task-box">
     <common-header :tittle="tittle" :showmore="false"></common-header>
     <div class="task-content">
-      <taskSynopsis :information="information"></taskSynopsis>
+      <taskSynopsis :information="information" :disable="disable" @applytask="applytask" @canceltask="canceltask"></taskSynopsis>
       <taskStage :information="information" :down="down"></taskStage>
     </div>
     <div class="task-footer">
@@ -27,6 +27,7 @@ export default {
   },
   data() {
     return {
+      disable: true,
       tittle: 'LOGO设计',
       information: {
         name: '深圳益康电子',
@@ -74,6 +75,12 @@ export default {
     }
   },
   methods: {
+    applytask() {
+      this.disable = false
+    },
+    canceltask() {
+      this.disable = true
+    },
     tohome() {
       this.$router.goBack()
     },
