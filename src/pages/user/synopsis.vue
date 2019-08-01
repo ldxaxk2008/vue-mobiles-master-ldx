@@ -6,12 +6,12 @@
         <div class="left">
           <span class="name">{{information.name}}</span>
           <span class="industry">{{information.industry}}</span>
-          <button class="apply" @click="handelClick('applyTask')">申请任务</button>
+          <button v-if="show" class="apply" @click="handelClick('applyTask')">申请任务</button>
         </div>
         <div class="right">
           <span class="assets">{{information.assets}}</span>
           <span class="number">{{information.number}} 人在申请</span>
-          <button class="cancel" @click="handelClick('cancelTask')">取消申请</button>
+          <button v-if="!show" class="cancel" @click="handelClick('cancelTask')">取消申请</button>
         </div>
       </div>
     </div>
@@ -33,10 +33,12 @@ export default {
   },
   data() {
     return {
+      show: true
     }
   },
   methods: {
     handelClick(val) {
+      this.show = !this.show
       this.$emit('taskSele', val)
     }
   }
