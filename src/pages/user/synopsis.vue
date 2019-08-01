@@ -29,11 +29,11 @@ export default {
     information: {
       type: Object,
       default: () => {}
-    },
-    disable: {
-      type: Boolean,
-      default: true
     }
+    // disable: {
+    //   type: Boolean,
+    //   default: true
+    // }
   },
   data() {
     return {
