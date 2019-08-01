@@ -59,7 +59,6 @@ export function fetchGet(requestUrl, params = {}) {
 }
 
 export function fetchGets(requestUrl) {
-  console.log(requestUrl,1111111111111)
   return axios({
     url: requestUrl,
     method: 'get'
