@@ -31,13 +31,11 @@
         ></textarea>
       </div>
       <div class="task-editor--filed">
-        <button class="evaluate-footer--btn">设计</button>
+        <button class="evaluate-footer--btn" @click="handel">设计</button>
         <ul class="page-map--ul">
           <li
             v-for="(item,index) in maplist"
-            :key="item.value"
-            ref="pagep"
-            @click="hanleclick(item,index)"
+            :key="index"
           >
             <img :src="item.img" alt />
             <p :class="{'active':item.disable===true}">{{item.name}}</p>
@@ -53,7 +51,7 @@
         <div>
           <div class="task-editor--tool__right">
             <p>报酬 RMB</p>
-            <input class="tool-input" v-model="valueData.payment" type="text" />
+            <input class="tool-input" v-model="valueData.payment" type="number" />
           </div>
           <div>
             <p class="tool-input--time">截止日期</p>
@@ -98,9 +96,10 @@ export default {
   },
   data() {
     return {
+      thisindex: 0,
       valueData: {
-        task_type_id: '1',
-        design_id: '1',
+        task_type_id: '',
+        design_id: '',
         title: '',
         desc: '',
         payment: '',
@@ -196,13 +195,28 @@ export default {
       this.valueData.end_date = this.timeFormat(value)
       this.disabled = false
     },
-    // 设计选择
+    // 设计
+    handel() {
+      if (this.thisindex === this.maplist.length) {
+        this.thisindex = 0
+      }
+      this.maplist.map((res, index) => {
+        this.maplist[index].disable = false
+        if (index === this.thisindex) {
+          this.valueData.design_id = res.value
+          this.maplist[index].disable = true
+        }
+      })
+      this.thisindex++
+    },
+    // tab设计选择
     hanleclick(data, index) {
       this.maplist.map(res => {
         res.disable = false
       })
       this.maplist[index].disable = true
       this.valueData.design_id = data.value
+      this.thisindex = index
     },
     // 获取数据类型
     getType() {
@@ -236,17 +250,54 @@ export default {
     },
     // 发布任务
     publish() {
-      var reg = new RegExp('^[0-9]*$')
-      if (!reg.test(this.valueData.payment)) {
+      if (!this.valueData.task_type_id) {
         this.$toast({
-          message: '报酬请输入数字'
+          message: '请选择类型'
+        })
+        return
+      }
+      if (!this.valueData.title) {
+        this.$toast({
+          message: '请输入标题'
+        })
+        return
+      }
+      if (!this.valueData.desc) {
+        this.$toast({
+          message: '请输入内容'
+        })
+        return
+      }
+      if (!this.valueData.design_id) {
+        this.$toast({
+          message: '选择设计'
+        })
+        return
+      }
+      var reg = new RegExp('^(0|[0-9][0-9]?|100)$')
+      if (!this.valueData.payment) {
+        this.$toast({
+          message: '请输入报酬'
+        })
+        return
+      } else if (!reg.test(this.valueData.payment)) {
+        this.$toast({
+          message: '报酬保留两位小数'
+        })
+        return
+      }
+      if (!this.valueData.end_date) {
+        this.$toast({
+          message: '请选择时间'
         })
         return
       }
       publishtask(this.valueData).then(res => {
         if (res.data.success === true) {
+          this.$toast(res.data.msg)
           this.$router.push('/success')
         } else {
+          this.$toast(res.data.msg)
           this.$router.push('/error')
         }
       })
