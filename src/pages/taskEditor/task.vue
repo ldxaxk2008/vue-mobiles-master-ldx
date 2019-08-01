@@ -223,21 +223,21 @@ export default {
       })
     },
     // 获取工具
-    getTool() {
-      let params = {
-        resource_type: 2
-      }
-      gettype(params).then(response => {
-        console.log(response)
-        if (response.data.success === true) {
-          console.log(response.data.data.results)
-        }
-      })
-    },
+    // getTool() {
+    //   let params = {
+    //     resource_type: 2
+    //   }
+    //   gettype(params).then(response => {
+    //     console.log(response)
+    //     if (response.data.success === true) {
+    //       console.log(response.data.data.results)
+    //     }
+    //   })
+    // },
     // 发布任务
     publish() {
       var reg = new RegExp('^[0-9]*$')
-      if (!reg.test(this.valueData.payment)) {
+      if (!reg.test(this.valueData.payment) || this.valueData.payment === '') {
         this.$toast({
           message: '报酬请输入数字'
         })
@@ -245,7 +245,7 @@ export default {
       }
       publishtask(this.valueData).then(res => {
         if (res.data.success === true) {
-          this.$router.push('/success')
+          this.$router.push({name: 'success', params: {id: res.data.data}})
         } else {
           this.$router.push('/error')
         }
@@ -254,7 +254,7 @@ export default {
   },
   mounted() {
     this.getType()
-    this.getTool()
+    // this.getTool()
   }
 }
 </script>

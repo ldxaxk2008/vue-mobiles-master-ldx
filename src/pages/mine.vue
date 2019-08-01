@@ -20,7 +20,7 @@
 <script>
 import currentList from '@/pages/taskList/currentTaskList'
 import commonHeader from 'common/common-header'
-
+import {taskList} from 'api/home-api'
 export default {
   components: {
     currentList,
@@ -28,53 +28,30 @@ export default {
   },
   data() {
     return {
-      tittle: '',
+      tittle: '任务列表',
       active: 0,
-      currentList: [
-        {
-          name: '设计',
-          people: 18,
-          money: 500,
-          days: 3,
-          ask: '任务要求任务要求任务要求任务要求任务要求',
-          label: ['设计', '教育培训'],
-          data: '2019年10月20日'
-        },
-        {
-          name: '代码',
-          people: 118,
-          money: 30000,
-          days: 30,
-          ask: '大是大非路上看见法律上的看了看',
-          label: ['设计', '教育培训'],
-          data: '2019年1月20日'
-        }
-      ],
-      currentprice: [
-        {
-          name: '代码',
-          people: 118,
-          money: 30000,
-          days: 30,
-          ask: '大是大非路上看见法律上的看了看',
-          label: ['设计', '教育培训'],
-          data: '2019年1月20日'
-        },
-        {
-          name: '设计',
-          people: 18,
-          money: 500,
-          days: 3,
-          ask: '任务要求任务要求任务要求任务要求任务要求',
-          label: ['设计', '教育培训'],
-          data: '2019年10月20日'
-        }
-      ]
+      currentList: [],
+      currentprice: []
     }
   },
   methods: {
     onClick(index) {
-      console.log(index)
+      this.getData()
+    },
+    getData() {
+      this.currentList = []
+      this.currentprice = []
+      taskList().then((res) => {
+        if (res.data.success) {
+          if (this.active === 0) {
+            this.currentList = res.data.data.results
+          } else {
+            this.currentprice = res.data.data.results
+          }
+        } else {
+        }
+      }).catch(() => {
+      })
     },
     more(val) {
       if (val === 'currentList') {
@@ -89,6 +66,9 @@ export default {
         }
       }
     }
+  },
+  mounted() {
+    this.getData()
   }
 }
 </script>

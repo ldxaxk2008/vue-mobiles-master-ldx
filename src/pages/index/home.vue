@@ -1,6 +1,6 @@
 <template>
   <div class="content-box">
-    <common-header :showinput="true" :headerColor="headerColor" :showback="false"></common-header>
+    <common-header @search="search" :showinput="true" :headerColor="headerColor" :showback="false"></common-header>
     <div class="page-content">
       <!-- <mt-button @click="todetail">home</mt-button> -->
       <div class="page-map">
@@ -20,21 +20,21 @@
       <div class="page-map-vantabs">
         <div class="page-map--search">
           <van-tabs v-model="active" @click="onClick">
-            <van-tab title="综合">
+            <van-tab title="价格">
               <div class="page-map--tab">
                 <currentList :currentList="currentList" @more="more('currentList')" />
               </div>
             </van-tab>
-            <van-tab title="价格">
+            <van-tab title="发布日期">
               <div class="page-map--tab" >
                 <currentList :currentList="currentprice" @more="more" />
               </div>
             </van-tab>
-            <van-tab title="热度">
+            <!-- <van-tab title="热度">
               <div class="page-map--tab">
                 <currentList :currentList="hostList" @more="more" />
               </div>
-            </van-tab>
+            </van-tab> -->
           </van-tabs>
         </div>
         <!-- <span class="page-map__p">筛选</span> -->
@@ -56,53 +56,40 @@ export default {
       headerColor: '#fff',
       currentList: [],
       hostList: [],
-      currentprice: [
-        {
-          name: '代码',
-          people: 118,
-          money: 30000,
-          days: 30,
-          ask: '大是大非路上看见法律上的看了看',
-          label: ['设计', '教育培训'],
-          data: '2019年1月20日'
-        },
-        {
-          name: '设计',
-          people: 18,
-          money: 500,
-          days: 3,
-          ask: '任务要求任务要求任务要求任务要求任务要求',
-          label: ['设计', '教育培训'],
-          data: '2019年10月20日'
-        }
-      ],
+      currentprice: [],
       active: 0,
       num: 0,
+      type: '',
       maplist: [
         {
           img: require('@/assets/imgs/copy1.png'),
           name: '文案',
-          disable: false
+          disable: false,
+          type: '7'
         },
         {
           img: require('@/assets/imgs/copy2.png'),
           name: '设计',
-          disable: false
+          disable: false,
+          type: '8'
         },
         {
           img: require('@/assets/imgs/copy3.png'),
           name: '代码',
-          disable: false
+          disable: false,
+          type: '9'
         },
         {
           img: require('@/assets/imgs/copy4.png'),
           name: '手绘',
-          disable: false
+          disable: false,
+          type: '10'
         },
         {
           img: require('@/assets/imgs/copy5.png'),
           name: 'PPT',
-          disable: false
+          disable: false,
+          type: '11'
         }
       ]
     }
@@ -112,17 +99,40 @@ export default {
     ...mapMutations({
       setNum: 'SET_NUM'
     }),
+    search(val) {
+      if (val === '') return false
+      taskList({search: val}).then((res) => {
+        if (res.data.success) {
+          this.currentList = res.data.data.results
+        } else {
+        }
+      }).catch(() => {
+      })
+    },
     todetail() {
       this.$router.togo('/Home/Detail')
     },
     handelclick(item, index) {
+      this.type = item.type
+      this.getData()
       this.maplist.map(res => {
         res.disable = false
       })
       this.maplist[index].disable = true
     },
-    onClick(index) {
-      console.log(index)
+    onClick(sort) {
+      sort = sort === 0 ? '-payment' : 'payment'
+      taskList({ordering: sort}).then((res) => {
+        if (res.data.success) {
+          if (sort === '-payment') {
+            this.currentList = res.data.data.results
+          } else {
+            this.currentprice = res.data.data.results
+          }
+        } else {
+        }
+      }).catch(() => {
+      })
     },
     more(val) {
       if (val === 'currentList') {
@@ -139,7 +149,7 @@ export default {
     },
     getData() {
       let params = {
-        resource_type: 1
+        design_id: this.type
       }
       taskList(params).then((res) => {
         if (res.data.success) {

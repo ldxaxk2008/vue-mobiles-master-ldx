@@ -1,12 +1,21 @@
 <template>
   <div class="input-box">
-    <span class="icon"></span>
-    <input type="text" class="search" placeholder="在Level up上搜索你想要的">
+    <span @click="search" class="icon"></span>
+    <input v-model="value" type="text" class="search" placeholder="在Level up上搜索你想要的">
   </div>
 </template>
 <script>
 export default {
-
+  data() {
+    return {
+      value: ''
+    }
+  },
+  methods: {
+    search() {
+      this.$emit('search', this.value)
+    }
+  }
 }
 </script>
 <style lang="less" scoped>

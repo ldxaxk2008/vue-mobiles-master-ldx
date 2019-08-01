@@ -28,7 +28,7 @@ export default {
   },
   methods: {
     watcher() {
-      this.$router.push('/User/Task')
+      this.$router.push({name: 'Task', params: {id: this.$route.params.id}})
     },
     prev() {
       this.$router.push('/taskeditor/post')

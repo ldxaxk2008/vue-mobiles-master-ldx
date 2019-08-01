@@ -6,7 +6,7 @@
       </div>
       <div class="header-tittle">
         <span v-if="showinput">
-          <cus-input></cus-input>
+          <cus-input @search="search"></cus-input>
         </span>
         <span v-if="!showinput">{{tittle}}</span>
       </div>
@@ -56,6 +56,9 @@ export default {
   methods: {
     back() {
       this.$router.goBack()
+    },
+    search(val) {
+      this.$emit('search', val)
     }
   },
   components: {
