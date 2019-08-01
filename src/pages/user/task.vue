@@ -27,6 +27,7 @@ export default {
   },
   data() {
     return {
+      disable: true,
       tittle: 'LOGO设计',
       information: {
         name: '深圳益康电子',
@@ -74,6 +75,12 @@ export default {
     }
   },
   methods: {
+    applytask() {
+      this.disable = false
+    },
+    canceltask() {
+      this.disable = true
+    },
     tohome() {
       this.$router.goBack()
     },

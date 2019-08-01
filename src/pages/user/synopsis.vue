@@ -30,12 +30,28 @@ export default {
       type: Object,
       default: () => {}
     }
+    // disable: {
+    //   type: Boolean,
+    //   default: true
+    // }
   },
   data() {
     return {
       show: true
     }
   },
+  // methods: {
+  //   applytask() {
+  //     console.log(111)
+  //     // this.disable = false
+  //     this.$emit('applytask')
+  //   },
+  //   canceltask() {
+  //     console.log(2221)
+  //     // this.disable = true
+  //     this.$emit('canceltask')
+  //   }
+  // },
   methods: {
     handelClick(val) {
       this.show = !this.show

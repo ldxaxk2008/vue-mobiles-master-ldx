@@ -126,7 +126,10 @@ export default {
       }
       register(this.registerlist).then(res => {
         if (res.data.success === 'true') {
+          this.$toast(res.data.msg)
           this.$router.push('/home')
+        } else {
+          this.$toast(res.data.msg)
         }
       })
       // this.$router.push('/levelup/enter')
