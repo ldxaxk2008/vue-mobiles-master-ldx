@@ -32,7 +32,7 @@
             </van-tab>
             <van-tab title="热度">
               <div class="page-map--tab">
-                <currentList :currentList="currentList" @more="more" />
+                <currentList :currentList="hostList" @more="more" />
               </div>
             </van-tab>
           </van-tabs>
@@ -55,6 +55,7 @@ export default {
     return {
       headerColor: '#fff',
       currentList: [],
+      hostList: [],
       currentprice: [
         {
           name: '代码',
@@ -136,8 +137,11 @@ export default {
         }
       }
     },
-    login() {
-      taskList().then((res) => {
+    getData() {
+      let params = {
+        resource_type: 1
+      }
+      taskList(params).then((res) => {
         if (res.data.success) {
           this.currentList = res.data.data.results
         } else {
@@ -147,7 +151,7 @@ export default {
     }
   },
   mounted() {
-    this.login()
+    this.getData()
   },
   components: {
     commonHeader,

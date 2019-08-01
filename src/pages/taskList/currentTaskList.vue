@@ -17,10 +17,11 @@
       </div>
       <span class="done" v-if="done"><img src="@/assets/imgs/done.png" alt=""></span>
     </div>
-    <div class="more" @click="more">
+    <div class="more" @click="more" v-if="currentList.length">
       <van-icon name="arrow-down" />
       <span>查看更多</span>
     </div>
+    <div v-if="!currentList.length" style="color:#333;text-align:center">暂无数据</div>
   </div>
 </template>
 

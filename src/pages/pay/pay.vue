@@ -32,8 +32,8 @@
 <script>
 import { mapMutations, mapGetters, mapState } from 'vuex'
 import commonHeader from 'common/common-header'
-import * as homeApi from 'api/home-api'
-import { ERR_OK } from 'config/index'
+// import * as homeApi from 'api/home-api'
+// import { ERR_OK } from 'config/index'
 export default {
   data() {
     return {
@@ -59,17 +59,17 @@ export default {
   },
   created() {
     console.log(this.$route)
-    let params = {
-      resource_type: 2
-    }
-    homeApi.loginUserNo(params).then((res) => {
-      let {data} = res
-      if (data.success === ERR_OK) {
-        // alert(data.value.token)
-      } else {
-      }
-    }).catch(() => {
-    })
+    // let params = {
+    //   resource_type: 2
+    // }
+    // homeApi.loginUserNo(params).then((res) => {
+    //   let {data} = res
+    //   if (data.success === ERR_OK) {
+    //     // alert(data.value.token)
+    //   } else {
+    //   }
+    // }).catch(() => {
+    // })
     // this.$get('/root/api/task/resource/type/', params)
     //   .then(function (response) {
     //     console.log(response)
