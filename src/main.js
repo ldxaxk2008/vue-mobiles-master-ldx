@@ -49,6 +49,19 @@ window.addEventListener('popstate', function(e) {
   }
 }, false)
 
+router.beforeEach((to, from, next) => {
+  const isLogin = sessionStorage.getItem('token')
+  if (isLogin) {
+      next()
+  } else {
+    if (to.path === '/loginpage') { //这就是跳出循环的关键
+      next()
+    } else {
+      next('/loginpage')
+    }
+  } 
+})
+
 // app 修改状态栏颜色
 // document.addEventListener('plusready', function () {
 //   let System = window.plus.os.name

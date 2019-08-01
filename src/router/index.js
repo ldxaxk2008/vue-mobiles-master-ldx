@@ -33,6 +33,18 @@ export default new Router({
   routes: [
     {
       path: '/',
+      name: 'login',
+      component: (resolve) => require(['@/pages/loginPage'], resolve),
+      redirect: '/loginPage',
+      children: [
+        {
+          path: '/loginPage',
+          name: 'loginPage',
+          component: (resolve) => require(['@/pages/loginPage'], resolve)
+        }]
+    },
+    {
+      path: '/',
       name: 'levelup', // 引导页专用
       component: (resolve) => require(['@/pages/levelup'], resolve),
       redirect: '/levelup/experience',
@@ -130,11 +142,6 @@ export default new Router({
       path: '/evaluate',
       name: 'evaluate',
       component: (resolve) => require(['@/pages/evaluate'], resolve)
-    },
-    {
-      path: '/loginpage',
-      name: 'loginpage',
-      component: (resolve) => require(['@/pages/loginPage'], resolve)
     },
     {
       path: '/registpage',
