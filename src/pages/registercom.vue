@@ -37,6 +37,8 @@
   </div>
 </template>
 <script>
+import { register } from 'api/register-api'
+// import { ERR_OK } from 'config/index'
 export default {
   data() {
     return {
@@ -122,7 +124,12 @@ export default {
         })
         return
       }
-      this.$router.push('/levelup/enter')
+      register(this.registerlist).then(res => {
+        if (res.data.success === 'true') {
+          this.$router.push('/home')
+        }
+      })
+      // this.$router.push('/levelup/enter')
     }
   },
   mounted() {}

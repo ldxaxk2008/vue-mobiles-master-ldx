@@ -18,7 +18,7 @@
       /> -->
       <progressBar/>
       <button class="confirm">进行阶段确认</button>
-      <button class="deliver">任务交付</button>
+      <button class="deliver" @click="taskpay">任务交付</button>
     </div>
     <FileDown :down="down"/>
   </div>
@@ -48,6 +48,11 @@ export default {
   data() {
     return {
       rangeValue: 20
+    }
+  },
+  methods: {
+    taskpay() {
+      this.$router.push('/Pay')
     }
   }
 }

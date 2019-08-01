@@ -122,8 +122,13 @@ export default {
       ]
 
     }
+  },
+  methods: {
+    cancel(data) {
+      console.log(data, 666)
+      this.$router.push('/User/Task')
+    }
   }
-
 }
 </script>
 

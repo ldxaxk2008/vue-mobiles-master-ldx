@@ -88,6 +88,8 @@
 <script>
 import commonHeader from 'common/common-header'
 import software from '@/pages/skillCommon/software'
+import { publishtask, gettype } from 'api/task-api'
+// import { ERR_OK } from 'config/index'
 
 export default {
   components: {
@@ -97,8 +99,8 @@ export default {
   data() {
     return {
       valueData: {
-        task_type_id: '',
-        design_id: '',
+        task_type_id: '1',
+        design_id: '1',
         title: '',
         desc: '',
         payment: '',
@@ -159,28 +161,19 @@ export default {
     changedata(val) {
       this.show = true
     },
-    // 发布
-    publish() {
-      this.$post('/root/api/task/task/', this.valueData)
-        .then(res => {
-          if (res.data.success === true) {
-            this.$router.push('/User/Task')
-          }
-        })
-    },
     // input框筛选
     popup() {
       this.disabled = true
     },
-    // 时间筛选chang事件
+    // 时间筛选chang事件 返回当前选定的值
     timeSelect(e) {
       this.disabled = true
-      this.valueData.end_date = ''
+      return this.valueData.end_date
     },
-    // 取消
+    // 取消 返回当前选定的值
     cancel(value) {
-      this.valueData.end_date = ''
       this.disabled = false
+      return this.valueData.end_date
     },
     // 时间格式转换
     timeFormat (timer) {
@@ -198,7 +191,7 @@ export default {
       seconds = seconds < 10 ? '0' + seconds : seconds
       return year + '-' + month + '-' + day + ' ' + hour + ':' + minutes + ':' + seconds
     },
-    // 确定
+    // 确定 确定最终的时间
     confirm(value) {
       this.valueData.end_date = this.timeFormat(value)
       this.disabled = false
@@ -210,39 +203,58 @@ export default {
       })
       this.maplist[index].disable = true
       this.valueData.design_id = data.value
+    },
+    // 获取数据类型
+    getType() {
+      let params = {
+        resource_type: 1
+      }
+      gettype(params).then(response => {
+        if (response.data.success === true) {
+          this.inputList = response.data.data.results
+          this.inputList.map(res => {
+            let obj = {
+              name: res.title,
+              id: res.id
+            }
+            this.actions.push(obj)
+          })
+        }
+      })
+    },
+    // 获取工具
+    getTool() {
+      let params = {
+        resource_type: 2
+      }
+      gettype(params).then(response => {
+        console.log(response)
+        if (response.data.success === true) {
+          console.log(response.data.data.results)
+        }
+      })
+    },
+    // 发布任务
+    publish() {
+      var reg = new RegExp('^[0-9]*$')
+      if (!reg.test(this.valueData.payment)) {
+        this.$toast({
+          message: '报酬请输入数字'
+        })
+        return
+      }
+      publishtask(this.valueData).then(res => {
+        if (res.data.success === true) {
+          this.$router.push('/success')
+        } else {
+          this.$router.push('/error')
+        }
+      })
     }
   },
   mounted() {
-    // 获取数据类型
-    let params = {
-      resource_type: 1
-    }
-    let this_ = this
-    this.$get('/root/api/task/resource/type/', params)
-      .then(function (response) {
-        this_.inputList = response.data.data.results
-        this_.inputList.map(res => {
-          let obj = {
-            name: res.title,
-            id: res.id
-          }
-          this_.actions.push(obj)
-        })
-      })
-      .catch(function (error) {
-        console.log(error)
-      })
-    // 获取工具
-    let params1 = {
-      resource_type: 2
-    }
-    this.$get('/root/api/task/resource/type/', params1)
-      .then(function (response) {
-        console.log(response.data.data.results)
-      })
-      .catch(function (error) {
-        console.log(error)
-      })
+    this.getType()
+    this.getTool()
   }
 }
 </script>

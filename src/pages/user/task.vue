@@ -83,6 +83,7 @@ export default {
     },
     confirm() {
       console.log('确认申请人')
+      this.$router.push('/User/acceptTask')
     }
   }
 }

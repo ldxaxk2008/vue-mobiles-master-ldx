@@ -8,8 +8,8 @@
     </div>
     <div class="taskpage-success--con">
       <p class="taskpage--con__title">任务完成</p>
-      <button>查看</button>
-      <button>返回</button>
+      <button @click="watcher">查看</button>
+      <button @click="prev">返回</button>
       <p class="taskpage--con__foot">感谢支持</p>
     </div>
   </div>
@@ -24,6 +24,14 @@ export default {
   data() {
     return {
       tittle: ''
+    }
+  },
+  methods: {
+    watcher() {
+      this.$router.push('/User/Task')
+    },
+    prev() {
+      this.$router.push('/taskeditor/post')
     }
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="current-list">
-    <div class="current" v-for="(item,index) in currentList" :key="index">
+    <div class="current" v-for="(item,index) in currentList" :key="index" @click="handleclick(item)">
       <!-- <div class="current-head">
         <div class="task-name">{{item.name}}</div>
         <div class="task-details">{{item.people}} 人正在申请 {{item.money}}RMB</div>
@@ -47,6 +47,10 @@ export default {
     }
   },
   methods: {
+    handleclick(item) {
+      // this.$router.push({name: 'Task', params: {id: item}})
+      this.$router.push('/User/Task')
+    },
     more() {
       this.$emit('more')
     }
