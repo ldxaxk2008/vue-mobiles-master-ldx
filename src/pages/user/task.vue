@@ -99,7 +99,7 @@ export default {
         })
       } else {
         cancelTask({task_id: this.$route.params.id.id, user_id: 14}).then((res) => {
-          console.log(res)
+          this.$toast(res.data.msg)
           if (res.data.success) {
             // this.currentList = res.data.data.results
           } else {

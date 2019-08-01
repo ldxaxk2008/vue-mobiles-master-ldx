@@ -96,7 +96,10 @@ export default {
     touch-action: pan-y;
   }
   color: #f5f5f5;
-  background: linear-gradient(bottom, #b92671 0%, #f9ce20 90%, #f9ce20 100%);
+  background: -webkit-linear-gradient(bottom, #b92671 0%, #f9ce20 90%, #f9ce20 100%);
+  background:-moz-linear-gradient(bottom, #b92671 0%, #f9ce20 90%, #f9ce20 100%);
+  background:-o-linear-gradient(bottom, #b92671 0%, #f9ce20 90%, #f9ce20 100%);
+  background:linear-gradient(bottom, #b92671 0%, #f9ce20 90%, #f9ce20 100%);
   .login-img {
     .mt(-50);
     box-sizing: border-box;
