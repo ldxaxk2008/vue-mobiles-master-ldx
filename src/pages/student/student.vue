@@ -11,7 +11,7 @@
       </div>
       <div class="done-task">
         <h4 style="color:#18ACB6">过往任务浏览 已完成20组任务</h4>
-        <currentList :currentList="currentList" :done="true" @more="more"/>
+        <currentList ref="more" :currentList="currentList" :done="true" @more="more"/>
       </div>
       <div class="img-view">
         <imgView :imgList="imgList"/>
@@ -39,6 +39,9 @@ import imgView from '@/pages/student/imgView'
 import fileDown from '@/pages/user/fileDown'
 import software from '@/pages/skillCommon/software'
 import skill from '@/pages/skillCommon/skill'
+import {taskList} from 'api/home-api'
+import {studentData} from 'api/student-api'
+import { ERR_OK } from 'config/index'
 export default {
   components: {
     commonHeader,
@@ -53,18 +56,7 @@ export default {
   data() {
     return {
       tittle: '',
-      information: {
-        name: '沙田伊莱莎',
-        industry: '北京理工大学',
-        assets: '300000￥',
-        number: '18',
-        logoImg: require('@/assets/imgs/user-img.png'),
-        aboutUs: '北京大学在读生，性格开朗。精通6们语言，熟练掌握模拟芯片技术，是个不可多得的人才。',
-        days: 3,
-        tasksNum: 35,
-        label: ['设计', '教育培训'],
-        pay: '$355555'
-      },
+      information: {},
       down: [
         {
           imgSrc: '',
@@ -77,26 +69,7 @@ export default {
           downSrc: 'www.baidu.com'
         }
       ],
-      currentList: [
-        {
-          name: '设计',
-          people: 18,
-          money: 500,
-          days: 3,
-          ask: '任务要求任务要求任务要求任务要求任务要求',
-          data: '2019年10月20日',
-          label: ['设计', '教育培训']
-        },
-        {
-          name: '代码',
-          people: 118,
-          money: 30000,
-          days: 30,
-          ask: '大是大非路上看见法律上的看了看',
-          label: ['设计', '教育培训'],
-          data: '2019年1月20日'
-        }
-      ],
+      currentList: [],
       evaluate: [
         {
           imgSrc: require('@/assets/imgs/user-img.png'),
@@ -139,16 +112,45 @@ export default {
       }, {
         label: '写作',
         value: '6%'
-      }]
+      }],
+      page: {
+        limit: 50,
+        offset: 0
+      }
     }
   },
   methods: {
     more(val) {
-      let obj = this.currentList[0]
-      for (let i = 0; i < 3; i++) {
-        this.currentList.push(obj)
-      }
+      this.page.offset += this.page.limit
+      this.getListData()
+    },
+    student() {
+      studentData().then((res) => {
+        console.log(res.data)
+        if (res.data.success === ERR_OK) {
+          this.information = res.data.data
+        } else {
+        }
+      }).catch(() => {
+      })
+    },
+    getListData() {
+      taskList(this.page).then((res) => {
+        if (!res.data.data.results.length) {
+          this.$refs['more'].$el.removeChild(this.$refs['more'].$el.getElementsByClassName('more')[0])
+          return false
+        }
+        if (res.data.success === ERR_OK) {
+          this.currentList.push(...res.data.data.results)
+        } else {
+        }
+      }).catch(() => {
+      })
     }
+  },
+  mounted() {
+    this.student()
+    this.getListData()
   }
 }
 </script>

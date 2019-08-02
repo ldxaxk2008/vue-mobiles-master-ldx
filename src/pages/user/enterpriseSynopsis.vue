@@ -1,22 +1,22 @@
 <template>
-  <div class="enterprise">
+  <div class="enterprise" :id="information.id">
     <div class="synopsis-head">
-      <img v-if="imgShow" :src="information.logoImg" alt="logo" class="logo">
+      <img v-if="imgShow" :src="information.image" alt="logo" class="logo">
       <div class="contenr">
         <div class="company" v-if="imgShow">
-          <span class="name">{{information.name}}</span>
-          <span class="autograph">{{information.industry}}</span>
+          <span class="name">{{information.username}}</span>
+          <span class="autograph">{{information.school_name}}</span>
         </div>
         <div class="synopsis-main">
-          <div class="left">
+          <div class="left" @click="handelClick">
             <van-icon name="comment-circle-o" />
             <span class="name">已发布任务</span>
-            <span class="industry">{{information.tasksNum}}</span>
+            <span class="industry">{{information.task_count}}</span>
           </div>
           <div class="right">
             <van-icon name="refund-o" />
             <span class="assets">累计支付报酬</span>
-            <span class="number">{{information.pay}}</span>
+            <span class="number">{{information.total_payment}}</span>
           </div>
         </div>
       </div>
@@ -37,6 +37,11 @@ export default {
     information: {
       type: Object,
       default: () => {}
+    }
+  },
+  methods: {
+    handelClick() {
+      this.$router.push('/mine')
     }
   }
 }

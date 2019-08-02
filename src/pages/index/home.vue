@@ -99,9 +99,17 @@ export default {
     ...mapMutations({
       setNum: 'SET_NUM'
     }),
+    orderingType() {
+      return this.active === 0 ? 'payment' : this.active === 1 ? 'created_time' : 'end_date'
+    },
     search(val) {
       if (val === '') return false
-      taskList({search: val}).then((res) => {
+      let params = {
+        search: val,
+        design_id: this.type,
+        ordering: this.orderingType()
+      }
+      taskList(params).then((res) => {
         if (res.data.success === ERR_OK) {
           this.currentList = res.data.data.results
         } else {
@@ -157,7 +165,8 @@ export default {
     },
     getData() {
       let params = {
-        design_id: this.type
+        design_id: this.type,
+        ordering: 'payment'
       }
       taskList(params).then((res) => {
         if (res.data.success === ERR_OK) {

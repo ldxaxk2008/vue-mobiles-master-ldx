@@ -14,7 +14,7 @@
           <currentList :currentList="currentList" :done="true" @more="more('done')"/>
       </div>
       <div class="evaluate-list">
-        <h4>公司评价</h4>
+        <h4>学生评价</h4>
         <evaluate :evaluate="evaluate" @evajump="evajump"/>
       </div>
     </div>
