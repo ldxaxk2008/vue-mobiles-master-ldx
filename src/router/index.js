@@ -33,30 +33,6 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'login',
-      component: (resolve) => require(['@/pages/loginPage'], resolve),
-      redirect: '/loginPage',
-      children: [
-        {
-          path: '/loginPage',
-          name: 'loginPage',
-          component: (resolve) => require(['@/pages/loginPage'], resolve)
-        }]
-    },
-    {
-      path: '/',
-      name: 'levelup', // 引导页专用
-      component: (resolve) => require(['@/pages/levelup'], resolve),
-      redirect: '/levelup/experience',
-      children: [
-        {
-          path: '/levelup/:id',
-          name: 'experience',
-          component: (resolve) => require(['@/pages/levelup'], resolve)
-        }]
-    },
-    {
-      path: '/index',
       name: 'index',
       component: (resolve) => require(['@/pages/index'], resolve),
       redirect: '/home',
@@ -72,6 +48,30 @@ export default new Router({
           component: (resolve) => require(['@/pages/index/user'], resolve)
         }
       ]
+    },
+    {
+      path: '/',
+      name: 'levelup', // 引导页专用
+      component: (resolve) => require(['@/pages/levelup'], resolve),
+      redirect: '/levelup/experience',
+      children: [
+        {
+          path: '/levelup/:id',
+          name: 'experience',
+          component: (resolve) => require(['@/pages/levelup'], resolve)
+        }]
+    },
+    {
+      path: '/',
+      name: 'login',
+      component: (resolve) => require(['@/pages/loginPage'], resolve),
+      redirect: '/loginPage',
+      children: [
+        {
+          path: '/loginPage',
+          name: 'loginPage',
+          component: (resolve) => require(['@/pages/loginPage'], resolve)
+        }]
     },
     // {
     //   path: '/Home/Detail',

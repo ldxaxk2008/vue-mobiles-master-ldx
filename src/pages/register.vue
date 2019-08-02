@@ -6,7 +6,10 @@
           <div class="register-content--img">
             <div class="register-logoborder">
               <van-uploader :after-read="afterRead" accept="image/png, image/jpeg">
-                <img class="logo" :src="registerlist.headimg" alt ref="goodimg" />
+                <img v-if="imgShow" class="logo" :src="registerlist.headimg" alt ref="goodimg" />
+                <div v-if="!imgShow" class="logo" ref="goodimg">
+                  <van-icon size="40" name="plus" color="rgb(230, 207, 207)"/>
+                </div>
               </van-uploader>
             </div>
             <p class="register-content__describe">添加一张您的头像</p>
@@ -52,6 +55,7 @@ export default {
   data() {
     return {
       show: false,
+      imgShow: false,
       sexlist: [
         {
           value: '男',
@@ -87,6 +91,7 @@ export default {
   methods: {
     ...mapMutations(['SET_TOKEN']),
     afterRead(file) {
+      this.imgShow = true
       this.$refs.goodimg.src = file.content
     },
     // 性别选择
@@ -147,7 +152,7 @@ export default {
       console.log(this.registerlist)
       register(this.registerlist).then((res) => {
         if (res.data.success === ERR_OK) {
-          this.SET_TOKEN(res.data.token)
+          this.SET_TOKEN(res.data)
           this.$toast(res.data.msg)
           this.$router.push('/home')
         } else {
@@ -201,10 +206,14 @@ export default {
   .logo {
     .w(170);
     .h(170);
-    .mt(7);
+    // .mt(7);
     .b-radius(500);
-    border: 5px solid #ffffff;
+    border: 4px solid #ffffff;
     background: #ffffff;
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .register-content {
     .margin(150, 80, 30, 80);

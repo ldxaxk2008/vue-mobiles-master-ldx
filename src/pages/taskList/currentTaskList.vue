@@ -4,15 +4,16 @@
       <div class="task-main">
         <div class="task-main-head">
           <div class="task-title">{{item.title}}<img v-if="!done" style="margin-left:10px;"  :src="imgUrl"/></div>
-          <div class="deadline">{{item.apply_num}} 人正在申请 {{item.payment}}RMB</div>
+          <div class="deadline"><span v-if="!done">{{item.apply_num}} 人正在申请</span> {{item.payment}}RMB</div>
         </div>
         <div class="task-main-container">任务要求：{{item.desc}}</div>
         <div class="task-labels">
-          <span v-for="(ele,i) in item.label" :key="i">{{ele}}</span>
+          <span>{{item.design}}</span>
+          <span>{{item.task_type}}</span>
         </div>
         <div class="days">
           <div class="task-time">发布日期：{{item.publish_time}}</div>
-          <div>距离截至日期还有：{{item.rest_day}} 天</div>
+          <div v-if="!done">距离截至日期还有：{{item.rest_day}} 天</div>
         </div>
       </div>
       <span class="done" v-if="done"><img src="@/assets/imgs/done.png" alt=""></span>
@@ -149,6 +150,12 @@ export default {
       .mb(10);
       .fs(50);
     }
+  }
+  .task-main-container{
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
   }
 }
 </style>

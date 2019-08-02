@@ -30,11 +30,11 @@
                 <currentList :currentList="currentprice" @more="more" />
               </div>
             </van-tab>
-            <!-- <van-tab title="热度">
+            <van-tab title="截止日期">
               <div class="page-map--tab">
                 <currentList :currentList="hostList" @more="more" />
               </div>
-            </van-tab> -->
+            </van-tab>
           </van-tabs>
         </div>
         <!-- <span class="page-map__p">筛选</span> -->
@@ -121,13 +121,21 @@ export default {
       this.maplist[index].disable = true
     },
     onClick(sort) {
-      sort = sort === 0 ? '-payment' : 'payment'
-      taskList({ordering: sort}).then((res) => {
+      if (sort === 0) {
+        sort = 'payment'
+      } else if (sort === 1) {
+        sort = 'created_time'
+      } else {
+        sort = 'end_date'
+      }
+      taskList({ordering: sort, design_id: this.type}).then((res) => {
         if (res.data.success === ERR_OK) {
-          if (sort === '-payment') {
+          if (sort === 'payment') {
             this.currentList = res.data.data.results
-          } else {
+          } else if (sort === 'created_time') {
             this.currentprice = res.data.data.results
+          } else {
+            this.hostList = res.data.data.results
           }
         } else {
         }
@@ -161,7 +169,8 @@ export default {
     }
   },
   mounted() {
-    this.getData()
+    this.handelclick({type: '7'}, 0)
+    // this.getData()
   },
   components: {
     commonHeader,

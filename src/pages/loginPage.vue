@@ -73,7 +73,7 @@ export default {
       }
       login(this.registerlist).then((res) => {
         if (res.data.success === ERR_OK) {
-          this.SET_TOKEN(res.data.token)
+          this.SET_TOKEN(res.data)
           this.$toast(res.data.msg)
           this.$router.push('/home')
         } else {

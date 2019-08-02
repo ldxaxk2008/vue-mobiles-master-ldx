@@ -2,8 +2,8 @@
   <div class="content-box">
     <common-header :tittle="tittle" :showback="true" :showmore='true'></common-header>
     <div class="user-main">
-      <h4 class="user-nick-name">{{nickName}}</h4>
-      <div class="user-label-name">{{labelName}}</div>
+      <h4 class="user-nick-name" @click="reset($event)">{{nickName}}</h4>
+      <div class="user-label-name" @click="reset($event)">{{labelName}}</div>
     </div>
     <div class="user-list">
       <img class="user-img" :src="userImg" alt="" srcset="">
@@ -14,15 +14,19 @@
         </li>
       </ul>
     </div>
+    <dialogBox :data="textData" @close="resetContent" v-if="show"/>
   </div>
 </template>
 
 <script>
 import { mapMutations, mapGetters, mapState } from 'vuex'
 import commonHeader from 'common/common-header'
+import dialogBox from 'common/dialog'
 export default {
   data() {
     return {
+      textData: '',
+      show: false,
       tittle: '',
       num: 0,
       nickName: '你的昵称',
@@ -57,20 +61,27 @@ export default {
       ]
     }
   },
-  created() {},
   methods: {
     ...mapMutations({
       setNum: 'SET_NUM'
     }),
+    resetContent(val) {
+      console.log(val)
+    },
     todetail() {
       this.$router.togo('/Home/Detail')
     },
     handelClick(val) {
       this.$router.push(val)
+    },
+    reset(event) {
+      this.textData = event.target.innerHTML
+      this.show = true
     }
   },
   components: {
-    commonHeader
+    commonHeader,
+    dialogBox
   },
   computed: {
     ...mapGetters(['number']),

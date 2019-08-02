@@ -1,7 +1,7 @@
 <template>
   <div class="input-box">
     <span @click="search" class="icon"></span>
-    <input v-model="value" type="text" class="search" placeholder="在Level up上搜索你想要的">
+    <input v-model="value" type="text" @keyup.enter="search" class="search" placeholder="在Level up上搜索你想要的">
   </div>
 </template>
 <script>

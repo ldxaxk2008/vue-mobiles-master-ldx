@@ -92,7 +92,7 @@ export default {
     },
     handelClick(val) {
       if (val === 'applyTask') {
-        applyTask({task_id: this.$route.params.id.id, user_id: 14}).then((res) => {
+        applyTask({task_id: this.$route.params.id.id}).then((res) => {
           console.log(res)
           if (res.data.success) {
             // this.currentList = res.data.data.results
