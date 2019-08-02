@@ -31,11 +31,12 @@
         ></textarea>
       </div>
       <div class="task-editor--filed">
-        <button class="evaluate-footer--btn" @click="handel">设计</button>
+        <button class="evaluate-footer--btn" ref="aaa">{{desctab}}</button>
         <ul class="page-map--ul">
           <li
             v-for="(item,index) in maplist"
             :key="index"
+            @click="hanleclick(item,index)"
           >
             <img :src="item.img" alt />
             <p :class="{'active':item.disable===true}">{{item.name}}</p>
@@ -96,10 +97,10 @@ export default {
   },
   data() {
     return {
-      thisindex: 0,
+      desctab: '文案',
       valueData: {
         task_type_id: '',
-        design_id: '',
+        design_id: '1',
         title: '',
         desc: '',
         payment: null,
@@ -119,31 +120,36 @@ export default {
           img: require('@/assets/imgs/copy1.png'),
           name: '文案',
           value: '1',
-          disable: false
+          disable: true,
+          color: '#1B9EA7'
         },
         {
           img: require('@/assets/imgs/copy2.png'),
           name: '设计',
           value: '2',
-          disable: false
+          disable: false,
+          color: '#F79D33'
         },
         {
           img: require('@/assets/imgs/copy3.png'),
           name: '代码',
           value: '3',
-          disable: false
+          disable: false,
+          color: '#1B9EA7'
         },
         {
           img: require('@/assets/imgs/copy4.png'),
           name: '手绘',
           value: '4',
-          disable: false
+          disable: false,
+          color: '#3BDA8A'
         },
         {
           img: require('@/assets/imgs/copy5.png'),
           name: 'PPT',
           value: '5',
-          disable: false
+          disable: false,
+          color: '#F79D33'
         }
       ]
     }
@@ -195,20 +201,6 @@ export default {
       this.valueData.end_date = this.timeFormat(value)
       this.disabled = false
     },
-    // 设计
-    handel() {
-      if (this.thisindex === this.maplist.length) {
-        this.thisindex = 0
-      }
-      this.maplist.map((res, index) => {
-        this.maplist[index].disable = false
-        if (index === this.thisindex) {
-          this.valueData.design_id = res.value
-          this.maplist[index].disable = true
-        }
-      })
-      this.thisindex++
-    },
     // tab设计选择
     hanleclick(data, index) {
       this.maplist.map(res => {
@@ -216,7 +208,8 @@ export default {
       })
       this.maplist[index].disable = true
       this.valueData.design_id = data.value
-      this.thisindex = index
+      this.desctab = this.maplist[index].name
+      this.$refs.aaa.style.background = this.maplist[index].color
     },
     // 获取数据类型
     getType() {
@@ -370,7 +363,7 @@ export default {
     .evaluate-footer--btn {
       .ml(40);
       display: flex;
-      background-color: #c54f8b;
+      background-color: #1B9EA7;
       color: white;
       .fs(25);
       .padding(10, 30, 10, 30);
