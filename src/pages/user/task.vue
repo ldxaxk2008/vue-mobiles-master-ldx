@@ -123,6 +123,10 @@ export default {
   },
   mounted() {
     console.log(this.$route)
+    if (JSON.stringify(this.$route.params) === '{}') {
+      this.$router.push('/mine')
+      return
+    }
     this.getData()
   }
 }

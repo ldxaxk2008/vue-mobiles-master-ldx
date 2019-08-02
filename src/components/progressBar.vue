@@ -38,7 +38,13 @@ export default {
       top: 0;
       left: 0;
       .h(10);
-       background: linear-gradient(to right, #3B8786 , #47C48B);
+      /*! autoprefixer: off */
+      background: -webkit-linear-gradient(right, #3B8786 , #47C48B);
+      /* autoprefixer: on */
+      background:-moz-linear-gradient(right, #3B8786 , #47C48B);
+      background:-o-linear-gradient(right, #3B8786 , #47C48B);
+      background:linear-gradient(right,#3B8786 , #47C48B);
+      //  background: linear-gradient(to right, #3B8786 , #47C48B);
       .b-radius(100);
     }
   }

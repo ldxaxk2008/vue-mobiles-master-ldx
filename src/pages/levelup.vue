@@ -66,7 +66,12 @@ export default {
 @import "~styles/index.less";
 @import "~styles/variable.less";
 .level-content {
-  background: linear-gradient(bottom, #b92671 0%, #f9ce20 90%, #f9ce20 100%);
+   /*! autoprefixer: off */
+  background: -webkit-linear-gradient(bottom, #b92671 0%, #f9ce20 90%, #f9ce20 100%);
+  /* autoprefixer: on */
+  background:-moz-linear-gradient(bottom, #b92671 0%, #f9ce20 90%, #f9ce20 100%);
+  background:-o-linear-gradient(bottom, #b92671 0%, #f9ce20 90%, #f9ce20 100%);
+  background:linear-gradient(bottom, #b92671 0%, #f9ce20 90%, #f9ce20 100%);
   .level-content--ul {
     color: #fff;
     .leve--ul_top {

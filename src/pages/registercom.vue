@@ -38,7 +38,7 @@
 </template>
 <script>
 import { register } from 'api/register-api'
-// import { ERR_OK } from 'config/index'
+import { ERR_OK } from 'config/index'
 export default {
   data() {
     return {
@@ -125,14 +125,13 @@ export default {
         return
       }
       register(this.registerlist).then(res => {
-        if (res.data.success === 'true') {
+        if (res.data.success === ERR_OK) {
           this.$toast(res.data.msg)
           this.$router.push('/home')
         } else {
           this.$toast(res.data.msg)
         }
       })
-      // this.$router.push('/levelup/enter')
     }
   },
   mounted() {}
@@ -156,7 +155,13 @@ export default {
     .w(200);
     .h(200);
     .b-radius(500);
-    background: linear-gradient(to right, #af002a, #e5d200);
+    // background: linear-gradient(to right, #af002a, #e5d200);
+     /*! autoprefixer: off */
+    background: -webkit-linear-gradient(right, #af002a, #e5d200);
+    /* autoprefixer: on */
+    background:-moz-linear-gradient(right, #af002a, #e5d200);
+    background:-o-linear-gradient(right,#af002a, #e5d200);
+    background:linear-gradient(right,#af002a, #e5d200);
     margin: 0 auto;
     display: flex;
     justify-content: center;

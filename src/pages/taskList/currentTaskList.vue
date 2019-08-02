@@ -99,8 +99,13 @@ export default {
   }
   .line {
     .h(5);
-    background-image: linear-gradient(left, #368dd2 0%, #2ecda8 100%);
-  }
+     /*! autoprefixer: off */
+    background: -webkit-linear-gradient(left,  #368dd2 0%, #2ecda8 100%);
+    /* autoprefixer: on */
+    background:-moz-linear-gradient(left,  #368dd2 0%, #2ecda8 100%);
+    background:-o-linear-gradient(left,  #368dd2 0%, #2ecda8 100%);
+    background:linear-gradient(left,  #368dd2 0%, #2ecda8 100%);
+    }
   .task-main {
     .padding(30, 30, 30, 30);
     .task-main-head {

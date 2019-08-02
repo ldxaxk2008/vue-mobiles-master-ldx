@@ -186,7 +186,13 @@ export default {
     .w(200);
     .h(200);
     .b-radius(500);
-    background: linear-gradient(to right, #af002a, #e5d200);
+    // background: linear-gradient(to right, #af002a, #e5d200);
+     /*! autoprefixer: off */
+    background: -webkit-linear-gradient(right, #af002a, #e5d200);
+    /* autoprefixer: on */
+    background:-moz-linear-gradient(right, #af002a, #e5d200);
+    background:-o-linear-gradient(right,#af002a, #e5d200);
+    background:linear-gradient(right,#af002a, #e5d200);
     margin: 0 auto;
     display: flex;
     justify-content: center;

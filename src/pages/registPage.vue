@@ -113,7 +113,12 @@ export default {
     touch-action: pan-y;
   }
   color: #f5f5f5;
-  background: linear-gradient(bottom, #b92671 0%, #f9ce20 90%, #f9ce20 100%);
+   /*! autoprefixer: off */
+  background: -webkit-linear-gradient(bottom, #b92671 0%, #f9ce20 90%, #f9ce20 100%);
+  /* autoprefixer: on */
+  background:-moz-linear-gradient(bottom, #b92671 0%, #f9ce20 90%, #f9ce20 100%);
+  background:-o-linear-gradient(bottom, #b92671 0%, #f9ce20 90%, #f9ce20 100%);
+  background:linear-gradient(bottom, #b92671 0%, #f9ce20 90%, #f9ce20 100%);
   .regist-img{
     // .h(400);
      .mt(-70);

@@ -51,7 +51,7 @@
         <div>
           <div class="task-editor--tool__right">
             <p>报酬 RMB</p>
-            <input class="tool-input" v-model="valueData.payment" type="number" />
+            <input class="tool-input" v-model="valueData.payment" type="number" pattern="[0-9]"/>
           </div>
           <div>
             <p class="tool-input--time">截止日期</p>
@@ -87,7 +87,7 @@
 import commonHeader from 'common/common-header'
 import software from '@/pages/skillCommon/software'
 import { publishtask, gettype } from 'api/task-api'
-// import { ERR_OK } from 'config/index'
+import { ERR_OK } from 'config/index'
 
 export default {
   components: {
@@ -224,7 +224,7 @@ export default {
         resource_type: 1
       }
       gettype(params).then(response => {
-        if (response.data.success === true) {
+        if (response.data.success === ERR_OK) {
           this.inputList = response.data.data.results
           this.inputList.map(res => {
             let obj = {
@@ -274,7 +274,7 @@ export default {
         })
         return
       }
-      var reg = new RegExp('^[0-9]+(.[0-9]{2})?$')
+      var reg = /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/
       if (!this.valueData.payment) {
         this.$toast({
           message: '请输入报酬'
@@ -282,7 +282,7 @@ export default {
         return
       } else if (!reg.test(this.valueData.payment)) {
         this.$toast({
-          message: '报酬保留两位小数'
+          message: '报酬保留两位小数,不能以0开头'
         })
         return
       }
@@ -293,8 +293,8 @@ export default {
         return
       }
       publishtask(this.valueData).then(res => {
-        if (res.data.success === true) {
-          this.$router.push({name: 'success', params: {id: '90'}})
+        if (res.data.success === ERR_OK) {
+          this.$router.push({name: 'success', params: {id: res.data.data}})
         } else {
           this.$toast(res.data.msg)
           this.$router.push('/error')

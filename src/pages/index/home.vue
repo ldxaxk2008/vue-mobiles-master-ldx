@@ -49,7 +49,7 @@ import commonHeader from 'common/common-header'
 import currentList from '@/pages/taskList/currentTaskList'
 
 import {taskList} from 'api/home-api'
-// import { ERR_OK } from 'config/index'
+import { ERR_OK } from 'config/index'
 export default {
   data() {
     return {
@@ -102,7 +102,7 @@ export default {
     search(val) {
       if (val === '') return false
       taskList({search: val}).then((res) => {
-        if (res.data.success) {
+        if (res.data.success === ERR_OK) {
           this.currentList = res.data.data.results
         } else {
         }
@@ -123,7 +123,7 @@ export default {
     onClick(sort) {
       sort = sort === 0 ? '-payment' : 'payment'
       taskList({ordering: sort}).then((res) => {
-        if (res.data.success) {
+        if (res.data.success === ERR_OK) {
           if (sort === '-payment') {
             this.currentList = res.data.data.results
           } else {
@@ -152,7 +152,7 @@ export default {
         design_id: this.type
       }
       taskList(params).then((res) => {
-        if (res.data.success) {
+        if (res.data.success === ERR_OK) {
           this.currentList = res.data.data.results
         } else {
         }

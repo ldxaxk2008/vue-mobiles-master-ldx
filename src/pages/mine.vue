@@ -21,6 +21,8 @@
 import currentList from '@/pages/taskList/currentTaskList'
 import commonHeader from 'common/common-header'
 import {taskList} from 'api/home-api'
+import { ERR_OK } from 'config/index'
+
 export default {
   components: {
     currentList,
@@ -42,7 +44,7 @@ export default {
       this.currentList = []
       this.currentprice = []
       taskList().then((res) => {
-        if (res.data.success) {
+        if (res.data.success === ERR_OK) {
           if (this.active === 0) {
             this.currentList = res.data.data.results
           } else {
