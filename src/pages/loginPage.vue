@@ -13,7 +13,7 @@
             <input type="text" v-model="registerlist.username" placeholder="账号" />
           </div>
           <div>
-            <input type="text" v-model="registerlist.password" placeholder="密码" />
+            <input type="password" v-model="registerlist.password" placeholder="密码" />
           </div>
         </div>
         <span class="forgetword" @click="hanleclick">忘记密码</span>

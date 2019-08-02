@@ -20,8 +20,8 @@
           /> -->
           <div><input type="text" v-model="registerlist.phone" placeholder="注册手机号"></div>
           <div><input type="text" v-model="registerlist.sms" placeholder="验证码"><button class="regist-input--btn">发送验证码</button></div>
-          <div><input type="text" v-model="registerlist.password" placeholder="新密码"></div>
-          <div><input type="text" v-model="registerlist.confirm_password" placeholder="重复输入密码"></div>
+          <div><input type="password" v-model="registerlist.password" placeholder="新密码"></div>
+          <div><input type="password" v-model="registerlist.confirm_password" placeholder="重复输入密码"></div>
         </div>
       </form>
       <div class="register-footer">

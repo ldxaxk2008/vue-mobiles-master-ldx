@@ -91,10 +91,10 @@ export default {
   methods: {
     // 提交评价
     addlevel() {
-      console.log(this.evaluaObj, 7654)
       // 接口报错500
       // subevaluate(this.evaluaObj).then(res => {
       //   console.log(res, 7564)
+      // }).catch(() => {
       // })
     },
     handelClick(index, item) {

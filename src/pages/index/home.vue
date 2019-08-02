@@ -189,6 +189,11 @@ export default {
 <style scoped lang="less">
 @import "~styles/index.less";
 @import "~styles/variable.less";
+.content-box{
+  * {
+    touch-action: pan-y;
+  }
+}
 .page-content {
   .mb(98);
   .page-map {
