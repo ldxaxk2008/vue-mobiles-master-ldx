@@ -1,24 +1,24 @@
 <template>
   <div class="task-synopsis">
     <div class="synopsis-head">
-      <img :src="information.logoImg" alt="logo" class="logo">
+      <img :src="information.image||logoImg" alt="logo" class="logo">
       <div class="contenr">
         <div class="left">
-          <span class="name">{{information.name}}</span>
-          <span class="industry">{{information.industry}}</span>
+          <span class="name">{{information.title}}</span>
+          <span class="industry">{{information.industry||'暂无'}}</span>
           <button v-if="show" class="apply" @click="handelClick('applyTask')">申请任务</button>
         </div>
         <div class="right">
-          <span class="assets">{{information.assets}}</span>
-          <span class="number">{{information.number}} 人在申请</span>
+          <span class="assets">{{information.total_payment}}</span>
+          <span class="number">{{information.task_num}} 人在申请</span>
           <button v-if="!show" class="cancel" @click="handelClick('cancelTask')">取消申请</button>
         </div>
       </div>
     </div>
     <div class="about-us">
         <h4>任务简介</h4>
-        <p>{{information.aboutUs}}</p>
-        <span>距离任务结束还剩：{{information.days}} 天</span>
+        <p>{{information.desc}}</p>
+        <span>距离任务结束还剩：{{information.rest_day}} 天</span>
       </div>
   </div>
 </template>
@@ -33,7 +33,8 @@ export default {
   },
   data() {
     return {
-      show: true
+      show: true,
+      logoImg: require('@/assets/imgs/img5.png')
     }
   },
   methods: {
