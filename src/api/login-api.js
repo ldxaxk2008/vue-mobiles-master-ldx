@@ -8,3 +8,7 @@ import {fetchPost, baseUrl} from 'config/index'
 export function login(data) {
   return fetchPost(`${baseUrl}/api/user/login/`, data)
 }
+// 登出接口
+export function singOut(data) {
+  return fetchPost(`${baseUrl}/api/user/logout/`, data)
+}

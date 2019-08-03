@@ -12,13 +12,16 @@
       </div>
       <div class="right-icon">
         <!-- <span v-if="showmore" class="icon"></span> -->
-        <van-icon name="ellipsis" v-if="showmore" class="icon"/>
+        <van-icon name="ellipsis" v-if="showmore" class="icon" @click="signOut"/>
       </div>
     </div>
 </template>
 
 <script>
 import cusInput from 'common/cus-input'
+import {singOut} from 'api/login-api'
+import { ERR_OK } from 'config/index'
+import { mapState, mapMutations } from 'vuex'
 export default {
   data() {
     return {}
@@ -54,15 +57,40 @@ export default {
     }
   },
   methods: {
+    ...mapMutations(['DEL_TOKEN']),
     back() {
       this.$router.goBack()
     },
     search(val) {
       this.$emit('search', val)
+    },
+    signOut() {
+      this.$dialog.alert({
+        message: '退出登录？',
+        showCancelButton: true
+      }).then(res => {
+        singOut({token: `${this.token}`}).then((res) => {
+          console.log(res.data)
+          if (res.data.success === ERR_OK) {
+            this.$toast(res.data.msg)
+            this.DEL_TOKEN()
+            this.$router.push('/loginpage')
+          } else {
+          }
+        }).catch(() => {
+        })
+      }).catch(error => {
+        console.log(error, 222)
+      })
     }
   },
   components: {
     cusInput
+  },
+  computed: {
+    ...mapState({
+      token: state => state.login.token
+    })
   }
 }
 </script>
