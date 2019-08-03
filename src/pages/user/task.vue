@@ -117,7 +117,7 @@ export default {
       }
     },
     getData() {
-      companyDetails({user_id: (this.$route.params.id && this.$route.params.id.id) || this.user_id}).then((res) => {
+      companyDetails({user_id: this.information.company_id}).then((res) => {
         if (res.data.success) {
           this.companyList = res.data.results
         } else {
@@ -126,7 +126,7 @@ export default {
       })
     },
     informationData() {
-      taskDetails((this.$route.params.id && this.$route.params.id.id) || this.task_id).then((res) => {
+      return taskDetails((this.$route.params.id && this.$route.params.id.id) || this.task_id).then((res) => {
         if (res.data.success) {
           this.information = res.data.data
           this.status = this.information.status
@@ -134,6 +134,10 @@ export default {
         }
       }).catch(() => {
       })
+    },
+    async asyncPrint() {
+      await this.informationData()
+      this.getData()
     }
   },
   mounted() {
@@ -152,8 +156,9 @@ export default {
     } else if (window.sessionStorage.getItem('user_type') === '1') {
       this.show = true
     }
-    this.getData()
-    this.informationData()
+    // this.getData()
+    // this.informationData()
+    this.asyncPrint()
   },
   computed: {
     ...mapState({

@@ -26,8 +26,8 @@
 export default {
   props: {
     data: {
-      type: String,
-      default: ''
+      type: Object,
+      default: () => {}
     }
   },
   data() {
@@ -41,11 +41,11 @@ export default {
       this.$emit('close')
     },
     preserve() {
-      this.$emit('close', this.message)
+      this.$emit('close', this.message, this.data.item)
     }
   },
   mounted() {
-    this.message = this.data
+    this.message = this.data.text
   }
 }
 </script>

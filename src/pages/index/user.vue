@@ -2,8 +2,8 @@
   <div class="content-box">
     <common-header :tittle="tittle" :showback="true" :showmore='true'></common-header>
     <div class="user-main">
-      <h4 class="user-nick-name" @click="reset($event)">{{nickName}}</h4>
-      <div class="user-label-name" @click="reset($event)">{{labelName}}</div>
+      <h4 class="user-nick-name" @click="reset(nickName,'nickName')">{{nickName}}</h4>
+      <div class="user-label-name" @click="reset(labelName,'labelName')">{{labelName}}</div>
     </div>
     <div class="user-list">
       <img class="user-img" :src="userImg" alt="" srcset="">
@@ -25,7 +25,7 @@ import dialogBox from 'common/dialog'
 export default {
   data() {
     return {
-      textData: '',
+      textData: {},
       show: false,
       tittle: '',
       num: 0,
@@ -65,8 +65,9 @@ export default {
     ...mapMutations({
       setNum: 'SET_NUM'
     }),
-    resetContent(val) {
-      console.log(val)
+    resetContent(val, item) {
+      this[item] = val
+      this.show = false
     },
     todetail() {
       this.$router.togo('/Home/Detail')
@@ -74,8 +75,9 @@ export default {
     handelClick(val) {
       this.$router.push(val)
     },
-    reset(event) {
-      this.textData = event.target.innerHTML
+    reset(event, item) {
+      this.textData.text = event
+      this.textData.item = item
       this.show = true
     }
   },
