@@ -19,6 +19,7 @@
 import commonHeader from 'common/common-header'
 import introduce from './introduce'
 import comment from './comment'
+import { getacceptuserlist } from 'api/task-api'
 export default {
   components: {
     commonHeader,
@@ -28,7 +29,7 @@ export default {
   data() {
     return {
       tittle: '任务接受者确认',
-
+      task_id: '',
       navList: [
         {
           label: '确认选择',
@@ -127,7 +128,17 @@ export default {
     cancel(data) {
       console.log(data, 666)
       this.$router.push('/User/Task')
+    },
+    getList () {
+      let taskid = this.task_id
+      getacceptuserlist(taskid).then(res => {
+        console.log(res)
+      })
     }
+  },
+  monuted () {
+    this.task_id = this.$router.params.id.id
+    this.getList()
   }
 }
 </script>
