@@ -1,6 +1,10 @@
 /* eslint-disable */
 import axios from 'axios'
+import { Toast } from 'vant'
+import Vue from 'vue'
+import router from '@/router'
 
+Vue.use(Toast);
 /**
 * 定义请求常量
 * TIME_OUT、ERR_OK
@@ -31,14 +35,24 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
   response => {
     let {data} = response
-    if (data.message === 'token failure!') {    // 如果后台返回的错误标识为token过期，则重新登录
+    console.log(data,'aaaaaaaaaaaaa')
+    if (data.success === false ) {    // 如果后台返回的错误标识为token过期，则重新登录
+      Toast(data.msg)     
       sessionStorage.removeItem('token')          // token过期，移除token
+      router.push('/loginpage')
       // 进行重新登录操作
     } else {
       return Promise.resolve(response)
     }
   },
   error => {
+    let data = error.response
+    if (data.data.success === false || data.data.code === 1009) {    // 如果后台返回的错误标识为token过期，则重新登录
+      Toast(data.data.msg)     
+      sessionStorage.removeItem('token')          // token过期，移除token
+      router.push('/loginpage')
+      // 进行重新登录操作
+    } 
     return Promise.reject(error)
   }
 )

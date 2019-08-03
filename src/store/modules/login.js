@@ -15,6 +15,8 @@ const login = {
       state.user_id = data.user_id
       state.user_type = data.user_type
       sessionStorage.setItem('token', data.token)
+      sessionStorage.setItem('user_id', data.user_id)
+      sessionStorage.setItem('user_type', data.user_type)
     },
     [types.DEL_TOKEN](state) {
       state.token = ''

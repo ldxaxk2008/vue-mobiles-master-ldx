@@ -18,7 +18,7 @@
       </div>
       <span class="done" v-if="done"><img src="@/assets/imgs/done.png" alt=""></span>
     </div>
-    <div class="more" @click="more" v-if="currentList.length">
+    <div ref="more" class="more" @click="more" v-if="currentList.length">
       <van-icon name="arrow-down" />
       <span>查看更多</span>
     </div>
@@ -50,6 +50,9 @@ export default {
     },
     more() {
       this.$emit('more')
+    },
+    close() {
+      this.$refs['more'].style.display = 'none'
     }
   },
   mounted() {
