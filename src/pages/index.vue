@@ -32,7 +32,7 @@ export default {
         },
         {
           path: '/taskeditor/post',
-          name: '编辑任务',
+          name: '发布任务',
           isshow: true
         },
         {
