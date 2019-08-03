@@ -101,7 +101,7 @@ export default {
     },
     confirm() {
       console.log('确认申请人')
-      this.$router.push('/User/acceptTask')
+      this.$router.push({name: 'acceptTask', params: {id: this.information}})
     },
     handelClick(val) {
       if (val === 'applyTask') {
