@@ -35,8 +35,7 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
   response => {
     let {data} = response
-    console.log(data,'aaaaaaaaaaaaa')
-    if (data.success === false ) {    // 如果后台返回的错误标识为token过期，则重新登录
+    if (data.code === 1008 || data.code === 1009 ) {    // 如果后台返回的错误标识为token过期，则重新登录
       Toast(data.msg)     
       sessionStorage.removeItem('token')          // token过期，移除token
       router.push('/loginpage')
@@ -47,7 +46,7 @@ axios.interceptors.response.use(
   },
   error => {
     let data = error.response
-    if (data.data.success === false || data.data.code === 1009) {    // 如果后台返回的错误标识为token过期，则重新登录
+    if (data.data.code === 1008 || data.data.code === 1009) {    // 如果后台返回的错误标识为token过期，则重新登录
       Toast(data.data.msg)     
       sessionStorage.removeItem('token')          // token过期，移除token
       router.push('/loginpage')
@@ -73,12 +72,6 @@ export function fetchGet(requestUrl, params = {}) {
   })
 }
 
-export function fetchGets(requestUrl) {
-  return axios({
-    url: requestUrl,
-    method: 'get'
-  })
-}
 // export function fetch(requestUrl, params = '') {
 //   return axios({
 //     url: requestUrl,
