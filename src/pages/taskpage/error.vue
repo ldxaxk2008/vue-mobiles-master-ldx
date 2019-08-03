@@ -28,7 +28,7 @@ export default {
   },
   methods: {
     prev() {
-      this.$router.push('/taskeditor/post')
+      this.$router.goBack()
     }
   }
 }

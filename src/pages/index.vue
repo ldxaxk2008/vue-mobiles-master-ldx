@@ -7,6 +7,7 @@
       <footer>
         <router-link
           v-for="(item, index) in navList"
+          v-show="item.isshow"
           :to="item.path"
           :key="index"
           v-bind:class="{'active':activeRoute == item.path}"
@@ -26,15 +27,18 @@ export default {
       navList: [
         {
           path: '/home',
-          name: '任务'
+          name: '任务',
+          isshow: true
         },
         {
           path: '/taskeditor/post',
-          name: '编辑任务'
+          name: '编辑任务',
+          isshow: true
         },
         {
           path: '/user',
-          name: '我的'
+          name: '我的',
+          isshow: true
         }
       ]
     }
@@ -44,7 +48,15 @@ export default {
       return this.$route.path
     }
   },
-  methods: {}
+  methods: {},
+  mounted() {
+    let userType = sessionStorage.getItem('user_type')
+    if (userType === '1') {
+      this.navList[1].isshow = true
+    } else {
+      this.navList[1].isshow = false
+    }
+  }
 }
 </script>
 
