@@ -10,7 +10,7 @@
         </van-tab>
         <van-tab title="未完成">
           <div class="page-map--tab">
-            <currentList :currentList="currentprice" @more="more" />
+            <currentList ref="more" :currentList="currentprice" @more="more" />
           </div>
         </van-tab>
       </van-tabs>
@@ -42,22 +42,26 @@ export default {
   },
   methods: {
     onClick(index) {
+      this.currentList = []
+      this.currentprice = []
       let params = {
         status: this.active === 0 ? 2 : 1,
-        limit: 4,
+        limit: 50,
         offset: 0
       }
       this.getData(params)
     },
     getData(params) {
-      this.currentList = []
-      this.currentprice = []
       taskList(params).then((res) => {
+        if (!res.data.data.results.length) {
+          this.$refs['more'].close()
+          return false
+        }
         if (res.data.success === ERR_OK) {
           if (this.active === 0) {
-            this.currentList = res.data.data.results
+            this.currentList.push(...res.data.data.results)
           } else {
-            this.currentprice = res.data.data.results
+            this.currentprice.push(...res.data.data.results)
           }
         } else {
         }
@@ -67,7 +71,7 @@ export default {
     more(val) {
       this.page.offset += this.page.limit
       let status = this.active === 0 ? 2 : 1
-      let params = Object.assign(this.page, status)
+      let params = Object.assign(this.page, {status: status})
       this.getData(params)
     }
   },

@@ -21,10 +21,11 @@
 import cusInput from 'common/cus-input'
 import {singOut} from 'api/login-api'
 import { ERR_OK } from 'config/index'
-import { mapState, mapMutations } from 'vuex'
+import { mapMutations } from 'vuex'
 export default {
   data() {
-    return {}
+    return {
+    }
   },
   props: {
     headerColor: {
@@ -69,7 +70,7 @@ export default {
         message: '退出登录？',
         showCancelButton: true
       }).then(res => {
-        singOut({token: `${this.token}`}).then((res) => {
+        singOut({token: sessionStorage.getItem('token')}).then((res) => {
           console.log(res.data)
           if (res.data.success === ERR_OK) {
             this.$toast(res.data.msg)
@@ -88,9 +89,6 @@ export default {
     cusInput
   },
   computed: {
-    ...mapState({
-      token: state => state.login.token
-    })
   }
 }
 </script>
