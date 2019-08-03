@@ -6,12 +6,12 @@
         <div class="left">
           <span class="name">{{information.title}}</span>
           <span class="industry">{{information.industry||'暂无'}}</span>
-          <button v-if="show" class="apply" @click="handelClick('applyTask')">申请任务</button>
+          <button v-if="show && state" class="apply" @click="handelClick('applyTask')">申请任务</button>
         </div>
         <div class="right">
           <span class="assets">{{information.total_payment}}</span>
           <span class="number">{{information.task_num}} 人在申请</span>
-          <button v-if="!show" class="cancel" @click="handelClick('cancelTask')">取消申请</button>
+          <button v-if="!show && state" class="cancel" @click="handelClick('cancelTask')">取消申请</button>
         </div>
       </div>
     </div>
@@ -34,19 +34,21 @@ export default {
   data() {
     return {
       show: true,
+      state: true,
       logoImg: require('@/assets/imgs/img5.png')
     }
   },
   methods: {
     handelClick(val) {
+      this.show = !this.show
       this.$emit('taskSele', val)
     }
   },
   mounted() {
     if (window.sessionStorage.getItem('user_type') === '0') {
-      this.show = true
+      this.state = true
     } else if (window.sessionStorage.getItem('user_type') === '1') {
-      this.show = false
+      this.state = false
     }
   }
 }

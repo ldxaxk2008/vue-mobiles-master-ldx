@@ -146,11 +146,11 @@ export default {
       }
     }
     // 权限添加
-    // if (window.sessionStorage.getItem('user_type') === '0') {
-    //   this.show = false
-    // } else if (window.sessionStorage.getItem('user_type') === '1') {
-    //   this.show = true
-    // }
+    if (window.sessionStorage.getItem('user_type') === '0') {
+      this.show = false
+    } else if (window.sessionStorage.getItem('user_type') === '1') {
+      this.show = true
+    }
     // this.getData()
     this.informationData()
   },
