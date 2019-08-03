@@ -2,11 +2,11 @@
   <div class="task-stage">
     <div class="stage-head">
       <div class="name">
-        <span>{{information.name}}</span>
-        <span>{{information.industry}}</span>
+        <span>{{information.company_name}}</span>
+        <span>{{information.industry||'行业未知'}}</span>
       </div>
       <div class="more">
-        <van-icon name="orders-o" />
+        <van-icon name="orders-o" @click="handelClick"/>
       </div>
     </div>
     <EnterpriseSynopsis :information="information"></EnterpriseSynopsis>
@@ -59,6 +59,9 @@ export default {
   methods: {
     taskpay() {
       this.$router.push('/Pay')
+    },
+    handelClick() {
+      this.$router.push({name: 'TaskList', params: {id: this.information}})
     }
   },
   mounted() {

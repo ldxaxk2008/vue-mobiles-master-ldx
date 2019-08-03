@@ -32,18 +32,7 @@ export default {
       userid: 0,
       show: true,
       tittle: 'LOGO设计',
-      companyList: {
-        name: '深圳益康电子',
-        industry: '人工智能',
-        assets: '300000￥',
-        number: '18',
-        logoImg: require('@/assets/imgs/user-img.png'),
-        aboutUs: '公司介绍多看看出席第公司介绍多看看出席第公司介绍多看看出席第公司介绍多看看出席第公司介绍多看看出席第公司介绍多看看出席第公司介绍多看看出席第公司介绍多看看出席第公司介绍多看看出席第公司介绍多看看出席第',
-        days: 3,
-        tasksNum: 35,
-        task_id: '',
-        pay: '$355555'
-      },
+      companyList: {},
       information: {},
       down: [
         {
@@ -119,8 +108,9 @@ export default {
     },
     getData() {
       companyDetails({user_id: this.information.company_id}).then((res) => {
+        console.log(res.data)
         if (res.data.success) {
-          this.companyList = res.data.results
+          this.companyList = res.data.data
         } else {
         }
       }).catch(() => {

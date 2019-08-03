@@ -10,7 +10,8 @@
         </div>
         <div class="right">
           <span class="assets">{{information.total_payment}}</span>
-          <span class="number">{{information.task_num}} 人在申请</span>
+          <span class="number" v-if="information.user_id!==0">{{information.user_name}} 已申请</span>
+          <span class="number" v-else>{{information.task_num}} 人在申请</span>
           <button v-if="!show && state" class="cancel" @click="handelClick('cancelTask')">取消申请</button>
         </div>
       </div>
@@ -45,10 +46,15 @@ export default {
     }
   },
   mounted() {
-    if (window.sessionStorage.getItem('user_type') === '0') {
+    console.log(this.information, 222222222)
+    if (sessionStorage.getItem('user_type') === '0') {
       this.state = true
-    } else if (window.sessionStorage.getItem('user_type') === '1') {
+    } else if (sessionStorage.getItem('user_type') === '1') {
       this.state = false
+    } else {
+      if (this.information.user_id && this.information.user_id !== 0 && this.information.user_id === sessionStorage.getItem('user_id')) {
+        this.show = false
+      }
     }
   }
 }
