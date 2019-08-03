@@ -17,9 +17,9 @@
         active-color="#f44"
       />-->
       <progressBar />
-      <button class="confirm">进行阶段确认</button>
-      <button v-show="show" class="deliver" @click="taskpay">任务交付</button>
-      <button v-show="!show" class="deliver">确认任务完成</button>
+      <button v-if="status!==2" class="confirm">进行阶段确认</button>
+      <button v-if="show && status===2" class="deliver" @click="taskpay">任务交付</button>
+      <button v-if="!show && status===2" class="deliver">确认任务完成</button>
     </div>
     <FileDown :down="down" />
   </div>
@@ -39,6 +39,10 @@ export default {
     down: {
       type: Array,
       default: () => []
+    },
+    status: {
+      type: Number,
+      default: 1
     }
   },
   components: {
@@ -48,6 +52,7 @@ export default {
   },
   data() {
     return {
+      show: true,
       rangeValue: 20
     }
   },
@@ -56,17 +61,12 @@ export default {
       this.$router.push('/Pay')
     }
   },
-  computed: {
-    show () {
-      if (window.sessionStorage.getItem('user_type') === '1') {
-        return false
-      } else if (window.sessionStorage.getItem('user_type') === '0') {
-        return true
-      }
-    }
-  },
   mounted() {
-    console.log(this.information, 9999)
+    if (window.sessionStorage.getItem('user_type') === '1') {
+      this.show = false
+    } else if (window.sessionStorage.getItem('user_type') === '0') {
+      this.show = true
+    }
   }
 }
 </script>

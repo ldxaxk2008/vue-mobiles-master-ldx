@@ -3,7 +3,7 @@
     <common-header :tittle="tittle" :showmore="false"></common-header>
     <div class="task-content">
       <taskSynopsis @taskSele="handelClick" :information="information"></taskSynopsis>
-      <taskStage :information="companyList" :down="down"></taskStage>
+      <taskStage :information="companyList" :status="status" :down="down"></taskStage>
     </div>
     <div class="task-footer" v-if="show">
       <ul>
@@ -27,6 +27,7 @@ export default {
   },
   data() {
     return {
+      status: 1,
       show: true,
       tittle: 'LOGO设计',
       companyList: {
@@ -127,6 +128,7 @@ export default {
       taskDetails((this.$route.params.id && this.$route.params.id.id) || this.task_id).then((res) => {
         if (res.data.success) {
           this.information = res.data.data
+          this.status = this.information.status
         } else {
         }
       }).catch(() => {
