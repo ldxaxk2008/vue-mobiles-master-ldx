@@ -1,18 +1,16 @@
 <template>
   <div class="enterprise" :id="information.id">
     <div class="synopsis-head">
-      <div class="synopsis-logoborder">
         <img
           v-if="imgShow"
           :src="information.image"
           alt="logo"
           class="logo"
         />
-      </div>
       <div class="contenr">
         <div class="company" v-if="imgShow">
-          <span class="name">{{information.nick_name===''?'未添加昵称':information.nick_name}}</span>
-          <span class="autograph">{{information.school_name === ''?'未添加学校':information.school_name}}</span>
+          <span class="name">{{information.nick_name}}</span>
+          <span class="autograph">{{information.school_name}}</span>
         </div>
         <div class="synopsis-main">
           <div class="left" @click="handelClick">
@@ -48,7 +46,6 @@ export default {
   },
   data() {
     return {
-      headimg: require('@/assets/imgs/user-img.png')
     }
   },
   methods: {
@@ -66,21 +63,6 @@ export default {
   .synopsis-head {
     color: #000;
     display: flex;
-    .synopsis-logoborder {
-      .w(230);
-      .h(230);
-      .b-radius(125);
-      /*! autoprefixer: off */
-      background: -webkit-linear-gradient(right, #af002a, #e5d200);
-      /* autoprefixer: on */
-      background: -moz-linear-gradient(right, #af002a, #e5d200);
-      background: -o-linear-gradient(right, #af002a, #e5d200);
-      background: linear-gradient(right, #af002a, #e5d200);
-      margin: 0 auto;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
     .logo {
       .w(200);
       .h(200);
