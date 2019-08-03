@@ -131,18 +131,14 @@ export default {
     },
     getList () {
       let taskid = this.task_id
-      getacceptuserlist(taskid).then(res => {
+      getacceptuserlist({task_id: taskid}).then(res => {
         console.log(res)
       })
     }
   },
   mounted () {
-<<<<<<< HEAD
     console.log(this.$route.params)
     this.task_id = this.$route.params.id.id
-=======
-    this.task_id = this.$router.params.id.id
->>>>>>> f103661051bbb7a4cbc5734024e5017abf6bb108
     this.getList()
   }
 }

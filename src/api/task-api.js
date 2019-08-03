@@ -15,5 +15,5 @@ export function publishtask(data) {
 }
 // 获取taskuser未调取
 export function getacceptuserlist(data) {
-  return fetchGet(`${baseUrl}/api/task/user/${data}/`)
+  return fetchGet(`${baseUrl}/api/task/user/`, data)
 }
