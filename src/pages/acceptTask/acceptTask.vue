@@ -131,7 +131,7 @@ export default {
     },
     getList () {
       let taskid = this.task_id
-      getacceptuserlist(taskid).then(res => {
+      getacceptuserlist({task_id: taskid}).then(res => {
         console.log(res)
       })
     }

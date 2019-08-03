@@ -1,11 +1,16 @@
 <template>
   <div class="enterprise" :id="information.id">
     <div class="synopsis-head">
-      <img v-if="imgShow" :src="information.image" alt="logo" class="logo">
+        <img
+          v-if="imgShow"
+          :src="information.image?information.image:headimg"
+          alt="logo"
+          class="logo"
+        />
       <div class="contenr">
         <div class="company" v-if="imgShow">
-          <span class="name">{{information.username}}</span>
-          <span class="autograph">{{information.school_name}}</span>
+          <span class="name">{{information.nick_name===''?'未添加昵称':information.nick_name}}</span>
+          <span class="autograph">{{information.school_name ===''?'未添加学校':information.school_name}}</span>
         </div>
         <div class="synopsis-main">
           <div class="left" @click="handelClick">
@@ -39,6 +44,11 @@ export default {
       default: () => {}
     }
   },
+  data() {
+    return {
+      headimg: require('@/assets/imgs/user-img.png')
+    }
+  },
   methods: {
     handelClick() {
       this.$router.push('/mine')
@@ -50,31 +60,35 @@ export default {
 <style scoped lang="less">
 @import "~styles/index.less";
 @import "~styles/variable.less";
-.enterprise{
-  .synopsis-head{
+.enterprise {
+  .synopsis-head {
     color: #000;
     display: flex;
-    .logo{
+    .logo {
       .w(200);
       .h(200);
       .b-radius(125);
+      border: 5px solid #ffffff;
+      background: #ffffff;
     }
-    .contenr{
+    .contenr {
       flex: 1;
-      .company{
+      .company {
         display: flex;
         flex-direction: column;
         text-align: left;
         .ml(50);
       }
-      .synopsis-main{
+      .synopsis-main {
         display: flex;
-        .left,.right{
-          .van-icon{
+        .left,
+        .right {
+          .van-icon {
             .mb(20);
             .fs(60);
           }
-          .name,.assets{
+          .name,
+          .assets {
             .mb(10);
           }
           .mt(30);
@@ -86,11 +100,11 @@ export default {
       }
     }
   }
-  .about-us{
+  .about-us {
     text-align: left;
     .mt(40);
     color: #000;
-    p{
+    p {
       .mb(20);
       text-indent: 24px;
     }

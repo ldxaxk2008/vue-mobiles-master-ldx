@@ -1,6 +1,6 @@
 <template>
   <div class="taskpage-error">
-    <!-- <common-header :tittle="tittle" :showback="false" :showmore="false"></common-header> -->
+    <common-header :tittle="tittle" :showback="true" :showmore="false"></common-header>
     <div style="flex:1;">
       <div class="taskpage-error--img">
         <img src="@/assets/imgs/nonetwork.png" alt />
@@ -39,12 +39,11 @@ export default {
 .taskpage-error {
   background-color: #ffffff;
   .taskpage-error--img {
-    .mt(180);
+    .mb(0);
+    width: 100%;
   }
   .taskpage-error--con {
     .pb(60);
-    display: flex;
-    flex-direction: column;
     .taskpage--con__title {
       color: #a90e5d;
       .fs(40);
