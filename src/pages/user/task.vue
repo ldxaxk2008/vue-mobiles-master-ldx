@@ -5,7 +5,7 @@
       <taskSynopsis @taskSele="handelClick" :information="information"></taskSynopsis>
       <taskStage :information="companyList" :down="down"></taskStage>
     </div>
-    <div class="task-footer">
+    <div class="task-footer" v-if="show">
       <ul>
         <li v-for="(item,index) in navList" :key="index" @click="item.fun">{{item.label}}</li>
       </ul>
@@ -27,6 +27,7 @@ export default {
   },
   data() {
     return {
+      show: true,
       tittle: 'LOGO设计',
       companyList: {
         name: '深圳益康电子',
@@ -143,6 +144,12 @@ export default {
     }
   },
   mounted() {
+    // 显示是否隐藏
+    // if (window.sessionStorage.getItem('user_type') === '0') {
+    //   this.show = false
+    // } else if (window.sessionStorage.getItem('user_type') === '1') {
+    //   this.show = true
+    // }
     console.log(this.$route, 11111111111)
     if (JSON.stringify(this.$route.params) === '{}') {
       this.$router.push('/mine')

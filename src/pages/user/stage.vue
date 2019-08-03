@@ -15,12 +15,13 @@
         v-model="rangeValue"
         bar-height="4px"
         active-color="#f44"
-      /> -->
-      <progressBar/>
+      />-->
+      <progressBar />
       <button class="confirm">进行阶段确认</button>
-      <button class="deliver" @click="taskpay">任务交付</button>
+      <button v-show="show" class="deliver" @click="taskpay">任务交付</button>
+      <button v-show="!show" class="deliver">确认任务完成</button>
     </div>
-    <FileDown :down="down"/>
+    <FileDown :down="down" />
   </div>
 </template>
 
@@ -54,6 +55,18 @@ export default {
     taskpay() {
       this.$router.push('/Pay')
     }
+  },
+  computed: {
+    show () {
+      if (window.sessionStorage.getItem('user_type') === '1') {
+        return false
+      } else if (window.sessionStorage.getItem('user_type') === '0') {
+        return true
+      }
+    }
+  },
+  mounted() {
+    console.log(this.information, 9999)
   }
 }
 </script>
@@ -61,50 +74,49 @@ export default {
 <style scoped lang="less">
 @import "~styles/index.less";
 @import "~styles/variable.less";
-.task-stage{
-  .padding(30,30,30,30);
+.task-stage {
+  .padding(30, 30, 30, 30);
   background: #fff;
-  .stage-head{
+  .stage-head {
     display: flex;
     align-items: center;
     justify-content: space-between;
     .mb(20);
-    .name{
+    .name {
       display: flex;
       flex-direction: column;
       color: #000;
-      span:nth-child(1){
+      span:nth-child(1) {
         .fs(30);
       }
     }
-    .more{
-      .van-icon{
+    .more {
+      .van-icon {
         .fs(50);
         color: #000;
       }
     }
   }
-  .slider{
+  .slider {
     .pt(20);
     .pb(20);
     text-align: left;
-    .confirm{
+    .confirm {
       .mt(40);
       .b-radius(200);
       color: #fff;
-      border:none;
-      .padding(10,20,10,20);
+      border: none;
+      .padding(10, 20, 10, 20);
       background: #c44c89;
     }
-    .deliver{
+    .deliver {
       .mt(40);
       .b-radius(200);
       color: #fff;
-      border:none;
-      .padding(10,20,10,20);
-      background: #C0C0C0;
+      border: none;
+      .padding(10, 20, 10, 20);
+      background: #c0c0c0;
     }
   }
 }
-
 </style>

@@ -39,12 +39,14 @@ export default {
   },
   methods: {
     handelClick(val) {
-      if (window.sessionStorage.getItem('user_type') === 0) {
-        this.show = true
-      } else if (window.sessionStorage.getItem('user_type') === 1) {
-        this.show = false
-      }
       this.$emit('taskSele', val)
+    }
+  },
+  mounted() {
+    if (window.sessionStorage.getItem('user_type') === '0') {
+      this.show = true
+    } else if (window.sessionStorage.getItem('user_type') === '1') {
+      this.show = false
     }
   }
 }
