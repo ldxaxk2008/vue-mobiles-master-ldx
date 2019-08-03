@@ -8,7 +8,7 @@
     <div class="user-list">
       <img class="user-img" :src="userImg" alt="" srcset="">
       <ul>
-        <li v-for="(item,index) in userList" :key="index" :style="{backgroundColor:item.bg}" @click="handelClick(item.path)">
+        <li v-for="(item,index) in userList" :key="index" :style="{backgroundColor:item.bg}" @click="handelClick(item.path)" v-if="!item.hide">
           <span :style="{color:item.color}" class="text">{{item.label}}</span>
           <span v-if="item.tips" class="tips">{{item.tips}}</span>
         </li>
@@ -27,6 +27,7 @@ export default {
     return {
       textData: {},
       show: false,
+      hide: true,
       tittle: '',
       num: 0,
       nickName: '你的昵称',
@@ -37,7 +38,15 @@ export default {
           bg: '#f9ce20',
           color: '#fff',
           path: '/User/Student',
+          hide: false,
           label: '个人简介'
+        },
+        {
+          bg: '#f9ce20',
+          color: '#fff',
+          path: '/User/taskList',
+          hide: true,
+          label: '公司简介'
         },
         {
           bg: '#b92671',
@@ -90,6 +99,13 @@ export default {
     ...mapState({
       number: state => state.home.number
     })
+  },
+  mounted() {
+    let usertype = sessionStorage.getItem('user_type')
+    if (usertype === '1') {
+      this.userList[1].hide = false
+      this.userList[0].hide = true
+    }
   }
 }
 </script>
