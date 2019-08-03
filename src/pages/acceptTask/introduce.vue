@@ -9,7 +9,7 @@
             <span class="autograph">{{information.industry||'行业未知'}}</span>
           </div>
           <span class="lv">{{information.level}}</span>
-          <van-checkbox v-model="information.checked" checked-color="#c14182"></van-checkbox>
+          <van-checkbox :name="keys" v-model="information.checked" checked-color="#c14182"></van-checkbox>
         </div>
         <div class="synopsis-main">
           {{information.desc||'暂无描述'}}
@@ -29,6 +29,10 @@ export default {
     information: {
       type: Object,
       default: () => {}
+    },
+    keys: {
+      type: Number,
+      default: 0
     }
   },
   data() {

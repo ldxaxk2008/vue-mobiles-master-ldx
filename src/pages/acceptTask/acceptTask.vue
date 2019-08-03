@@ -2,10 +2,12 @@
   <div class="accept">
     <common-header :tittle="tittle"></common-header>
     <div class="accept-main">
-      <div class="accept-main-box" v-for="(item,index) in acceptList" :key="index">
-        <introduce :information="item" :imgShow="true"/>
-        <comment :commentList="item"/>
-      </div>
+      <van-checkbox-group v-model="result" :max="1">
+        <div class="accept-main-box" v-for="(item,index) in acceptList" :key="index">
+          <introduce :information="item" :keys="index" :imgShow="true"/>
+          <comment :commentList="item"/>
+        </div>
+      </van-checkbox-group>
     </div>
     <div class="task-footer">
       <ul>
@@ -28,6 +30,7 @@ export default {
   },
   data() {
     return {
+      result: [],
       tittle: '任务接受者确认',
       task_id: '',
       task_user_ids: '',
