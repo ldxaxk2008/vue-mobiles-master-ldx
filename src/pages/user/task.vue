@@ -5,7 +5,7 @@
       <taskSynopsis @taskSele="handelClick" :information="information"></taskSynopsis>
       <taskStage :information="companyList" :status="status" :down="down"></taskStage>
     </div>
-    <div class="task-footer" v-if="show && userid">
+    <div class="task-footer" v-if="show && userid ==0">
       <ul>
         <li v-for="(item,index) in navList" :key="index" @click="item.fun">{{item.label}}</li>
       </ul>
