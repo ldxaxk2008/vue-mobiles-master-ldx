@@ -17,3 +17,7 @@ export function publishtask(data) {
 export function getacceptuserlist(data) {
   return fetchGet(`${baseUrl}/api/task/user/`, data)
 }
+// 公司选择学生
+export function selectstudents(data) {
+  return fetchGet(`${baseUrl}/api/task/select/user/`, data)
+}
