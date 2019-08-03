@@ -10,10 +10,10 @@
           <!-- <van-field v-model="registerlist.username" placeholder="账号" />
           <van-field v-model="registerlist.password" placeholder="密码" />-->
           <div>
-            <input type="text" v-model="registerlist.username" placeholder="账号" />
+            <input type="text" v-model="registerlist.username" placeholder="账号" @keyup.enter="login" />
           </div>
           <div>
-            <input type="password" v-model="registerlist.password" placeholder="密码" />
+            <input type="password" v-model="registerlist.password" placeholder="密码" @keyup.enter="login" />
           </div>
         </div>
         <span class="forgetword" @click="hanleclick">忘记密码</span>
