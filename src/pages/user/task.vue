@@ -5,7 +5,7 @@
       <taskSynopsis @taskSele="handelClick" :information="information"></taskSynopsis>
       <taskStage :information="companyList" :status="status" :down="down"></taskStage>
     </div>
-    <div class="task-footer" v-if="show">
+    <div class="task-footer" v-if="show && userid">
       <ul>
         <li v-for="(item,index) in navList" :key="index" @click="item.fun">{{item.label}}</li>
       </ul>
@@ -29,6 +29,7 @@ export default {
   data() {
     return {
       status: 1,
+      userid: 0,
       show: true,
       tittle: 'LOGO设计',
       companyList: {
@@ -130,6 +131,7 @@ export default {
         if (res.data.success) {
           this.information = res.data.data
           this.status = this.information.status
+          this.userid = this.information.user_id
         } else {
         }
       }).catch(() => {
@@ -149,7 +151,7 @@ export default {
     // 权限添加
     if (window.sessionStorage.getItem('user_type') === '0') {
       this.show = false
-    } else if (window.sessionStorage.getItem('user_type') === '1') {
+    } else if (window.sessionStorage.getItem('user_type') === '1' && this.userid !== 0) {
       this.show = true
     }
     this.getData()
