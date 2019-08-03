@@ -33,17 +33,26 @@ export default {
       tittle: '任务列表',
       active: 0,
       currentList: [],
-      currentprice: []
+      currentprice: [],
+      page: {
+        limit: 50,
+        offset: 0
+      }
     }
   },
   methods: {
     onClick(index) {
-      this.getData()
+      let params = {
+        status: this.active === 0 ? 2 : 1,
+        limit: 4,
+        offset: 0
+      }
+      this.getData(params)
     },
-    getData() {
+    getData(params) {
       this.currentList = []
       this.currentprice = []
-      taskList().then((res) => {
+      taskList(params).then((res) => {
         if (res.data.success === ERR_OK) {
           if (this.active === 0) {
             this.currentList = res.data.data.results
@@ -56,21 +65,14 @@ export default {
       })
     },
     more(val) {
-      if (val === 'currentList') {
-        let obj = this.currentList[0]
-        for (let i = 0; i < 3; i++) {
-          this.currentList.push(obj)
-        }
-      } else {
-        let obj = this.currentprice[0]
-        for (let i = 0; i < 3; i++) {
-          this.currentprice.push(obj)
-        }
-      }
+      this.page.offset += this.page.limit
+      let status = this.active === 0 ? 2 : 1
+      let params = Object.assign(this.page, status)
+      this.getData(params)
     }
   },
   mounted() {
-    this.getData()
+    this.onClick()
   }
 }
 </script>

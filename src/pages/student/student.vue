@@ -137,7 +137,7 @@ export default {
     getListData() {
       taskList(this.page).then((res) => {
         if (!res.data.data.results.length) {
-          this.$refs['more'].$el.removeChild(this.$refs['more'].$el.getElementsByClassName('more')[0])
+          this.$refs['more'].close()
           return false
         }
         if (res.data.success === ERR_OK) {
