@@ -1,6 +1,6 @@
 <template>
   <div class="taskpage-success">
-    <!-- <common-header :tittle="tittle" :showback="false" :showmore="false"></common-header> -->
+    <common-header :tittle="tittle" :showback="true" :showmore="false"></common-header>
     <div style="flex:1;">
       <div class="taskpage-success--img">
         <img src="@/assets/imgs/network.png" alt />
@@ -42,7 +42,7 @@ export default {
 .taskpage-success {
   background-color: #ffffff;
   .taskpage-success--img {
-    .mt(250);
+    .mt(150);
     width: 100%;
   }
   .taskpage-success--con {

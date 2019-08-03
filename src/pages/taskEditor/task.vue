@@ -9,6 +9,7 @@
           type="text"
           placeholder="请输入选择类型"
           @focus="changedata"
+          ref="typeinput"
         />
         <van-icon class="task-editor-secicon" name="arrow-down" />
         <van-action-sheet v-model="show" :actions="actions" @select="onSelect" />
@@ -62,6 +63,7 @@
                 v-model="valueData.end_date"
                 type="text"
                 @focus="popup"
+                ref="timeinput"
               />
               <van-icon class="task-editor-secicon" name="arrow-down" />
               <van-popup v-model="disabled" position="bottom" :overlay="true">
@@ -165,10 +167,12 @@ export default {
     // input框筛选
     changedata(val) {
       this.show = true
+      this.$refs.typeinput.readOnly = true
     },
     // input框筛选
     popup() {
       this.disabled = true
+      this.$refs.timeinput.readOnly = true
     },
     // 时间筛选chang事件 返回当前选定的值
     timeSelect(e) {
