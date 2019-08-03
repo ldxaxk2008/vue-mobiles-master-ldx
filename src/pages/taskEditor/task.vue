@@ -118,36 +118,36 @@ export default {
       maplist: [
         {
           img: require('@/assets/imgs/copy1.png'),
-          name: '',
-          value: '',
+          name: '文案',
+          value: '7',
           disable: true,
           color: '#1B9EA7'
         },
         {
           img: require('@/assets/imgs/copy2.png'),
-          name: '',
-          value: '',
+          name: '设计',
+          value: '8',
           disable: false,
           color: '#F79D33'
         },
         {
           img: require('@/assets/imgs/copy3.png'),
-          name: '',
-          value: '',
+          name: '代码',
+          value: '9',
           disable: false,
           color: '#1B9EA7'
         },
         {
           img: require('@/assets/imgs/copy4.png'),
-          name: '',
-          value: '',
+          name: '手绘',
+          value: '10',
           disable: false,
           color: '#3BDA8A'
         },
         {
           img: require('@/assets/imgs/copy5.png'),
-          name: '',
-          value: '',
+          name: 'PPT',
+          value: '11',
           disable: false,
           color: '#F79D33'
         }
@@ -229,19 +229,20 @@ export default {
         }
       })
     },
-    getTypes() {
-      let params = {
-        resource_type: 3
-      }
-      gettype(params).then(response => {
-        if (response.data.success === ERR_OK) {
-          response.data.data.results.map((res, index) => {
-            this.maplist[index].name = res.title
-            this.maplist[index].value = res.id
-          })
-        }
-      })
-    },
+    // 获取tab
+    // getTypes() {
+    //   let params = {
+    //     resource_type: 3
+    //   }
+    //   gettype(params).then(response => {
+    //     if (response.data.success === ERR_OK) {
+    //       response.data.data.results.map((res, index) => {
+    //         this.maplist[index].name = res.title
+    //         this.maplist[index].value = res.id
+    //       })
+    //     }
+    //   })
+    // },
     // 获取工具
     // getTool() {
     //   let params = {
@@ -310,7 +311,7 @@ export default {
   },
   mounted() {
     this.getType()
-    this.getTypes()
+    // this.getTypes()
   }
 }
 </script>
