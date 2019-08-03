@@ -18,8 +18,7 @@
           <div class="left" @click="handelClick">
             <van-icon name="comment-circle-o" />
             <span class="name">已发布任务</span>
-            <span class="industry">{{information.task_count}}</span>
-            <span class="industry">{{information.task_num}}</span>
+            <span class="industry">{{information.task_count||information.task_num}}</span>
           </div>
           <div class="right">
             <van-icon name="refund-o" />
@@ -30,8 +29,7 @@
       </div>
     </div>
     <div class="about-us">
-      <p>{{information.aboutUs}}</p>
-      <p>{{information.desc}}</p>
+      <p>{{information.aboutUs||information.desc||'暂无介绍'}}</p>
     </div>
   </div>
 </template>
