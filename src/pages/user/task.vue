@@ -3,9 +3,9 @@
     <common-header :tittle="tittle" :showmore="false"></common-header>
     <div class="task-content">
       <taskSynopsis @taskSele="handelClick" :information="information"></taskSynopsis>
-      <taskStage :information="companyList" :down="down"></taskStage>
+      <taskStage :information="companyList" :status="status" :down="down"></taskStage>
     </div>
-    <div class="task-footer">
+    <div class="task-footer" v-if="show">
       <ul>
         <li v-for="(item,index) in navList" :key="index" @click="item.fun">{{item.label}}</li>
       </ul>
@@ -28,6 +28,8 @@ export default {
   },
   data() {
     return {
+      status: 1,
+      show: true,
       tittle: 'LOGO设计',
       companyList: {
         name: '深圳益康电子',
@@ -127,6 +129,7 @@ export default {
       taskDetails((this.$route.params.id && this.$route.params.id.id) || this.task_id).then((res) => {
         if (res.data.success) {
           this.information = res.data.data
+          this.status = this.information.status
         } else {
         }
       }).catch(() => {
@@ -143,6 +146,12 @@ export default {
         this.SET_TASK_ID(this.$route.params.id.id)
       }
     }
+    // 权限添加
+    // if (window.sessionStorage.getItem('user_type') === '0') {
+    //   this.show = false
+    // } else if (window.sessionStorage.getItem('user_type') === '1') {
+    //   this.show = true
+    // }
     this.getData()
     this.informationData()
   },
