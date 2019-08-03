@@ -55,7 +55,7 @@ export default {
   },
   mounted () {
     console.log(this.$route.params)
-    this.task_id = this.$route.params.id.id
+    this.task_id = this.$route.params.id && this.$route.params.id.id
     this.getList()
   }
 }
