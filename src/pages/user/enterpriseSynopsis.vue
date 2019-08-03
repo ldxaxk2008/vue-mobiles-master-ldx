@@ -3,14 +3,14 @@
     <div class="synopsis-head">
         <img
           v-if="imgShow"
-          :src="information.image"
+          :src="information.image?information.image:headimg"
           alt="logo"
           class="logo"
         />
       <div class="contenr">
         <div class="company" v-if="imgShow">
-          <span class="name">{{information.nick_name}}</span>
-          <span class="autograph">{{information.school_name}}</span>
+          <span class="name">{{information.nick_name===''?'未添加昵称':information.nick_name}}</span>
+          <span class="autograph">{{information.school_name ===''?'未添加学校':information.school_name}}</span>
         </div>
         <div class="synopsis-main">
           <div class="left" @click="handelClick">
@@ -46,6 +46,7 @@ export default {
   },
   data() {
     return {
+      headimg: require('@/assets/imgs/user-img.png')
     }
   },
   methods: {
