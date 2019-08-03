@@ -51,10 +51,9 @@ export default {
       this.state = true
     } else if (sessionStorage.getItem('user_type') === '1') {
       this.state = false
-    } else {
-      if (this.information.user_id && this.information.user_id !== 0 && this.information.user_id === sessionStorage.getItem('user_id')) {
-        this.show = false
-      }
+    }
+    if (this.information.user_id && this.information.user_id !== 0 && JSON.stringify(this.information.user_id) === sessionStorage.getItem('user_id')) {
+      this.show = false
     }
   }
 }
