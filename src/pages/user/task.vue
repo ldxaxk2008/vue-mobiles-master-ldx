@@ -18,7 +18,7 @@ import commonHeader from 'common/common-header'
 import taskSynopsis from './synopsis'
 import taskStage from './stage'
 import {taskDetails, applyTask, cancelTask} from 'api/home-api'
-import {mapState} from 'vuex'
+import {mapState, mapMutations} from 'vuex'
 export default {
   components: {
     commonHeader,
@@ -40,18 +40,7 @@ export default {
         task_id: '',
         pay: '$355555'
       },
-      information: {
-        name: '深圳益康电子',
-        industry: '人工智能',
-        assets: '300000￥',
-        number: '18',
-        logoImg: require('@/assets/imgs/user-img.png'),
-        aboutUs: '公司介绍多看看出席第公司介绍多看看出席第公司介绍多看看出席第公司介绍多看看出席第公司介绍多看看出席第公司介绍多看看出席第公司介绍多看看出席第公司介绍多看看出席第公司介绍多看看出席第公司介绍多看看出席第',
-        days: 3,
-        tasksNum: 35,
-        task_id: '',
-        pay: '$355555'
-      },
+      information: {},
       down: [
         {
           imgSrc: '',
@@ -90,6 +79,7 @@ export default {
     }
   },
   methods: {
+    ...mapMutations(['SET_TASK_ID']),
     tohome() {
       this.$router.goBack()
     },
@@ -105,7 +95,7 @@ export default {
     },
     handelClick(val) {
       if (val === 'applyTask') {
-        applyTask({task_id: this.$route.params.id.id, user_id: this.user_id}).then((res) => {
+        applyTask({task_id: (this.$route.params.id && this.$route.params.id.id) || this.task_id, user_id: this.user_id}).then((res) => {
           console.log(res)
           if (res.data.success) {
           } else {
@@ -113,7 +103,7 @@ export default {
         }).catch(() => {
         })
       } else {
-        cancelTask({task_id: this.$route.params.id.id, user_id: this.user_id}).then((res) => {
+        cancelTask({task_id: (this.$route.params.id && this.$route.params.id.id) || this.task_id, user_id: this.user_id}).then((res) => {
           this.$toast(res.data.msg)
           if (res.data.success) {
             // this.currentList = res.data.data.results
@@ -124,7 +114,7 @@ export default {
       }
     },
     getData() {
-      taskDetails(this.$route.params.id.id).then((res) => {
+      taskDetails((this.$route.params.id && this.$route.params.id.id) || this.task_id).then((res) => {
         if (res.data.success) {
           this.companyList = res.data.results
         } else {
@@ -133,7 +123,7 @@ export default {
       })
     },
     informationData() {
-      taskDetails(this.$route.params.id.id).then((res) => {
+      taskDetails((this.$route.params.id && this.$route.params.id.id) || this.task_id).then((res) => {
         if (res.data.success) {
           this.information = res.data.data
         } else {
@@ -143,17 +133,22 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$route, 11111111111)
-    if (JSON.stringify(this.$route.params) === '{}') {
+    console.log(this.task_id, this.user_id)
+    if (JSON.stringify(this.$route.params) === '{}' && !this.task_id) {
       this.$router.push('/mine')
       return
+    } else {
+      if (this.$route.params.id) {
+        this.SET_TASK_ID(this.$route.params.id.id)
+      }
     }
     // this.getData()
     this.informationData()
   },
   computed: {
     ...mapState({
-      user_id: state => state.login.user_id
+      user_id: state => state.login.user_id,
+      task_id: state => state.login.task_id
     })
   }
 }

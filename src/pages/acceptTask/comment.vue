@@ -1,10 +1,20 @@
 <template>
   <div class="comment">
     <ul>
-      <li v-for="(item,index) in commentList" :key="index">
-        <img :src="item.imgUrl" alt="">
-        <span>{{item.num}}</span>
-        <p>{{item.ask}}</p>
+      <li>
+        <img :src="verySatisfied" alt="">
+        <span>{{commentList.fit_require}}</span>
+        <p>符合要求</p>
+      </li>
+      <li>
+        <img :src="Satisfied" alt="">
+        <span>{{commentList.satisfied}}</span>
+        <p>比较满意</p>
+      </li>
+      <li>
+        <img :src="Dissatisfied" alt="">
+        <span>{{commentList.not_satisfied}}</span>
+        <p>远超预期</p>
       </li>
     </ul>
   </div>
@@ -14,8 +24,15 @@
 export default {
   props: {
     commentList: {
-      type: Array,
+      type: Object,
       default: () => []
+    }
+  },
+  data() {
+    return {
+      verySatisfied: require('@/assets/imgs/verySatisfied.svg'),
+      Satisfied: require('@/assets/imgs/Satisfied.svg'),
+      Dissatisfied: require('@/assets/imgs/Dissatisfied.svg')
     }
   }
 }

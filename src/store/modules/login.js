@@ -7,12 +7,14 @@ const login = {
   state: {
     token: '',
     user_id: '',
-    user_type: ''
+    user_type: '',
+    task_id: ''
   },
   mutations: {
     [types.SET_TOKEN](state, data) {
       state.token = data.token
       state.user_id = data.user_id
+      state.task_id = data.task_id
       state.user_type = data.user_type
       sessionStorage.setItem('token', data.token)
       sessionStorage.setItem('user_id', data.user_id)
@@ -21,6 +23,9 @@ const login = {
     [types.DEL_TOKEN](state) {
       state.token = ''
       sessionStorage.removeItem('token')
+    },
+    [types.SET_TASK_ID](state, data) {
+      state.task_id = data
     }
   },
   actions: {},

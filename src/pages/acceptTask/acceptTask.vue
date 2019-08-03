@@ -3,8 +3,8 @@
     <common-header :tittle="tittle"></common-header>
     <div class="accept-main">
       <div class="accept-main-box" v-for="(item,index) in acceptList" :key="index">
-        <introduce :information="item.information" :imgShow="true"/>
-        <comment :commentList="item.commentList"/>
+        <introduce :information="item" :imgShow="true"/>
+        <comment :commentList="item"/>
       </div>
     </div>
     <div class="task-footer">
@@ -38,90 +38,7 @@ export default {
           }
         }
       ],
-      acceptList: [
-        {
-          information: {
-            name: '深圳益康电子',
-            industry: '人工智能',
-            logoImg: require('@/assets/imgs/user-img.png'),
-            aboutUs: '公司介绍多看看出席第公司介绍多看介绍多看看出席第',
-            lv: 'LV13',
-            checked: true
-          },
-          commentList: [
-            {
-              imgUrl: require('@/assets/imgs/verySatisfied.svg'),
-              num: 99,
-              ask: '符合要求'
-            },
-            {
-              imgUrl: require('@/assets/imgs/Satisfied.svg'),
-              num: 88,
-              ask: '比较满意'
-            },
-            {
-              imgUrl: require('@/assets/imgs/Dissatisfied.svg'),
-              num: 11,
-              ask: '远超预期'
-            }
-          ]
-        },
-        {
-          information: {
-            name: '深圳益康电子',
-            industry: '人工智能',
-            logoImg: require('@/assets/imgs/img0.png'),
-            aboutUs: '公司介绍多看看出席第公司介绍多看介绍多看看出席第',
-            lv: 'LV13',
-            checked: false
-          },
-          commentList: [
-            {
-              imgUrl: require('@/assets/imgs/verySatisfied.svg'),
-              num: 33,
-              ask: '符合要求'
-            },
-            {
-              imgUrl: require('@/assets/imgs/Satisfied.svg'),
-              num: 22,
-              ask: '比较满意'
-            },
-            {
-              imgUrl: require('@/assets/imgs/Dissatisfied.svg'),
-              num: 11,
-              ask: '远超预期'
-            }
-          ]
-        },
-        {
-          information: {
-            name: '深圳益康电子',
-            industry: '人工智能',
-            logoImg: require('@/assets/imgs/img5.png'),
-            aboutUs: '公司介绍多看看出席第公司介绍多看介绍多看看出席第',
-            lv: 'LV13',
-            checked: false
-          },
-          commentList: [
-            {
-              imgUrl: require('@/assets/imgs/verySatisfied.svg'),
-              num: 11,
-              ask: '符合要求'
-            },
-            {
-              imgUrl: require('@/assets/imgs/Satisfied.svg'),
-              num: 22,
-              ask: '比较满意'
-            },
-            {
-              imgUrl: require('@/assets/imgs/Dissatisfied.svg'),
-              num: 0,
-              ask: '远超预期'
-            }
-          ]
-        }
-      ]
-
+      acceptList: []
     }
   },
   methods: {
@@ -132,7 +49,7 @@ export default {
     getList () {
       let taskid = this.task_id
       getacceptuserlist({task_id: taskid}).then(res => {
-        console.log(res)
+        this.acceptList = res.data.data.results
       })
     }
   },
