@@ -18,7 +18,7 @@ import commonHeader from 'common/common-header'
 import taskSynopsis from './synopsis'
 import taskStage from './stage'
 import {taskDetails, applyTask, cancelTask} from 'api/home-api'
-
+import {mapState} from 'vuex'
 export default {
   components: {
     commonHeader,
@@ -37,6 +37,7 @@ export default {
         aboutUs: '公司介绍多看看出席第公司介绍多看看出席第公司介绍多看看出席第公司介绍多看看出席第公司介绍多看看出席第公司介绍多看看出席第公司介绍多看看出席第公司介绍多看看出席第公司介绍多看看出席第公司介绍多看看出席第',
         days: 3,
         tasksNum: 35,
+        task_id: '',
         pay: '$355555'
       },
       down: [
@@ -91,17 +92,17 @@ export default {
       this.$router.push('/User/acceptTask')
     },
     handelClick(val) {
+      console.log(this.$route.params.id, 'aaaaaaaaaaaaa')
       if (val === 'applyTask') {
-        applyTask({task_id: this.$route.params.id.id}).then((res) => {
+        applyTask({task_id: this.$route.params.id.id, user_id: this.user_id}).then((res) => {
           console.log(res)
           if (res.data.success) {
-            // this.currentList = res.data.data.results
           } else {
           }
         }).catch(() => {
         })
       } else {
-        cancelTask({task_id: this.$route.params.id.id, user_id: 14}).then((res) => {
+        cancelTask({task_id: this.$route.params.id.id, user_id: this.user_id}).then((res) => {
           this.$toast(res.data.msg)
           if (res.data.success) {
             // this.currentList = res.data.data.results
@@ -114,7 +115,7 @@ export default {
     getData() {
       taskDetails(this.$route.params.id.id).then((res) => {
         if (res.data.success) {
-          this.currentList = res.data.data.results
+          // this.information = res.data.results
         } else {
         }
       }).catch(() => {
@@ -122,12 +123,17 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$route)
+    console.log(this.$route, 11111111111)
     if (JSON.stringify(this.$route.params) === '{}') {
       this.$router.push('/mine')
       return
     }
     this.getData()
+  },
+  computed: {
+    ...mapState({
+      user_id: state => state.login.user_id
+    })
   }
 }
 </script>
