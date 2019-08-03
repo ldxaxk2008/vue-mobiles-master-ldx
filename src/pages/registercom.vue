@@ -51,7 +51,7 @@ export default {
         phone: '',
         user_type: 1,
         code: '',
-        // vercode:'' 验证码
+        vercode: '', // 验证码
         email: '',
         password: '',
         confirm_password: ''
@@ -65,11 +65,34 @@ export default {
     addlevel() {
       var phoneReg = /^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,3,5-8])|(18[0-9])|166|198|199|(147))\d{8}$/
       var nameReg = /^(?![^a-zA-Z]+$)(?!\D+$)(?![^_]+$).{3,16}$/ // 验证姓名正则
+      var emailReg = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,6}))$/ // 邮箱验证
       var codeReg = /^(?![A-Z]+$)(?![a-z]+$)(?!\d+$)\S{8,}$/ // 密码校验
-
+      if (this.registerlist.company_name === '') {
+        this.$toast({
+          message: '请输入公司名称'
+        })
+        return
+      }
+      if (this.registerlist.code === '') {
+        this.$toast({
+          message: '请输入工商编号'
+        })
+        return
+      }
       if (this.registerlist.contact_person === '') {
         this.$toast({
           message: '请输入联系人'
+        })
+        return
+      }
+      if (this.registerlist.email === '') {
+        this.$toast({
+          message: '请输入联系邮箱'
+        })
+        return
+      } else if (!emailReg.test(this.registerlist.email)) {
+        this.$toast({
+          message: '请输入邮箱正确格式'
         })
         return
       }
@@ -80,12 +103,13 @@ export default {
         return
       } else if (!phoneReg.test(this.registerlist.phone)) {
         this.$toast({
-          message: '请输入正确电话号码'
+          message: '请输入电话号码正确格式'
         })
         return
-      } else if (this.registerlist.phone.toString().length !== 11) {
+      }
+      if (this.registerlist.vercode === '') {
         this.$toast({
-          message: '电话号码必须是11位'
+          message: '请输入验证码'
         })
         return
       }
@@ -155,7 +179,6 @@ export default {
     .w(200);
     .h(200);
     .b-radius(500);
-    // background: linear-gradient(to right, #af002a, #e5d200);
      /*! autoprefixer: off */
     background: -webkit-linear-gradient(right, #af002a, #e5d200);
     /* autoprefixer: on */

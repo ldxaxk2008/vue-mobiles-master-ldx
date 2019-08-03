@@ -39,12 +39,11 @@ export default {
 .taskpage-error {
   background-color: #ffffff;
   .taskpage-error--img {
-    .mt(40);
+    .mb(0);
+    width: 100%;
   }
   .taskpage-error--con {
     .pb(60);
-    display: flex;
-    flex-direction: column;
     .taskpage--con__title {
       color: #a90e5d;
       .fs(40);

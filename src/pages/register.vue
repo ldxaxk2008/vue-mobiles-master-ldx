@@ -112,8 +112,44 @@ export default {
       this.show = true
     },
     addlevel() {
+      var phoneReg = /^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,3,5-8])|(18[0-9])|166|198|199|(147))\d{8}$/
       var codeReg = /^(?![A-Z]+$)(?![a-z]+$)(?!\d+$)\S{8,}$/ // 密码校验
       var nameReg = /^(?![^a-zA-Z]+$)(?!\D+$)(?![^_]+$).{3,16}$/
+      if (this.registerlist.name === '') {
+        this.$toast({
+          message: '请输入姓名'
+        })
+        return
+      }
+      if (this.registerlist.school_name === '') {
+        this.$toast({
+          message: '请输入学校'
+        })
+        return
+      }
+      if (this.registerlist.grades === '') {
+        this.$toast({
+          message: '请选择年级'
+        })
+        return
+      }
+      if (this.registerlist.phone === '') {
+        this.$toast({
+          message: '请输入电话号码'
+        })
+        return
+      } else if (!phoneReg.test(this.registerlist.phone)) {
+        this.$toast({
+          message: '请输入电话号码正确格式'
+        })
+        return
+      }
+      if (this.registerlist.code === '') {
+        this.$toast({
+          message: '请输入验证码'
+        })
+        return
+      }
       if (this.registerlist.username === '') {
         this.$toast({
           message: '请输入登录用户名'
