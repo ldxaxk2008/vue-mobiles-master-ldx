@@ -3,7 +3,7 @@
     <common-header :tittle="tittle" :showmore="false"></common-header>
     <div class="task-content">
       <taskSynopsis @taskSele="handelClick" :information="information"></taskSynopsis>
-      <taskStage :information="information" :down="down"></taskStage>
+      <taskStage :information="companyList" :down="down"></taskStage>
     </div>
     <div class="task-footer">
       <ul>
@@ -28,6 +28,18 @@ export default {
   data() {
     return {
       tittle: 'LOGO设计',
+      companyList: {
+        name: '深圳益康电子',
+        industry: '人工智能',
+        assets: '300000￥',
+        number: '18',
+        logoImg: require('@/assets/imgs/user-img.png'),
+        aboutUs: '公司介绍多看看出席第公司介绍多看看出席第公司介绍多看看出席第公司介绍多看看出席第公司介绍多看看出席第公司介绍多看看出席第公司介绍多看看出席第公司介绍多看看出席第公司介绍多看看出席第公司介绍多看看出席第',
+        days: 3,
+        tasksNum: 35,
+        task_id: '',
+        pay: '$355555'
+      },
       information: {
         name: '深圳益康电子',
         industry: '人工智能',
@@ -92,7 +104,6 @@ export default {
       this.$router.push('/User/acceptTask')
     },
     handelClick(val) {
-      console.log(this.$route.params.id, 'aaaaaaaaaaaaa')
       if (val === 'applyTask') {
         applyTask({task_id: this.$route.params.id.id, user_id: this.user_id}).then((res) => {
           console.log(res)
@@ -115,7 +126,16 @@ export default {
     getData() {
       taskDetails(this.$route.params.id.id).then((res) => {
         if (res.data.success) {
-          // this.information = res.data.results
+          this.companyList = res.data.results
+        } else {
+        }
+      }).catch(() => {
+      })
+    },
+    informationData() {
+      taskDetails(this.$route.params.id.id).then((res) => {
+        if (res.data.success) {
+          this.information = res.data.data
         } else {
         }
       }).catch(() => {
@@ -128,7 +148,8 @@ export default {
       this.$router.push('/mine')
       return
     }
-    this.getData()
+    // this.getData()
+    this.informationData()
   },
   computed: {
     ...mapState({
