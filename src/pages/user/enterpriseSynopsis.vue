@@ -11,12 +11,15 @@
         <div class="company" v-if="imgShow">
           <span class="name">{{information.nick_name===''?'未添加昵称':information.nick_name}}</span>
           <span class="autograph">{{information.school_name ===''?'未添加学校':information.school_name}}</span>
+          <span class="name">{{information.company_name===''?'未添加公司名称':information.company_name}}</span>
+          <!-- <span class="name">{{information.===''?'未添加行业':information.}}</span> -->
         </div>
         <div class="synopsis-main">
           <div class="left" @click="handelClick">
             <van-icon name="comment-circle-o" />
             <span class="name">已发布任务</span>
             <span class="industry">{{information.task_count}}</span>
+            <span class="industry">{{information.task_num}}</span>
           </div>
           <div class="right">
             <van-icon name="refund-o" />
@@ -28,6 +31,7 @@
     </div>
     <div class="about-us">
       <p>{{information.aboutUs}}</p>
+      <p>{{information.desc}}</p>
     </div>
   </div>
 </template>

@@ -152,6 +152,11 @@ export default new Router({
       path: '/mine',
       name: 'mine',
       component: (resolve) => require(['@/pages/mine'], resolve)
+    },
+    {
+      path: '/agreepage',
+      name: 'agreepage',
+      component: (resolve) => require(['@/pages/agreepage'], resolve)
     }
   ]
 })

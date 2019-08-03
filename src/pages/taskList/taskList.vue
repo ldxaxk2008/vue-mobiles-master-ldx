@@ -7,15 +7,15 @@
       </div>
       <div class="current-task">
         <h4>当前进行的任务</h4>
-          <currentList :currentList="currentList" @more="more('current')"/>
+          <currentList :currentList="currentList" ref="more" @more="more('current')"/>
       </div>
       <div class="done-task">
         <h4>过往任务浏览 已完成20组任务</h4>
-          <currentList :currentList="currentList" :done="true" @more="more('done')"/>
+          <currentList :currentList="currentList" ref="more" :done="true" @more="more('done')"/>
       </div>
       <div class="evaluate-list">
         <h4>学生评价</h4>
-        <evaluate :evaluate="evaluate" @evajump="evajump"/>
+        <evaluate :evaluate="evaluate"/>
       </div>
     </div>
     <div class="task-footer">
@@ -31,6 +31,11 @@ import commonHeader from 'common/common-header'
 import companyIntorduce from '@/pages/user/enterpriseSynopsis'
 import currentList from '@/pages/taskList/currentTaskList'
 import evaluate from '@/pages/taskList/evaluate'
+import {companyDetails} from 'api/company-api'
+import {taskList} from 'api/home-api'
+
+import { ERR_OK } from 'config/index'
+
 export default {
   components: {
     commonHeader,
@@ -41,37 +46,8 @@ export default {
   data() {
     return {
       tittle: '',
-      information: {
-        name: '深圳益康电子',
-        industry: '人工智能',
-        assets: '300000￥',
-        number: '18',
-        logoImg: require('@/assets/imgs/user-img.png'),
-        aboutUs: '公司介绍多看看出席第公司介绍多看看出席第公司介绍多看看出席第公司介绍多看看出席第公司介绍多看看出席第公司介绍多看看出席第公司介绍多看看出席第公司介绍多看看出席第公司介绍多看看出席第公司介绍多看看出席第',
-        days: 3,
-        tasksNum: 35,
-        pay: '$355555'
-      },
-      currentList: [
-        {
-          name: '设计',
-          people: 18,
-          money: 500,
-          days: 3,
-          ask: '任务要求任务要求任务要求任务要求任务要求',
-          data: '2019年10月20日',
-          label: ['设计', '教育培训']
-        },
-        {
-          name: '代码',
-          people: 118,
-          money: 30000,
-          days: 30,
-          ask: '大是大非路上看见法律上的看了看',
-          data: '2019年1月20日',
-          label: ['设计', '教育培训']
-        }
-      ],
+      information: {},
+      currentList: [],
       evaluate: [
         {
           imgSrc: require('@/assets/imgs/user-img.png'),
@@ -91,19 +67,50 @@ export default {
             return this.cancel(data)
           }
         }
-      ]
+      ],
+      page: {
+        limit: 50,
+        offset: 0
+      }
     }
   },
   methods: {
     more(val) {
-      let obj = this.currentList[0]
-      for (let i = 0; i < 3; i++) {
-        this.currentList.push(obj)
-      }
+      this.page.offset += this.page.limit
+      this.getListData()
     },
-    evajump() {
-      this.$router.push('/User/Student')
+    // evajump() {
+    //   this.$router.push('/User/Student')
+    // },
+    cancel(data) {
+      console.log(data)
+    },
+    getData() {
+      let userid = sessionStorage.getItem('user_id')
+      companyDetails({user_id: userid}).then(res => {
+        if (res.data.success === ERR_OK) {
+          this.information = res.data.data
+        } else {
+        }
+      }).catch(() => {
+      })
+    },
+    getListData() {
+      taskList(this.page).then(res => {
+        if (!res.data.data.results.length) {
+          this.$refs['more'].close()
+          return false
+        }
+        if (res.data.success === ERR_OK) {
+          this.currentList.push(...res.data.data.results)
+        } else {
+        }
+      }).catch({})
     }
+  },
+  mounted() {
+    this.getData()
+    this.getListData()
   }
 }
 </script>

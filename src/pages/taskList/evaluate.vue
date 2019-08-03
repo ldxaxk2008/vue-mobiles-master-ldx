@@ -2,7 +2,7 @@
   <div class="evaluate">
     <ul>
       <li v-for="(item,index) in evaluate" :key="index" @click="handelclick(item)">
-        <img :src="item.imgSrc" @click="evajump" alt="">
+        <img :src="item.imgSrc" alt="">
         <div class="remark">
           <span>{{item.remark}}</span>
           <span>{{item.data}}</span>
@@ -21,11 +21,12 @@ export default {
     }
   },
   methods: {
-    evajump() {
-      this.$emit('evajump')
-    },
     handelclick(item) {
-      this.$router.push({name: 'TaskList', params: {id: item}})
+      if (sessionStorage.getItem('user_type') === '0') {
+        this.$router.push({name: 'TaskList', params: {id: item}})
+      } else if (sessionStorage.getItem('user_type') === '1') {
+        this.$router.push({name: 'student', params: {id: item}})
+      }
     }
   }
 }
