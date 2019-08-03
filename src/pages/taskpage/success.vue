@@ -31,7 +31,7 @@ export default {
       this.$router.push({name: 'Task', params: {id: this.$route.params.id}})
     },
     prev() {
-      this.$router.push('/taskeditor/post')
+      this.$router.goBack()
     }
   }
 }

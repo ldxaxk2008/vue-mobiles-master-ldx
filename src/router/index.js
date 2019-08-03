@@ -104,7 +104,7 @@ export default new Router({
       component: (resolve) => require(['@/pages/student/student'], resolve)
     },
     {
-      path: '/User/acceptTask/:id',
+      path: '/User/acceptTask',
       name: 'acceptTask',
       component: (resolve) => require(['@/pages/acceptTask/acceptTask'], resolve)
     },

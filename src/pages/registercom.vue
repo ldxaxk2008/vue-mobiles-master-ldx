@@ -44,7 +44,6 @@ export default {
     return {
       registerlist: {
         headimg: require('@/assets/imgs/user-img.png'),
-        sex: 'man',
         username: '',
         contact_person: '',
         company_name: '',

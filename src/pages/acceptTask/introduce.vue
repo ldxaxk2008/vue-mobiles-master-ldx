@@ -1,18 +1,18 @@
 <template>
   <div class="enterprise">
-    <div class="synopsis-head">
-      <img v-if="imgShow" :src="information.logoImg" alt="logo" class="logo">
+    <div class="synopsis-head" :id="information.task_user_id">
+      <img v-if="imgShow" :src="information.image||logoImg" alt="logo" class="logo">
       <div class="contenr">
         <div class="company" v-if="imgShow">
           <div class="company-box">
-            <span class="name">{{information.name}}</span>
-            <span class="autograph">{{information.industry}}</span>
+            <span class="name">{{information.username}}</span>
+            <span class="autograph">{{information.industry||'行业未知'}}</span>
           </div>
-          <span class="lv">{{information.lv}}</span>
+          <span class="lv">{{information.level}}</span>
           <van-checkbox v-model="information.checked" checked-color="#c14182"></van-checkbox>
         </div>
         <div class="synopsis-main">
-          {{information.aboutUs}}
+          {{information.desc||'暂无描述'}}
         </div>
       </div>
     </div>
@@ -30,7 +30,11 @@ export default {
       type: Object,
       default: () => {}
     }
-
+  },
+  data() {
+    return {
+      logoImg: require('@/assets/imgs/user-img.png')
+    }
   }
 }
 </script>
