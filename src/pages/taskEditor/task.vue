@@ -31,7 +31,7 @@
         ></textarea>
       </div>
       <div class="task-editor--filed">
-        <button class="evaluate-footer--btn" ref="aaa">{{desctab}}</button>
+        <button class="evaluate-footer--btn" ref="tabBtn">{{desctab}}</button>
         <ul class="page-map--ul">
           <li
             v-for="(item,index) in maplist"
@@ -100,7 +100,7 @@ export default {
       desctab: '文案',
       valueData: {
         task_type_id: '',
-        design_id: '1',
+        design_id: '7',
         title: '',
         desc: '',
         payment: null,
@@ -118,36 +118,36 @@ export default {
       maplist: [
         {
           img: require('@/assets/imgs/copy1.png'),
-          name: '文案',
-          value: '1',
+          name: '',
+          value: '',
           disable: true,
           color: '#1B9EA7'
         },
         {
           img: require('@/assets/imgs/copy2.png'),
-          name: '设计',
-          value: '2',
+          name: '',
+          value: '',
           disable: false,
           color: '#F79D33'
         },
         {
           img: require('@/assets/imgs/copy3.png'),
-          name: '代码',
-          value: '3',
+          name: '',
+          value: '',
           disable: false,
           color: '#1B9EA7'
         },
         {
           img: require('@/assets/imgs/copy4.png'),
-          name: '手绘',
-          value: '4',
+          name: '',
+          value: '',
           disable: false,
           color: '#3BDA8A'
         },
         {
           img: require('@/assets/imgs/copy5.png'),
-          name: 'PPT',
-          value: '5',
+          name: '',
+          value: '',
           disable: false,
           color: '#F79D33'
         }
@@ -209,9 +209,9 @@ export default {
       this.maplist[index].disable = true
       this.valueData.design_id = data.value
       this.desctab = this.maplist[index].name
-      this.$refs.aaa.style.background = this.maplist[index].color
+      this.$refs.tabBtn.style.background = this.maplist[index].color
     },
-    // 获取数据类型
+    // 获取选择类型
     getType() {
       let params = {
         resource_type: 1
@@ -225,6 +225,19 @@ export default {
               id: res.id
             }
             this.actions.push(obj)
+          })
+        }
+      })
+    },
+    getTypes() {
+      let params = {
+        resource_type: 3
+      }
+      gettype(params).then(response => {
+        if (response.data.success === ERR_OK) {
+          response.data.data.results.map((res, index) => {
+            this.maplist[index].name = res.title
+            this.maplist[index].value = res.id
           })
         }
       })
@@ -270,7 +283,7 @@ export default {
       var reg = /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/
       if (!this.valueData.payment) {
         this.$toast({
-          message: '请输入报酬'
+          message: '请输入报酬正确格式'
         })
         return
       } else if (!reg.test(this.valueData.payment)) {
@@ -297,7 +310,7 @@ export default {
   },
   mounted() {
     this.getType()
-    // this.getTool()
+    this.getTypes()
   }
 }
 </script>
