@@ -34,7 +34,7 @@ export default {
   },
   data() {
     return {
-      show: true,
+      // show: true,
       state: true,
       logoImg: require('@/assets/imgs/img5.png')
     }
@@ -52,8 +52,16 @@ export default {
     } else if (sessionStorage.getItem('user_type') === '1') {
       this.state = false
     }
-    if (this.information.user_id && this.information.user_id !== 0 && JSON.stringify(this.information.user_id) === sessionStorage.getItem('user_id')) {
-      this.show = false
+
+    console.log(this.show, this.information.user_id && this.information.user_id !== 0 && JSON.stringify(this.information.user_id) === sessionStorage.getItem('user_id'))
+  },
+  computed: {
+    show() {
+      if (this.information.user_id && this.information.user_id !== 0 && JSON.stringify(this.information.user_id) === sessionStorage.getItem('user_id')) {
+        return false
+      } else {
+        return true
+      }
     }
   }
 }
