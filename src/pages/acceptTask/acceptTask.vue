@@ -136,7 +136,7 @@ export default {
       })
     }
   },
-  monuted () {
+  mounted () {
     this.task_id = this.$router.params.id.id
     this.getList()
   }
