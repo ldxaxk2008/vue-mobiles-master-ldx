@@ -6,13 +6,13 @@
         <div class="left">
           <span class="name">{{information.title}}</span>
           <span class="industry">{{information.industry||'暂无'}}</span>
-          <button v-if="show && state" class="apply" @click="handelClick('applyTask')">申请任务</button>
+          <button v-if="appstate" class="apply" @click="handelClick('applyTask')">申请任务</button>
         </div>
         <div class="right">
           <span class="assets">{{information.total_payment}}</span>
           <span class="number" v-if="information.user_id!==0">{{information.user_name}} 已申请</span>
           <span class="number" v-else>{{information.task_num}} 人在申请</span>
-          <button v-if="!show && state" class="cancel" @click="handelClick('cancelTask')">取消申请</button>
+          <button v-if="state" class="cancel" @click="handelClick('cancelTask')">取消申请</button>
         </div>
       </div>
     </div>
@@ -30,37 +30,47 @@ export default {
     information: {
       type: Object,
       default: () => {}
+    },
+    userId: {
+      type: Number,
+      default: 0
     }
   },
   data() {
     return {
       // show: true,
-      state: true,
+      state: false,
+      appstate: true,
       logoImg: require('@/assets/imgs/img5.png')
+    }
+  },
+  mounted () {
+    console.log('qqqqqqq')
+    let type = sessionStorage.getItem('user_type')
+    if (type === '1') {
+      this.appstate = false
     }
   },
   methods: {
     handelClick(val) {
-      this.show = !this.show
+      this.appstate = !this.appstate
+      this.state = !this.state
       this.$emit('taskSele', val)
     }
   },
-  mounted() {
-    console.log(this.information, 222222222)
-    if (sessionStorage.getItem('user_type') === '0') {
-      this.state = true
-    } else if (sessionStorage.getItem('user_type') === '1') {
-      this.state = false
-    }
-
-    console.log(this.show, this.information.user_id && this.information.user_id !== 0 && JSON.stringify(this.information.user_id) === sessionStorage.getItem('user_id'))
-  },
-  computed: {
-    show() {
-      if (this.information.user_id && this.information.user_id !== 0 && JSON.stringify(this.information.user_id) === sessionStorage.getItem('user_id')) {
-        return false
+  watch: {
+    async userId (newVal, oldVal) {
+      console.log(newVal, oldVal)
+      if (sessionStorage.getItem('user_type') === '0') {
+        if (sessionStorage.getItem('user_id') === JSON.stringify(newVal)) {
+          this.appstate = false
+          this.state = true
+        } else {
+          this.appstate = false
+          this.state = false
+        }
       } else {
-        return true
+        this.state = false
       }
     }
   }

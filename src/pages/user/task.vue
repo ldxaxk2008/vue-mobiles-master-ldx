@@ -2,10 +2,10 @@
   <div class="task-box">
     <common-header :tittle="tittle" :showmore="false"></common-header>
     <div class="task-content">
-      <taskSynopsis @taskSele="handelClick" :information="information"></taskSynopsis>
+      <taskSynopsis @taskSele="handelClick" :information="information" :userId="userId"></taskSynopsis>
       <taskStage :information="companyList" :status="status" :down="down"></taskStage>
     </div>
-    <div class="task-footer" v-if="show && userid ==0">
+    <div class="task-footer" v-if="show && userId ==0">
       <ul>
         <li v-for="(item,index) in navList" :key="index" @click="item.fun">{{item.label}}</li>
       </ul>
@@ -29,7 +29,7 @@ export default {
   data() {
     return {
       status: 1,
-      userid: 0,
+      userId: 0,
       show: true,
       tittle: 'LOGO设计',
       companyList: {},
@@ -121,7 +121,7 @@ export default {
         if (res.data.success) {
           this.information = res.data.data
           this.status = this.information.status
-          this.userid = this.information.user_id
+          this.userId = this.information.user_id
         } else {
         }
       }).catch(() => {
