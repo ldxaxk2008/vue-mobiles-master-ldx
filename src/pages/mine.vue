@@ -3,14 +3,14 @@
     <common-header :tittle="tittle"></common-header>
     <div class="mine-page--content">
       <van-tabs v-model="active" @click="onClick">
-        <van-tab title="已完成">
-          <div class="page-map--tab">
-            <currentList :currentList="currentList" :done="true" @more="more('currentList')" />
-          </div>
-        </van-tab>
         <van-tab title="未完成">
           <div class="page-map--tab">
             <currentList ref="more" :currentList="currentprice" @more="more" />
+          </div>
+        </van-tab>
+        <van-tab title="已完成">
+          <div class="page-map--tab">
+            <currentList :currentList="currentList" :done="true" @more="more('currentList')" />
           </div>
         </van-tab>
       </van-tabs>
@@ -45,7 +45,7 @@ export default {
       this.currentList = []
       this.currentprice = []
       let params = {
-        status: this.active === 0 ? 2 : 1,
+        status: this.active === 0 ? 1 : 2,
         limit: 50,
         offset: 0
       }
@@ -59,9 +59,9 @@ export default {
         }
         if (res.data.success === ERR_OK) {
           if (this.active === 0) {
-            this.currentList.push(...res.data.data.results)
-          } else {
             this.currentprice.push(...res.data.data.results)
+          } else {
+            this.currentList.push(...res.data.data.results)
           }
         } else {
         }
@@ -70,7 +70,7 @@ export default {
     },
     more(val) {
       this.page.offset += this.page.limit
-      let status = this.active === 0 ? 2 : 1
+      let status = this.active === 0 ? 1 : 2
       let params = Object.assign(this.page, {status: status})
       this.getData(params)
     }
