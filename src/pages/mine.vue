@@ -5,12 +5,12 @@
       <van-tabs v-model="active" @click="onClick">
         <van-tab title="未完成">
           <div class="page-map--tab">
-            <currentList ref="more" :currentList="currentprice" @more="more" />
+            <currentList ref="more" :currentList="currentList" :dmore="dmore" @more="more" />
           </div>
         </van-tab>
         <van-tab title="已完成">
           <div class="page-map--tab">
-            <currentList :currentList="currentList" :done="true" @more="more('currentList')" />
+            <currentList :currentList="currentList" :done="true" :dmore="dmore" @more="more" />
           </div>
         </van-tab>
       </van-tabs>
@@ -31,17 +31,17 @@ export default {
   data() {
     return {
       tittle: '任务列表',
+      limit: 10,
+      offset: 0,
+      count: 0,
+      dmore: false,
       active: 0,
-      currentList: [],
-      currentprice: [],
-      page: {
-        limit: 10,
-        offset: 0
-      }
+      currentList: []
     }
   },
   methods: {
     onClick(index) {
+      this.offset = 0
       this.currentList = []
       this.currentprice = []
       let params = {
@@ -51,28 +51,33 @@ export default {
       }
       this.getData(params)
     },
-    getData(params) {
+    getData(params, type) {
       taskList(params).then((res) => {
-        if (!res.data.data.results.length) {
-          this.$refs['more'].close()
-          return false
-        }
         if (res.data.success === ERR_OK) {
-          if (this.active === 0) {
-            this.currentprice.push(...res.data.data.results)
+          if (type === 'more') {
+            this.currentList = this.currentList.concat(res.data.data.results)
+            if (this.offset + this.limit > this.count) {
+              this.dmore = false
+            }
           } else {
-            this.currentList.push(...res.data.data.results)
+            this.currentList = res.data.data.results
+            this.count = res.data.data.count
+            if (this.count > 10) {
+              this.dmore = true
+            }
           }
-        } else {
         }
       }).catch(() => {
       })
     },
-    more(val) {
-      this.page.offset += this.page.limit
+    more() {
+      this.offset = this.limit + this.offset
       let status = this.active === 0 ? 1 : 2
-      let params = Object.assign(this.page, {status: status})
-      this.getData(params)
+      let params = Object.assign({
+        limit: this.limit,
+        offset: this.offset
+      }, {status: status})
+      this.getData(params, 'more')
     }
   },
   mounted() {

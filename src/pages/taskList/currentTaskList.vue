@@ -18,7 +18,7 @@
       </div>
       <span class="done" v-if="done"><img src="@/assets/imgs/done.png" alt=""></span>
     </div>
-    <div ref="more" class="more" @click="more" v-if="currentList.length">
+    <div ref="more" class="more" @click="more" v-if="show">
       <van-icon name="arrow-down" />
       <span>查看更多</span>
     </div>
@@ -34,6 +34,10 @@ export default {
       default: () => []
     },
     done: {
+      type: Boolean,
+      default: false
+    },
+    dmore: {
       type: Boolean,
       default: false
     }
@@ -53,6 +57,11 @@ export default {
     },
     close() {
       this.$refs['more'].style.display = 'none'
+    }
+  },
+  computed: {
+    show() {
+      return this.dmore
     }
   },
   mounted() {
