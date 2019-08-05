@@ -40,7 +40,7 @@ import fileDown from '@/pages/user/fileDown'
 import software from '@/pages/skillCommon/software'
 import skill from '@/pages/skillCommon/skill'
 import {taskList} from 'api/home-api'
-import {studentData} from 'api/student-api'
+import {studentData, studentinfor} from 'api/student-api'
 import { ERR_OK } from 'config/index'
 export default {
   components: {
@@ -119,6 +119,14 @@ export default {
     skillChage(val) {
       console.log(val, 11111111)
       this.skillList = val
+      studentinfor({skill_list: val, user_id: sessionStorage.getItem('user_id')}).then((res) => {
+        console.log(res.data)
+        if (res.data.success === ERR_OK) {
+          this.student()
+        } else {
+        }
+      }).catch(() => {
+      })
     },
     more(val) {
       this.offset = this.limit + this.offset
@@ -134,6 +142,7 @@ export default {
         console.log(res.data)
         if (res.data.success === ERR_OK) {
           this.information = res.data.data
+          this.skillList = res.data.data.skill_list
         } else {
         }
       }).catch(() => {
