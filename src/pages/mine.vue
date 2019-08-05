@@ -35,7 +35,7 @@ export default {
       currentList: [],
       currentprice: [],
       page: {
-        limit: 50,
+        limit: 10,
         offset: 0
       }
     }
@@ -46,7 +46,7 @@ export default {
       this.currentprice = []
       let params = {
         status: this.active === 0 ? 1 : 2,
-        limit: 50,
+        limit: 10,
         offset: 0
       }
       this.getData(params)
