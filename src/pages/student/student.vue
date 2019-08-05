@@ -5,8 +5,8 @@
       <div class="company-introduce">
         <companyIntorduce :information="information" :imgShow="true"/>
         <div class="skill-main">
-          <skill :skillList="skillList" class="software">asdasdsad</skill>
-          <software class="skill-user"/>
+          <skill @skillChage="skillChage" :skillList="skillList" class="software"></skill>
+          <software @softwareChange="softwareChange" :softwareLists="softwareLists" class="skill-user"/>
         </div>
       </div>
       <div class="done-task">
@@ -103,23 +103,23 @@ export default {
           }
         }
       ],
-      skillList: [{
-        label: '作曲',
-        value: '30%'
-      }, {
-        label: '绘画',
-        value: '90%'
-      }, {
-        label: '写作',
-        value: '6%'
-      }],
+      skillList: [],
+      softwareLists: [],
       page: {
-        limit: 50,
+        limit: 10,
         offset: 0
       }
     }
   },
   methods: {
+    softwareChange(val) {
+      console.log(val, 11111111)
+      this.softwareLists = val
+    },
+    skillChage(val) {
+      console.log(val, 11111111)
+      this.skillList = val
+    },
     more(val) {
       this.page.offset += this.page.limit
       this.getListData()

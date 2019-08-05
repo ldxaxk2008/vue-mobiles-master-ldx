@@ -7,11 +7,11 @@
       </div>
       <div class="current-task">
         <h4>当前进行的任务</h4>
-          <currentList :currentList="currentList" ref="more" @more="more('current')"/>
+          <currentList :currentList="currentList" ref="more" :dmore="dmore" @more="more('current')"/>
       </div>
       <div class="done-task">
         <h4>过往任务浏览 已完成20组任务</h4>
-          <currentList :currentList="currentList" ref="more" :done="true" @more="more('done')"/>
+          <currentList :currentList="currentNList" ref="more" :done="true" :dmore="ndmore" @more="more('done')"/>
       </div>
       <div class="evaluate-list">
         <h4>学生评价</h4>
@@ -48,6 +48,13 @@ export default {
       tittle: '',
       information: {},
       currentList: [],
+      currentNList: [],
+      limit: 5,
+      offset: 0,
+      count: 0,
+      dmore: false,
+      ncount: 0,
+      ndmore: 0,
       evaluate: [
         {
           imgSrc: require('@/assets/imgs/user-img.png'),
@@ -67,17 +74,17 @@ export default {
             return this.cancel(data)
           }
         }
-      ],
-      page: {
-        limit: 50,
-        offset: 0
-      }
+      ]
     }
   },
   methods: {
     more(val) {
-      this.page.offset += this.page.limit
-      this.getListData()
+      this.offset = this.limit + this.offset
+      let data = {
+        limit: this.limit,
+        offset: this.offset
+      }
+      this.getListData(data, 'more')
     },
     // evajump() {
     //   this.$router.push('/User/Student')
@@ -95,22 +102,57 @@ export default {
       }).catch(() => {
       })
     },
-    getListData() {
-      taskList(this.page).then(res => {
-        if (!res.data.data.results.length) {
-          this.$refs['more'].close()
-          return false
-        }
+    getListNData(parmes, type) {
+      taskList(parmes).then(res => {
         if (res.data.success === ERR_OK) {
-          this.currentList.push(...res.data.data.results)
-        } else {
+          if (type === 'more') {
+            this.currentNList = this.currentNList.concat(res.data.data.results)
+            if (this.offset + this.limit > this.ncount) {
+              this.ndmore = false
+            }
+          } else {
+            this.currentNList = res.data.data.results
+            this.ncount = res.data.data.count
+            if (this.ncount > 10) {
+              this.ndmore = true
+            }
+          }
+        }
+      }).catch({})
+    },
+    getListData(parmes, type) {
+      taskList(parmes).then(res => {
+        if (res.data.success === ERR_OK) {
+          if (type === 'more') {
+            this.currentList = this.currentList.concat(res.data.data.results)
+            if (this.offset + this.limit > this.count) {
+              this.dmore = false
+            }
+          } else {
+            this.currentList = res.data.data.results
+            this.count = res.data.data.count
+            if (this.count > 10) {
+              this.dmore = true
+            }
+          }
         }
       }).catch({})
     }
   },
   mounted() {
     this.getData()
-    this.getListData()
+    let data = {
+      limit: this.limit,
+      offset: this.offset,
+      status: 1
+    }
+    this.getListData(data)
+    let datas = {
+      limit: this.limit,
+      offset: this.offset,
+      status: 2
+    }
+    this.getListNData(datas)
   }
 }
 </script>
