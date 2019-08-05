@@ -1,20 +1,26 @@
 <template>
   <div class="content-box">
-    <common-header :tittle="tittle" :showback="true" :showmore='true'></common-header>
+    <common-header :tittle="tittle" :showback="true" :showmore="true"></common-header>
     <div class="user-main">
       <h4 class="user-nick-name" @click="reset(nickName,'nickName')">{{nickName}}</h4>
       <div class="user-label-name" @click="reset(labelName,'labelName')">{{labelName}}</div>
     </div>
     <div class="user-list">
-      <img class="user-img" :src="userImg" alt="" srcset="">
+      <img class="user-img" :src="userImg" alt srcset />
       <ul>
-        <li v-for="(item,index) in userList" :key="index" :style="{backgroundColor:item.bg}" @click="handelClick(item.path)" v-if="!item.hide">
+        <li
+          v-for="(item,index) in userList"
+          :key="index"
+          :style="{backgroundColor:item.bg}"
+          @click="handelClick(item.path)"
+          v-if="!item.hide"
+        >
           <span :style="{color:item.color}" class="text">{{item.label}}</span>
           <span v-if="item.tips" class="tips">{{item.tips}}</span>
         </li>
       </ul>
     </div>
-    <dialogBox :data="textData" @close="resetContent" v-if="show"/>
+    <dialogBox :data="textData" @close="resetContent" v-if="show" />
   </div>
 </template>
 
@@ -22,6 +28,8 @@
 import { mapMutations, mapGetters, mapState } from 'vuex'
 import commonHeader from 'common/common-header'
 import dialogBox from 'common/dialog'
+import {studentinfor} from 'api/student-api'
+
 export default {
   data() {
     return {
@@ -76,6 +84,10 @@ export default {
     }),
     resetContent(val, item) {
       this[item] = val
+      let id = sessionStorage.getItem('user_id')
+      studentinfor(id, ({nick_name: this[item]} || {label: this[item]})).then(res => {
+        console.log(res, 111)
+      })
       this.show = false
     },
     todetail() {
@@ -116,6 +128,9 @@ export default {
 @import "~styles/variable.less";
 .page-content {
   .mb(98);
+  * {
+    touch-action: pan-y;
+  }
 }
 .user-main {
   .h(300);
@@ -125,18 +140,18 @@ export default {
     .fs(@base-header-size);
     color: @base-font-color;
   }
-  .user-label-name{
+  .user-label-name {
     .fs(18);
     color: #000;
-    .margin(20,100,20,100);
+    .margin(20, 100, 20, 100);
     .pt(10);
     .pb(10);
     .b-radius(50);
     background: #bfbfbf;
   }
 }
-.user-list{
-  .user-img{
+.user-list {
+  .user-img {
     .w(260);
     .h(260);
     .mt(-150);
@@ -144,7 +159,7 @@ export default {
     .b-radius(500);
     border: 10px solid #f5f5f5;
   }
-  li{
+  li {
     position: relative;
     .mt(30);
     .mr(60);
@@ -152,17 +167,17 @@ export default {
     .pt(20);
     .pb(20);
     .b-radius(30);
-    text-align:center;
-    .tips{
-      position:absolute;
+    text-align: center;
+    .tips {
+      position: absolute;
       .right(20);
       .top(-10);
       color: #fff;
-      background: #14A5AE;
+      background: #14a5ae;
       .w(40);
       .h(40);
       .lh(40);
-      .b-radius(100)
+      .b-radius(100);
     }
   }
 }

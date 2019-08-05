@@ -72,6 +72,13 @@ export function fetchGet(requestUrl, params = {}) {
   })
 }
 
+export function fetchPetch(requestUrl, params = {}) {
+  return axios({
+    url: requestUrl,
+    method: 'patch',
+    params
+  })
+}
 // export function fetch(requestUrl, params = '') {
 //   return axios({
 //     url: requestUrl,
