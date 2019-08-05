@@ -5,9 +5,9 @@
       <div v-if="!actions.length" style="margin-top:10px;">暂无技能，点击<van-icon name="add-o" color="#c14182"/>添加</div>
       <ul>
         <li v-for="(item,index) in actions" :key="index">
-          {{item.label}}
+          {{item.title}}
           <p>
-            <span :style="{'width':item.value}"></span>
+            <span :style="{'width':item.progress*100+'%'}"></span>
           </p>
         </li>
       </ul>
@@ -83,8 +83,8 @@ export default {
       this.softwareList.forEach(item => {
         if (item.value !== '' && item.label !== '') {
           this.actions.push({
-            label: item.label,
-            value: `${item.value}%`
+            title: item.label,
+            progress: item.value / 100
           })
         }
       })
