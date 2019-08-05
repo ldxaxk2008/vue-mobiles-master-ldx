@@ -59,11 +59,11 @@ export default {
       sexlist: [
         {
           value: '男',
-          label: 'man'
+          label: 'male'
         },
         {
           value: '女',
-          label: 'woman'
+          label: 'female'
         }
       ],
       actions: [
@@ -74,7 +74,7 @@ export default {
       ],
       registerlist: {
         headimg: require('@/assets/imgs/user-img.png'),
-        sex: 'man',
+        sex: 'male',
         name: '',
         username: '',
         school_name: '',
@@ -205,7 +205,7 @@ export default {
     }
   },
   mounted() {
-    this.$refs.sex[0].className = 'man'
+    this.$refs.sex[0].className = 'male'
   }
 }
 </script>
@@ -274,11 +274,11 @@ export default {
     .b-radius(60);
     border: none;
   }
-  .man {
+  .male {
     background-color: rgb(27, 158, 168);
     color: #f5f5f5;
   }
-  .woman {
+  .female {
     background-color: rgb(221, 129, 155);
     color: hsl(0, 0%, 96%);
   }

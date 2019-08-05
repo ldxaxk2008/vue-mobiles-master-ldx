@@ -3,9 +3,13 @@
  * @param params
  * @returns {*}
  */
-import {fetchGet, baseUrl} from 'config/index'
+import {fetchGet, fetchPetch, baseUrl} from 'config/index'
 
 // 获取类型及工具
 export function studentData(data) {
   return fetchGet(`${baseUrl}/api/user/student/`, data)
+}
+// 编辑自己的标签，名称
+export function studentinfor(params, data) {
+  return fetchPetch(`${baseUrl}/api/user/student/` + params + '/', data)
 }
