@@ -11,7 +11,7 @@
       </div>
       <div class="done-task">
         <h4 style="color:#18ACB6">过往任务浏览 已完成20组任务</h4>
-        <currentList ref="more" :currentList="currentList" :done="true" @more="more"/>
+        <currentList ref="more" :currentList="currentList" :dmore="dmore" :done="true" @more="more"/>
       </div>
       <div class="img-view">
         <imgView :imgList="imgList"/>
@@ -57,6 +57,10 @@ export default {
     return {
       tittle: '',
       information: {},
+      limit: 5,
+      offset: 0,
+      dmore: false,
+      count: 0,
       down: [
         {
           imgSrc: '',
@@ -104,11 +108,7 @@ export default {
         }
       ],
       skillList: [],
-      softwareLists: [],
-      page: {
-        limit: 10,
-        offset: 0
-      }
+      softwareLists: []
     }
   },
   methods: {
@@ -121,8 +121,13 @@ export default {
       this.skillList = val
     },
     more(val) {
-      this.page.offset += this.page.limit
-      this.getListData()
+      this.offset = this.limit + this.offset
+      let data = {
+        limit: this.limit,
+        offset: this.offset,
+        status: 2
+      }
+      this.getListData(data, 'more')
     },
     student() {
       studentData().then((res) => {
@@ -134,15 +139,21 @@ export default {
       }).catch(() => {
       })
     },
-    getListData() {
-      taskList(this.page).then((res) => {
-        if (!res.data.data.results.length) {
-          this.$refs['more'].close()
-          return false
-        }
+    getListData(parmes, type) {
+      taskList(parmes).then((res) => {
         if (res.data.success === ERR_OK) {
-          this.currentList.push(...res.data.data.results)
-        } else {
+          if (type === 'more') {
+            this.currentList = this.currentList.concat(res.data.data.results)
+            if (this.offset + this.limit > this.count) {
+              this.dmore = false
+            }
+          } else {
+            this.currentList = res.data.data.results
+            this.count = res.data.data.count
+            if (this.count > 10) {
+              this.dmore = true
+            }
+          }
         }
       }).catch(() => {
       })
@@ -150,7 +161,12 @@ export default {
   },
   mounted() {
     this.student()
-    this.getListData()
+    let data = {
+      limit: this.limit,
+      offset: this.offset,
+      status: 2
+    }
+    this.getListData(data)
   }
 }
 </script>
