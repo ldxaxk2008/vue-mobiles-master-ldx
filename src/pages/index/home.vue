@@ -22,17 +22,17 @@
           <van-tabs v-model="active" @click="onClick">
             <van-tab title="价格">
               <div class="page-map--tab">
-                <currentList :currentList="currentList" @more="more('currentList')" />
+                <currentList :currentList="currentList" :dmore="dmore" @more="more()" />
               </div>
             </van-tab>
             <van-tab title="发布日期">
               <div class="page-map--tab" >
-                <currentList :currentList="currentprice" @more="more" />
+                <currentList :currentList="currentList" :dmore="dmore" @more="more" />
               </div>
             </van-tab>
             <van-tab title="截止日期">
               <div class="page-map--tab">
-                <currentList :currentList="hostList" @more="more" />
+                <currentList :currentList="currentList" :dmore="dmore" @more="more" />
               </div>
             </van-tab>
           </van-tabs>
@@ -55,10 +55,12 @@ export default {
     return {
       headerColor: '#fff',
       currentList: [],
-      hostList: [],
-      currentprice: [],
+      count: 0,
+      dmore: false,
       active: 0,
       num: 0,
+      limit: 10,
+      offset: 0,
       type: '',
       maplist: [
         {
@@ -104,10 +106,13 @@ export default {
     },
     search(val) {
       if (val === '') return false
+      this.offset = 0
       let params = {
         search: val,
         design_id: this.type,
-        ordering: this.orderingType()
+        ordering: this.orderingType(),
+        limit: this.limit,
+        offset: this.offset
       }
       taskList(params).then((res) => {
         if (res.data.success === ERR_OK) {
@@ -122,13 +127,21 @@ export default {
     },
     handelclick(item, index) {
       this.type = item.type
-      this.getData()
+      this.offset = 0
+      let data = {
+        design_id: this.type,
+        ordering: 'payment',
+        limit: this.limit,
+        offset: 0
+      }
+      this.getData(data)
       this.maplist.map(res => {
         res.disable = false
       })
       this.maplist[index].disable = true
     },
     onClick(sort) {
+      this.offset = 0
       if (sort === 0) {
         sort = 'payment'
       } else if (sort === 1) {
@@ -136,41 +149,40 @@ export default {
       } else {
         sort = 'end_date'
       }
-      taskList({ordering: sort, design_id: this.type}).then((res) => {
-        if (res.data.success === ERR_OK) {
-          if (sort === 'payment') {
-            this.currentList = res.data.data.results
-          } else if (sort === 'created_time') {
-            this.currentprice = res.data.data.results
-          } else {
-            this.hostList = res.data.data.results
-          }
-        } else {
-        }
-      }).catch(() => {
-      })
-    },
-    more(val) {
-      if (val === 'currentList') {
-        let obj = this.currentList[0]
-        for (let i = 0; i < 3; i++) {
-          this.currentList.push(obj)
-        }
-      } else {
-        let obj = this.currentprice[0]
-        for (let i = 0; i < 3; i++) {
-          this.currentprice.push(obj)
-        }
+      this.sort = sort
+      let data = {
+        ordering: this.sort,
+        design_id: this.type,
+        limit: 10,
+        offset: 0
       }
+      this.getData(data)
     },
-    getData() {
+    more() {
+      this.offset = this.offset + this.limit
       let params = {
         design_id: this.type,
-        ordering: 'payment'
+        ordering: this.sort,
+        limit: this.limit,
+        offset: this.offset
       }
+      this.getData(params, 'more')
+    },
+    getData(params, type) {
       taskList(params).then((res) => {
         if (res.data.success === ERR_OK) {
-          this.currentList = res.data.data.results
+          if (type === 'more') {
+            this.currentList = this.currentList.concat(res.data.data.results)
+            if (this.offset + this.limit > this.count) {
+              this.dmore = false
+            }
+          } else {
+            this.currentList = res.data.data.results
+            this.count = res.data.data.count
+            if (this.count > 10) {
+              this.dmore = true
+            }
+          }
         } else {
         }
       }).catch(() => {
