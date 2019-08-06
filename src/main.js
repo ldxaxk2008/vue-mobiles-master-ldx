@@ -13,6 +13,7 @@ import Vant from 'vant';
 import 'vant/lib/index.css';
 import FastClick from 'fastclick'
 import '../static/js/flexible.js'
+import vantDialog from '@/components/vantDialog'
 // import {fetchGet,fetchPost} from '@/apiconfig/index.js'
 if (process.env.MOCK) {    // 判断是否为mock模式
   require('./mock/index.js')
@@ -74,6 +75,7 @@ router.beforeEach((to, from, next) => {
 Vue.use(Vant)
 // Vue.use(Vuex)
 Vue.component('svg-icon', SvgIcon)
+Vue.component('vantDialog', vantDialog)
 Vue.config.productionTip = false
 FastClick.attach(document.body)
 // Vue.prototype.$get = fetchGet

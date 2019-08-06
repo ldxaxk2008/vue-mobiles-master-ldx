@@ -2,7 +2,7 @@
   <div class="task-stage">
     <div class="stage-head">
       <div class="name">
-        <span>{{information.company_name}}</span>
+        <span>{{information.company_name||'公司未知'}}</span>
         <span>{{information.industry||'行业未知'}}</span>
       </div>
       <div class="more">
@@ -11,17 +11,13 @@
     </div>
     <EnterpriseSynopsis :information="information"></EnterpriseSynopsis>
     <div class="slider">
-      <!-- <van-slider
-        v-model="rangeValue"
-        bar-height="4px"
-        active-color="#f44"
-      />-->
       <progressBar />
-      <button v-if="status!==2" class="confirm">进行阶段确认</button>
+      <button v-if="status!==2" class="confirm" @click="dialogClick">进行阶段确认</button>
       <button v-if="show && status===2" class="deliver" @click="taskpay">任务交付</button>
       <button v-if="!show && status===2" class="deliver">确认任务完成</button>
     </div>
     <FileDown :down="down" />
+    <vantDialog ref="dialog" @confirmDialog="confirmDialog"/>
   </div>
 </template>
 
@@ -62,6 +58,12 @@ export default {
     },
     handelClick() {
       this.$router.push({name: 'TaskList', params: {id: this.information}})
+    },
+    dialogClick() {
+      this.$refs['dialog'].show = true
+    },
+    confirmDialog(val) {
+      console.log(val)
     }
   },
   mounted() {

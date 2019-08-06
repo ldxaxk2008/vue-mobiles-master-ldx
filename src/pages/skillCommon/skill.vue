@@ -94,7 +94,11 @@ export default {
     }
   },
   mounted() {
-    this.actions = this.skillList
+  },
+  watch: {
+    skillList(val) {
+      this.actions = val
+    }
   }
 }
 </script>

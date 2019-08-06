@@ -69,8 +69,10 @@ export default {
       this.show = false
     }
   },
-  mounted() {
-    this.actions = this.softwareLists
+  watch: {
+    softwareLists(val) {
+      // this.actions = val
+    }
   }
 }
 </script>
