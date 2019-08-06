@@ -54,7 +54,7 @@ export default {
       count: 0,
       dmore: false,
       ncount: 0,
-      ndmore: 0,
+      ndmore: false,
       evaluate: [
         {
           imgSrc: require('@/assets/imgs/user-img.png'),

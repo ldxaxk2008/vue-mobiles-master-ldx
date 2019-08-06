@@ -40,10 +40,9 @@ export default {
     }
   },
   methods: {
-    onClick(index) {
+    onClick() {
       this.offset = 0
       this.currentList = []
-      this.currentprice = []
       let params = {
         status: this.active === 0 ? 1 : 2,
         limit: 10,
@@ -52,6 +51,7 @@ export default {
       this.getData(params)
     },
     getData(params, type) {
+      this.dmore = false
       taskList(params).then((res) => {
         if (res.data.success === ERR_OK) {
           if (type === 'more') {
@@ -64,6 +64,8 @@ export default {
             this.count = res.data.data.count
             if (this.count > 10) {
               this.dmore = true
+            } else {
+              this.dmore = false
             }
           }
         }
