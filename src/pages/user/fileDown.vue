@@ -2,6 +2,11 @@
   <div class="down">
     <span class="down-file">下载附属文件</span>
     <ul>
+      <li>
+        <van-icon name="send-gift-o" />
+        <span class="title"></span>
+        <span class="up-click">点击上传</span>
+      </li>
       <li v-for="(item,index) in down" :key="index">
         <!-- <img class="img" src="" alt=""> -->
         <van-icon name="send-gift-o" />
@@ -43,6 +48,12 @@ export default {
   .padding(20,20,20,20);
   display: flex;
   flex-direction: column;
+  .up-file{
+     .mt(20);
+     li{
+       .mb(0);
+     }
+  }
   ul{
     .mb(20);
     .mt(20);
@@ -57,9 +68,15 @@ export default {
       .title{
         flex:1;
       }
-      .down-click{
+      .up-click{
         .b-radius(30);
         background:#18acb6;
+        color: #fff;
+        .padding(4,20,4,20);
+      }
+      .down-click{
+        .b-radius(30);
+        background:#b1b1b1;
         color: #fff;
         .padding(4,20,4,20);
       }

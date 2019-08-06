@@ -28,12 +28,13 @@
 import { mapMutations, mapGetters, mapState } from 'vuex'
 import commonHeader from 'common/common-header'
 import dialogBox from 'common/dialog'
-import {studentinfor} from 'api/student-api'
+import {studentinfor, studentData} from 'api/student-api'
 
 export default {
   data() {
     return {
       textData: {},
+      modifylabel: '',
       show: false,
       hide: true,
       tittle: '',
@@ -84,9 +85,14 @@ export default {
     }),
     resetContent(val, item) {
       this[item] = val
+      console.log(val, 9999)
       let id = sessionStorage.getItem('user_id')
-      studentinfor(id, ({nick_name: this[item]} || {label: this[item]})).then(res => {
-        console.log(res, 111)
+      let data = {
+        nick_name: item === 'nickName' ? val : '',
+        label: item === 'labelName' ? val : ''
+      }
+      studentinfor(id, data).then(res => {
+        console.log(res, 7878)
       })
       this.show = false
     },
@@ -97,6 +103,7 @@ export default {
       this.$router.push(val)
     },
     reset(event, item) {
+      console.log(event, item, 890)
       this.textData.text = event
       this.textData.item = item
       this.show = true
@@ -117,6 +124,11 @@ export default {
     if (usertype === '1') {
       this.userList[1].hide = false
       this.userList[0].hide = true
+    } else if (usertype === '0') {
+      studentData().then(res => {
+        this.nickName = res.data.data.nick_name ? res.data.data.nick_name : this.nickName
+        this.labelName = res.data.data.label ? res.data.data.label : this.labelName
+      })
     }
   }
 }
