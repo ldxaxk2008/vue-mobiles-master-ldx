@@ -115,11 +115,18 @@ export default {
     softwareChange(val) {
       console.log(val, 11111111)
       this.softwareLists = val
+      studentinfor(sessionStorage.getItem('user_id'), {tool_list: val}).then((res) => {
+        console.log(res.data)
+        if (res.data.success === ERR_OK) {
+          this.student()
+        } else {
+        }
+      }).catch(() => {
+      })
     },
     skillChage(val) {
-      console.log(val, 11111111)
       this.skillList = val
-      studentinfor({skill_list: val, user_id: sessionStorage.getItem('user_id')}).then((res) => {
+      studentinfor(sessionStorage.getItem('user_id'), {skill_list: val}).then((res) => {
         console.log(res.data)
         if (res.data.success === ERR_OK) {
           this.student()
@@ -143,6 +150,7 @@ export default {
         if (res.data.success === ERR_OK) {
           this.information = res.data.data
           this.skillList = res.data.data.skill_list
+          this.softwareLists = res.data.data.tool_list
         } else {
         }
       }).catch(() => {
