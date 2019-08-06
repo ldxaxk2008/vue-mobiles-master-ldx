@@ -87,9 +87,15 @@ export default {
       this[item] = val
       console.log(val, 9999)
       let id = sessionStorage.getItem('user_id')
-      let data = {
-        nick_name: item === 'nickName' ? val : '',
-        label: item === 'labelName' ? val : ''
+      let data
+      if (item === 'nickName') {
+        data = {
+          nick_name: val
+        }
+      } else if (item === 'labelName') {
+        data = {
+          label: val
+        }
       }
       studentinfor(id, data).then(res => {
         console.log(res, 7878)
