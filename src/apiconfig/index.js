@@ -76,7 +76,7 @@ export function fetchPetch(requestUrl, params = {}) {
   return axios({
     url: requestUrl,
     method: 'patch',
-    data:params
+    data: params
   })
 }
 // export function fetch(requestUrl, params = '') {
