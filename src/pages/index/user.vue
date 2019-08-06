@@ -96,6 +96,8 @@ export default {
         data = {
           label: val
         }
+      } else {
+        data = {}
       }
       studentinfor(id, data).then(res => {
         console.log(res, 7878)
