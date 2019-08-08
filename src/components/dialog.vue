@@ -78,7 +78,7 @@ export default {
       let rules = this.rules
       this.valid(rules).then((res) => {
         if (res) {
-          this.$emit('close', this.message, this.data.item)
+          this.$emit('close', this.message, this.data.prop)
           this.show = false
         } else {}
       }).catch(() => {
@@ -88,7 +88,7 @@ export default {
   watch: {
     data: {
       handler(newName, oldName) {
-        this.message = newName.text
+        this.message = newName.defaultVal
       },
       immediate: true
     }

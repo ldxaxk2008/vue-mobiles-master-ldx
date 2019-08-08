@@ -112,6 +112,7 @@ export default {
       setNum: 'SET_NUM'
     }),
     resetContent(val, item) {
+      console.log(val, item, 2222222222)
       let id = sessionStorage.getItem('user_id')
       let data
       if (item === 'nickName') {
@@ -135,8 +136,7 @@ export default {
     },
     reset(event, item, label) {
       this.textData = {
-        text: event,
-        item: item,
+        defaultVal: event,
         prop: item,
         label: label
       }
