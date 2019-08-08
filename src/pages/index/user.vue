@@ -2,8 +2,8 @@
   <div class="content-box">
     <common-header :tittle="tittle" :showback="true" :showmore="true"></common-header>
     <div class="user-main">
-      <h4 class="user-nick-name" @click="reset(nickName,'nickName')">{{nickName}}</h4>
-      <div class="user-label-name" @click="reset(labelName,'labelName')">{{labelName}}</div>
+      <h4 class="user-nick-name" @click="reset(nickName,'nickName', '昵称')">{{nickName}}</h4>
+      <div class="user-label-name" @click="reset(labelName,'labelName', '标签')">{{labelName}}</div>
     </div>
     <div class="user-list">
       <img class="user-img" :src="userImg" alt srcset />
@@ -37,7 +37,6 @@ import {studentinfor, studentData} from 'api/student-api'
 export default {
   data() {
     return {
-      rules: {},
       textData: {},
       modifylabel: '',
       show: false,
@@ -81,7 +80,41 @@ export default {
           // path: '/User/taskList',
           label: '客服'
         }
-      ]
+      ],
+      rules: {
+        nickName: [{
+          message: '昵称不能大于8个字符',
+          valid: function(data) {
+            if (data && data.length > 8) {
+              return false
+            } else {
+              return true
+            }
+          },
+          require: true
+        },
+        {
+          message: '昵称不能小于3个字符',
+          valid: function(data) {
+            if (data && data.length < 3) {
+              return false
+            } else {
+              return true
+            }
+          }
+        }],
+        labelName: [{
+          message: '个性签名不能大于8个字符',
+          valid: function(data) {
+            if (data && data.length > 8) {
+              return false
+            } else {
+              return true
+            }
+          },
+          require: true
+        }]
+      }
     }
   },
   methods: {
@@ -89,6 +122,7 @@ export default {
       setNum: 'SET_NUM'
     }),
     resetContent(val, item) {
+      console.log(val, item, 2222222222)
       let id = sessionStorage.getItem('user_id')
       let data
       if (item === 'nickName') {
@@ -110,16 +144,11 @@ export default {
     handelClick(val) {
       this.$router.push(val)
     },
-    reset(event, item) {
-      console.log(event, item)
+    reset(event, item, label) {
       this.textData = {
-        text: event,
-        item: item
-      }
-      if (item === 'nickName') {
-        this.rules = {max: 8, msg: '不可超过8个字符'}
-      } else {
-        this.rules = {max: 8, msg: '不可超过8个字符'}
+        defaultVal: event,
+        prop: item,
+        label: label
       }
       this.$refs['dialog'].open()
     },
@@ -153,63 +182,63 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
-@import "~styles/index.less";
-@import "~styles/variable.less";
-.page-content {
-  .mb(98);
-  * {
-    touch-action: pan-y;
+  @import "~styles/index.less";
+  @import "~styles/variable.less";
+  .page-content {
+    .mb(98);
+    * {
+      touch-action: pan-y;
+    }
   }
-}
-.user-main {
-  .h(300);
-  .pt(20);
-  background: #f5f5f5;
-  .user-nick-name {
-    .fs(@base-header-size);
-    color: @base-font-color;
+  .user-main {
+    .h(300);
+    .pt(20);
+    background: #f5f5f5;
+    .user-nick-name {
+      .fs(@base-header-size);
+      color: @base-font-color;
+    }
+    .user-label-name {
+      .fs(18);
+      color: #000;
+      .margin(20, 100, 20, 100);
+      .pt(10);
+      .pb(10);
+      .b-radius(50);
+      background: #bfbfbf;
+    }
   }
-  .user-label-name {
-    .fs(18);
-    color: #000;
-    .margin(20, 100, 20, 100);
-    .pt(10);
-    .pb(10);
-    .b-radius(50);
-    background: #bfbfbf;
-  }
-}
-.user-list {
-  .user-img {
-    .w(260);
-    .h(260);
-    .mt(-150);
-    .mb(40);
-    .b-radius(500);
-    border: 10px solid #f5f5f5;
-  }
-  li {
-    .divTips{
-      position: relative;
-      .mt(30);
-      .mr(60);
-      .ml(60);
-      .pt(20);
-      .pb(20);
-      .b-radius(30);
-      text-align: center;
-      .tips {
-        position: absolute;
-        .right(20);
-        .top(-10);
-        color: #fff;
-        background: #14a5ae;
-        .w(40);
-        .h(40);
-        .lh(40);
-        .b-radius(100);
+  .user-list {
+    .user-img {
+      .w(260);
+      .h(260);
+      .mt(-150);
+      .mb(40);
+      .b-radius(500);
+      border: 10px solid #f5f5f5;
+    }
+    li {
+      .divTips{
+        position: relative;
+        .mt(30);
+        .mr(60);
+        .ml(60);
+        .pt(20);
+        .pb(20);
+        .b-radius(30);
+        text-align: center;
+        .tips {
+          position: absolute;
+          .right(20);
+          .top(-10);
+          color: #fff;
+          background: #14a5ae;
+          .w(40);
+          .h(40);
+          .lh(40);
+          .b-radius(100);
+        }
       }
     }
   }
-}
 </style>
