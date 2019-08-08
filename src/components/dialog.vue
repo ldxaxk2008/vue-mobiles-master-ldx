@@ -54,14 +54,15 @@ export default {
       let alert = this.$toast
       return new Promise((resolve, reject) => {
         if (rules[prop]) {
-          rules[prop].map((item) => {
+          let step = 0
+          rules[prop].forEach((item) => {
             if (item.valid(data)) {
               if (item.require) {
                 if (data && data.length > 0) {
-                  resolve(true)
+                  step++
                 } else {
                   alert(label + '不能为空')
-                  resolve(false)
+                  return false
                 }
               }
             } else {
@@ -69,6 +70,11 @@ export default {
               resolve(false)
             }
           })
+          if (step > 0) {
+            resolve(true)
+          } else {
+            resolve(false)
+          }
         } else {
           resolve(true)
         }

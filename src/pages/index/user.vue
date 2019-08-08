@@ -92,6 +92,16 @@ export default {
             }
           },
           require: true
+        },
+        {
+          message: '昵称不能小于3个字符',
+          valid: function(data) {
+            if (data && data.length < 3) {
+              return false
+            } else {
+              return true
+            }
+          }
         }],
         labelName: [{
           message: '个性签名不能大于8个字符',
