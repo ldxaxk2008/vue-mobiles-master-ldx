@@ -11,12 +11,16 @@
         <li
           v-for="(item,index) in userList"
           :key="index"
-          :style="{backgroundColor:item.bg}"
           @click="handelClick(item.path)"
-          v-if="!item.hide"
         >
-          <span :style="{color:item.color}" class="text">{{item.label}}</span>
-          <span v-if="item.tips" class="tips">{{item.tips}}</span>
+          <div
+            class="divTips"
+            v-if="!item.hide"
+            :style="{backgroundColor:item.bg}"
+          >
+            <span :style="{color:item.color}" class="text">{{item.label}}</span>
+            <span v-if="item.tips" class="tips">{{item.tips}}</span>
+          </div>
         </li>
       </ul>
     </div>
@@ -84,8 +88,12 @@ export default {
       setNum: 'SET_NUM'
     }),
     resetContent(val, item) {
-      this[item] = val
-      console.log(val, 9999)
+      // this[item] = val
+      this.show = false
+      if (val.length > 8) {
+        this.$toast('长度不可大于8个')
+        return
+      }
       let id = sessionStorage.getItem('user_id')
       let data
       if (item === 'nickName') {
@@ -96,13 +104,10 @@ export default {
         data = {
           label: val
         }
-      } else {
-        data = {}
       }
       studentinfor(id, data).then(res => {
-        console.log(res, 7878)
+        // this[item] = res.xxxxxx
       })
-      this.show = false
     },
     todetail() {
       this.$router.togo('/Home/Detail')
@@ -180,24 +185,26 @@ export default {
     border: 10px solid #f5f5f5;
   }
   li {
-    position: relative;
-    .mt(30);
-    .mr(60);
-    .ml(60);
-    .pt(20);
-    .pb(20);
-    .b-radius(30);
-    text-align: center;
-    .tips {
-      position: absolute;
-      .right(20);
-      .top(-10);
-      color: #fff;
-      background: #14a5ae;
-      .w(40);
-      .h(40);
-      .lh(40);
-      .b-radius(100);
+    .divTips{
+      position: relative;
+      .mt(30);
+      .mr(60);
+      .ml(60);
+      .pt(20);
+      .pb(20);
+      .b-radius(30);
+      text-align: center;
+      .tips {
+        position: absolute;
+        .right(20);
+        .top(-10);
+        color: #fff;
+        background: #14a5ae;
+        .w(40);
+        .h(40);
+        .lh(40);
+        .b-radius(100);
+      }
     }
   }
 }
