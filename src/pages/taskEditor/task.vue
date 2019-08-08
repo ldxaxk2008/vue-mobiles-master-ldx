@@ -107,8 +107,8 @@ export default {
         title: '',
         desc: '',
         payment: null,
-        end_date: '',
-        tool_list: []
+        end_date: ''
+        // tool_list: {}
       },
       invalue: '',
       minDate: new Date(),
@@ -236,7 +236,11 @@ export default {
     },
     softwareChange(val) {
       this.softwareLists = val
+      console.log(val, 7654)
       this.valueData.tool_list = val
+      val.forEach(res => {
+        console.log(res, 888)
+      })
     },
     // 获取tab
     // getTypes() {
@@ -290,6 +294,12 @@ export default {
         })
         return
       }
+      // if (!this.valueData.tool_list) {
+      //   this.$toast({
+      //     message: '请发布软件'
+      //   })
+      //   return
+      // }
       var reg = /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/
       if (!this.valueData.payment) {
         this.$toast({
@@ -309,6 +319,7 @@ export default {
         return
       }
       publishtask(this.valueData).then(res => {
+        console.log(this.valueData, 7865)
         if (res.data.success === ERR_OK) {
           this.$router.push({name: 'success', params: {id: res.data.data}})
         } else {
