@@ -24,7 +24,7 @@
         </li>
       </ul>
     </div>
-    <dialogBox :data="textData" @close="resetContent" v-if="show" />
+    <dialogBox ref="dialog" :rules="rules" :data="textData" @close="resetContent"/>
   </div>
 </template>
 
@@ -37,6 +37,7 @@ import {studentinfor, studentData} from 'api/student-api'
 export default {
   data() {
     return {
+      rules: {},
       textData: {},
       modifylabel: '',
       show: false,
@@ -88,12 +89,6 @@ export default {
       setNum: 'SET_NUM'
     }),
     resetContent(val, item) {
-      // this[item] = val
-      this.show = false
-      if (val.length > 8) {
-        this.$toast('长度不可大于8个')
-        return
-      }
       let id = sessionStorage.getItem('user_id')
       let data
       if (item === 'nickName') {
@@ -106,7 +101,7 @@ export default {
         }
       }
       studentinfor(id, data).then(res => {
-        // this[item] = res.xxxxxx
+        this.getStudentData()
       })
     },
     todetail() {
@@ -116,10 +111,23 @@ export default {
       this.$router.push(val)
     },
     reset(event, item) {
-      console.log(event, item, 890)
-      this.textData.text = event
-      this.textData.item = item
-      this.show = true
+      console.log(event, item)
+      this.textData = {
+        text: event,
+        item: item
+      }
+      if (item === 'nickName') {
+        this.rules = {max: 8, msg: '不可超过8个字符'}
+      } else {
+        this.rules = {max: 8, msg: '不可超过8个字符'}
+      }
+      this.$refs['dialog'].open()
+    },
+    getStudentData() {
+      studentData().then(res => {
+        this.nickName = res.data.data.nick_name ? res.data.data.nick_name : this.nickName
+        this.labelName = res.data.data.label ? res.data.data.label : this.labelName
+      })
     }
   },
   components: {
@@ -137,12 +145,8 @@ export default {
     if (usertype === '1') {
       this.userList[1].hide = false
       this.userList[0].hide = true
-    } else if (usertype === '0') {
-      studentData().then(res => {
-        this.nickName = res.data.data.nick_name ? res.data.data.nick_name : this.nickName
-        this.labelName = res.data.data.label ? res.data.data.label : this.labelName
-      })
     }
+    this.getStudentData()
   }
 }
 </script>

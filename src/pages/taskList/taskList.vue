@@ -103,6 +103,7 @@ export default {
       })
     },
     getListNData(parmes, type) {
+      Object.assign(parmes, {'user_id': sessionStorage.getItem('user_id')})
       taskList(parmes).then(res => {
         if (res.data.success === ERR_OK) {
           if (type === 'more') {
@@ -121,6 +122,7 @@ export default {
       }).catch({})
     },
     getListData(parmes, type) {
+      Object.assign(parmes, {'user_id': sessionStorage.getItem('user_id')})
       taskList(parmes).then(res => {
         if (res.data.success === ERR_OK) {
           if (type === 'more') {

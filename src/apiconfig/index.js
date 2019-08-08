@@ -46,12 +46,16 @@ axios.interceptors.response.use(
   },
   error => {
     let data = error.response
-    if (data && data.data && (data.data.code === 1008 || data.data.code === 1009)) {    // 如果后台返回的错误标识为token过期，则重新登录
-      Toast(data.data.msg)     
-      sessionStorage.removeItem('token')          // token过期，移除token
-      router.push('/loginpage')
-      // 进行重新登录操作
-    } 
+    if(data){
+      if (data && data.data && (data.data.code === 1008 || data.data.code === 1009)) {    // 如果后台返回的错误标识为token过期，则重新登录
+        Toast(data.data.msg)     
+        sessionStorage.removeItem('token')          // token过期，移除token
+        router.push('/loginpage')
+        // 进行重新登录操作
+      } 
+    }else{
+      Toast('服务异常')     
+    }
     return Promise.reject(error)
   }
 )
