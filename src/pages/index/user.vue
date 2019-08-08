@@ -24,7 +24,7 @@
         </li>
       </ul>
     </div>
-    <dialogBox :data="textData" @close="resetContent" v-if="show" />
+    <dialogBox ref="dialog" :rules="rules" :data="textData" @close="resetContent"/>
   </div>
 </template>
 
@@ -37,6 +37,7 @@ import {studentinfor, studentData} from 'api/student-api'
 export default {
   data() {
     return {
+      rules: {max: 8, msg: '不可超过8个字符'},
       textData: {},
       modifylabel: '',
       show: false,
@@ -88,12 +89,6 @@ export default {
       setNum: 'SET_NUM'
     }),
     resetContent(val, item) {
-      // this[item] = val
-      this.show = false
-      if (val.length > 8) {
-        this.$toast('长度不可大于8个')
-        return
-      }
       let id = sessionStorage.getItem('user_id')
       let data
       if (item === 'nickName') {
@@ -116,10 +111,12 @@ export default {
       this.$router.push(val)
     },
     reset(event, item) {
-      console.log(event, item, 890)
-      this.textData.text = event
-      this.textData.item = item
-      this.show = true
+      console.log(event, item)
+      this.textData = {
+        text: event,
+        item: item
+      }
+      this.$refs['dialog'].open()
     }
   },
   components: {
