@@ -77,7 +77,7 @@ export default {
         {
           bg: '#b92671',
           color: '#fff',
-          path: '/User/taskList',
+          // path: '/User/taskList',
           label: '客服'
         }
       ]
@@ -120,6 +120,12 @@ export default {
       this.textData.text = event
       this.textData.item = item
       this.show = true
+    },
+    studentDatas() {
+      studentData().then(res => {
+        this.nickName = res.data.data.nick_name ? res.data.data.nick_name : this.nickName
+        this.labelName = res.data.data.label ? res.data.data.label : this.labelName
+      })
     }
   },
   components: {
@@ -133,15 +139,11 @@ export default {
     })
   },
   mounted() {
+    this.studentDatas()
     let usertype = sessionStorage.getItem('user_type')
     if (usertype === '1') {
       this.userList[1].hide = false
       this.userList[0].hide = true
-    } else if (usertype === '0') {
-      studentData().then(res => {
-        this.nickName = res.data.data.nick_name ? res.data.data.nick_name : this.nickName
-        this.labelName = res.data.data.label ? res.data.data.label : this.labelName
-      })
     }
   }
 }

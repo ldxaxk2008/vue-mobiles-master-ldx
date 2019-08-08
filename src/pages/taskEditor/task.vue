@@ -47,7 +47,7 @@
       <div class="task-editor--tool">
         <div class="task-editor--tool__left">
           <div class="task-editor__top">
-            <software class="skill-user" />
+            <software @softwareChange="softwareChange" :softwareLists="softwareLists" class="skill-user" />
           </div>
         </div>
         <div>
@@ -99,6 +99,7 @@ export default {
   },
   data() {
     return {
+      softwareLists: [],
       desctab: '文案',
       valueData: {
         task_type_id: '',
@@ -107,7 +108,7 @@ export default {
         desc: '',
         payment: null,
         end_date: '',
-        tool_list: [4, 5, 6]
+        tool_list: []
       },
       invalue: '',
       minDate: new Date(),
@@ -232,6 +233,10 @@ export default {
           })
         }
       })
+    },
+    softwareChange(val) {
+      this.softwareLists = val
+      this.valueData.tool_list = val
     },
     // 获取tab
     // getTypes() {
