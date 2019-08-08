@@ -37,7 +37,7 @@ import {studentinfor, studentData} from 'api/student-api'
 export default {
   data() {
     return {
-      rules: {max: 8, msg: '不可超过8个字符'},
+      rules: {},
       textData: {},
       modifylabel: '',
       show: false,
@@ -101,7 +101,7 @@ export default {
         }
       }
       studentinfor(id, data).then(res => {
-        // this[item] = res.xxxxxx
+        this.getStudentData()
       })
     },
     todetail() {
@@ -116,7 +116,18 @@ export default {
         text: event,
         item: item
       }
+      if (item === 'nickName') {
+        this.rules = {max: 8, msg: '不可超过8个字符'}
+      } else {
+        this.rules = {max: 8, msg: '不可超过8个字符'}
+      }
       this.$refs['dialog'].open()
+    },
+    getStudentData() {
+      studentData().then(res => {
+        this.nickName = res.data.data.nick_name ? res.data.data.nick_name : this.nickName
+        this.labelName = res.data.data.label ? res.data.data.label : this.labelName
+      })
     }
   },
   components: {
@@ -134,12 +145,8 @@ export default {
     if (usertype === '1') {
       this.userList[1].hide = false
       this.userList[0].hide = true
-    } else if (usertype === '0') {
-      studentData().then(res => {
-        this.nickName = res.data.data.nick_name ? res.data.data.nick_name : this.nickName
-        this.labelName = res.data.data.label ? res.data.data.label : this.labelName
-      })
     }
+    this.getStudentData()
   }
 }
 </script>
