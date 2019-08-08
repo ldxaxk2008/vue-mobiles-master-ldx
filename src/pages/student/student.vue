@@ -157,6 +157,7 @@ export default {
       })
     },
     getListData(parmes, type) {
+      Object.assign(parmes, {'user_id': sessionStorage.getItem('user_id')})
       taskList(parmes).then((res) => {
         if (res.data.success === ERR_OK) {
           if (type === 'more') {
@@ -177,6 +178,7 @@ export default {
     }
   },
   mounted() {
+    console.log(this.$route)
     this.student()
     let data = {
       limit: this.limit,

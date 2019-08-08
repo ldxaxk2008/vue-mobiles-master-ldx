@@ -6,7 +6,7 @@
     <div class="percentage">
       <div class="one"><span>20%</span><van-icon name="play" /></div>
       <div class="two"><span>50%</span><van-icon name="play" /></div>
-      <div class="three"><span>80%</span><van-icon name="play" /></div>
+      <!-- <div class="three"><span>80%</span><van-icon name="play" /></div> -->
     </div>
   </div>
 </template>

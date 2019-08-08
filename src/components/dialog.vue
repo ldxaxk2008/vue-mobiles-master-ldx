@@ -28,24 +28,56 @@ export default {
     data: {
       type: Object,
       default: () => {}
+    },
+    rules: {
+      type: Object,
+      default: () => {}
     }
   },
   data() {
     return {
-      show: true,
+      show: false,
       message: ''
     }
   },
   methods: {
     close() {
-      this.$emit('close')
+      this.show = false
+    },
+    open() {
+      this.show = true
     },
     preserve() {
-      this.$emit('close', this.message, this.data.item)
+      this.vaild().then((res) => {
+        if (res) {
+          this.$emit('close', res.message, res.item)
+          this.show = false
+        }
+      })
+    },
+    vaild() {
+      return new Promise((resolve, reject) => {
+        if (this.message.length === 0) {
+          this.$toast('不可为空')
+        } else if (this.message.length > this.rules.max) {
+          this.$toast(this.rules.msg)
+        } else {
+          let data = {
+            message: this.message,
+            item: this.data.item
+          }
+          resolve(data)
+        }
+      })
     }
   },
-  mounted() {
-    this.message = this.data.text
+  watch: {
+    data: {
+      handler(newName, oldName) {
+        this.message = newName.text
+      },
+      immediate: true
+    }
   }
 }
 </script>
