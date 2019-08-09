@@ -2,14 +2,14 @@
   <div class="chat">
     <commonHeader :tittle="tittle"></commonHeader>
     <div class="main">
-      <div class="left">
+      <!-- <div class="left">
         <div class="message">
           <img src="@/assets/imgs/img0.png" alt="">
           <span>你瞅啥！你瞅啥！你瞅啥！你瞅啥！你瞅啥！你瞅啥！你瞅啥！</span>
         </div>
-      </div>
-      <div class="right">
-        <div class="message" v-for="(item,index) in rightList" :key="index">
+      </div> -->
+      <div v-for="(item,index) in rightList" :key="index" :class="item.id?'right':'left'">
+        <div class="message">
           <img :src="item.imgSrc" alt="">
           <span>{{item.message}}</span>
         </div>
@@ -39,7 +39,14 @@ export default {
       voice: require('@/assets/imgs/voice.png'),
       rightList: [{
         imgSrc: require('@/assets/imgs/img1.png'),
-        message: '瞅你咋地！瞅你咋地！瞅你咋地！瞅你咋地！瞅你咋地！瞅你咋地！瞅你咋地！瞅你咋地！瞅你咋地！瞅你咋地'
+        message: '你愁啥你愁啥你愁啥你愁啥你愁啥你愁啥你愁啥你愁啥你愁啥你愁啥你愁啥你愁啥你愁啥你愁啥你愁啥你愁啥你愁啥你愁啥'
+      }, {
+        imgSrc: require('@/assets/imgs/img1.png'),
+        id: 'my',
+        message: '瞅你咋地！瞅你咋地！瞅你咋地！瞅你咋地！你咋地！瞅你咋地！瞅你咋地！瞅你咋地！瞅你咋地！瞅你咋地'
+      }, {
+        imgSrc: require('@/assets/imgs/img1.png'),
+        message: '不行'
       }]
     }
   },
@@ -88,23 +95,43 @@ export default {
   overflow-y:auto;
   background: #fff;
   .padding(20,20,20,20);
-  .left,.right{
-    text-align: left;
-    overflow: hidden;
+  .left{
     .message{
       display: flex;
-      align-items: center;
+      justify-content:end;
+      .mb(30);
+      width:80%;
+      img{
+        width:40px;
+        height: 40px;
+        .b-radius(300);
+      }
+      span{
+        text-align: left;
+        .ml(20);
+        background: #D8D8D8;
+        color: #000;
+        .padding(10,10,10,10);
+        .b-radius(10);
+      }
+    }
+  }
+  .right{
+    .message{
+      display: flex;
       justify-content: flex-end;
       .mb(30);
       width:80%;
       img{
-        .w(100);
-        .h(100);
+        width:40px;
+        height: 40px;
         .b-radius(300);
       }
       span{
+        text-align: left;
         .ml(20);
-        background: #D8D8D8;
+        background: #9afd9a;
+        color: #000;
         .padding(10,10,10,10);
         .b-radius(10);
       }
