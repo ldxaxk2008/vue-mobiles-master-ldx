@@ -107,8 +107,8 @@ export default {
         title: '',
         desc: '',
         payment: null,
-        end_date: ''
-        // tool_list: {}
+        end_date: '',
+        tool_list: []
       },
       invalue: '',
       minDate: new Date(),
@@ -236,10 +236,15 @@ export default {
     },
     softwareChange(val) {
       this.softwareLists = val
-      console.log(val, 7654)
-      this.valueData.tool_list = val
-      val.forEach(res => {
-        console.log(res, 888)
+      let arr = []
+      val.forEach((res, index) => {
+        arr[index] = {
+          id: index,
+          name: res
+        }
+      })
+      arr.forEach(res => {
+        this.valueData.tool_list.push(res.id)
       })
     },
     // 获取tab
@@ -294,12 +299,12 @@ export default {
         })
         return
       }
-      // if (!this.valueData.tool_list) {
-      //   this.$toast({
-      //     message: '请发布软件'
-      //   })
-      //   return
-      // }
+      if (this.valueData.tool_list.length === 0) {
+        this.$toast({
+          message: '请发布软件'
+        })
+        return
+      }
       var reg = /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/
       if (!this.valueData.payment) {
         this.$toast({
