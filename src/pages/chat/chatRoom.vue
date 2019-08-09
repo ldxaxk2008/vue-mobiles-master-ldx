@@ -1,28 +1,23 @@
 <template>
   <div class="chat">
-    <commonHeader :tittle="tittle"></commonHeader>
-    <div class="main">
-      <div class="left">
-        <div class="message">
-          <img src="@/assets/imgs/img0.png" alt="">
-          <span>你瞅啥！你瞅啥！你瞅啥！你瞅啥！你瞅啥！你瞅啥！你瞅啥！</span>
-        </div>
-      </div>
-      <div class="right">
-        <div class="message" v-for="(item,index) in rightList" :key="index">
-          <img :src="item.imgSrc" alt="">
-          <span>{{item.message}}</span>
-        </div>
-      </div>
-    </div>
-    <div class="foot">
-      <img src="@/assets/imgs/voice.png" alt="">
-      <van-field
-        v-model="value"
-        :border="false"
-      />
-      <van-button slot="button" size="mini" type="primary" @click="handelClick">发送</van-button>
-    </div>
+    <!-- <commonHeader :tittle="tittle"/> -->
+    <th-message
+      ref="messgebox"
+      :usePulldown="true"
+      :useText="true"
+      :pulldownConfig="pulldownConfig"
+      :topPadding="120"
+      :messageData="messageData"
+      :funcList="funclist"
+      :showInput="showInput"
+      :showEmoticon="true"
+      @sendOut="senRequest"
+      @quickCall="quick"
+      @bigBtnCall="btncall"
+      @msgClick="msgclick"
+      @pulldownCall="pulldowncall">
+      >
+    </th-message>
   </div>
 </template>
 
@@ -34,27 +29,57 @@ export default {
   },
   data() {
     return {
-      tittle: '聊天',
-      value: '',
-      voice: require('@/assets/imgs/voice.png'),
-      rightList: [{
-        imgSrc: require('@/assets/imgs/img1.png'),
-        message: '瞅你咋地！瞅你咋地！瞅你咋地！瞅你咋地！瞅你咋地！瞅你咋地！瞅你咋地！瞅你咋地！瞅你咋地！瞅你咋地'
-      }]
+      pulldownConfig: {
+        default: '下拉刷新',
+        up: "<div style='color:red'>下拉刷新</div>",
+        down: "<div style='color:blue'>下拉刷新</div>",
+        loading: "<span style='color:green'>加载中</span>"
+      },
+      messageData: [
+        {
+          type: 2,
+          text: '您好'
+        }, {
+          type: 3,
+          text: '消息提示'
+        }, {
+          type: 4,
+          text: '系统消息'
+        }
+      ],
+      funclist: [],
+      showInput: true,
+      tittle: '聊天'
     }
   },
   methods: {
-    handelClick() {
-      let obj = {
-        imgSrc: require('@/assets/imgs/img1.png'),
-        message: this.value
-      }
-      this.rightList.push(obj)
-      this.value = ''
-      this.$nextTick(() => {
-        let msg = document.getElementsByClassName('main')[0] // 获取对象
-        msg.scrollTop = msg.scrollHeight // 滚动高度
+    senRequest(val) {
+      console.log(val, 111)
+      this.messageData.push({
+        type: 1,
+        text: val
       })
+    },
+    gallery(val) {
+      console.log(val, 111)
+    },
+    camera(val) {
+      console.log(val, 111)
+    },
+    quick(val) {
+      console.log(val, 111)
+    },
+    btncall (val) {
+      console.log(val, 111)
+    },
+    msgclick (val) {
+      console.log(val, 111)
+    },
+    pulldowncall (val) {
+      console.log(val, 111)
+      setTimeout(() => {
+        this.$refs.messgebox.resetpulldown()
+      }, 3000)
     }
   }
 }
@@ -63,58 +88,20 @@ export default {
 <style scoped lang="less">
 @import "~styles/index.less";
 @import "~styles/variable.less";
-.foot{
+.th-message{
   display: flex;
-  background: #F9F9F9;
-  border-top: 1px solid #e6e6e6;
-  .padding(20,20,20,20);
-  align-items: center;
-  justify-content: center;
-  .van-field{
-    .margin(0, 20, 0, 20);
-    background: #B5E2E5;
-    .padding(5,35,5,5);
-    .b-radius(300);
+  flex-direction: column;
+  height:100%;
+  margin-top:0 !important;
+  /deep/ #vux-scroller-2rkki{
+    flex:1;
+    overflow: auto;
   }
-  .van-button{
-    .b-radius(300);
-    .h(60);
-    background:#18ACB6;
+  /deep/ .xs-container>div{
+    padding-top:0 !important;
   }
-}
-.main{
-  flex:1;
-  overflow-x:hidden;
-  overflow-y:auto;
-  background: #fff;
-  .padding(20,20,20,20);
-  .left,.right{
-    text-align: left;
-    overflow: hidden;
-    .message{
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      .mb(30);
-      width:80%;
-      img{
-        .w(100);
-        .h(100);
-        .b-radius(300);
-      }
-      span{
-        .ml(20);
-        background: #D8D8D8;
-        .padding(10,10,10,10);
-        .b-radius(10);
-      }
-    }
-  }
-  .left .message{
-    float:left;
-  }
-  .right .message{
-    float:right;
+  /deep/ .th-pulldown{
+    top:-60px !important;
   }
 }
 </style>
