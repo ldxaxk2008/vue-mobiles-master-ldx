@@ -1,6 +1,6 @@
 <template>
   <div class="login-page">
-    <common-header :tittle="tittle" :headerColor="headerColor" :showback="true"></common-header>
+    <common-header :tittle="tittle" :headerColor="headerColor"></common-header>
     <div style="flex:1;">
       <div class="login-img">
         <svg-icon name="logo" size="250" ref="svg_icon"></svg-icon>
