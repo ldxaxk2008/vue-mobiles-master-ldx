@@ -2,12 +2,14 @@
   <div class="accept">
     <common-header :tittle="tittle"></common-header>
     <div class="accept-main">
-      <van-checkbox-group v-model="result" :max="1">
+      <!-- <van-checkbox-group v-model="result" :max="1"> -->
+      <van-radio-group v-model="result">
         <div class="accept-main-box" v-for="(item,index) in acceptList" :key="index">
-          <introduce :information="item" :keys="index" :imgShow="true"/>
+          <introduce @changeRadio="changeRadio" :information="item" :keys="index" :imgShow="true"/>
           <comment :commentList="item"/>
         </div>
-      </van-checkbox-group>
+      <!-- </van-checkbox-group> -->
+      </van-radio-group>
     </div>
     <div class="task-footer">
       <ul>
@@ -30,7 +32,7 @@ export default {
   },
   data() {
     return {
-      result: [],
+      result: null,
       tittle: '任务接受者确认',
       task_id: '',
       task_user_ids: '',
@@ -47,17 +49,19 @@ export default {
   },
   methods: {
     cancel(data) {
-      selectstudents({task_user_ids: this.acceptList[this.result[0]].task_user_id}).then(res => {
+      selectstudents({task_user_ids: this.acceptList[this.result].task_user_id}).then(res => {
         console.log(res, 77744)
         this.$router.push('/User/Task')
       })
-      // this.$router.push('/User/Task')
     },
     getList () {
       let taskid = this.task_id
       getacceptuserlist({task_id: taskid}).then(res => {
         this.acceptList = res.data.data.results
       })
+    },
+    changeRadio(val) {
+      this.result = val
     }
   },
   mounted () {

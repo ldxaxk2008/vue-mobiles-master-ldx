@@ -1,15 +1,16 @@
 <template>
   <div class="enterprise">
-    <div class="synopsis-head" :id="information.task_user_id">
-      <img v-if="imgShow" :src="information.image||logoImg" alt="logo" class="logo">
+    <div class="synopsis-head" :id="information.task_user_id" @click="handelClick">
+      <img v-if="imgShow" :src="information.image||logoImg" alt="logo" class="logo" @click.stop="imgClick">
       <div class="contenr">
         <div class="company" v-if="imgShow">
           <div class="company-box">
             <span class="name">{{information.username}}</span>
             <span class="autograph">{{information.industry||'行业未知'}}</span>
           </div>
-          <span class="lv">{{information.level}}</span>
-          <van-checkbox :name="keys" v-model="information.checked" checked-color="#c14182"></van-checkbox>
+          <span class="lv">LV{{information.level}}</span>
+          <!-- <van-checkbox :name="keys" v-model="information.checked" checked-color="#c14182"></van-checkbox> -->
+          <van-radio checked-color="#c14182" :name="keys"></van-radio>
         </div>
         <div class="synopsis-main">
           {{information.desc||'暂无描述'}}
@@ -38,6 +39,14 @@ export default {
   data() {
     return {
       logoImg: require('@/assets/imgs/user-img.png')
+    }
+  },
+  methods: {
+    handelClick() {
+      this.$emit('changeRadio', this.keys)
+    },
+    imgClick() {
+      this.$router.push({name: 'student', params: this.information})
     }
   }
 }
