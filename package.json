@@ -25,6 +25,7 @@
     "svg-sprite-loader": "^4.1.6",
     "svgo": "^1.2.2",
     "svgo-loader": "^2.2.1",
+    "thor-x": "0.0.81",
     "vant": "^2.0.2",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",

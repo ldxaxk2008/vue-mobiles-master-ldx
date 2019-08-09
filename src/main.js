@@ -14,6 +14,9 @@ import 'vant/lib/index.css';
 import FastClick from 'fastclick'
 import '../static/js/flexible.js'
 import vantDialog from '@/components/vantDialog'
+import thor from 'thor-x'
+import 'thor-x/dist/index.css'
+Vue.use(thor)
 // import {fetchGet,fetchPost} from '@/apiconfig/index.js'
 if (process.env.MOCK) {    // 判断是否为mock模式
   require('./mock/index.js')
