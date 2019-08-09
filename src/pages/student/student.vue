@@ -178,7 +178,7 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$route)
+    console.log(this.$route.params)
     this.student()
     let data = {
       limit: this.limit,
