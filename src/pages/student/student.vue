@@ -115,7 +115,7 @@ export default {
     softwareChange(val) {
       console.log(val, 11111111)
       this.softwareLists = val
-      studentinfor(sessionStorage.getItem('user_id'), {tool_list: val}).then((res) => {
+      studentinfor((this.$route.params.id && this.$route.params.id.id) ? this.$route.params.id.id : sessionStorage.getItem('user_id'), {tool_list: val}).then((res) => {
         console.log(res.data)
         if (res.data.success === ERR_OK) {
           this.student()
@@ -126,7 +126,7 @@ export default {
     },
     skillChage(val) {
       this.skillList = val
-      studentinfor(sessionStorage.getItem('user_id'), {skill_list: val}).then((res) => {
+      studentinfor((this.$route.params.id && this.$route.params.id.id) ? this.$route.params.id.id : sessionStorage.getItem('user_id'), {skill_list: val}).then((res) => {
         console.log(res.data)
         if (res.data.success === ERR_OK) {
           this.student()
@@ -157,7 +157,7 @@ export default {
       })
     },
     getListData(parmes, type) {
-      Object.assign(parmes, {'user_id': sessionStorage.getItem('user_id')})
+      Object.assign(parmes, {'user_id': (this.$route.params.id && this.$route.params.id.id) ? this.$route.params.id.id : sessionStorage.getItem('user_id')})
       taskList(parmes).then((res) => {
         if (res.data.success === ERR_OK) {
           if (type === 'more') {
@@ -178,7 +178,6 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$route.params)
     this.student()
     let data = {
       limit: this.limit,
