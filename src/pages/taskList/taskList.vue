@@ -93,8 +93,9 @@ export default {
       console.log(data)
     },
     getData() {
-      let userid = sessionStorage.getItem('user_id')
-      companyDetails({user_id: userid}).then(res => {
+      let parmes = {}
+      Object.assign(parmes, {'user_id': (this.$route.params.id && this.$route.params.id.id) ? this.$route.params.id.id : sessionStorage.getItem('user_id')})
+      companyDetails(parmes).then(res => {
         if (res.data.success === ERR_OK) {
           this.information = res.data.data
         } else {
@@ -103,7 +104,7 @@ export default {
       })
     },
     getListNData(parmes, type) {
-      Object.assign(parmes, {'user_id': (this.$route.params.id && this.$route.parmes.id.id) ? this.$route.params.id.id : sessionStorage.getItem('user_id')})
+      Object.assign(parmes, {'user_id': (this.$route.params.id && this.$route.params.id.id) ? this.$route.params.id.id : sessionStorage.getItem('user_id')})
       taskList(parmes).then(res => {
         if (res.data.success === ERR_OK) {
           if (type === 'more') {
@@ -122,7 +123,7 @@ export default {
       }).catch({})
     },
     getListData(parmes, type) {
-      Object.assign(parmes, {'user_id': (this.$route.params.id && this.$route.parmes.id.id) ? this.$route.params.id.id : sessionStorage.getItem('user_id')})
+      Object.assign(parmes, {'user_id': (this.$route.params.id && this.$route.params.id.id) ? this.$route.params.id.id : sessionStorage.getItem('user_id')})
       taskList(parmes).then(res => {
         if (res.data.success === ERR_OK) {
           if (type === 'more') {
