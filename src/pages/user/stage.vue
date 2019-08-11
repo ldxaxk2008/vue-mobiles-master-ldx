@@ -12,9 +12,9 @@
     <EnterpriseSynopsis :information="information"></EnterpriseSynopsis>
     <div class="slider">
       <progressBar />
-      <button v-if="status!==2" class="confirm" @click="dialogClick">进行阶段确认</button>
-      <button v-if="show && status===2" class="deliver" @click="taskpay">任务交付</button>
-      <button v-if="!show && status===2" class="deliver">确认任务完成</button>
+      <button v-if="show && !pay" class="confirm" @click="dialogClick">进行阶段确认</button>
+      <button v-if="pay" class="deliver" @click="taskpay">任务交付</button>
+      <button v-if="cpay" class="deliver">确认任务完成</button>
     </div>
     <FileDown :down="down" />
     <vantDialog :progress="progress" :type="type" ref="dialog" @confirmDialog="confirmDialog"/>
@@ -53,7 +53,6 @@ export default {
   },
   data() {
     return {
-      show: true,
       rangeValue: 20,
       type: '',
       progress: 0
@@ -87,6 +86,41 @@ export default {
       this.show = false
     } else if (window.sessionStorage.getItem('user_type') === '0') {
       this.show = true
+    }
+  },
+  computed: {
+    show: function () {
+      let id = sessionStorage.getItem('user_id')
+      let type = sessionStorage.getItem('user_type')
+      if (type === '0') {
+        if (JSON.stringify(this.taskList.user_id) === id && !this.taskList.is_confirm_stage) {
+          return true
+        } else {
+          return false
+        }
+      } else {
+        if (JSON.stringify(this.taskList.company_id) === id && this.taskList.is_confirm_stage) {
+          return true
+        } else {
+          return false
+        }
+      }
+    },
+    pay: function () {
+      let type = sessionStorage.getItem('user_type')
+      if (type === '0') {
+        return this.taskList.progress === '1' && !this.taskList.is_confirm_stage
+      } else {
+        return false
+      }
+    },
+    cpay: function () {
+      let type = sessionStorage.getItem('user_type')
+      if (type === '0') {
+        return false
+      } else {
+        return this.taskList.progress === '1' && this.taskList.is_confirm_stage
+      }
     }
   }
 }
