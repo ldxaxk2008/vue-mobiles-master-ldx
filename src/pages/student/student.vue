@@ -3,7 +3,7 @@
     <common-header :tittle="tittle"></common-header>
     <div class="student-main">
       <div class="company-introduce">
-        <companyIntorduce :information="information" :imgShow="true"/>
+        <companyIntorduce :information="information" :imgShow="true" @handelEdit="handelEdit"/>
         <div class="skill-main">
           <skill @skillChage="skillChage" :skillList="skillList" class="software"></skill>
           <software @softwareChange="softwareChange" :softwareLists="softwareLists" class="skill-user"/>
@@ -27,6 +27,7 @@
         <li v-for="(item,index) in navList" :key="index" @click="item.fun">{{item.label}}</li>
       </ul>
     </div>
+    <dialogBox ref="dialog" :rules="rules" :data="textData" @close="resetContent"/>
   </div>
 </template>
 
@@ -42,6 +43,8 @@ import skill from '@/pages/skillCommon/skill'
 import {taskList} from 'api/home-api'
 import {studentData, studentinfor} from 'api/student-api'
 import { ERR_OK } from 'config/index'
+import dialogBox from 'common/dialog'
+
 export default {
   components: {
     commonHeader,
@@ -51,10 +54,12 @@ export default {
     imgView,
     fileDown,
     software,
-    skill
+    skill,
+    dialogBox
   },
   data() {
     return {
+      textData: {},
       tittle: '',
       information: {},
       limit: 5,
@@ -108,10 +113,34 @@ export default {
         }
       ],
       skillList: [],
-      softwareLists: []
+      softwareLists: [],
+      rules: {}
     }
   },
   methods: {
+    // 点击修改
+    handelEdit(data, sign, label) {
+      this.textData = {
+        defaultVal: data,
+        prop: sign,
+        label: label
+      }
+      this.$refs['dialog'].open()
+    },
+    // 修改完成
+    resetContent(val, item) {
+      console.log(val, item, 876554)
+      let id = sessionStorage.getItem('user_id')
+      let data
+      if (item === 'desc') {
+        data = {
+          desc: val
+        }
+      }
+      studentinfor(id, data).then(res => {
+        this.student()
+      })
+    },
     softwareChange(val) {
       console.log(val, 11111111)
       this.softwareLists = val
@@ -146,8 +175,9 @@ export default {
     },
     student() {
       studentData().then((res) => {
-        console.log(res.data)
+        console.log(res.data, 'eeeeeeeeeewd')
         if (res.data.success === ERR_OK) {
+          this.information.desc = res.data.data.desc
           this.information = res.data.data
           this.skillList = res.data.data.skill_list
           this.softwareLists = res.data.data.tool_list
