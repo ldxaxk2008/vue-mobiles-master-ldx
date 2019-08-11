@@ -68,6 +68,24 @@ export function fetchPost(requestUrl, data = {}) {
   })
 }
 
+// 封装post请求
+export function formPost(requestUrl, data = {}) {
+  console.log(data)
+  let formData = new FormData()
+  // formData.append('file', 'ssssssssss')
+  formData.append('file', data.file)
+  formData.append('task_id',data.task_id)
+  formData.append('attach_type', sessionStorage.getItem('user_type'))
+  return axios({
+    url: requestUrl,
+    method: 'post',
+    headers:{
+      'Content-Type' :'multipart/form-data'
+    },
+    data:formData
+  })
+}
+
 export function fetchGet(requestUrl, params = {}) {
   return axios({
     url: requestUrl,

@@ -44,12 +44,11 @@ export default {
   },
   methods: {
     afterRead(file) {
-      let formData = new FormData()
-      formData.append('file', file.content)
+      console.log(file.content)
       let data = {
         task_id: this.fileObj.id,
         attach_type: sessionStorage.getItem('user_type'),
-        file: formData
+        file: file.content
       }
       fileUp(data).then((res) => {
         console.log(res.data, 111111111111111111111)
