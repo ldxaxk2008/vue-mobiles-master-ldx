@@ -5,7 +5,7 @@
       <taskSynopsis @taskSele="handelClick" :information="information" :userId="userId"></taskSynopsis>
       <taskStage :information="companyList" :status="status" :down="down"></taskStage>
     </div>
-    <div class="task-footer" v-if="show && userId ==0">
+    <div class="task-footer" v-if="show">
       <ul>
         <li v-for="(item,index) in navList" :key="index" @click="item.fun">{{item.label}}</li>
       </ul>
@@ -30,6 +30,7 @@ export default {
     return {
       status: 1,
       userId: 0,
+      comId: 0,
       show: true,
       tittle: 'LOGO设计',
       companyList: {},
@@ -108,7 +109,6 @@ export default {
     },
     getData() {
       companyDetails({user_id: this.information.company_id}).then((res) => {
-        console.log(res.data)
         if (res.data.success) {
           this.companyList = res.data.data
         } else {
@@ -122,6 +122,7 @@ export default {
           this.information = res.data.data
           this.status = this.information.status
           this.userId = this.information.user_id
+          this.comId = this.information.company_id
         } else {
         }
       }).catch(() => {
@@ -133,6 +134,13 @@ export default {
     }
   },
   mounted() {
+    // 权限添加
+    let id = sessionStorage.getItem('user_id')
+    if (id === this.comId && this.userId === 0) {
+      this.show = true
+    } else {
+      this.show = false
+    }
     console.log(this.task_id, this.user_id)
     if (JSON.stringify(this.$route.params) === '{}' && !this.task_id) {
       this.$router.push('/mine')
@@ -141,12 +149,6 @@ export default {
       if (this.$route.params.id) {
         this.SET_TASK_ID(this.$route.params.id.id)
       }
-    }
-    // 权限添加
-    if (window.sessionStorage.getItem('user_type') === '0') {
-      this.show = false
-    } else if (window.sessionStorage.getItem('user_type') === '1' && this.userid !== 0) {
-      this.show = true
     }
     // this.getData()
     // this.informationData()
