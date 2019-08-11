@@ -18,7 +18,7 @@
     </div>
     <div class="about-us">
         <h4>任务简介</h4>
-        <p>{{information.desc}}</p>
+        <p>{{information.desc}}<van-icon class="about-icon" name="edit" @click="handelEdit(information.desc,'desc','任务简介')"/></p>
         <span>距离任务结束还剩：{{information.rest_day}} 天</span>
       </div>
   </div>
@@ -56,6 +56,9 @@ export default {
       this.appstate = !this.appstate
       this.state = !this.state
       this.$emit('taskSele', val)
+    },
+    handelEdit(data, sign, label) {
+      this.$emit('handelEdit', data, sign, label)
     }
   },
   watch: {
@@ -134,6 +137,9 @@ export default {
     p{
       .mb(20);
       text-indent: 24px;
+    }
+    .about-icon{
+      .ml(-90);
     }
     span{
       display: block;

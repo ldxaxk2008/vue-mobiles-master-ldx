@@ -2,7 +2,7 @@
   <div class="task-box">
     <common-header :tittle="tittle" :showmore="false"></common-header>
     <div class="task-content">
-      <taskSynopsis @taskSele="handelClick" :information="information" :userId="userId"></taskSynopsis>
+      <taskSynopsis @taskSele="handelClick" :information="information" :userId="userId" @handelEdit="handelEdit"></taskSynopsis>
       <taskStage :taskList='information' :information="companyList" :status="status" :down="down" @stageChange="stageChange"></taskStage>
     </div>
     <div class="task-footer" v-if="show">
@@ -10,6 +10,7 @@
         <li v-for="(item,index) in navList" :key="index" @click="item.fun">{{item.label}}</li>
       </ul>
     </div>
+    <dialogBox ref="dialog" :rules="rules" :data="textData" @close="resetContent"/>
   </div>
 </template>
 
@@ -20,14 +21,19 @@ import taskStage from './stage'
 import {taskDetails, applyTask, cancelTask} from 'api/home-api'
 import {companyDetails} from 'api/company-api'
 import {mapState, mapMutations} from 'vuex'
+import dialogBox from 'common/dialog'
+
 export default {
   components: {
     commonHeader,
     taskSynopsis,
-    taskStage
+    taskStage,
+    dialogBox
   },
   data() {
     return {
+      rules: {},
+      textData: {},
       status: 1,
       tittle: 'LOGO设计',
       companyList: {},
@@ -84,6 +90,19 @@ export default {
       console.log('确认申请人')
       this.$router.push({name: 'acceptTask', params: {id: this.information}})
     },
+    // 修改任务
+    handelEdit(data, sign, label) {
+      this.textData = {
+        defaultVal: data,
+        prop: sign,
+        label: label
+      }
+      this.$refs['dialog'].open()
+    },
+    // 修改完成
+    resetContent(val, item) {
+      console.log(val, item, 'reeeeeeeee')
+    },
     stageChange(val) {
       if (val) {
         this.informationData()
@@ -134,8 +153,6 @@ export default {
     }
   },
   mounted() {
-    // 权限添加
-
     console.log(this.task_id, this.user_id)
     if (JSON.stringify(this.$route.params) === '{}' && !this.task_id) {
       this.$router.push('/home')

@@ -108,7 +108,7 @@ export default {
         desc: '',
         payment: null,
         end_date: '',
-        tool_list: []
+        tool_list: [4, 5, 6]
       },
       invalue: '',
       minDate: new Date(),
@@ -236,16 +236,17 @@ export default {
     },
     softwareChange(val) {
       this.softwareLists = val
-      let arr = []
-      val.forEach((res, index) => {
-        arr[index] = {
-          id: index,
-          name: res
-        }
-      })
-      arr.forEach(res => {
-        this.valueData.tool_list.push(res.id)
-      })
+      // this.valueData.tool_list = val
+      // let arr = []
+      // val.forEach((res, index) => {
+      //   arr[index] = {
+      //     id: index,
+      //     name: res
+      //   }
+      // })
+      // arr.forEach(res => {
+      //   this.valueData.tool_list.push(res.id)
+      // })
     },
     // 获取tab
     // getTypes() {
@@ -299,12 +300,12 @@ export default {
         })
         return
       }
-      if (this.valueData.tool_list.length === 0) {
-        this.$toast({
-          message: '请发布软件'
-        })
-        return
-      }
+      // if (this.valueData.tool_list.length === 0) {
+      //   this.$toast({
+      //     message: '请发布软件'
+      //   })
+      //   return
+      // }
       var reg = /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/
       if (!this.valueData.payment) {
         this.$toast({
