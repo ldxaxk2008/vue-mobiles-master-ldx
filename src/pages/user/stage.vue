@@ -11,12 +11,12 @@
     </div>
     <EnterpriseSynopsis :information="information"></EnterpriseSynopsis>
     <div class="slider">
-      <progressBar />
-      <button v-if="status!==2" class="confirm" @click="dialogClick">进行阶段确认</button>
-      <button v-if="show && status===2" class="deliver" @click="taskpay">任务交付</button>
-      <button v-if="!show && status===2" class="deliver">确认任务完成</button>
+      <progressBar :progress="taskList.progress"/>
+      <button v-if="show && !pay" class="confirm" @click="dialogClick">进行阶段确认</button>
+      <button v-if="pay" class="deliver" @click="taskpay">任务交付</button>
+      <button v-if="cpay" class="deliver">确认任务完成</button>
     </div>
-    <FileDown :down="down" />
+    <FileDown :down="down" :taskObj="taskList"/>
     <vantDialog :progress="progress" :type="type" ref="dialog" @confirmDialog="confirmDialog"/>
   </div>
 </template>
@@ -53,10 +53,10 @@ export default {
   },
   data() {
     return {
-      show: true,
       rangeValue: 20,
       type: '',
-      progress: 0
+      progress: 0,
+      labelWidth: ''
     }
   },
   methods: {
@@ -72,10 +72,11 @@ export default {
       this.progress = 0.2
     },
     confirmDialog(val, progress) {
-      // console.log(val, progress, this.taskList.id)
       stageConfirm({task_id: this.taskList.id}).then((res) => {
         console.log(res.data)
         if (res.data.success === ERR_OK) {
+          this.$toast(res.data.msg)
+          this.$emit('stageChange', true)
         } else {
         }
       }).catch(() => {
@@ -87,6 +88,41 @@ export default {
       this.show = false
     } else if (window.sessionStorage.getItem('user_type') === '0') {
       this.show = true
+    }
+  },
+  computed: {
+    show: function () {
+      let id = sessionStorage.getItem('user_id')
+      let type = sessionStorage.getItem('user_type')
+      if (type === '0') {
+        if (JSON.stringify(this.taskList.user_id) === id && !this.taskList.is_confirm_stage) {
+          return true
+        } else {
+          return false
+        }
+      } else {
+        if (JSON.stringify(this.taskList.company_id) === id && this.taskList.is_confirm_stage) {
+          return true
+        } else {
+          return false
+        }
+      }
+    },
+    pay: function () {
+      let type = sessionStorage.getItem('user_type')
+      if (type === '0') {
+        return this.taskList.progress === '1' && !this.taskList.is_confirm_stage
+      } else {
+        return false
+      }
+    },
+    cpay: function () {
+      let type = sessionStorage.getItem('user_type')
+      if (type === '0') {
+        return false
+      } else {
+        return this.taskList.progress === '1' && this.taskList.is_confirm_stage
+      }
     }
   }
 }

@@ -15,7 +15,7 @@
 export default {
   props: {
     progress: {
-      type: Number,
+      type: [Number, String],
       default: 0
     }
   },

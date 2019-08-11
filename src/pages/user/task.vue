@@ -3,7 +3,7 @@
     <common-header :tittle="tittle" :showmore="false"></common-header>
     <div class="task-content">
       <taskSynopsis @taskSele="handelClick" :information="information" :userId="userId"></taskSynopsis>
-      <taskStage :taskList='information' :information="companyList" :status="status" :down="down"></taskStage>
+      <taskStage :taskList='information' :information="companyList" :status="status" :down="down" @stageChange="stageChange"></taskStage>
     </div>
     <div class="task-footer" v-if="show">
       <ul>
@@ -29,9 +29,6 @@ export default {
   data() {
     return {
       status: 1,
-      userId: 0,
-      comId: 0,
-      show: true,
       tittle: 'LOGO设计',
       companyList: {},
       information: {},
@@ -87,6 +84,11 @@ export default {
       console.log('确认申请人')
       this.$router.push({name: 'acceptTask', params: {id: this.information}})
     },
+    stageChange(val) {
+      if (val) {
+        this.informationData()
+      }
+    },
     handelClick(val) {
       if (val === 'applyTask') {
         applyTask({task_id: (this.$route.params.id && this.$route.params.id.id) || this.task_id, user_id: this.user_id}).then((res) => {
@@ -121,8 +123,6 @@ export default {
         if (res.data.success) {
           this.information = res.data.data
           this.status = this.information.status
-          this.userId = this.information.user_id
-          this.comId = this.information.company_id
         } else {
         }
       }).catch(() => {
@@ -135,15 +135,10 @@ export default {
   },
   mounted() {
     // 权限添加
-    let id = sessionStorage.getItem('user_id')
-    if (id === this.comId && this.userId === 0) {
-      this.show = true
-    } else {
-      this.show = false
-    }
+
     console.log(this.task_id, this.user_id)
     if (JSON.stringify(this.$route.params) === '{}' && !this.task_id) {
-      this.$router.push('/mine')
+      this.$router.push('/home')
       return
     } else {
       if (this.$route.params.id) {
@@ -155,6 +150,20 @@ export default {
     this.asyncPrint()
   },
   computed: {
+    userId: function () {
+      return this.information.user_id
+    },
+    comId: function () {
+      return this.information.company_id
+    },
+    show: function () {
+      let id = sessionStorage.getItem('user_id')
+      if (id === JSON.stringify(this.comId) && this.userId === 0) {
+        return true
+      } else {
+        return false
+      }
+    },
     ...mapState({
       user_id: state => state.login.user_id,
       task_id: state => state.login.task_id
