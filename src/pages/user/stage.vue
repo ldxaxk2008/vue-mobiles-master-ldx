@@ -83,13 +83,6 @@ export default {
       })
     }
   },
-  mounted() {
-    if (window.sessionStorage.getItem('user_type') === '1') {
-      this.show = false
-    } else if (window.sessionStorage.getItem('user_type') === '0') {
-      this.show = true
-    }
-  },
   computed: {
     show: function () {
       let id = sessionStorage.getItem('user_id')
