@@ -17,7 +17,7 @@
       <button v-if="!show && status===2" class="deliver">确认任务完成</button>
     </div>
     <FileDown :down="down" />
-    <vantDialog ref="dialog" @confirmDialog="confirmDialog"/>
+    <vantDialog :progress="progress" :type="type" ref="dialog" @confirmDialog="confirmDialog"/>
   </div>
 </template>
 
@@ -25,10 +25,15 @@
 import EnterpriseSynopsis from './enterpriseSynopsis'
 import FileDown from './fileDown'
 import progressBar from 'common/progressBar'
-
+import { stageConfirm } from 'api/stage-api'
+import { ERR_OK } from 'config/index'
 export default {
   props: {
     information: {
+      type: Object,
+      default: () => {}
+    },
+    taskList: {
       type: Object,
       default: () => {}
     },
@@ -49,7 +54,9 @@ export default {
   data() {
     return {
       show: true,
-      rangeValue: 20
+      rangeValue: 20,
+      type: '',
+      progress: 0
     }
   },
   methods: {
@@ -61,9 +68,18 @@ export default {
     },
     dialogClick() {
       this.$refs['dialog'].show = true
+      this.type = 'company_progress'
+      this.progress = 0.2
     },
-    confirmDialog(val) {
-      console.log(val)
+    confirmDialog(val, progress) {
+      // console.log(val, progress, this.taskList.id)
+      stageConfirm({task_id: this.taskList.id}).then((res) => {
+        console.log(res.data)
+        if (res.data.success === ERR_OK) {
+        } else {
+        }
+      }).catch(() => {
+      })
     }
   },
   mounted() {

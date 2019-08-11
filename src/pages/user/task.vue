@@ -3,7 +3,7 @@
     <common-header :tittle="tittle" :showmore="false"></common-header>
     <div class="task-content">
       <taskSynopsis @taskSele="handelClick" :information="information" :userId="userId"></taskSynopsis>
-      <taskStage :information="companyList" :status="status" :down="down"></taskStage>
+      <taskStage :taskList='information' :information="companyList" :status="status" :down="down"></taskStage>
     </div>
     <div class="task-footer" v-if="show && userId ==0">
       <ul>
@@ -108,7 +108,6 @@ export default {
     },
     getData() {
       companyDetails({user_id: this.information.company_id}).then((res) => {
-        console.log(res.data)
         if (res.data.success) {
           this.companyList = res.data.data
         } else {

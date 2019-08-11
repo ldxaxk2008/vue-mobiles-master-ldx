@@ -1,7 +1,7 @@
 <template>
   <div class="progress">
     <div class="line-box">
-      <div class="line" :style="{width:lineWidth+'%'}"></div>
+      <div class="line" :style="{width:progress * 100 +'%'}"></div>
     </div>
     <div class="percentage">
       <div class="one"><span>20%</span><van-icon name="play" /></div>
@@ -13,9 +13,14 @@
 
 <script>
 export default {
+  props: {
+    progress: {
+      type: Number,
+      default: 0
+    }
+  },
   data() {
     return {
-      lineWidth: 20
     }
   }
 }
@@ -55,7 +60,7 @@ export default {
     width: 100%;
     div{
       position: absolute;
-      top: 0;
+      top: -4px;
       display: flex;
       flex-direction: column;
       text-align: center;

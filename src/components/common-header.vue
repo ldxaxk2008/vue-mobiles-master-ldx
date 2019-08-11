@@ -2,7 +2,7 @@
     <div class="header-box" :style="{ backgroundColor: headerColor}">
       <div class="left-icon">
         <!-- <span v-if="showback" @click="back" class="icon-back"></span> -->
-        <van-icon name="arrow-left" v-if="showback" @click="back" class="icon-back"/>
+        <van-icon name="arrow-left" v-if="showback" @click="back" class="icons-back"/>
       </div>
       <div class="header-tittle">
         <span v-if="showinput">
@@ -111,7 +111,7 @@ export default {
   .left-icon{
     position: relative;
     flex: 1;
-    .icon-back{
+    .icons-back{
       position: absolute;
       display: inline-block;
       .w(50);

@@ -212,7 +212,7 @@ export default {
     .user-img {
       .w(260);
       .h(260);
-      .mt(-150);
+      .mt(-100);
       .mb(40);
       .b-radius(500);
       border: 10px solid #f5f5f5;
