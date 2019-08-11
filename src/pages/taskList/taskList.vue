@@ -3,7 +3,7 @@
     <common-header :tittle="tittle"></common-header>
     <div class="list-main">
       <div class="company-introduce">
-        <companyIntorduce :information="information" :imgShow="true"/>
+        <companyIntorduce :information="information" :imgShow="true" @handelEdit="handelEdit"/>
       </div>
       <div class="current-task">
         <h4>当前进行的任务</h4>
@@ -23,6 +23,7 @@
         <li v-for="(item,index) in navList" :key="index" @click="item.fun">{{item.label}}</li>
       </ul>
     </div>
+    <dialogBox ref="dialog" :rules="rules" :data="textData" @close="resetContent"/>
   </div>
 </template>
 
@@ -32,8 +33,9 @@ import companyIntorduce from '@/pages/user/enterpriseSynopsis'
 import currentList from '@/pages/taskList/currentTaskList'
 import evaluate from '@/pages/taskList/evaluate'
 import {companyDetails} from 'api/company-api'
+import {studentinfor} from 'api/student-api'
 import {taskList} from 'api/home-api'
-
+import dialogBox from 'common/dialog'
 import { ERR_OK } from 'config/index'
 
 export default {
@@ -41,10 +43,13 @@ export default {
     commonHeader,
     companyIntorduce,
     currentList,
-    evaluate
+    evaluate,
+    dialogBox
   },
   data() {
     return {
+      rules: {},
+      textData: {},
       tittle: '',
       information: {},
       currentList: [],
@@ -78,6 +83,32 @@ export default {
     }
   },
   methods: {
+    // 点击修改
+    handelEdit(data, sign, label) {
+      this.textData = {
+        defaultVal: data,
+        prop: sign,
+        label: label
+      }
+      this.$refs['dialog'].open()
+    },
+    // 修改成功
+    resetContent(val, item) {
+      let id = sessionStorage.getItem('user_id')
+      let data
+      if (item === 'desc') {
+        data = {
+          desc: val
+        }
+      } else if (item === 'nickName') {
+        data = {
+          company_name: val
+        }
+      }
+      studentinfor(id, data).then(res => {
+        this.getData()
+      })
+    },
     more(val) {
       this.offset = this.limit + this.offset
       let data = {

@@ -136,6 +136,10 @@ export default {
         data = {
           desc: val
         }
+      } else if (item === 'nickName') {
+        data = {
+          school_name: val
+        }
       }
       studentinfor(id, data).then(res => {
         this.student()
@@ -175,9 +179,7 @@ export default {
     },
     student() {
       studentData().then((res) => {
-        console.log(res.data, 'eeeeeeeeeewd')
         if (res.data.success === ERR_OK) {
-          this.information.desc = res.data.data.desc
           this.information = res.data.data
           this.skillList = res.data.data.skill_list
           this.softwareLists = res.data.data.tool_list

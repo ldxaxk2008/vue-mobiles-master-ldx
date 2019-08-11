@@ -10,8 +10,7 @@
       <div class="contenr">
         <div class="company" v-if="imgShow">
           <span class="name">{{information.nick_name===''?'未添加昵称':information.nick_name}}</span>
-          <span class="autograph">{{information.school_name ===''?'未添加学校':information.school_name}}</span>
-          <span class="name">{{information.company_name===''?'未添加公司名称':information.company_name}}</span>
+          <span class="autograph">{{(information.school_name==='' || information.company_name ==='') ?'未添加名称':(information.school_name || information.company_name)}}<van-icon class="about-icon" name="edit" @click="handelEdit((information.school_name || information.company_name),'nickName','简介')"/></span>
           <!-- <span class="name">{{information.===''?'未添加行业':information.}}</span> -->
         </div>
         <div class="synopsis-main">
@@ -30,7 +29,7 @@
     </div>
     <div class="about-us">
       <div class="about-us--edit">
-         <p>{{information.aboutUs||information.desc||'暂无介绍'}}<van-icon class="about-icon" name="edit" @click="handelEdit(information.aboutUs||information.desc,'desc','简介')"/></p>
+         <p>{{information.aboutUs||information.desc||'暂无介绍'}}<van-icon class="about-icon" name="edit" @click="handelEdit((information.aboutUs||information.desc),'desc','简介')"/></p>
       </div>
     </div>
   </div>
