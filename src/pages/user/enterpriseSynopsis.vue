@@ -29,7 +29,9 @@
       </div>
     </div>
     <div class="about-us">
-      <p>{{information.aboutUs||information.desc||'暂无介绍'}}</p>
+      <div class="about-us--edit">
+         <p>{{information.aboutUs||information.desc||'暂无介绍'}}<van-icon class="about-icon" name="edit" @click="handelEdit(information.aboutUs||information.desc,'desc','简介')"/></p>
+      </div>
     </div>
   </div>
 </template>
@@ -54,6 +56,9 @@ export default {
   methods: {
     handelClick() {
       this.$router.push('/mine')
+    },
+    handelEdit(data, sign, label) {
+      this.$emit('handelEdit', data, sign, label)
     }
   }
 }
@@ -106,9 +111,16 @@ export default {
     text-align: left;
     .mt(40);
     color: #000;
+    .about-us--edit{
+      display: flex;
+      justify-content: flex-start;
+    }
     p {
       .mb(20);
       text-indent: 24px;
+    }
+    .about-icon{
+      .ml(-90);
     }
   }
 }
