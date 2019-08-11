@@ -11,12 +11,12 @@
     </div>
     <EnterpriseSynopsis :information="information"></EnterpriseSynopsis>
     <div class="slider">
-      <progressBar />
+      <progressBar :progress="taskList.progress"/>
       <button v-if="status!==2" class="confirm" @click="dialogClick">进行阶段确认</button>
       <button v-if="show && status===2" class="deliver" @click="taskpay">任务交付</button>
       <button v-if="!show && status===2" class="deliver">确认任务完成</button>
     </div>
-    <FileDown :down="down" />
+    <FileDown :down="down" :taskObj="taskList"/>
     <vantDialog :progress="progress" :type="type" ref="dialog" @confirmDialog="confirmDialog"/>
   </div>
 </template>
@@ -56,7 +56,8 @@ export default {
       show: true,
       rangeValue: 20,
       type: '',
-      progress: 0
+      progress: 0,
+      labelWidth: ''
     }
   },
   methods: {
@@ -72,10 +73,11 @@ export default {
       this.progress = 0.2
     },
     confirmDialog(val, progress) {
-      // console.log(val, progress, this.taskList.id)
       stageConfirm({task_id: this.taskList.id}).then((res) => {
         console.log(res.data)
         if (res.data.success === ERR_OK) {
+          this.$toast(res.data.msg)
+          this.$emit('stageChange', true)
         } else {
         }
       }).catch(() => {

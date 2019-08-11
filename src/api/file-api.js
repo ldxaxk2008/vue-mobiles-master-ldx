@@ -5,6 +5,6 @@
  */
 import {fetchPost, baseUrl} from 'config/index'
 // 登录接口
-export function stageConfirm(params) {
-  return fetchPost(`${baseUrl}/api/task/stage/confirm/`, params)
+export function fileUp(params) {
+  return fetchPost(`${baseUrl}/api/task/attachment/`, params)
 }

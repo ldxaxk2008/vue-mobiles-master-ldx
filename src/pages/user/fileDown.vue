@@ -1,11 +1,13 @@
 <template>
   <div class="down">
-    <span class="down-file">下载附属文件</span>
+    <span class="down-file">附属文件</span>
     <ul>
       <li>
         <van-icon name="send-gift-o" />
         <span class="title"></span>
-        <span class="up-click">点击上传</span>
+        <van-uploader class="up-click" :after-read="afterRead">
+          <span>点击上传</span>
+        </van-uploader>
       </li>
       <li v-for="(item,index) in down" :key="index">
         <!-- <img class="img" src="" alt=""> -->
@@ -22,16 +24,46 @@
 </template>
 
 <script>
+import { fileUp } from 'api/file-api'
+import { ERR_OK } from 'config/index'
 export default {
   props: {
     down: {
       type: Array,
       default: () => []
+    },
+    taskObj: {
+      type: Object,
+      default: () => []
     }
   },
   data() {
     return {
-
+      fileObj: {}
+    }
+  },
+  methods: {
+    afterRead(file) {
+      let formData = new FormData()
+      formData.append('file', file.content)
+      let data = {
+        task_id: this.fileObj.id,
+        attach_type: sessionStorage.getItem('user_type'),
+        file: formData
+      }
+      fileUp(data).then((res) => {
+        console.log(res.data, 111111111111111111111)
+        if (res.data.success === ERR_OK) {
+          this.$toast(res.data.msg)
+        } else {
+        }
+      }).catch(() => {
+      })
+    }
+  },
+  watch: {
+    taskObj(val) {
+      this.fileObj = val
     }
   }
 }

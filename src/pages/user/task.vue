@@ -3,7 +3,7 @@
     <common-header :tittle="tittle" :showmore="false"></common-header>
     <div class="task-content">
       <taskSynopsis @taskSele="handelClick" :information="information" :userId="userId"></taskSynopsis>
-      <taskStage :taskList='information' :information="companyList" :status="status" :down="down"></taskStage>
+      <taskStage :taskList='information' :information="companyList" :status="status" :down="down" @stageChange="stageChange"></taskStage>
     </div>
     <div class="task-footer" v-if="show">
       <ul>
@@ -86,6 +86,11 @@ export default {
     confirm() {
       console.log('确认申请人')
       this.$router.push({name: 'acceptTask', params: {id: this.information}})
+    },
+    stageChange(val) {
+      if (val) {
+        this.informationData()
+      }
     },
     handelClick(val) {
       if (val === 'applyTask') {
