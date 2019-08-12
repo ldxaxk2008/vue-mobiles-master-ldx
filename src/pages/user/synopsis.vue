@@ -62,17 +62,27 @@ export default {
     }
   },
   watch: {
-    async userId (newVal, oldVal) {
-      console.log(newVal, oldVal)
+    async information (newVal, oldVal) {
+      console.log(newVal)
       if (sessionStorage.getItem('user_type') === '0') {
-        if (sessionStorage.getItem('user_id') === JSON.stringify(newVal)) {
+        if (newVal.is_enroll === 1) {
           this.appstate = false
-          this.state = true
+          if (JSON.stringify(newVal.user_id) !== '0' && sessionStorage.getItem('user_id') === JSON.stringify(newVal.user_id)) {
+            this.state = true
+          } else {
+            this.state = false
+          }
         } else {
-          this.appstate = false
-          this.state = false
+          if (JSON.stringify(newVal.user_id) === '0') {
+            this.appstate = true
+            this.state = false
+          } else {
+            this.appstate = false
+            this.state = false
+          }
         }
       } else {
+        this.appstate = false
         this.state = false
       }
     }
