@@ -7,6 +7,7 @@
           <span class="name">{{information.title}}</span>
           <span class="industry">{{information.industry||'暂无'}}</span>
           <button v-if="appstate" class="apply" @click="handelClick('applyTask')">申请任务</button>
+          <button v-if="!appstate && wait" class="wait">等待甲方确认</button>
         </div>
         <div class="right">
           <span class="assets">{{information.total_payment}}</span>
@@ -40,6 +41,7 @@ export default {
     return {
       // show: true,
       state: false,
+      wait: false,
       appstate: true,
       logoImg: require('@/assets/imgs/img5.png')
     }
@@ -62,18 +64,37 @@ export default {
     }
   },
   watch: {
-    async userId (newVal, oldVal) {
-      console.log(newVal, oldVal)
+    async information (newVal, oldVal) {
+      console.log(newVal)
       if (sessionStorage.getItem('user_type') === '0') {
-        if (sessionStorage.getItem('user_id') === JSON.stringify(newVal)) {
+        if (newVal.is_enroll === 1) {
           this.appstate = false
-          this.state = true
+          if (JSON.stringify(newVal.user_id) !== '0') {
+            if (sessionStorage.getItem('user_id') === JSON.stringify(newVal.user_id)) {
+              this.state = true
+              this.wait = false
+            } else {
+              this.state = false
+              this.wait = false
+            }
+          } else {
+            this.wait = true
+            this.state = true
+          }
         } else {
-          this.appstate = false
-          this.state = false
+          this.wait = false
+          if (JSON.stringify(newVal.user_id) === '0') {
+            this.appstate = true
+            this.state = false
+          } else {
+            this.appstate = false
+            this.state = false
+          }
         }
       } else {
+        this.appstate = false
         this.state = false
+        this.wait = false
       }
     }
   }
@@ -121,6 +142,10 @@ export default {
           color: #fff;
         }
         .cancel{
+          background: #f7c724;
+          color: #fff;
+        }
+        .wait{
           background: #c0c0c0;
           color: #fff;
         }
