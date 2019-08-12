@@ -32,7 +32,7 @@ export default {
   props: {
     type: {
       type: String,
-      default: 'student_cancel' // student_cancel/complete 学生取消/完成   company_progress 公司进度 此时必须传进度值  task_pay 任务交付
+      default: '' // student_cancel/complete 学生取消/完成   company_progress 公司进度 此时必须传进度值  task_pay 任务交付
     },
     progress: {
       type: Number,

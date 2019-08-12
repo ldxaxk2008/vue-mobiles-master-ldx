@@ -103,9 +103,12 @@ export default {
     resetContent(val, item) {
       console.log(val, item, 'reeeeeeeee')
     },
-    stageChange(val) {
-      if (val) {
+    stageChange(falg, val) {
+      if (falg) {
         this.informationData()
+        if (val === 'task_pay') {
+          this.$router.push({name: 'Pay', params: this.information})
+        }
       }
     },
     handelClick(val) {

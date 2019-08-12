@@ -61,7 +61,8 @@ export default {
   },
   methods: {
     taskpay() {
-      this.$router.push('/Pay')
+      this.$refs['dialog'].show = true
+      this.type = 'task_pay'
     },
     handelClick() {
       this.$router.push({name: 'TaskList', params: {id: this.information}})
@@ -69,14 +70,21 @@ export default {
     dialogClick() {
       this.$refs['dialog'].show = true
       this.type = 'company_progress'
-      this.progress = 0.2
+      console.log(this.taskList.progress)
+      if (this.taskList.progress === '0') {
+        this.progress = 0.2
+      } else if (this.taskList.progress === '0.2') {
+        this.progress = 0.5
+      } else if (this.taskList.progress === '0.5') {
+        this.progress = 1
+      }
     },
     confirmDialog(val, progress) {
       stageConfirm({task_id: this.taskList.id}).then((res) => {
         console.log(res.data)
         if (res.data.success === ERR_OK) {
           this.$toast(res.data.msg)
-          this.$emit('stageChange', true)
+          this.$emit('stageChange', true, val)
         } else {
         }
       }).catch(() => {
