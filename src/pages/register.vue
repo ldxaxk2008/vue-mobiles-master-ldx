@@ -1,5 +1,6 @@
 <template>
   <div class="register">
+    <common-header :tittle="tittle" :showback="true"></common-header>
     <div style="flex:1;overflow:auto;">
       <div class="register-content">
         <form ref="registerform" :model="registerlist">
@@ -51,9 +52,15 @@
 import { mapMutations } from 'vuex'
 import {register} from 'api/register-api'
 import { ERR_OK } from 'config/index'
+import commonHeader from 'common/common-header'
+
 export default {
+  components: {
+    commonHeader
+  },
   data() {
     return {
+      tittle: '',
       show: false,
       imgShow: false,
       sexlist: [
@@ -262,10 +269,6 @@ export default {
       font-weight: bold;
       color: #c54f8b;
     }
-  }
-  .register-content__sex {
-    .mt(-40);
-    .mb(40);
   }
   button {
     .mr(10);

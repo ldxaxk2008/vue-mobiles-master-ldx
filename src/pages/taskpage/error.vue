@@ -39,8 +39,7 @@ export default {
 .taskpage-error {
   background-color: #ffffff;
   .taskpage-error--img {
-    .mb(0);
-    width: 100%;
+     width: 100%;
   }
   .taskpage-error--con {
     .pb(60);
