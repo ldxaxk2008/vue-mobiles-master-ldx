@@ -7,7 +7,7 @@
           <span class="name">{{information.title}}</span>
           <span class="industry">{{information.industry||'暂无'}}</span>
           <button v-if="appstate" class="apply" @click="handelClick('applyTask')">申请任务</button>
-          <button v-if="!appstate && wait" class="apply" @click="handelClick('applyTask')">等待甲方确认</button>
+          <button v-if="!appstate && wait" class="wait">等待甲方确认</button>
         </div>
         <div class="right">
           <span class="assets">{{information.total_payment}}</span>
@@ -143,6 +143,10 @@ export default {
         }
         .cancel{
           background: #f7c724;
+          color: #fff;
+        }
+        .wait{
+          background: #c0c0c0;
           color: #fff;
         }
       }
