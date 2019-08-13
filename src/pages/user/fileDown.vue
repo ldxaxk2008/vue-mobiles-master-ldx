@@ -34,7 +34,7 @@ export default {
     },
     taskObj: {
       type: Object,
-      default: () => []
+      default: () => {}
     }
   },
   data() {

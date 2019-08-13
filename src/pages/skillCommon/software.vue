@@ -11,6 +11,11 @@
     </div>
     <van-popup class="popup" v-model="show" @click-overlay="close">
       <ul>
+        <li v-for="(item,index) in artList" :key="index">
+          <span @click="artClick($event,item)">{{item}}</span>
+        </li>
+      </ul>
+      <ul>
         <li v-for="(item,index) in softwareList" :key="index"><span><van-field v-model="item.value" placeholder="软件名" :max="3"/></span></li>
         <li><van-icon v-if="addShow" name="add-o" color="#c14182" class="add" @click="addSoftware"/></li>
       </ul>
@@ -38,10 +43,24 @@ export default {
     return {
       show: false,
       actions: [],
+      artList: ['PS', 'AI', 'AR', 'DW', 'JS', 'HTML', 'VUE', 'REACT'],
       softwareList: []
     }
   },
   methods: {
+    artClick(event, val) {
+      if (event.target.className) {
+        event.target.className = ''
+        this.actions.forEach((item, index) => {
+          if (item === val) {
+            this.actions.splice(index, 1)
+          }
+        })
+      } else {
+        event.target.className = 'colors'
+        this.actions.push(val)
+      }
+    },
     onSelect(item) {
       // 点击选项时默认不会关闭菜单，可以手动关闭
       this.show = false
@@ -56,23 +75,34 @@ export default {
     },
     close() {
       this.show = false
-      this.softwareList = []
+      this.softwareList = this.softwareLists
+      console.log(this.softwareLists, 22222222)
     },
     confirm() {
+      let arr = Array.from(new Set(this.actions))
+      console.log(arr)
       this.softwareList.forEach(item => {
         if (item.value !== '') {
           this.actions.push(item.value)
         }
       })
-      this.$emit('softwareChange', this.actions)
+      this.$emit('softwareChange', arr)
       this.softwareList = []
       this.show = false
     }
   },
   watch: {
-    softwareLists(val) {
-      // this.actions = val
+    softwareLists: {
+      handler: function(newValue, oldValue) {
+        console.log(newValue, oldValue, 1111111111111111)
+        this.actions = newValue
+      },
+      deep: true
     }
+    // softwareLists(val) {
+    //   console.log('aaaaaaaaaa')
+    //   this.actions = val
+    // }
   }
 }
 </script>
@@ -143,5 +173,9 @@ export default {
   .btn{
     .mt(40);
   }
+}
+.colors{
+  color:red;
+  font-weight: bold;
 }
 </style>
