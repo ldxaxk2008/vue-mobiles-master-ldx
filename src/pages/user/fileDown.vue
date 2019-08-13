@@ -5,7 +5,7 @@
       <li>
         <van-icon name="send-gift-o" />
         <span class="title"></span>
-        <van-uploader class="up-click" :after-read="afterRead">
+        <van-uploader class="up-click" name="ldx" :after-read="afterRead">
           <span>点击上传</span>
         </van-uploader>
       </li>
@@ -44,11 +44,12 @@ export default {
   },
   methods: {
     afterRead(file) {
-      console.log(file.content)
+      var formdata = new FormData()
+      formdata.append('file', file.file)
       let data = {
         task_id: this.fileObj.id,
-        attach_type: sessionStorage.getItem('user_type'),
-        file: file.content
+        attach_type: sessionStorage.getItem('user_type') === '0' ? '1' : '0',
+        data: formdata
       }
       fileUp(data).then((res) => {
         console.log(res.data, 111111111111111111111)
