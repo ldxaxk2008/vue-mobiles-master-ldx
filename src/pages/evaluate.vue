@@ -37,7 +37,7 @@
 </template>
 <script>
 import commonHeader from 'common/common-header'
-// import { subevaluate } from 'api/evaluate-api'
+import { subevaluate } from 'api/evaluate-api'
 // import { ERR_OK } from 'config/index'
 export default {
   components: {
@@ -50,10 +50,10 @@ export default {
       showIndex: -1,
       tittle: '',
       evaluaObj: {
-        task_user_id: 1,
+        // task_user_id: 1,
         company_comment: '',
         user_tag_list: [],
-        user_service: ''
+        user_service: 3
       },
       evaluatelist: [
         {
@@ -89,13 +89,12 @@ export default {
     }
   },
   methods: {
-    // 提交评价
+    // 提交评价 待传id
     addlevel() {
-      // 接口报错500
-      // subevaluate(this.evaluaObj).then(res => {
-      //   console.log(res, 7564)
-      // }).catch(() => {
-      // })
+      subevaluate(this.evaluaObj).then(res => {
+        console.log(res, 7564)
+      }).catch(() => {
+      })
     },
     handelClick(index, item) {
       this.evaluatelist.forEach(element => {

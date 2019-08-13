@@ -1,12 +1,16 @@
 <template>
   <div class="register">
+    <common-header :tittle="tittle" :showback="true"></common-header>
     <div style="flex:1;overflow:auto;">
       <div class="register-content">
         <form ref="registerform" :model="registerlist">
           <div class="register-content--img">
             <div class="register-logoborder">
               <van-uploader :after-read="afterRead" accept="image/png, image/jpeg">
-                <img class="logo" :src="registerlist.headimg" alt ref="goodimg" />
+                <img v-if="imgShow" class="logo" :src="registerlist.headimg" alt ref="goodimg" />
+                <div v-if="!imgShow" class="logo" ref="goodimg">
+                  <van-icon size="40" name="plus" color="rgb(230, 207, 207)"/>
+                </div>
               </van-uploader>
             </div>
             <p class="register-content__describe">添加一张您的头像</p>
@@ -39,9 +43,16 @@
 <script>
 import { register } from 'api/register-api'
 import { ERR_OK } from 'config/index'
+import commonHeader from 'common/common-header'
+
 export default {
+  components: {
+    commonHeader
+  },
   data() {
     return {
+      imgShow: false,
+      tittle: '',
       registerlist: {
         headimg: require('@/assets/imgs/user-img.png'),
         username: '',
@@ -59,6 +70,8 @@ export default {
   },
   methods: {
     afterRead(file) {
+      console.log(111)
+      this.imgShow = true
       this.$refs.goodimg.src = file.content
     },
     addlevel() {
@@ -192,10 +205,12 @@ export default {
   .logo {
     .w(170);
     .h(170);
-    .mt(7);
     .b-radius(500);
     border: 5px solid #ffffff;
     background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .register-content {
     .margin(150, 80, 30, 80);
