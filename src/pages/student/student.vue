@@ -15,7 +15,7 @@
       </div>
       <div class="img-view">
         <imgView :imgList="imgList"/>
-        <fileDown :down="down"/>
+        <fileDown :down="down" :taskObj="information"/>
       </div>
       <div class="evaluate-list">
         <h4>公司评价</h4>
