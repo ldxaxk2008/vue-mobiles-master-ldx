@@ -11,11 +11,9 @@
     </div>
     <van-popup class="popup" v-model="show" @click-overlay="close">
       <ul>
-        <li v-for="(item,index) in artList" :key="index">
+        <li class="list" v-for="(item,index) in artList" :key="item+index">
           <span @click="artClick($event,item)">{{item}}</span>
         </li>
-      </ul>
-      <ul>
         <li v-for="(item,index) in softwareList" :key="index"><span><van-field v-model="item.value" placeholder="软件名" :max="3"/></span></li>
         <li><van-icon v-if="addShow" name="add-o" color="#c14182" class="add" @click="addSoftware"/></li>
       </ul>
@@ -28,6 +26,8 @@
 </template>
 
 <script>
+import {softwareList} from 'api/software-api'
+import { ERR_OK } from 'config/index'
 export default {
   props: {
     addShow: {
@@ -43,7 +43,8 @@ export default {
     return {
       show: false,
       actions: [],
-      artList: ['PS', 'AI', 'AR', 'DW', 'JS', 'HTML', 'VUE', 'REACT'],
+      artList: [],
+      newList: [],
       softwareList: []
     }
   },
@@ -60,6 +61,7 @@ export default {
         event.target.className = 'colors'
         this.actions.push(val)
       }
+      this.newList = this.actions
     },
     onSelect(item) {
       // 点击选项时默认不会关闭菜单，可以手动关闭
@@ -75,34 +77,52 @@ export default {
     },
     close() {
       this.show = false
-      this.softwareList = this.softwareLists
-      console.log(this.softwareLists, 22222222)
+      this.actions = []
+      let arr = document.querySelectorAll('.list span')
+      arr.forEach(item => {
+        item.className = ''
+      })
+      this.$emit('softwareChange')
     },
     confirm() {
       let arr = Array.from(new Set(this.actions))
-      console.log(arr)
       this.softwareList.forEach(item => {
         if (item.value !== '') {
-          this.actions.push(item.value)
+          arr.push(item.value)
         }
       })
       this.$emit('softwareChange', arr)
       this.softwareList = []
+      this.actions = []
       this.show = false
+    },
+    softwareListData() {
+      softwareList({resource_type: 2}).then((res) => {
+        if (res.data.success === ERR_OK) {
+          let arr = []
+          res.data.data.results.forEach(item => {
+            arr.push(item.title)
+          })
+          this.artList = arr
+        }
+      }).catch(() => {
+      })
     }
   },
+  mounted() {
+    this.softwareListData()
+  },
   watch: {
-    softwareLists: {
-      handler: function(newValue, oldValue) {
-        console.log(newValue, oldValue, 1111111111111111)
-        this.actions = newValue
-      },
-      deep: true
-    }
-    // softwareLists(val) {
-    //   console.log('aaaaaaaaaa')
-    //   this.actions = val
+    // softwareLists: {
+    //   handler: function(newValue, oldValue) {
+    //     this.actions = newValue
+    //   },
+    //   deep: true
     // }
+    softwareLists(val) {
+      this.actions = val
+      console.log(val, 22222)
+    }
   }
 }
 </script>
