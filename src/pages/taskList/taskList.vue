@@ -14,8 +14,11 @@
           <currentList :currentList="currentNList" ref="more" :done="true" :dmore="ndmore" @more="more('done')"/>
       </div>
       <div class="evaluate-list">
-        <h4>学生评价</h4>
-        <evaluate :evaluate="evaluate"/>
+        <div v-if="!showE" class="hideEvaluate">暂无评价</div>
+        <div  v-if="showE">
+          <h4>学生评价</h4>
+          <evaluate :evaluate="evaluate"/>
+        </div>
       </div>
     </div>
     <div class="task-footer">
@@ -33,7 +36,7 @@ import companyIntorduce from '@/pages/user/enterpriseSynopsis'
 import currentList from '@/pages/taskList/currentTaskList'
 import evaluate from '@/pages/taskList/evaluate'
 import {companyDetails} from 'api/company-api'
-import {studentinfor} from 'api/student-api'
+import {studentinfor, getEvaluateList} from 'api/student-api'
 import {taskList} from 'api/home-api'
 import dialogBox from 'common/dialog'
 import { ERR_OK } from 'config/index'
@@ -60,18 +63,7 @@ export default {
       dmore: false,
       ncount: 0,
       ndmore: false,
-      evaluate: [
-        {
-          imgSrc: require('@/assets/imgs/user-img.png'),
-          data: '2019-1-1',
-          remark: '啥也不说了，666666'
-        },
-        {
-          imgSrc: require('@/assets/imgs/user-img.png'),
-          data: '2019-11-21',
-          remark: '负责人，厉害的很'
-        }
-      ],
+      evaluate: [],
       navList: [
         {
           label: '与企业沟通',
@@ -171,6 +163,12 @@ export default {
           }
         }
       }).catch({})
+    },
+    getEvaluateList() {
+      console.log('qq')
+      getEvaluateList().then((res) => {
+        this.evaluate = res.data.data.results
+      })
     }
   },
   mounted() {
@@ -187,6 +185,12 @@ export default {
       status: 2
     }
     this.getListNData(datas)
+    this.getEvaluateList()
+  },
+  computed: {
+    showE: function () {
+      return this.evaluate.length > 0 ? 1 : 0
+    }
   }
 }
 </script>
@@ -238,6 +242,12 @@ export default {
         .pb(10);
       }
     }
+  }
+  .hideEvaluate {
+    width: 100%;
+    line-height: 2;
+    color: #000;
+    text-align: center;
   }
 }
 </style>
