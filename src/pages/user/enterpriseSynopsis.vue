@@ -16,13 +16,15 @@
         <div class="synopsis-main">
           <div class="left" @click="handelClick">
             <van-icon name="comment-circle-o" />
-            <span class="name">已发布任务</span>
-            <span class="industry">{{information.task_count||information.task_num}}</span>
+            <span v-show="company" class="name">已发布任务</span>
+            <span v-show="student" class="name">已完成任务</span>
+            <span class="industry">{{information.task_count||information.task_num || 0}}个</span>
           </div>
           <div class="right">
             <van-icon name="refund-o" />
-            <span class="assets">累计支付报酬</span>
-            <span class="number">{{information.total_payment}}</span>
+            <span v-show="company" class="assets">累计支付报酬</span>
+            <span v-show="student" class="assets">累计获得报酬</span>
+            <span class="number">￥{{information.total_payment}}</span>
           </div>
         </div>
       </div>
@@ -49,15 +51,30 @@ export default {
   },
   data() {
     return {
+      company: false,
+      student: false,
       headimg: require('@/assets/imgs/user-img.png')
     }
   },
   methods: {
     handelClick() {
-      this.$router.push('/mine')
+      // this.$router.push('/mine')
+      let data = {
+        id: this.information.id
+      }
+      this.$router.push({name: 'mine', params: {id: data}})
     },
     handelEdit(data, sign, label) {
       this.$emit('handelEdit', data, sign, label)
+    }
+  },
+  mounted() {
+    if (sessionStorage.getItem('user_type') === '0') {
+      this.company = false
+      this.student = true
+    } else {
+      this.company = true
+      this.student = false
     }
   }
 }
