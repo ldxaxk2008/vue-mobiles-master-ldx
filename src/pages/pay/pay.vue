@@ -13,7 +13,7 @@
               <li v-for="(item,index) in payImgList" :key="index">
                 <div>
                   <img :src="item.payImg" alt="">
-                  <button :style="{background:item.bgColor}">立即支付</button>
+                  <button :style="{background:item.bgColor}" onclick="pay">立即支付</button>
                   <!-- <van-icon :color="item.bgColor" class="pay-small" name="gift" /> -->
                 </div>
               </li>
@@ -82,6 +82,11 @@ export default {
     ...mapMutations({
       setNum: 'SET_NUM'
     }),
+    pay() {
+      // 调支付接口，成功后执行下面操作
+      let id = this.$route.params.id.id
+      this.$router.push({name: 'evaluate', params: {id: id}})
+    },
     todetail() {
       this.$router.togo('/Home/Detail')
     },

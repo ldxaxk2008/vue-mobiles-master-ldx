@@ -14,7 +14,7 @@
       <progressBar :progress="taskList.progress"/>
       <button v-if="show && !pay" class="confirm" @click="dialogClick">进行阶段确认</button>
       <button v-if="pay" class="deliver" @click="taskpay">任务交付</button>
-      <button v-if="cpay" class="deliver">确认任务完成</button>
+      <button v-if="cpay" class="deliver" @click="taskpay">确认任务完成</button>
     </div>
     <FileDown :showUpload="showUpload" :down="down" :taskObj="taskList"/>
     <vantDialog :progress="progress" :type="type" ref="dialog" @confirmDialog="confirmDialog"/>
@@ -122,7 +122,7 @@ export default {
       if (type === '0') {
         return false
       } else {
-        return this.taskList.progress === '1' && this.taskList.is_confirm_stage
+        return this.taskList.progress === '1' && !this.taskList.is_confirm_stage
       }
     },
     showUpload: function () {
