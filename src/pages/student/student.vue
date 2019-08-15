@@ -15,11 +15,14 @@
       </div>
       <div class="img-view">
         <imgView :imgList="imgList"/>
-        <fileDown :down="down" :taskObj="information"/>
+        <fileDown :showUpload="showUpload" :down="down" :taskObj="information"/>
       </div>
       <div class="evaluate-list">
-        <h4>公司评价</h4>
-        <evaluate :evaluate="evaluate"/>
+        <div v-if="!showE" class="hideEvaluate">暂无评价</div>
+        <div  v-if="showE">
+          <h4>公司评价</h4>
+          <evaluate :evaluate="evaluate"/>
+        </div>
       </div>
     </div>
     <div class="task-footer">
@@ -41,7 +44,7 @@ import fileDown from '@/pages/user/fileDown'
 import software from '@/pages/skillCommon/software'
 import skill from '@/pages/skillCommon/skill'
 import {taskList} from 'api/home-api'
-import {studentData, studentinfor} from 'api/student-api'
+import {studentData, studentinfor, getEvaluateList} from 'api/student-api'
 import { ERR_OK } from 'config/index'
 import dialogBox from 'common/dialog'
 
@@ -79,18 +82,7 @@ export default {
         }
       ],
       currentList: [],
-      evaluate: [
-        {
-          imgSrc: require('@/assets/imgs/user-img.png'),
-          data: '2019-1-1',
-          remark: '啥也不说了，666666'
-        },
-        {
-          imgSrc: require('@/assets/imgs/user-img.png'),
-          data: '2019-11-21',
-          remark: '负责人，厉害的很'
-        }
-      ],
+      evaluate: [],
       imgList: [
         {
           imgSrc: require('@/assets/imgs/img0.png')
@@ -178,7 +170,9 @@ export default {
       this.getListData(data, 'more')
     },
     student() {
-      studentData().then((res) => {
+      let parmes = {}
+      Object.assign(parmes, {'user_id': (this.$route.params.id && this.$route.params.id.id) ? this.$route.params.id.id : sessionStorage.getItem('user_id')})
+      studentData(parmes).then((res) => {
         if (res.data.success === ERR_OK) {
           this.information = res.data.data
           this.skillList = res.data.data.skill_list
@@ -207,6 +201,12 @@ export default {
         }
       }).catch(() => {
       })
+    },
+    getEvaluateList() {
+      console.log('qq')
+      getEvaluateList().then((res) => {
+        this.evaluate = res.data.data.results
+      })
     }
   },
   mounted() {
@@ -217,6 +217,16 @@ export default {
       status: 2
     }
     this.getListData(data)
+    this.getEvaluateList()
+  },
+  computed: {
+    showUpload: function () {
+      let id = JSON.stringify(this.information.id)
+      return id === sessionStorage.getItem('user_id') ? 1 : 0
+    },
+    showE: function () {
+      return this.evaluate.length > 0 ? 1 : 0
+    }
   }
 }
 </script>
@@ -281,5 +291,11 @@ export default {
   .software{
     flex:1;
   }
+}
+.hideEvaluate {
+  width: 100%;
+  line-height: 2;
+  color: #000;
+  text-align: center;
 }
 </style>

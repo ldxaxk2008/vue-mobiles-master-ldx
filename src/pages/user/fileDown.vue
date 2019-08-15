@@ -2,10 +2,10 @@
   <div class="down">
     <span class="down-file">附属文件</span>
     <ul>
-      <li>
+      <li v-if="show">
         <van-icon name="send-gift-o" />
         <span class="title"></span>
-        <van-uploader class="up-click" :after-read="afterRead">
+        <van-uploader class="up-click" name="ldx" :after-read="afterRead">
           <span>点击上传</span>
         </van-uploader>
       </li>
@@ -35,20 +35,26 @@ export default {
     taskObj: {
       type: Object,
       default: () => {}
+    },
+    showUpload: {
+      type: [String, Number],
+      default: ''
     }
   },
   data() {
     return {
-      fileObj: {}
+      fileObj: {},
+      show: false
     }
   },
   methods: {
     afterRead(file) {
-      console.log(file.content)
+      var formdata = new FormData()
+      formdata.append('file', file.file)
       let data = {
         task_id: this.fileObj.id,
-        attach_type: sessionStorage.getItem('user_type'),
-        file: file.content
+        attach_type: sessionStorage.getItem('user_type') === '0' ? '1' : '0',
+        data: formdata
       }
       fileUp(data).then((res) => {
         console.log(res.data, 111111111111111111111)
@@ -63,6 +69,9 @@ export default {
   watch: {
     taskObj(val) {
       this.fileObj = val
+    },
+    showUpload(val) {
+      this.show = val
     }
   }
 }

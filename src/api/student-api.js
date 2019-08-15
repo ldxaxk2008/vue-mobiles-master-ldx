@@ -13,3 +13,6 @@ export function studentData(data) {
 export function studentinfor(params, data) {
   return fetchPetch(`${baseUrl}/api/user/student/` + params + '/', data)
 }
+export function getEvaluateList(data) {
+  return fetchGet(`${baseUrl}//api/user/is/evaluated/`, data)
+}

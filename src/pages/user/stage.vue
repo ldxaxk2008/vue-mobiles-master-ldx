@@ -16,7 +16,7 @@
       <button v-if="pay" class="deliver" @click="taskpay">任务交付</button>
       <button v-if="cpay" class="deliver">确认任务完成</button>
     </div>
-    <FileDown :down="down" :taskObj="taskList"/>
+    <FileDown :showUpload="showUpload" :down="down" :taskObj="taskList"/>
     <vantDialog :progress="progress" :type="type" ref="dialog" @confirmDialog="confirmDialog"/>
   </div>
 </template>
@@ -123,6 +123,23 @@ export default {
         return false
       } else {
         return this.taskList.progress === '1' && this.taskList.is_confirm_stage
+      }
+    },
+    showUpload: function () {
+      let id = sessionStorage.getItem('user_id')
+      let type = sessionStorage.getItem('user_type')
+      if (type === '0') {
+        if (JSON.stringify(this.taskList.user_id) === id) {
+          return 1
+        } else {
+          return 0
+        }
+      } else {
+        if (JSON.stringify(this.taskList.company_id) === id) {
+          return 1
+        } else {
+          return 0
+        }
       }
     }
   }

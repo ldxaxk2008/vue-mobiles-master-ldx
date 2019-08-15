@@ -108,7 +108,7 @@ export default {
         desc: '',
         payment: null,
         end_date: '',
-        tool_list: [4, 5, 6]
+        tool_list: []
       },
       invalue: '',
       minDate: new Date(),
@@ -236,17 +236,7 @@ export default {
     },
     softwareChange(val) {
       this.softwareLists = val
-      // this.valueData.tool_list = val
-      // let arr = []
-      // val.forEach((res, index) => {
-      //   arr[index] = {
-      //     id: index,
-      //     name: res
-      //   }
-      // })
-      // arr.forEach(res => {
-      //   this.valueData.tool_list.push(res.id)
-      // })
+      this.valueData.tool_list = val
     },
     // 获取tab
     // getTypes() {
