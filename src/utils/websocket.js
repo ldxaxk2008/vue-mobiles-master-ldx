@@ -26,7 +26,7 @@ var ws = null // 判断当前浏览器是否支持WebSocket
 var wsUrl = 'ws://192.168.1.6:8888/test/'
 createWebSocket(wsUrl) // 连接ws
 
-function createWebSocket (url) {
+export function createWebSocket (url) {
   try {
     if ('WebSocket' in window) {
       ws = new WebSocket(url)

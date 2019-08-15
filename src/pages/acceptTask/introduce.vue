@@ -46,7 +46,10 @@ export default {
       this.$emit('changeRadio', this.keys)
     },
     imgClick() {
-      this.$router.push({name: 'student', params: this.information})
+      let data = {
+        id: this.information.user_id
+      }
+      this.$router.push({name: 'student', params: {id: data}})
     }
   }
 }

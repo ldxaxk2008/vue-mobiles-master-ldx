@@ -2,7 +2,7 @@
   <div class="down">
     <span class="down-file">附属文件</span>
     <ul>
-      <li>
+      <li v-if="show">
         <van-icon name="send-gift-o" />
         <span class="title"></span>
         <van-uploader class="up-click" name="ldx" :after-read="afterRead">
@@ -35,11 +35,16 @@ export default {
     taskObj: {
       type: Object,
       default: () => {}
+    },
+    showUpload: {
+      type: [String, Number],
+      default: ''
     }
   },
   data() {
     return {
-      fileObj: {}
+      fileObj: {},
+      show: false
     }
   },
   methods: {
@@ -64,6 +69,9 @@ export default {
   watch: {
     taskObj(val) {
       this.fileObj = val
+    },
+    showUpload(val) {
+      this.show = val
     }
   }
 }

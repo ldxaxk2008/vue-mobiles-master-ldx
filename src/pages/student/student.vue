@@ -15,7 +15,7 @@
       </div>
       <div class="img-view">
         <imgView :imgList="imgList"/>
-        <fileDown :down="down" :taskObj="information"/>
+        <fileDown :showUpload="showUpload" :down="down" :taskObj="information"/>
       </div>
       <div class="evaluate-list">
         <h4>公司评价</h4>
@@ -178,7 +178,9 @@ export default {
       this.getListData(data, 'more')
     },
     student() {
-      studentData().then((res) => {
+      let parmes = {}
+      Object.assign(parmes, {'user_id': (this.$route.params.id && this.$route.params.id.id) ? this.$route.params.id.id : sessionStorage.getItem('user_id')})
+      studentData(parmes).then((res) => {
         if (res.data.success === ERR_OK) {
           this.information = res.data.data
           this.skillList = res.data.data.skill_list
@@ -217,6 +219,12 @@ export default {
       status: 2
     }
     this.getListData(data)
+  },
+  computed: {
+    showUpload: function () {
+      let id = JSON.stringify(this.information.id)
+      return id === sessionStorage.getItem('user_id') ? 1 : 0
+    }
   }
 }
 </script>
