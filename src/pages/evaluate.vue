@@ -4,14 +4,15 @@
       <common-header :tittle="tittle" :showback="true" :showmore="false"></common-header>
     </div>
     <div class="evaluate-content">
-      <p class="evaluate-content--serve">请问你如何评价这次服务</p>
+      <p class="evaluate-content--serve">请问您如何评价这次服务</p>
       <ul class="evaluate-content--img">
         <li v-for="(item,index) in evaluatelist" :key="index" @click="handelClick(index,item)">
           <svg-icon :name="item.img" size="80" :fill="item.disable?'#c54f8b':''" ref="svg_icon"></svg-icon>
           <p :class="{'active':item.disable===true}">{{item.name}}</p>
         </li>
       </ul>
-      <p class="evaluate-content--serve">请为该学生添加标签</p>
+      <p class="evaluate-content--serve" v-if="user_type==='0'">请为该学生添加标签</p>
+      <p class="evaluate-content--serve" v-if="user_type==='1'">请为该公司添加标签</p>
       <div class="evaluate-content--input">
         <span v-for="(item,index) in brr" :key="index" @click="del(index)">
           {{item}}
@@ -45,6 +46,7 @@ export default {
   },
   data() {
     return {
+      user_type: '',
       arr: [],
       brr: [],
       showIndex: -1,
@@ -117,7 +119,9 @@ export default {
       this.arr = []
     }
   },
-  mounted() {}
+  mounted() {
+    this.user_type = sessionStorage.getItem('user_type')
+  }
 }
 </script>
 <style scoped lang="less">
