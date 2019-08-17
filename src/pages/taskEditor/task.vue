@@ -238,32 +238,6 @@ export default {
       this.softwareLists = val
       this.valueData.tool_list = val
     },
-    // 获取tab
-    // getTypes() {
-    //   let params = {
-    //     resource_type: 3
-    //   }
-    //   gettype(params).then(response => {
-    //     if (response.data.success === ERR_OK) {
-    //       response.data.data.results.map((res, index) => {
-    //         this.maplist[index].name = res.title
-    //         this.maplist[index].value = res.id
-    //       })
-    //     }
-    //   })
-    // },
-    // 获取工具
-    // getTool() {
-    //   let params = {
-    //     resource_type: 2
-    //   }
-    //   gettype(params).then(response => {
-    //     console.log(response)
-    //     if (response.data.success === true) {
-    //       console.log(response.data.data.results)
-    //     }
-    //   })
-    // },
     // 发布任务
     publish() {
       if (!this.valueData.task_type_id) {
@@ -290,12 +264,12 @@ export default {
         })
         return
       }
-      // if (this.valueData.tool_list.length === 0) {
-      //   this.$toast({
-      //     message: '请发布软件'
-      //   })
-      //   return
-      // }
+      if (this.valueData.tool_list.length === 0) {
+        this.$toast({
+          message: '请发布软件'
+        })
+        return
+      }
       var reg = /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/
       if (!this.valueData.payment) {
         this.$toast({
@@ -500,6 +474,10 @@ export default {
   }
   .active {
     color: #c54f8b;
+  }
+  /deep/.popup .btn[data-v-92496f84] {
+    margin-top: 0.53333333rem;
+    text-align: center;
   }
 }
 </style>
