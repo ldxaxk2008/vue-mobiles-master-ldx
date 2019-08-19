@@ -195,15 +195,12 @@ export default {
         return
       }
       var formdata = new FormData()
-      formdata.append('file', this.img.file)
+      formdata.append('image', this.img.file)
       formdata.append('sex', this.registerlist.sex)
-      formdata.append('name', this.registerlist.name)
       formdata.append('username', this.registerlist.username)
       formdata.append('school_name', this.registerlist.school_name)
       formdata.append('grade', this.registerlist.grade)
-      formdata.append('grades', this.registerlist.grades)
       formdata.append('phone', this.registerlist.phone)
-      formdata.append('code', this.registerlist.code)
       formdata.append('user_type', this.registerlist.user_type)
       formdata.append('password', this.registerlist.password)
       formdata.append('confirm_password', this.registerlist.confirm_password)
