@@ -11,8 +11,8 @@
           <p :class="{'active':item.disable===true}">{{item.name}}</p>
         </li>
       </ul>
-      <p class="evaluate-content--serve" v-if="user_type==='0'">请为该学生添加标签</p>
-      <p class="evaluate-content--serve" v-if="user_type==='1'">请为该公司添加标签</p>
+      <p class="evaluate-content--serve" v-if="user_type==='1'">请为该学生添加标签</p>
+      <p class="evaluate-content--serve" v-if="user_type==='0'">请为该公司添加标签</p>
       <div class="evaluate-content--input">
         <span v-for="(item,index) in brr" :key="index" @click="del(index)">
           {{item}}
