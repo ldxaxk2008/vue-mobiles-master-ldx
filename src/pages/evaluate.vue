@@ -100,9 +100,7 @@ export default {
   methods: {
     // 提交评价 待传id
     addlevel() {
-      alert(22)
-      let usertype = sessionStorage.getItem('user_type')
-      if (usertype === '1') {
+      if (this.user_type === '1') {
       // 公司评价学生
         userEvaluate(this.evaluaObj).then(res => {
           console.log(res, 7564)
