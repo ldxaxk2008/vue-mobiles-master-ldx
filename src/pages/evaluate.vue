@@ -11,8 +11,8 @@
           <p :class="{'active':item.disable===true}">{{item.name}}</p>
         </li>
       </ul>
-      <p class="evaluate-content--serve" v-if="user_type==='0'">请为该学生添加标签</p>
-      <p class="evaluate-content--serve" v-if="user_type==='1'">请为该公司添加标签</p>
+      <p class="evaluate-content--serve" v-if="user_type==='1'">请为该学生添加标签</p>
+      <p class="evaluate-content--serve" v-if="user_type==='0'">请为该公司添加标签</p>
       <div class="evaluate-content--input">
         <span v-for="(item,index) in brr" :key="index" @click="del(index)">
           {{item}}
@@ -48,6 +48,7 @@ export default {
     return {
       value: '',
       user_type: null,
+      task_user_id: null,
       arr: [],
       brr: [],
       showIndex: -1,
@@ -101,6 +102,13 @@ export default {
     // 提交评价 待传id
     addlevel() {
       if (this.user_type === '1') {
+        this.evaluaObj.company_comment = this.value
+        this.evaluaObj.task_user_id = this.$route.params.task_user_id || this.task_user_id
+      } else if (this.user_type === '0') {
+        this.evaluaObj.user_comment = this.value
+        this.evaluaStuObj.task_user_id = this.$route.params.task_user_id || this.task_user_id
+      }
+      if (this.user_type === '1') {
       // 公司评价学生
         userEvaluate(this.evaluaObj).then(res => {
           console.log(res, 7564)
@@ -145,13 +153,7 @@ export default {
   },
   mounted() {
     this.user_type = sessionStorage.getItem('user_type')
-    if (this.user_type === '1') {
-      this.evaluaObj.company_comment = this.value
-      this.evaluaObj.task_user_id = this.$route.params.task_user_id
-    } else if (this.user_type === '0') {
-      this.evaluaObj.user_comment = this.value
-      this.evaluaStuObj.task_user_id = this.$route.params.task_user_id
-    }
+    this.task_user_id = sessionStorage.getItem('task_user_id')
   }
 }
 </script>
