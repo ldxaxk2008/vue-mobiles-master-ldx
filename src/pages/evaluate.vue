@@ -28,7 +28,7 @@
       </div>
       <p class="evaluate-content--serve">请为您对本次服务做出点评价(选填)</p>
       <div class="evaluate-content--textarea">
-        <textarea class="evaluate--input" v-model="evaluaObj.company_comment" name id cols="30" rows="10"></textarea>
+        <textarea class="evaluate--input" v-model="value" name id cols="30" rows="10"></textarea>
       </div>
     </div>
     <div class="evaluate-footer">
@@ -38,7 +38,7 @@
 </template>
 <script>
 import commonHeader from 'common/common-header'
-import { subevaluate } from 'api/evaluate-api'
+import { companyEvaluate, userEvaluate } from 'api/evaluate-api'
 // import { ERR_OK } from 'config/index'
 export default {
   components: {
@@ -46,16 +46,23 @@ export default {
   },
   data() {
     return {
-      user_type: '',
+      value: '',
+      user_type: null,
       arr: [],
       brr: [],
       showIndex: -1,
       tittle: '',
       evaluaObj: {
-        // task_user_id: 1,
+        task_user_id: null,
         company_comment: '',
         user_tag_list: [],
         user_service: 3
+      },
+      evaluaStuObj: {
+        task_user_id: null,
+        user_comment: '',
+        company_tag_list: [],
+        company_service: 3
       },
       evaluatelist: [
         {
@@ -93,17 +100,32 @@ export default {
   methods: {
     // 提交评价 待传id
     addlevel() {
-      subevaluate(this.evaluaObj).then(res => {
-        console.log(res, 7564)
-      }).catch(() => {
-      })
+      alert(22)
+      let usertype = sessionStorage.getItem('user_type')
+      if (usertype === '1') {
+      // 公司评价学生
+        userEvaluate(this.evaluaObj).then(res => {
+          console.log(res, 7564)
+        }).catch(() => {
+        })
+      } else {
+        // 学生评价公司
+        companyEvaluate(this.evaluaStuObj).then(res => {
+          console.log(res, 222222)
+        }).catch(() => {
+        })
+      }
     },
     handelClick(index, item) {
       this.evaluatelist.forEach(element => {
         element.disable = false
       })
       this.evaluatelist[index].disable = true
-      this.evaluaObj.user_service = item.value
+      if (this.user_type === '1') {
+        this.evaluaObj.user_service = item.value
+      } else if (this.user_type === '0') {
+        this.evaluaStuObj.company_service = item.value
+      }
     },
     // 数组去重
     unique(arr) {
@@ -112,7 +134,11 @@ export default {
     handelEav(index, item) {
       this.arr.push(item.name)
       this.brr = this.unique(this.arr)
-      this.evaluaObj.user_tag_list = this.brr
+      if (this.user_type === '1') {
+        this.evaluaObj.user_tag_list = this.brr
+      } else if (this.user_type === '0') {
+        this.evaluaStuObj.company_tag_list = this.brr
+      }
     },
     del(index) {
       this.brr.splice(index, 1)
@@ -121,6 +147,13 @@ export default {
   },
   mounted() {
     this.user_type = sessionStorage.getItem('user_type')
+    if (this.user_type === '1') {
+      this.evaluaObj.company_comment = this.value
+      this.evaluaObj.task_user_id = this.$route.params.task_user_id
+    } else if (this.user_type === '0') {
+      this.evaluaObj.user_comment = this.value
+      this.evaluaStuObj.task_user_id = this.$route.params.task_user_id
+    }
   }
 }
 </script>
