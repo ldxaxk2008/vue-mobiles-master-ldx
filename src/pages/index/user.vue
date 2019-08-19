@@ -156,6 +156,7 @@ export default {
       studentData().then(res => {
         this.nickName = res.data.data.nick_name ? res.data.data.nick_name : this.nickName
         this.labelName = res.data.data.label ? res.data.data.label : this.labelName
+        this.userImg = res.data.data.image ? res.data.data.image : this.userImg
       })
     }
   },
