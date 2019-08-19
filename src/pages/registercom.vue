@@ -41,7 +41,8 @@
   </div>
 </template>
 <script>
-import { register } from 'api/register-api'
+import { mapMutations } from 'vuex'
+import { uploadImg } from 'api/register-api'
 import { ERR_OK } from 'config/index'
 import commonHeader from 'common/common-header'
 
@@ -52,6 +53,7 @@ export default {
   data() {
     return {
       imgShow: false,
+      img: '',
       tittle: '',
       registerlist: {
         headimg: require('@/assets/imgs/user-img.png'),
@@ -69,10 +71,12 @@ export default {
     }
   },
   methods: {
+    ...mapMutations(['SET_TOKEN']),
     afterRead(file) {
       console.log(111)
       this.imgShow = true
       this.$refs.goodimg.src = file.content
+      this.img = file
     },
     addlevel() {
       var phoneReg = /^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,3,5-8])|(18[0-9])|166|198|199|(147))\d{8}$/
@@ -160,13 +164,27 @@ export default {
         })
         return
       }
-      register(this.registerlist).then(res => {
+      var formdata = new FormData()
+      formdata.append('image', this.img.file)
+      formdata.append('username', this.registerlist.username)
+      formdata.append('phone', this.registerlist.phone)
+      formdata.append('user_type', this.registerlist.user_type)
+      formdata.append('password', this.registerlist.password)
+      formdata.append('confirm_password', this.registerlist.confirm_password)
+      formdata.append('company_name', this.registerlist.company_name)
+      formdata.append('code', this.registerlist.code)
+      formdata.append('contact_person', this.registerlist.contact_person)
+      console.log(this.registerlist)
+      uploadImg(formdata).then((res) => {
+        console.log(res, 999)
         if (res.data.success === ERR_OK) {
+          this.SET_TOKEN(res.data)
           this.$toast(res.data.msg)
           this.$router.push('/home')
         } else {
           this.$toast(res.data.msg)
         }
+      }).catch(() => {
       })
     }
   },
