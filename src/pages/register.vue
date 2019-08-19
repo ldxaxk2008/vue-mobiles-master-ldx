@@ -50,7 +50,7 @@
 </template>
 <script>
 import { mapMutations } from 'vuex'
-import {register} from 'api/register-api'
+import { uploadImg } from 'api/register-api'
 import { ERR_OK } from 'config/index'
 import commonHeader from 'common/common-header'
 
@@ -63,6 +63,7 @@ export default {
       tittle: '',
       show: false,
       imgShow: false,
+      img: '',
       sexlist: [
         {
           value: '男',
@@ -100,6 +101,7 @@ export default {
     afterRead(file) {
       this.imgShow = true
       this.$refs.goodimg.src = file.content
+      this.img = file
     },
     // 性别选择
     hanleclick(event, item, index) {
@@ -192,8 +194,21 @@ export default {
         })
         return
       }
+      var formdata = new FormData()
+      formdata.append('file', this.img.file)
+      formdata.append('sex', this.registerlist.sex)
+      formdata.append('name', this.registerlist.name)
+      formdata.append('username', this.registerlist.username)
+      formdata.append('school_name', this.registerlist.school_name)
+      formdata.append('grade', this.registerlist.grade)
+      formdata.append('grades', this.registerlist.grades)
+      formdata.append('phone', this.registerlist.phone)
+      formdata.append('code', this.registerlist.code)
+      formdata.append('user_type', this.registerlist.user_type)
+      formdata.append('password', this.registerlist.password)
+      formdata.append('confirm_password', this.registerlist.confirm_password)
       console.log(this.registerlist)
-      register(this.registerlist).then((res) => {
+      uploadImg(formdata).then((res) => {
         if (res.data.success === ERR_OK) {
           this.SET_TOKEN(res.data)
           this.$toast(res.data.msg)
