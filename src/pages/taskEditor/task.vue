@@ -291,7 +291,8 @@ export default {
       publishtask(this.valueData).then(res => {
         console.log(this.valueData, 7865)
         if (res.data.success === ERR_OK) {
-          this.$router.push({name: 'success', params: {id: res.data.data}})
+          // this.$router.push({name: 'success', params: {id: res.data.data}})
+          this.$router.push({name: 'Pay', params: {id: res.data.data}})
         } else {
           this.$toast(res.data.msg)
           this.$router.push('/error')
