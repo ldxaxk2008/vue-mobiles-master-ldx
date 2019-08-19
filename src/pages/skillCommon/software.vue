@@ -4,9 +4,10 @@
       <h4 class="personal-skill">软件</h4>
       <ul>
         <li v-for="(item,index) in actions" :key="index">
-          <span>{{item}}</span>
+          <span v-if="item==='+'"><van-icon v-if="addShow" name="add-o" color="#c14182" class="add" @click="skillClick"/></span>
+          <span v-else>{{item}}</span>
         </li>
-        <li><van-icon v-if="addShow" name="add-o" color="#c14182" class="add" @click="skillClick"/></li>
+        <!-- <li><van-icon v-if="addShow" name="add-o" color="#c14182" class="add" @click="skillClick"/></li> -->
       </ul>
     </div>
     <van-popup class="popup" v-model="show" @click-overlay="close">
@@ -78,6 +79,7 @@ export default {
     close() {
       this.show = false
       this.actions = []
+      this.softwareList = []
       let arr = document.querySelectorAll('.list span')
       arr.forEach(item => {
         item.className = ''
@@ -121,7 +123,6 @@ export default {
     // }
     softwareLists(val) {
       this.actions = val
-      console.log(val, 22222)
     }
   }
 }
@@ -148,6 +149,8 @@ export default {
     justify-content: center;
     li{
       display: flex;
+      float: left;
+      .mb(-30);
       justify-content: center;
       align-items: center;
       width: 33%;
@@ -161,6 +164,12 @@ export default {
     }
     li:nth-child(odd){color:#14BFE4;}
     li:nth-child(even){color:#FEAE62;}
+    li:nth-child(5n + 4) {
+      .ml(60);
+    }
+    li:nth-child(5n + 5) {
+      .mr(60);
+    }
     // li:nth-child(3){color:#96D6C6;}
     // li:nth-child(4){color:#EF7272;}
     // li:nth-child(5){color:#c14182;}
@@ -171,11 +180,15 @@ export default {
   .padding(20,20,20,20);
   box-sizing: border-box;
   ul{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    // display: flex;
+    // flex-wrap: wrap;
+    // justify-content: center;
+    .pl(30);
+    overflow: hidden;
     li{
+      float: left;
       display: flex;
+      .mb(-30);
       justify-content: center;
       align-items: center;
       .fs(35);
@@ -186,11 +199,18 @@ export default {
     }
     li:nth-child(odd){color:#14BFE4;}
     li:nth-child(even){color:#FEAE62;}
+    li:nth-child(7n - 2) {
+      .ml(60);
+    }
+    li:nth-child(7n) {
+      .mr(60);
+    }
     .van-field{
       .fs(18);
     }
   }
   .btn{
+    overflow: hidden;
     .mt(40);
   }
 }
