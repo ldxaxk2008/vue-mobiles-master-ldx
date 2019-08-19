@@ -63,6 +63,7 @@ export default {
     taskpay() {
       this.$refs['dialog'].show = true
       this.type = 'task_pay'
+      this.$router.push({name: 'Pay', params: {task_user_id: this.taskList.task_user_id}})
     },
     handelClick() {
       this.$router.push({name: 'TaskList', params: {id: this.information}})

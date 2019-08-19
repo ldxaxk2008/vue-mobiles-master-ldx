@@ -84,9 +84,8 @@ export default {
     }),
     pay() {
       // 调支付接口，成功后执行下面操作
-      let id = ''
-      // let id = this.$route.params.id.id
-      this.$router.push({name: 'evaluate', params: {id: id || ''}})
+      let id = this.$route.params.task_user_id
+      this.$router.push({name: 'evaluate', params: {task_user_id: id || ''}})
     },
     todetail() {
       this.$router.togo('/Home/Detail')
