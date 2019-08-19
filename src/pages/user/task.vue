@@ -107,7 +107,9 @@ export default {
       if (falg) {
         this.informationData()
         if (val === 'task_pay') {
-          this.$router.push({name: 'Pay', params: this.information})
+          let id = this.information.task_user_id
+          sessionStorage.setItem('task_user_id', id)
+          this.$router.push({name: 'evaluate', params: {task_user_id: id}})
         }
       }
     },
