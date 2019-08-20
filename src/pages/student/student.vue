@@ -139,6 +139,11 @@ export default {
     },
     softwareChange(val) {
       console.log(val, 11111111)
+      val && val.forEach((item, index) => {
+        if (item === '+') {
+          val.splice(index, 1)
+        }
+      })
       this.softwareLists = val
       studentinfor((this.$route.params.id && this.$route.params.id.id) ? this.$route.params.id.id : sessionStorage.getItem('user_id'), {tool_list: val}).then((res) => {
         console.log(res.data)
@@ -176,7 +181,9 @@ export default {
         if (res.data.success === ERR_OK) {
           this.information = res.data.data
           this.skillList = res.data.data.skill_list
-          this.softwareLists = res.data.data.tool_list
+          let arr = res.data.data.tool_list
+          arr.splice(parseInt(arr.length / 2), 0, '+')
+          this.softwareLists = arr
         } else {
         }
       }).catch(() => {
