@@ -105,7 +105,7 @@ export default {
         this.evaluaObj.company_comment = this.value
         this.evaluaObj.task_user_id = this.$route.params.task_user_id || this.task_user_id
       } else if (this.user_type === '0') {
-        this.evaluaObj.user_comment = this.value
+        this.evaluaStuObj.user_comment = this.value
         this.evaluaStuObj.task_user_id = this.$route.params.task_user_id || this.task_user_id
       }
       if (this.user_type === '1') {

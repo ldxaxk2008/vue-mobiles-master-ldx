@@ -122,7 +122,7 @@ export default {
       if (type === '0') {
         return false
       } else {
-        return this.taskList.progress === '1' && !this.taskList.is_confirm_stage
+        return this.taskList.progress === '1' && this.taskList.is_confirm_stage
       }
     },
     showUpload: function () {

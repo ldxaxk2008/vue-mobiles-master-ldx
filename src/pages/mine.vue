@@ -3,6 +3,11 @@
     <common-header :tittle="tittle"></common-header>
     <div class="mine-page--content">
       <van-tabs v-model="active" @click="onClick">
+        <van-tab title="未确认">
+          <div class="page-map--tab">
+            <currentList ref="more" :currentList="currentList" :dmore="dmore" @more="more" />
+          </div>
+        </van-tab>
         <van-tab title="未完成">
           <div class="page-map--tab">
             <currentList ref="more" :currentList="currentList" :dmore="dmore" @more="more" />
@@ -44,7 +49,7 @@ export default {
       this.offset = 0
       this.currentList = []
       let params = {
-        status: this.active === 0 ? 1 : 2,
+        status: this.active,
         limit: 10,
         offset: 0
       }
@@ -75,7 +80,7 @@ export default {
     },
     more() {
       this.offset = this.limit + this.offset
-      let status = this.active === 0 ? 1 : 2
+      let status = this.active
       let params = Object.assign({
         limit: this.limit,
         offset: this.offset
