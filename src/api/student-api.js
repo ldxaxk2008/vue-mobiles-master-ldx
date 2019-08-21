@@ -18,5 +18,5 @@ export function getEvaluateList(data) {
 }
 // 学生作品集查询
 export function getPortfolio(data) {
-  return fetchGet(`${baseUrl}/api/user/attachment/`, data)
+  return fetchGet(`${baseUrl}/api/task/attachment/download`, data)
 }
