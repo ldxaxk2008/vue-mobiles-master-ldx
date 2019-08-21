@@ -71,7 +71,7 @@ export default {
       this.$refs['dialog'].show = true
       this.type = 'company_progress'
       console.log(this.taskList.progress)
-      if (this.taskList.progress === '0') {
+      if (this.taskList.progress === '0' || this.taskList.progress === '') {
         this.progress = 0.2
       } else if (this.taskList.progress === '0.2') {
         this.progress = 0.5
