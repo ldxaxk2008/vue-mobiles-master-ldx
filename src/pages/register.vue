@@ -9,7 +9,7 @@
               <van-uploader :after-read="afterRead" accept="image/png, image/jpeg">
                 <img v-if="imgShow" class="logo" :src="registerlist.headimg" alt ref="goodimg" />
                 <div v-if="!imgShow" class="logo" ref="goodimg">
-                  <van-icon size="40" name="plus" color="rgb(230, 207, 207)"/>
+                  <van-icon size="40" name="plus" color="rgb(230, 207, 207)" />
                 </div>
               </van-uploader>
             </div>
@@ -17,13 +17,19 @@
           </div>
           <div class="register-content__sex">
             <button
+              type="button"
               v-for="(item,index) in sexlist"
               :key="index"
               @click="hanleclick($event,item,index)"
               ref="sex"
             >{{item.value}}</button>
           </div>
-          <van-action-sheet class="register-seclect" v-model="show" :actions="actions" @select="onSelect" />
+          <van-action-sheet
+            class="register-seclect"
+            v-model="show"
+            :actions="actions"
+            @select="onSelect"
+          />
           <div class="register-content__info">
             <van-field v-model="registerlist.name" placeholder="姓名" />
             <van-field v-model="registerlist.school_name" placeholder="学校" />
@@ -31,9 +37,9 @@
             <van-field v-model="registerlist.phone" placeholder="联系电话">
               <van-button slot="button" class="register-btn" size="small" type="primary">发送验证码</van-button>
             </van-field>
-            <van-field  v-model="registerlist.code" placeholder="验证码" />
-            <van-field  v-model="registerlist.username" placeholder="登录用户名" />
-            <van-field  v-model="registerlist.password" type="password" placeholder="登录密码" />
+            <van-field v-model="registerlist.code" placeholder="验证码" />
+            <van-field v-model="registerlist.username" placeholder="登录用户名" />
+            <van-field v-model="registerlist.password" type="password" placeholder="登录密码" />
             <van-field
               v-model="registerlist.confirm_password"
               type="password"
@@ -205,16 +211,17 @@ export default {
       formdata.append('password', this.registerlist.password)
       formdata.append('confirm_password', this.registerlist.confirm_password)
       console.log(this.registerlist)
-      uploadImg(formdata).then((res) => {
-        if (res.data.success === ERR_OK) {
-          this.SET_TOKEN(res.data)
-          this.$toast(res.data.msg)
-          this.$router.push('/home')
-        } else {
-          this.$toast(res.data.msg)
-        }
-      }).catch(() => {
-      })
+      uploadImg(formdata)
+        .then(res => {
+          if (res.data.success === ERR_OK) {
+            this.SET_TOKEN(res.data)
+            this.$toast(res.data.msg)
+            this.$router.push('/home')
+          } else {
+            this.$toast(res.data.msg)
+          }
+        })
+        .catch(() => {})
       // this.$post('/root/api/user/register/', this.registerlist).then(res => {
       //   console.log(res.data)
       //   if (res.data.success === 'true') {
@@ -247,12 +254,12 @@ export default {
     .h(200);
     .b-radius(500);
     // background: linear-gradient(to right, #af002a, #e5d200);
-     /*! autoprefixer: off */
+    /*! autoprefixer: off */
     background: -webkit-linear-gradient(right, #af002a, #e5d200);
     /* autoprefixer: on */
-    background:-moz-linear-gradient(right, #af002a, #e5d200);
-    background:-o-linear-gradient(right,#af002a, #e5d200);
-    background:linear-gradient(right,#af002a, #e5d200);
+    background: -moz-linear-gradient(right, #af002a, #e5d200);
+    background: -o-linear-gradient(right, #af002a, #e5d200);
+    background: linear-gradient(right, #af002a, #e5d200);
     margin: 0 auto;
     display: flex;
     justify-content: center;
@@ -303,11 +310,11 @@ export default {
       background-color: #fff;
       .mt(30);
     }
-    .register-seclect{
+    .register-seclect {
       .b-radius(0) !important;
       border: 1px solid #f5f5f5;
     }
-    div{
+    div {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -365,8 +372,8 @@ export default {
     line-height: 30px;
     height: 30px;
     text-align: center;
-   }
-   /deep/.van-field__control {
+  }
+  /deep/.van-field__control {
     display: block;
     box-sizing: border-box;
     width: 100%;

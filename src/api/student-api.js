@@ -16,3 +16,7 @@ export function studentinfor(params, data) {
 export function getEvaluateList(data) {
   return fetchGet(`${baseUrl}//api/user/is/evaluated/`, data)
 }
+// 学生作品集查询
+export function getPortfolio(data) {
+  return fetchGet(`${baseUrl}/api/user/attachment/`, data)
+}

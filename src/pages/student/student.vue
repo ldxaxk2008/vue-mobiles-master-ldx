@@ -44,7 +44,7 @@ import fileDown from '@/pages/user/fileDown'
 import software from '@/pages/skillCommon/software'
 import skill from '@/pages/skillCommon/skill'
 import {taskList} from 'api/home-api'
-import {studentData, studentinfor, getEvaluateList} from 'api/student-api'
+import {studentData, studentinfor, getEvaluateList, getPortfolio} from 'api/student-api'
 import { ERR_OK } from 'config/index'
 import dialogBox from 'common/dialog'
 
@@ -214,6 +214,11 @@ export default {
       getEvaluateList().then((res) => {
         this.evaluate = res.data.data.results
       })
+    },
+    getPortfolio() {
+      getPortfolio({'user_id': (this.$route.params.id && this.$route.params.id.id) ? this.$route.params.id.id : sessionStorage.getItem('user_id')}).then(res => {
+        console.log(res, 'hhhhhhh')
+      })
     }
   },
   mounted() {
@@ -225,6 +230,7 @@ export default {
     }
     this.getListData(data)
     this.getEvaluateList()
+    this.getPortfolio()
   },
   computed: {
     showUpload: function () {
