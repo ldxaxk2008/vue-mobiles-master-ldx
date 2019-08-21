@@ -62,6 +62,7 @@ export default {
   },
   data() {
     return {
+      task_id: '',
       textData: {},
       tittle: '',
       information: {},
@@ -200,6 +201,8 @@ export default {
             }
           } else {
             this.currentList = res.data.data.results
+            this.task_id = this.currentList.id
+            console.log(this.currentList, 99999999)
             this.count = res.data.data.count
             if (this.count > 10) {
               this.dmore = true
@@ -216,7 +219,7 @@ export default {
       })
     },
     getPortfolio() {
-      getPortfolio({'user_id': (this.$route.params.id && this.$route.params.id.id) ? this.$route.params.id.id : sessionStorage.getItem('user_id')}).then(res => {
+      getPortfolio({'user_id': (this.$route.params.id && this.$route.params.id.id) ? this.$route.params.id.id : sessionStorage.getItem('user_id'), 'task_id': this.task_id}).then(res => {
         console.log(res, 'hhhhhhh')
       })
     }
