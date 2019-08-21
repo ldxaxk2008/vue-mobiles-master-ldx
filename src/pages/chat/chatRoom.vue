@@ -1,5 +1,5 @@
 <template>
-  <div class="chat">
+  <div class="chat" @click.capture="btnClick">
     <!-- <commonHeader :tittle="tittle"/> -->
     <th-message
       ref="messgebox"
