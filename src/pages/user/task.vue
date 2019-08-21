@@ -22,6 +22,7 @@ import {taskDetails, applyTask, cancelTask} from 'api/home-api'
 import {companyDetails} from 'api/company-api'
 import {mapState, mapMutations} from 'vuex'
 import dialogBox from 'common/dialog'
+import { getPortfolio } from 'api/student-api'
 
 export default {
   components: {
@@ -146,15 +147,23 @@ export default {
       return taskDetails((this.$route.params.id && this.$route.params.id.id) || this.task_id).then((res) => {
         if (res.data.success) {
           this.information = res.data.data
+          console.log(this.information, 999)
           this.status = this.information.status
         } else {
         }
       }).catch(() => {
       })
     },
+    // 获取下载列表
+    getPortfolio() {
+      getPortfolio({user_id: this.userId, task_id: this.information.id}).then(res => {
+        console.log(res, 'hhhhhhh')
+      })
+    },
     async asyncPrint() {
       await this.informationData()
       this.getData()
+      this.getPortfolio()
     }
   },
   mounted() {
