@@ -1,5 +1,5 @@
 <template>
-  <div class="chat" @click.capture="btnClick($event)">
+  <div class="chat">
     <!-- <commonHeader :tittle="tittle"/> -->
     <th-message
       ref="messgebox"
@@ -23,6 +23,7 @@
 
 <script>
 import commonHeader from 'common/common-header'
+import { createWebSocket } from '../../utils/websocket'
 export default {
   components: {
     commonHeader
@@ -100,6 +101,7 @@ export default {
       text: arr
     }
     this.messageData.push(brr)
+    createWebSocket()
   }
 
 }
