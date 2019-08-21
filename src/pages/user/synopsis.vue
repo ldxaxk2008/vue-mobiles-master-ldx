@@ -12,7 +12,7 @@
         <div class="right">
           <span class="assets">{{information.total_payment}}</span>
           <span class="number" v-if="information.user_id!==0">{{information.user_name}} 已申请</span>
-          <span class="number" v-else>{{information.task_num}} 人在申请</span>
+          <span class="number" v-else>{{information.apply_num}} 人在申请</span>
           <button v-if="state" class="cancel" @click="handelClick('cancelTask')">取消申请</button>
         </div>
       </div>
