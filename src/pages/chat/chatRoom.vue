@@ -1,6 +1,6 @@
 <template>
   <div class="chat" @click.capture="btnClick">
-    <!-- <commonHeader :tittle="tittle"/> -->
+    <commonHeader :tittle="tittle"/>
     <th-message
       ref="messgebox"
       :usePulldown="true"
@@ -87,7 +87,11 @@ export default {
       }
     },
     back(val) {
-      console.log(val)
+      console.log(JSON.parse(val).message, 'dsddsd')
+      this.messageData.push({
+        type: 2,
+        text: JSON.parse(val).message
+      })
     }
   },
   mounted() {
@@ -105,19 +109,30 @@ export default {
     }
     this.messageData.push(brr)
     createWebSocket(this.back)
+  },
+  beforeRouteLeave(to, form, next) {
+    webs().close()
+    next()
   }
-
 }
 </script>
 
 <style scoped lang="less">
 @import "~styles/index.less";
 @import "~styles/variable.less";
+.chat{
+  display: flex;
+}
 .th-message{
+  flex:1;
   display: flex;
   flex-direction: column;
-  height:100%;
+  // height:100%;
   margin-top:0 !important;
+  /deep/ .messagebox{
+    flex:1;
+    height: auto;
+  }
   /deep/ #vux-scroller-2rkki{
     flex:1;
     overflow: auto;
