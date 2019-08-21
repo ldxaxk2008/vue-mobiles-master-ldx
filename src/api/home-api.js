@@ -9,6 +9,10 @@ export function taskList(params) {
   // return fetchGet(`${baseUrl}/api/task/resource/type/`, params)
   return fetchGet(`${baseUrl}/api/task/task/`, params)
 }
+export function staskList(params) {
+  // return fetchGet(`${baseUrl}/api/task/resource/type/`, params)
+  return fetchGet(`${baseUrl}/api/user/my/tasks/`, params)
+}
 export function taskDetails(params) {
   return fetchGet(`${baseUrl}/api/task/task/` + params + '/')
 }

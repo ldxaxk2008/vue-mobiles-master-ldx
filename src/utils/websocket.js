@@ -23,15 +23,15 @@
 // }
 var lockReconnect = false // 避免ws重复连接
 var ws = null // 判断当前浏览器是否支持WebSocket
-var wsUrl = 'ws://192.168.1.6:8888/test/'
-createWebSocket(wsUrl) // 连接ws
+var url = 'ws://47.99.240.71:10000/ws/chat/room0'
+// createWebSocket(url) // 连接ws
 
-export function createWebSocket (url) {
+export function createWebSocket () {
   try {
     if ('WebSocket' in window) {
       ws = new WebSocket(url)
     } else if ('MozWebSocket' in window) {
-      ws = new MozWebSocket(url)
+      // ws = new MozWebSocket(url)
     } else {
       // layui.use(['layer'],function(){
       //   var layer = layui.layer;
@@ -46,14 +46,14 @@ export function createWebSocket (url) {
 }
 
 function initEventHandle () {
-  ws.onclose = function () {
-    reconnect(wsUrl)
-    console.log('llws连接关闭!' + new Date().toUTCString())
-  }
-  ws.onerror = function () {
-    reconnect(wsUrl)
-    console.log('llws连接错误!')
-  }
+  // ws.onclose = function () {
+  //   reconnect(url)
+  //   console.log('llws连接关闭!' + new Date().toUTCString())
+  // }
+  // ws.onerror = function () {
+  //   reconnect(url)
+  //   console.log('llws连接错误!')
+  // }
   ws.onopen = function () {
     heartCheck.reset().start() // 心跳检测重置
     console.log('llws连接成功!' + new Date().toUTCString())
@@ -88,7 +88,7 @@ var heartCheck = {
     return this
   },
   start: function () {
-    var self = this
+    // var self = this
     this.timeoutObj = setTimeout(function () {
       // 这里发送一个心跳，后端收到后，返回一个心跳消息，
       // onmessage拿到返回的心跳就说明连接正常

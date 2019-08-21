@@ -25,7 +25,7 @@
 <script>
 import currentList from '@/pages/taskList/currentTaskList'
 import commonHeader from 'common/common-header'
-import {taskList} from 'api/home-api'
+import {taskList, staskList} from 'api/home-api'
 import { ERR_OK } from 'config/index'
 
 export default {
@@ -58,25 +58,47 @@ export default {
     getData(params, type) {
       Object.assign(params, {'user_id': (this.$route.params.id && this.$route.params.id.id) ? this.$route.params.id.id : sessionStorage.getItem('user_id')})
       this.dmore = false
-      taskList(params).then((res) => {
-        if (res.data.success === ERR_OK) {
-          if (type === 'more') {
-            this.currentList = this.currentList.concat(res.data.data.results)
-            if (this.offset + this.limit > this.count) {
-              this.dmore = false
-            }
-          } else {
-            this.currentList = res.data.data.results
-            this.count = res.data.data.count
-            if (this.count > 10) {
-              this.dmore = true
+      if (sessionStorage.getItem('user_type') === '0' && params.status === 0) {
+        staskList(params).then((res) => {
+          if (res.data.success === ERR_OK) {
+            if (type === 'more') {
+              this.currentList = this.currentList.concat(res.data.data.results)
+              if (this.offset + this.limit > this.count) {
+                this.dmore = false
+              }
             } else {
-              this.dmore = false
+              this.currentList = res.data.data.results
+              this.count = res.data.data.count
+              if (this.count > 10) {
+                this.dmore = true
+              } else {
+                this.dmore = false
+              }
             }
           }
-        }
-      }).catch(() => {
-      })
+        }).catch(() => {
+        })
+      } else {
+        taskList(params).then((res) => {
+          if (res.data.success === ERR_OK) {
+            if (type === 'more') {
+              this.currentList = this.currentList.concat(res.data.data.results)
+              if (this.offset + this.limit > this.count) {
+                this.dmore = false
+              }
+            } else {
+              this.currentList = res.data.data.results
+              this.count = res.data.data.count
+              if (this.count > 10) {
+                this.dmore = true
+              } else {
+                this.dmore = false
+              }
+            }
+          }
+        }).catch(() => {
+        })
+      }
     },
     more() {
       this.offset = this.limit + this.offset

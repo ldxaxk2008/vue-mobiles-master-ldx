@@ -23,6 +23,7 @@
 
 <script>
 import commonHeader from 'common/common-header'
+import { createWebSocket } from '../../utils/websocket'
 export default {
   components: {
     commonHeader
@@ -81,6 +82,9 @@ export default {
         this.$refs.messgebox.resetpulldown()
       }, 3000)
     }
+  },
+  mounted() {
+    createWebSocket()
   }
 }
 </script>
