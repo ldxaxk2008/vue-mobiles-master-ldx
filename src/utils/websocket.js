@@ -23,10 +23,10 @@
 // }
 var lockReconnect = false // 避免ws重复连接
 var ws = null // 判断当前浏览器是否支持WebSocket
-var url = 'ws://47.99.240.71:10000/ws/chat/room0'
+var url = 'ws://47.99.240.71:10000/ws/chat/room0/'
 // createWebSocket(url) // 连接ws
 
-export function createWebSocket () {
+export function createWebSocket (msg) {
   try {
     if ('WebSocket' in window) {
       ws = new WebSocket(url)
@@ -38,28 +38,29 @@ export function createWebSocket () {
       //   layer.alert("您的浏览器不支持websocket协议,建议使用新版谷歌、火狐等浏览器，请勿使用IE10以下浏览器，360浏览器请使用极速模式，不要使用兼容模式！");
       // });
     }
-    initEventHandle()
+    initEventHandle(msg)
   } catch (e) {
     reconnect(url)
     console.log(e)
   }
 }
 
-function initEventHandle () {
+function initEventHandle (msg) {
   // ws.onclose = function () {
   //   reconnect(url)
   //   console.log('llws连接关闭!' + new Date().toUTCString())
   // }
-  // ws.onerror = function () {
-  //   reconnect(url)
-  //   console.log('llws连接错误!')
-  // }
+  ws.onerror = function () {
+    reconnect(url)
+    console.log('llws连接错误!')
+  }
   ws.onopen = function () {
     heartCheck.reset().start() // 心跳检测重置
+    ws.send('你好，老师')
     console.log('llws连接成功!' + new Date().toUTCString())
   }
   ws.onmessage = function (event) { // 如果获取到消息，心跳检测重置
-    heartCheck.reset().start() // 拿到任何消息都说明当前连接是正常的
+    // heartCheck.reset().start() // 拿到任何消息都说明当前连接是正常的
     console.log('llws收到消息啦:' + event.data)
   }
 }

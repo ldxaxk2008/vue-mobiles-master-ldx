@@ -35,7 +35,7 @@ export default {
       rules: {},
       textData: {},
       status: 1,
-      tittle: 'LOGO设计',
+      tittle: '任务详情',
       companyList: {},
       information: {},
       down: [
