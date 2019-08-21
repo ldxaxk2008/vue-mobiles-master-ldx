@@ -23,7 +23,7 @@
 
 <script>
 import commonHeader from 'common/common-header'
-import { createWebSocket } from '../../utils/websocket'
+import {createWebSocket, webs} from '../../utils/websocket'
 export default {
   components: {
     commonHeader
@@ -55,26 +55,26 @@ export default {
   },
   methods: {
     senRequest(val) {
-      console.log(val, 111)
+      webs().send(val)
       this.messageData.push({
         type: 1,
         text: val
       })
     },
     gallery(val) {
-      console.log(val, 111)
+      console.log(val, 1)
     },
     camera(val) {
-      console.log(val, 111)
+      console.log(val, 11)
     },
     quick(val) {
-      console.log(val, 111)
+      console.log(val)
     },
     btncall (val) {
       console.log(val, 222)
     },
     pulldowncall (val) {
-      console.log(val, 111)
+      console.log(val, 1111)
       setTimeout(() => {
         this.$refs.messgebox.resetpulldown()
       }, 3000)
@@ -85,6 +85,9 @@ export default {
       } else if (event.target.getAttribute('class') === 'no') {
         alert('拒绝')
       }
+    },
+    back(val) {
+      console.log(val)
     }
   },
   mounted() {
@@ -101,7 +104,7 @@ export default {
       text: arr
     }
     this.messageData.push(brr)
-    createWebSocket()
+    createWebSocket(this.back)
   }
 
 }
