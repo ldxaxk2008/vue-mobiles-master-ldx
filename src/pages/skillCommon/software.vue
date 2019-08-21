@@ -7,7 +7,7 @@
           <span v-if="item==='+'"><van-icon v-if="addShow" name="add-o" color="#c14182" class="add" @click="skillClick"/></span>
           <span v-else>{{item}}</span>
         </li>
-        <!-- <li><van-icon v-if="addShow" name="add-o" color="#c14182" class="add" @click="skillClick"/></li> -->
+        <li v-if="!actions.length"><van-icon name="add-o" color="#c14182" class="add" @click="skillClick"/></li>
       </ul>
     </div>
     <van-popup class="popup" v-model="show" @click-overlay="close">
@@ -93,10 +93,16 @@ export default {
           arr.push(item.value)
         }
       })
-      this.$emit('softwareChange', arr)
+      if (this.actions.length >= 9) {
+        console.log(this.actions)
+        this.$toast('软件最多选/填8个')
+        arr = []
+        return
+      }
       this.softwareList = []
-      this.actions = []
       this.show = false
+      this.actions = []
+      this.$emit('softwareChange', arr)
     },
     softwareListData() {
       softwareList({resource_type: 2}).then((res) => {

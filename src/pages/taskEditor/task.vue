@@ -235,6 +235,11 @@ export default {
       })
     },
     softwareChange(val) {
+      val && val.forEach((item, index) => {
+        if (item === '+') {
+          val.splice(index, 1)
+        }
+      })
       this.softwareLists = val
       this.valueData.tool_list = val
     },
