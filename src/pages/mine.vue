@@ -56,7 +56,6 @@ export default {
       this.getData(params)
     },
     getData(params, type) {
-      Object.assign(params, {'user_id': (this.$route.params.id && this.$route.params.id.id) ? this.$route.params.id.id : sessionStorage.getItem('user_id')})
       this.dmore = false
       staskList(params).then((res) => {
         if (res.data.success === ERR_OK) {
