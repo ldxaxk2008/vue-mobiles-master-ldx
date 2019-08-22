@@ -37,7 +37,7 @@ import currentList from '@/pages/taskList/currentTaskList'
 import evaluate from '@/pages/taskList/evaluate'
 import {companyDetails} from 'api/company-api'
 import {studentinfor, getEvaluateList} from 'api/student-api'
-import {taskList} from 'api/home-api'
+import {staskList} from 'api/home-api'
 import dialogBox from 'common/dialog'
 import { ERR_OK } from 'config/index'
 
@@ -128,7 +128,7 @@ export default {
     },
     getListNData(parmes, type) {
       Object.assign(parmes, {'user_id': (this.$route.params.id && this.$route.params.id.id) ? this.$route.params.id.id : sessionStorage.getItem('user_id')})
-      taskList(parmes).then(res => {
+      staskList(parmes).then(res => {
         if (res.data.success === ERR_OK) {
           if (type === 'more') {
             this.currentNList = this.currentNList.concat(res.data.data.results)
@@ -147,7 +147,7 @@ export default {
     },
     getListData(parmes, type) {
       Object.assign(parmes, {'user_id': (this.$route.params.id && this.$route.params.id.id) ? this.$route.params.id.id : sessionStorage.getItem('user_id')})
-      taskList(parmes).then(res => {
+      staskList(parmes).then(res => {
         if (res.data.success === ERR_OK) {
           if (type === 'more') {
             this.currentList = this.currentList.concat(res.data.data.results)

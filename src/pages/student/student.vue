@@ -43,7 +43,7 @@ import imgView from '@/pages/student/imgView'
 import fileDown from '@/pages/user/fileDown'
 import software from '@/pages/skillCommon/software'
 import skill from '@/pages/skillCommon/skill'
-import {taskList} from 'api/home-api'
+import {staskList} from 'api/home-api'
 import {studentData, studentinfor, getEvaluateList, getPortfolio} from 'api/student-api'
 import { ERR_OK } from 'config/index'
 import dialogBox from 'common/dialog'
@@ -191,7 +191,7 @@ export default {
     },
     getListData(parmes, type) {
       Object.assign(parmes, {'user_id': (this.$route.params.id && this.$route.params.id.id) ? this.$route.params.id.id : sessionStorage.getItem('user_id')})
-      taskList(parmes).then((res) => {
+      staskList(parmes).then((res) => {
         if (res.data.success === ERR_OK) {
           if (type === 'more') {
             this.currentList = this.currentList.concat(res.data.data.results)
