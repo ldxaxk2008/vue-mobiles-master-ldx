@@ -129,13 +129,13 @@ export default {
       let id = sessionStorage.getItem('user_id')
       let type = sessionStorage.getItem('user_type')
       if (type === '0') {
-        if (JSON.stringify(this.taskList.user_id) === id) {
+        if (JSON.stringify(this.taskList.user_id) === id && this.taskList.user_id) {
           return 1
         } else {
           return 0
         }
       } else {
-        if (JSON.stringify(this.taskList.company_id) === id) {
+        if (JSON.stringify(this.taskList.company_id) === id && this.taskList.user_id) {
           return 1
         } else {
           return 0
