@@ -19,7 +19,7 @@
     </div>
     <div class="about-us">
         <h4>任务简介</h4>
-        <p>{{information.desc}}<van-icon class="about-icon" name="edit" @click="handelEdit(information.desc,'desc','任务简介')"/></p>
+        <p>{{information.desc}}<van-icon v-if="information.company_id===sessionId" class="about-icon" name="edit" @click="handelEdit(information.desc,'desc','任务简介')"/></p>
         <span>距离任务结束还剩：{{information.rest_day}} 天</span>
       </div>
   </div>
@@ -43,7 +43,8 @@ export default {
       state: false,
       wait: false,
       appstate: true,
-      logoImg: require('@/assets/imgs/img5.png')
+      logoImg: require('@/assets/imgs/img5.png'),
+      sessionId: sessionStorage.getItem('user_id')
     }
   },
   mounted () {

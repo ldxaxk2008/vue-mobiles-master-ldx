@@ -31,7 +31,7 @@
     </div>
     <div class="about-us">
       <div class="about-us--edit">
-         <p>{{information.aboutUs||information.desc||'暂无介绍'}}<van-icon class="about-icon" name="edit" @click="handelEdit((information.aboutUs||information.desc),'desc','简介')"/></p>
+         <p>{{information.aboutUs||information.desc||'暂无介绍'}}<van-icon v-if="(information.company_id===sessionId)||(information.id==sessionId)" class="about-icon" name="edit" @click="handelEdit((information.aboutUs||information.desc),'desc','简介')"/></p>
       </div>
     </div>
   </div>
@@ -53,7 +53,8 @@ export default {
     return {
       company: false,
       student: false,
-      headimg: require('@/assets/imgs/user-img.png')
+      headimg: require('@/assets/imgs/user-img.png'),
+      sessionId: sessionStorage.getItem('user_id')
     }
   },
   methods: {
