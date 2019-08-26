@@ -7,7 +7,7 @@
           <div class="register-content--img">
             <div class="register-logoborder">
               <van-uploader :after-read="afterRead" accept="image/png, image/jpeg">
-                <img v-if="imgShow" class="logo" :src="registerlist.headimg" alt ref="goodimg" />
+                <img v-if="imgShow" class="logo" :src="registerlist.Img?registerlist.Img:headimg" alt ref="goodimg" />
                 <div v-if="!imgShow" class="logo" ref="goodimg">
                   <van-icon size="40" name="plus" color="rgb(230, 207, 207)"/>
                 </div>
@@ -55,8 +55,9 @@ export default {
       imgShow: false,
       img: '',
       tittle: '',
+      headimg: require('@/assets/imgs/user-img.png'),
       registerlist: {
-        headimg: require('@/assets/imgs/user-img.png'),
+        Img: '',
         username: '',
         contact_person: '',
         company_name: '',
@@ -75,6 +76,7 @@ export default {
     afterRead(file) {
       console.log(111)
       this.imgShow = true
+      this.registerlist.Img = file.content
       this.$refs.goodimg.src = file.content
       this.img = file
     },

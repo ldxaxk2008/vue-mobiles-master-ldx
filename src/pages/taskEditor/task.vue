@@ -46,12 +46,10 @@
       </div>
       <div class="task-editor--tool">
         <div class="task-editor--tool__left">
-          <div class="task-editor__top">
-            <software @softwareChange="softwareChange" :softwareLists="softwareLists" class="skill-user" />
-          </div>
+            <software @softwareChange="softwareChange" :softwareLists="softwareLists" class="skill-user"/>
         </div>
-        <div>
-          <div class="task-editor--tool__right">
+        <div class="task-editor--tool__right">
+          <div>
             <p>报酬 RMB</p>
             <input class="tool-input" v-model="valueData.payment" type="number" pattern="[0-9]"/>
           </div>
@@ -235,12 +233,14 @@ export default {
       })
     },
     softwareChange(val) {
-      val && val.forEach((item, index) => {
+      let arr = val
+      arr.splice(parseInt(arr.length / 2), 0, '+')
+      arr && arr.forEach((item, index) => {
         if (item === '+') {
-          val.splice(index, 1)
+          arr.splice(index, 1)
         }
       })
-      this.softwareLists = val
+      this.softwareLists = arr
       this.valueData.tool_list = val
     },
     // 发布任务
@@ -320,7 +320,7 @@ export default {
   }
   background-color: #fff;
   .task-editor--select {
-    .margin(40, 50, 40, 50);
+    .margin(40,20,40,20);
     .padding(5, 20, 5, 20);
     height: 30px;
     display: flex;
@@ -350,7 +350,7 @@ export default {
       background-color: transparent;
       border-bottom: 3px solid #d8d8d8;
       width: 100%;
-      .padding(0, 50, 20, 20);
+      .padding(0, 20, 20, 20);
       .fs(24);
     }
   }
@@ -364,27 +364,26 @@ export default {
     border-right: 0px;
     border-bottom: 3px solid #d8d8d8;
     .h(250);
-    .padding(20, 50, 0, 50);
+    .padding(20, 20, 0, 20);
     .fs(24);
   }
   .task-editor--filed {
     color: #898798;
     .mt(40);
     .evaluate-footer--btn {
-      .ml(40);
+      .ml(20);
       display: flex;
       background-color: #1B9EA7;
       color: white;
       .fs(25);
       .padding(10, 30, 10, 30);
-      // font-weight: bold;
       border: none;
       .b-radius(10);
     }
     .page-map--ul {
       .mt(30);
-      .pl(20);
-      .pr(20);
+      .pl(10);
+      .pr(10);
       display: flex;
       justify-content: space-between;
       img {
@@ -400,29 +399,21 @@ export default {
     }
   }
   .task-editor--tool {
-    .margin(50, 50, 0, 50);
+    .margin(40, 20, 40, 20);
     display: flex;
-    justify-content: flex-start;
     text-align: left;
     box-sizing: border-box;
-    p {
-      .fs(28);
-      color: #363636;
-    }
     .task-editor--tool__left {
-      width: 50%;
-      .task-editor__top {
-        display: flex;
-      }
-      .task-editor-toolicon {
-        .mt(5);
-        .fs(30);
-        color: #2ca2a9;
+      flex:1;
+      .skill-user{
+        flex:1;
+        .mr(-10);
       }
     }
     .task-editor--tool__right {
-      width: 50%;
+       flex:1;
       .tool-input {
+        width: 100%;
         .mt(25);
         .b-radius(50);
         background-color: #e7e7e7;
@@ -431,8 +422,7 @@ export default {
     }
     .tool-input--time {
       .mt(20);
-      .mb(10);
-      color: #363636;
+      .mb(20);
     }
     .task-tool__input {
       .padding(10, 20, 10, 10);
@@ -474,10 +464,7 @@ export default {
       .mr(20);
     }
   }
-  .skill-user{
-    flex:1;
-    .mr(20);
-  }
+
   .active {
     color: #c54f8b;
   }

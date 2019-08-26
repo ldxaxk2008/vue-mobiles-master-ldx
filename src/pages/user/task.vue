@@ -156,7 +156,7 @@ export default {
     },
     // 获取下载列表
     getPortfolio() {
-      getPortfolio({user_id: this.userId, task_id: this.information.id}).then(res => {
+      getPortfolio({'user_id': this.userId, 'task_id': this.task_id}).then(res => {
         console.log(res, 'hhhhhhh')
       })
     },
