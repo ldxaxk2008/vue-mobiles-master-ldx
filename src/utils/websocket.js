@@ -52,7 +52,8 @@ function initEventHandle (back, msg) {
   //   reconnect(url)
   //   console.log('llws连接关闭!' + new Date().toUTCString())
   // }
-  ws.onerror = function () {
+  ws.onerror = function (back) {
+    typeof back === 'function' && back('error')
     reconnect(url)
     console.log('llws连接错误!')
   }

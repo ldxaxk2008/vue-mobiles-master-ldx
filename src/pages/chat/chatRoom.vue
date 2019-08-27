@@ -87,11 +87,18 @@ export default {
       }
     },
     back(val) {
-      console.log(JSON.parse(val).message, 'dsddsd')
-      this.messageData.push({
-        type: 2,
-        text: JSON.parse(val).message
-      })
+      if (val === 'error') {
+        // 连接失败
+        this.messageData.push({
+          type: 4,
+          text: '连接失败，请检查网络'
+        })
+      } else {
+        this.messageData.push({
+          type: 2,
+          text: JSON.parse(val).message
+        })
+      }
     }
   },
   mounted() {
@@ -109,6 +116,7 @@ export default {
     }
     this.messageData.push(brr)
     createWebSocket(this.back)
+    webs().onerror(this.back)
   },
   beforeRouteLeave(to, form, next) {
     webs().close()
