@@ -172,7 +172,7 @@ export default {
       let data = {
         limit: this.limit,
         offset: this.offset,
-        status: 2
+        status: 3
       }
       this.getListData(data, 'more')
     },
@@ -230,7 +230,7 @@ export default {
     let data = {
       limit: this.limit,
       offset: this.offset,
-      status: 2
+      status: 3
     }
     this.getListData(data)
     this.getEvaluateList()
