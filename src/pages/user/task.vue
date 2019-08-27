@@ -114,12 +114,14 @@ export default {
         }
       }
     },
-    handelClick(val) {
+    handelClick(val, back) {
       if (val === 'applyTask') {
         applyTask({task_id: (this.$route.params.id && this.$route.params.id.id) || this.task_id, user_id: sessionStorage.getItem('user_id')}).then((res) => {
           console.log(res)
           if (res.data.success) {
+            back(true)
           } else {
+            back(false)
           }
         }).catch(() => {
         })
@@ -127,8 +129,10 @@ export default {
         cancelTask({task_id: (this.$route.params.id && this.$route.params.id.id) || this.task_id, user_id: sessionStorage.getItem('user_id')}).then((res) => {
           this.$toast(res.data.msg)
           if (res.data.success) {
+            back(true)
             // this.currentList = res.data.data.results
           } else {
+            back(false)
           }
         }).catch(() => {
         })

@@ -112,12 +112,14 @@ export default {
       // 公司评价学生
         userEvaluate(this.evaluaObj).then(res => {
           console.log(res, 7564)
+          this.$router.push('/home')
         }).catch(() => {
         })
       } else {
         // 学生评价公司
         companyEvaluate(this.evaluaStuObj).then(res => {
           console.log(res, 222222)
+          this.$router.push('/home')
         }).catch(() => {
         })
       }

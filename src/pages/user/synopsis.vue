@@ -6,14 +6,14 @@
         <div class="left">
           <span class="name">{{information.title}}</span>
           <span class="industry">{{information.industry||'暂无'}}</span>
-          <button v-if="appstate" class="apply" @click="handelClick('applyTask')">申请任务</button>
+          <button v-if="appstate" class="apply" @click="handelClick('applyTask')" :disabled="disable">申请任务</button>
           <button v-if="!appstate && wait" class="wait">等待甲方确认</button>
         </div>
         <div class="right">
           <span class="assets">{{information.total_payment}}</span>
           <span class="number" v-if="information.user_id!==0">{{information.user_name}} 已申请</span>
           <span class="number" v-else>{{information.apply_num}} 人在申请</span>
-          <button v-if="state" class="cancel" @click="handelClick('cancelTask')">取消申请</button>
+          <button v-if="state" class="cancel" @click="handelClick('cancelTask')" :disabled="disable">取消申请</button>
         </div>
       </div>
     </div>
@@ -43,6 +43,7 @@ export default {
       state: false,
       wait: false,
       appstate: true,
+      disable: false,
       logoImg: require('@/assets/imgs/img5.png')
     }
   },
@@ -55,9 +56,15 @@ export default {
   },
   methods: {
     handelClick(val) {
-      this.appstate = !this.appstate
-      this.state = !this.state
-      this.$emit('taskSele', val)
+      this.disable = true
+      this.$emit('taskSele', val, this.back)
+    },
+    back (val) {
+      if (val) {
+        this.appstate = !this.appstate
+        this.state = !this.state
+        this.disable = false
+      }
     },
     handelEdit(data, sign, label) {
       this.$emit('handelEdit', data, sign, label)
