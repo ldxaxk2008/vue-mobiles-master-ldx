@@ -7,7 +7,7 @@
           <div class="register-content--img">
             <div class="register-logoborder">
               <van-uploader :after-read="afterRead" accept="image/png, image/jpeg">
-                <img v-if="imgShow" class="logo" :src="registerlist.headimg" alt ref="goodimg" />
+                <img v-if="imgShow" class="logo" :src="registerlist.Img?registerlist.Img:headimg" alt ref="goodimg" />
                 <div v-if="!imgShow" class="logo" ref="goodimg">
                   <van-icon size="40" name="plus" color="rgb(230, 207, 207)" />
                 </div>
@@ -70,6 +70,7 @@ export default {
       show: false,
       imgShow: false,
       img: '',
+      headimg: require('@/assets/imgs/user-img.png'),
       sexlist: [
         {
           value: '男',
@@ -87,7 +88,7 @@ export default {
         { value: 4, name: '大四' }
       ],
       registerlist: {
-        headimg: require('@/assets/imgs/user-img.png'),
+        Img: '',
         sex: 'male',
         name: '',
         username: '',
@@ -106,6 +107,7 @@ export default {
     ...mapMutations(['SET_TOKEN']),
     afterRead(file) {
       this.imgShow = true
+      this.registerlist.Img = file.content
       this.$refs.goodimg.src = file.content
       this.img = file
     },

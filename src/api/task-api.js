@@ -3,7 +3,7 @@
  * @param params
  * @returns {*}
  */
-import {fetchGet, fetchPost, baseUrl} from 'config/index'
+import {fetchGet, fetchPost, fetchPetch, baseUrl} from 'config/index'
 
 // 获取类型及工具
 export function gettype(data) {
@@ -12,6 +12,10 @@ export function gettype(data) {
 // 发布任务
 export function publishtask(data) {
   return fetchPost(`${baseUrl}/api/task/task/`, data)
+}
+// 编辑任务
+export function edittask(params, data) {
+  return fetchPetch(`${baseUrl}/api/task/task/` + params + `/`, data)
 }
 // 获取taskuser未调取
 export function getacceptuserlist(data) {
