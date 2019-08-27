@@ -62,6 +62,7 @@ export default {
       limit: 10,
       offset: 0,
       type: '',
+      searchVal: '',
       maplist: [
         {
           img: require('@/assets/imgs/copy1.png'),
@@ -105,7 +106,8 @@ export default {
       return this.active === 0 ? 'payment' : this.active === 1 ? 'created_time' : 'end_date'
     },
     search(val) {
-      if (val === '') return false
+      // if (val === '') return false
+      this.searchVal = val
       this.offset = 0
       let params = {
         search: val,
@@ -129,6 +131,7 @@ export default {
       this.type = item.type
       this.offset = 0
       let data = {
+        search: this.searchVal,
         design_id: this.type,
         ordering: 'payment',
         limit: this.limit,
@@ -151,6 +154,7 @@ export default {
       }
       this.sort = sort
       let data = {
+        search: this.searchVal,
         ordering: this.sort,
         design_id: this.type,
         limit: 10,
@@ -161,6 +165,7 @@ export default {
     more() {
       this.offset = this.offset + this.limit
       let params = {
+        search: this.searchVal,
         design_id: this.type,
         ordering: this.sort,
         limit: this.limit,
