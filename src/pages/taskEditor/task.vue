@@ -87,7 +87,11 @@
 <script>
 import commonHeader from 'common/common-header'
 import software from '@/pages/skillCommon/software'
-import { publishtask, gettype } from 'api/task-api'
+import {
+  publishtask,
+  gettype
+  // edittask
+} from 'api/task-api'
 import { ERR_OK } from 'config/index'
 
 export default {
@@ -99,6 +103,7 @@ export default {
     return {
       softwareLists: [],
       desctab: '文案',
+      valObj: {},
       valueData: {
         task_type_id: '',
         design_id: '7',
@@ -235,13 +240,18 @@ export default {
     softwareChange(val) {
       let arr = val
       arr.splice(parseInt(arr.length / 2), 0, '+')
-      arr && arr.forEach((item, index) => {
-        if (item === '+') {
-          arr.splice(index, 1)
+      this.softwareLists = [...new Set(arr)]
+      this.valueData.tool_list = this.remove(this.softwareLists, '+')
+    },
+    // 不改变原来的数组获取新数组
+    remove(arr, item) {
+      var result = []
+      arr.forEach(function(element) {
+        if (element !== item) {
+          result.push(element)
         }
       })
-      this.softwareLists = arr
-      this.valueData.tool_list = val
+      return result
     },
     // 发布任务
     publish() {
@@ -293,21 +303,32 @@ export default {
         })
         return
       }
-      publishtask(this.valueData).then(res => {
-        console.log(this.valueData, 7865)
-        if (res.data.success === ERR_OK) {
+      if (this.$route.params.type === 'post') {
+        publishtask(this.valueData).then(res => {
+          this.valObj = this.valueData
+          console.log(this.valueData, 7865)
+          if (res.data.success === ERR_OK) {
           // this.$router.push({name: 'success', params: {id: res.data.data}})
-          this.$router.push({name: 'Pay', params: {id: res.data.data}})
-        } else {
-          this.$toast(res.data.msg)
-          this.$router.push('/error')
-        }
-      })
+            this.$router.push({name: 'Pay', params: {id: res.data.data}})
+          } else {
+            this.$toast(res.data.msg)
+            this.$router.push('/error')
+          }
+        })
+      } else if (this.$route.params.type === 'get') {
+        // let id = sessionStorage.getItem('user_id')
+        // edittask(id).then(res => {
+        //   console.log(res, 'kkkkkkkkkkk')
+        // })
+      }
     }
   },
   mounted() {
     this.getType()
     // this.getTypes()
+    if (this.$route.params.type === 'get') {
+      this.valueData = this.valObj
+    }
   }
 }
 </script>
