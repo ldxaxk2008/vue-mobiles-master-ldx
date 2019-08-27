@@ -1,16 +1,24 @@
 <template>
   <div class="enterprise" :id="information.id">
     <div class="synopsis-head">
-        <img
-          v-if="imgShow"
-          :src="information.image?information.image:headimg"
-          alt="logo"
-          class="logo"
-        />
+      <img
+        v-if="imgShow"
+        :src="information.image?information.image:headimg"
+        alt="logo"
+        class="logo"
+      />
       <div class="contenr">
         <div class="company" v-if="imgShow">
           <span class="name">{{information.nick_name===''?'未添加昵称':information.nick_name}}</span>
-          <span class="autograph">{{(information.school_name==='' || information.company_name ==='') ?'未添加名称':(information.school_name || information.company_name)}}<van-icon class="about-icon" name="edit" @click="handelEdit((information.school_name || information.company_name),'nickName','简介')"/></span>
+          <span class="autograph">
+            {{(information.school_name==='' || information.company_name ==='') ?'未添加名称':(information.school_name || information.company_name)}}
+            <van-icon
+             v-if="(information.company_id===sessionId)||(information.id==sessionId)"
+              class="about-icon"
+              name="edit"
+              @click="handelEdit((information.school_name || information.company_name),'nickName','简介')"
+            />
+          </span>
           <!-- <span class="name">{{information.===''?'未添加行业':information.}}</span> -->
         </div>
         <div class="synopsis-main">
@@ -31,7 +39,15 @@
     </div>
     <div class="about-us">
       <div class="about-us--edit">
-         <p>{{information.aboutUs||information.desc||'暂无介绍'}}<van-icon v-if="(information.company_id===sessionId)||(information.id==sessionId)" class="about-icon" name="edit" @click="handelEdit((information.aboutUs||information.desc),'desc','简介')"/></p>
+        <p>
+          {{information.aboutUs||information.desc||'暂无介绍'}}
+          <van-icon
+            v-if="(information.company_id===sessionId)||(information.id==sessionId)"
+            class="about-icon"
+            name="edit"
+            @click="handelEdit((information.aboutUs||information.desc),'desc','简介')"
+          />
+        </p>
       </div>
     </div>
   </div>
@@ -63,7 +79,7 @@ export default {
       let data = {
         id: this.information.id
       }
-      this.$router.push({name: 'mine', params: {id: data}})
+      this.$router.push({ name: 'mine', params: { id: data } })
     },
     handelEdit(data, sign, label) {
       this.$emit('handelEdit', data, sign, label)
@@ -128,7 +144,7 @@ export default {
     text-align: left;
     .mt(40);
     color: #000;
-    .about-us--edit{
+    .about-us--edit {
       display: flex;
       justify-content: flex-start;
     }
@@ -136,7 +152,7 @@ export default {
       .mb(20);
       text-indent: 24px;
     }
-    .about-icon{
+    .about-icon {
       .ml(-90);
     }
   }
