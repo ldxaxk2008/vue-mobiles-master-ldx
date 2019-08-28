@@ -65,7 +65,8 @@ export default {
       this.type = 'task_pay'
     },
     handelClick() {
-      this.$router.push({name: 'TaskList', params: {id: this.information}})
+      let id = this.information.id
+      this.$router.push('/User/TaskList/' + id)
     },
     dialogClick() {
       this.$refs['dialog'].show = true
@@ -112,7 +113,7 @@ export default {
     pay: function () {
       let type = sessionStorage.getItem('user_type')
       if (type === '0') {
-        return this.taskList.progress === '1' && !this.taskList.is_confirm_stage
+        return this.taskList.progress === '1' && this.taskList.is_confirm_stage === false
       } else {
         return false
       }
@@ -122,7 +123,7 @@ export default {
       if (type === '0') {
         return false
       } else {
-        return this.taskList.progress === '1' && this.taskList.is_confirm_stage
+        return this.taskList.progress === '1' && this.taskList.is_confirm_stage === true
       }
     },
     showUpload: function () {

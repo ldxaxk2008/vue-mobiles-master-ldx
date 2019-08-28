@@ -11,7 +11,7 @@
         <li
           v-for="(item,index) in userList"
           :key="index"
-          @click="handelClick(item.path)"
+          @click="handelClick(item)"
         >
           <div
             class="divTips"
@@ -51,6 +51,7 @@ export default {
           bg: '#f9ce20',
           color: '#fff',
           path: '/User/Student',
+          id: true,
           hide: false,
           label: '个人简介'
         },
@@ -58,6 +59,7 @@ export default {
           bg: '#f9ce20',
           color: '#fff',
           path: '/User/taskList',
+          id: true,
           hide: true,
           label: '公司简介'
         },
@@ -142,7 +144,11 @@ export default {
       this.$router.togo('/Home/Detail')
     },
     handelClick(val) {
-      this.$router.push(val)
+      if (val.id) {
+        this.$router.push(val.path + '/' + sessionStorage.getItem('user_id'))
+      } else {
+        this.$router.push(val.path)
+      }
     },
     reset(event, item, label) {
       this.textData = {

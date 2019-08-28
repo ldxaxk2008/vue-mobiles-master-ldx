@@ -94,12 +94,12 @@ export default new Router({
       component: (resolve) => require(['@/pages/pay/pay'], resolve)
     },
     {
-      path: '/User/TaskList',
+      path: '/User/TaskList/:id',
       name: 'TaskList',
       component: (resolve) => require(['@/pages/taskList/taskList'], resolve)
     },
     {
-      path: '/User/Student',
+      path: '/User/Student/:id',
       name: 'student',
       component: (resolve) => require(['@/pages/student/student'], resolve)
     },
