@@ -89,9 +89,11 @@ import commonHeader from 'common/common-header'
 import software from '@/pages/skillCommon/software'
 import {
   publishtask,
-  gettype
-  // edittask
+  gettype,
+  edittask
 } from 'api/task-api'
+import { taskDetails } from 'api/home-api'
+
 import { ERR_OK } from 'config/index'
 
 export default {
@@ -103,7 +105,6 @@ export default {
     return {
       softwareLists: [],
       desctab: '文案',
-      valObj: {},
       valueData: {
         task_type_id: '',
         design_id: '7',
@@ -305,10 +306,8 @@ export default {
       }
       if (this.$route.params.type === 'post') {
         publishtask(this.valueData).then(res => {
-          this.valObj = this.valueData
           console.log(this.valueData, 7865)
           if (res.data.success === ERR_OK) {
-          // this.$router.push({name: 'success', params: {id: res.data.data}})
             this.$router.push({name: 'Pay', params: {id: res.data.data}})
           } else {
             this.$toast(res.data.msg)
@@ -316,18 +315,45 @@ export default {
           }
         })
       } else if (this.$route.params.type === 'get') {
-        // let id = sessionStorage.getItem('user_id')
-        // edittask(id).then(res => {
-        //   console.log(res, 'kkkkkkkkkkk')
-        // })
+        let id = this.$route.query.id
+        edittask(id, this.valueData).then(res => {
+          if (res.data.success === ERR_OK) {
+            this.$router.push({name: 'Pay', params: {id: res.data.data}})
+          } else {
+            this.$toast(res.data.msg)
+            this.$router.push('/error')
+          }
+        })
       }
     }
   },
   mounted() {
     this.getType()
-    // this.getTypes()
     if (this.$route.params.type === 'get') {
-      this.valueData = this.valObj
+      taskDetails(this.$route.query.id).then(res => {
+        this.valueData.tool_list = res.data.data.tool_list
+        let arr = res.data.data.tool_list
+        arr.splice(parseInt(arr.length / 2), 0, '+')
+        this.softwareLists = [...new Set(arr)]
+        this.valueData.tool_list = this.remove(this.softwareLists, '+')
+        this.valueData.desc = res.data.data.desc
+        this.valueData.payment = res.data.data.payment
+        this.valueData.title = res.data.data.title
+        this.valueData.end_date = this.timeFormat(res.data.data.end_date)
+        this.valueData.design_id = res.data.data.design_id
+        this.maplist.map((item, index) => {
+          item.disable = false
+          if (Number(item.value) === res.data.data.design_id) {
+            this.desctab = item.name
+            this.$refs.tabBtn.style.background = item.color
+            item.disable = true
+          }
+        })
+        this.valueData.task_type_id = res.data.data.task_type_id
+        this.inputList.map(item => {
+          if (item.id === res.data.data.task_type_id) { this.invalue = item.title }
+        })
+      })
     }
   }
 }
@@ -360,7 +386,8 @@ export default {
     }
   }
   .task-editor--con {
-    flex: 1;
+    // flex: 1;
+    height: 100vh;
     overflow-x: hidden;
     overflow-y: auto;
   }
@@ -467,9 +494,10 @@ export default {
     .pt(30);
     .pb(30);
     background-color: #f5f5f5;
-    position: sticky;
+    position: fixed;
     bottom: 0;
     left: 0;
+    width: 100%;
     display: flex;
     .evaluate-footer--btn {
       flex: 1;
@@ -492,6 +520,10 @@ export default {
   /deep/.popup .btn[data-v-92496f84] {
     margin-top: 0.53333333rem;
     text-align: center;
+  }
+  /deep/.skill-content ul li .add[data-v-92496f84], .skill-content ul li span[data-v-92496f84] {
+   .mr(15);
+   .mb(10);
   }
 }
 </style>

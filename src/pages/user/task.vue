@@ -86,7 +86,7 @@ export default {
     },
     edit() {
       console.log('再次编辑')
-      this.$router.push('/taskeditor/get')
+      this.$router.push({path: '/taskeditor/get', query: {id: this.information.id}})
     },
     confirm() {
       console.log('确认申请人')
@@ -222,7 +222,8 @@ export default {
 }
 .task-footer {
   .padding(30,20,30,20);
-  background:#222230;
+  // background:#222230;
+  background:#f5f5f5;
   position: sticky;
   bottom: 0;
   left:0;
