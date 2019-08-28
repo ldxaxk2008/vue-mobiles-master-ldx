@@ -23,7 +23,16 @@
 // }
 var lockReconnect = false // 避免ws重复连接
 var ws = null // 判断当前浏览器是否支持WebSocket
-var url = 'ws://47.99.240.71:10000/ws/chat/room0/'
+var getCookie = function (name) {
+  var cookieArray = document.cookie.split(';')
+  for (var i = 0; i < cookieArray.length; i++) {
+    var arr = cookieArray[i].split('=')
+    if (arr[0] === name) return unescape(arr[1])
+  }
+  return ''
+}
+var token = getCookie('token')
+var url = 'ws://47.99.240.71:10000/ws/chat/room0/?token=' + token
 // createWebSocket(url) // 连接ws
 export function webs() {
   return ws
@@ -54,7 +63,7 @@ function initEventHandle (back, msg) {
   // }
   ws.onerror = function (back) {
     typeof back === 'function' && back('error')
-    reconnect(url)
+    // reconnect(url)
     console.log('llws连接错误!')
   }
   ws.onopen = function () {
