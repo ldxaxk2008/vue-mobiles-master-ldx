@@ -69,6 +69,7 @@ export default {
       information: {},
       limit: 5,
       userId: '',
+      showUpload: false,
       offset: 0,
       dmore: false,
       count: 0,
@@ -241,10 +242,6 @@ export default {
     // this.getPortfolio()
   },
   computed: {
-    showUpload: function () {
-      let id = JSON.stringify(this.information.id)
-      return id === sessionStorage.getItem('user_id') ? 1 : 0
-    },
     showE: function () {
       return this.evaluate.length > 0 ? 1 : 0
     }

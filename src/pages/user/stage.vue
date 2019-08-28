@@ -131,13 +131,21 @@ export default {
       let type = sessionStorage.getItem('user_type')
       if (type === '0') {
         if (JSON.stringify(this.taskList.user_id) === id && this.taskList.user_id) {
-          return 1
+          if (this.taskList.is_confirm_stage !== 'finish') {
+            return 1
+          } else {
+            return 0
+          }
         } else {
           return 0
         }
       } else {
         if (JSON.stringify(this.taskList.company_id) === id && this.taskList.user_id) {
-          return 1
+          if (this.taskList.is_confirm_stage !== 'finish') {
+            return 1
+          } else {
+            return 0
+          }
         } else {
           return 0
         }
