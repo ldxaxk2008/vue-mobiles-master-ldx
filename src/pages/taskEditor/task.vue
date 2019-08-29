@@ -305,11 +305,10 @@ export default {
         })
         return
       }
-      if (this.taskId === 'create') {
-      // 发布任务
+      if (this.$route.params.id === 'create') {
         publishtask(this.valueData).then(res => {
           if (res.data.success === ERR_OK) {
-            this.$router.push({name: 'Pay', params: {id: res.data.data}})
+            this.$router.push('/pay/' + res.data.data.id)
           } else {
             this.$toast(res.data.msg)
             this.$router.push('/error')
@@ -319,7 +318,7 @@ export default {
       // 编辑任务
         edittask(this.taskId, this.valueData).then(res => {
           if (res.data.success === ERR_OK) {
-            this.$router.push({name: 'Pay', params: {id: res.data.data}})
+            this.$router.push('/pay/' + res.data.data.id)
           } else {
             this.$toast(res.data.msg)
             this.$router.push('/error')

@@ -38,6 +38,7 @@ export default {
   data() {
     return {
       tittle: '支付',
+      taskId: '',
       payImgList: [
         {
           label: '支付宝',
@@ -84,9 +85,8 @@ export default {
     }),
     pay() {
       // 调支付接口，成功后执行下面操作
-      let id = this.$route.params.task_user_id
       // this.$router.push({name: 'evaluate', params: {task_user_id: id || ''}})
-      this.$router.push({name: 'success', params: {task_user_id: id || ''}})
+      this.$router.push('/success/' + this.taskId)
     },
     todetail() {
       this.$router.togo('/Home/Detail')
@@ -94,6 +94,10 @@ export default {
     handelClick(val) {
       this.$router.push(val)
     }
+  },
+  mounted () {
+    let url = this.$route.path
+    this.taskId = url.substring(url.lastIndexOf('/') + 1, url.length)
   },
   components: {
     commonHeader
