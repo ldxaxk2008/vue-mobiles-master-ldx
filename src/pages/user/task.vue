@@ -36,6 +36,7 @@ export default {
       rules: {},
       textData: {},
       status: 1,
+      taskId: '',
       tittle: '任务详情',
       companyList: {},
       information: {},
@@ -86,7 +87,8 @@ export default {
     },
     edit() {
       console.log('再次编辑')
-      this.$router.push('/taskeditor/get')
+      this.$router.push('/taskeditor/' + this.information.id)
+      // this.$router.push({path: '/taskeditor/get', query: {id: this.information.id}})
     },
     confirm() {
       console.log('确认申请人')
@@ -172,14 +174,13 @@ export default {
     }
   },
   mounted() {
-    console.log(this.task_id, this.user_id)
-    if (JSON.stringify(this.$route.params) === '{}' && !this.task_id) {
+    let url = this.$route.path
+    this.taskId = url.substring(url.lastIndexOf('/') + 1, url.length)
+    if (!this.taskId) {
       this.$router.push('/home')
       return
     } else {
-      if (this.$route.params.id) {
-        this.SET_TASK_ID(this.$route.params.id.id)
-      }
+      this.SET_TASK_ID(this.taskId)
     }
     // this.getData()
     // this.informationData()
@@ -222,7 +223,9 @@ export default {
 }
 .task-footer {
   .padding(30,20,30,20);
-  background:rgb(245, 245, 245);
+  // background:rgb(245, 245, 245);
+  // background:#222230;
+  background:#f5f5f5;
   position: sticky;
   bottom: 0;
   left:0;

@@ -39,7 +39,7 @@
             :key="index"
             @click="hanleclick(item,index)"
           >
-            <img :src="item.img" alt />
+            <svg-icon :name="item.icons" size="60"  ref="svg_icon"></svg-icon>
             <p :class="{'active':item.disable===true}">{{item.name}}</p>
           </li>
         </ul>
@@ -89,9 +89,11 @@ import commonHeader from 'common/common-header'
 import software from '@/pages/skillCommon/software'
 import {
   publishtask,
-  gettype
-  // edittask
+  gettype,
+  edittask
 } from 'api/task-api'
+import { taskDetails } from 'api/home-api'
+
 import { ERR_OK } from 'config/index'
 
 export default {
@@ -103,7 +105,6 @@ export default {
     return {
       softwareLists: [],
       desctab: '文案',
-      valObj: {},
       valueData: {
         task_type_id: '',
         design_id: '7',
@@ -119,43 +120,44 @@ export default {
       show: false,
       disabled: false,
       inputList: [],
+      taskId: '',
       actions: [],
       tittle: '返回首页',
       maplist: [
         {
-          img: require('@/assets/imgs/copy1.png'),
           name: '文案',
           value: '7',
           disable: true,
-          color: '#1B9EA7'
+          color: '#1B9EA7',
+          icons: 'official'
         },
         {
-          img: require('@/assets/imgs/copy2.png'),
           name: '设计',
           value: '8',
           disable: false,
-          color: '#F79D33'
+          color: '#F79D33',
+          icons: 'design'
         },
         {
-          img: require('@/assets/imgs/copy3.png'),
           name: '代码',
           value: '9',
           disable: false,
-          color: '#1B9EA7'
+          color: '#1B9EA7',
+          icons: 'code'
         },
         {
-          img: require('@/assets/imgs/copy4.png'),
           name: '手绘',
           value: '10',
           disable: false,
-          color: '#3BDA8A'
+          color: '#3BDA8A',
+          icons: 'hand'
         },
         {
-          img: require('@/assets/imgs/copy5.png'),
           name: 'PPT',
           value: '11',
           disable: false,
-          color: '#F79D33'
+          color: '#F79D33',
+          icons: 'ppt'
         }
       ]
     }
@@ -306,32 +308,62 @@ export default {
         })
         return
       }
-      if (this.$route.params.type === 'post') {
+      if (this.$route.params.id === 'create') {
         publishtask(this.valueData).then(res => {
-          this.valObj = this.valueData
-          console.log(this.valueData, 7865)
           if (res.data.success === ERR_OK) {
-          // this.$router.push({name: 'success', params: {id: res.data.data}})
-            this.$router.push({name: 'Pay', params: {id: res.data.data}})
+            this.$router.push('/pay/' + res.data.data.id)
           } else {
             this.$toast(res.data.msg)
             this.$router.push('/error')
           }
         })
-      } else if (this.$route.params.type === 'get') {
-        // let id = sessionStorage.getItem('user_id')
-        // edittask(id).then(res => {
-        //   console.log(res, 'kkkkkkkkkkk')
-        // })
+      } else {
+      // 编辑任务
+        edittask(this.taskId, this.valueData).then(res => {
+          if (res.data.success === ERR_OK) {
+            this.$router.push('/pay/' + res.data.data.id)
+          } else {
+            this.$toast(res.data.msg)
+            this.$router.push('/error')
+          }
+        })
       }
+    },
+    // 编辑任务
+    edit() {
+      taskDetails(this.taskId).then(res => {
+        this.valueData.tool_list = res.data.data.tool_list
+        let arr = res.data.data.tool_list
+        arr.splice(parseInt(arr.length / 2), 0, '+')
+        this.softwareLists = [...new Set(arr)]
+        this.valueData.tool_list = this.remove(this.softwareLists, '+')
+        this.valueData.desc = res.data.data.desc
+        this.valueData.payment = res.data.data.payment
+        this.valueData.title = res.data.data.title
+        this.valueData.end_date = this.timeFormat(res.data.data.end_date)
+        this.valueData.design_id = res.data.data.design_id
+        this.maplist.map((item, index) => {
+          item.disable = false
+          if (Number(item.value) === res.data.data.design_id) {
+            this.desctab = item.name
+            this.$refs.tabBtn.style.background = item.color
+            item.disable = true
+          }
+        })
+        this.valueData.task_type_id = res.data.data.task_type_id
+        this.inputList.map(item => {
+          if (item.id === res.data.data.task_type_id) { this.invalue = item.title }
+        })
+      })
     }
   },
   mounted() {
-    this.getType()
-    // this.getTypes()
-    if (this.$route.params.type === 'get') {
-      this.valueData = this.valObj
+    let url = this.$route.path
+    this.taskId = url.substring(url.lastIndexOf('/') + 1, url.length)
+    if (this.taskId !== 'create') {
+      this.edit()
     }
+    this.getType()
   }
 }
 </script>
@@ -363,7 +395,8 @@ export default {
     }
   }
   .task-editor--con {
-    flex: 1;
+    // flex: 1;
+    height: 100vh;
     overflow-x: hidden;
     overflow-y: auto;
   }
@@ -470,9 +503,10 @@ export default {
     .pt(30);
     .pb(30);
     background-color: #f5f5f5;
-    position: sticky;
+    position: fixed;
     bottom: 0;
     left: 0;
+    width: 100%;
     display: flex;
     .evaluate-footer--btn {
       flex: 1;
@@ -495,6 +529,10 @@ export default {
   /deep/.popup .btn[data-v-92496f84] {
     margin-top: 0.53333333rem;
     text-align: center;
+  }
+  /deep/.skill-content ul li .add[data-v-92496f84], .skill-content ul li span[data-v-92496f84] {
+   .mr(15);
+   .mb(10);
   }
 }
 </style>

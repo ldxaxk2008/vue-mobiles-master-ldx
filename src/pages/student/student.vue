@@ -68,6 +68,8 @@ export default {
       tittle: '',
       information: {},
       limit: 5,
+      userId: '',
+      showUpload: false,
       offset: 0,
       dmore: false,
       count: 0,
@@ -141,13 +143,15 @@ export default {
     },
     softwareChange(val) {
       console.log(val, 11111111)
+
       val && val.forEach((item, index) => {
         if (item === '+') {
           val.splice(index, 1)
         }
       })
       this.softwareLists = val
-      studentinfor((this.$route.params.id && this.$route.params.id.id) ? this.$route.params.id.id : cookie.get('user_id'), {tool_list: val}).then((res) => {
+      // studentinfor((this.$route.params.id && this.$route.params.id.id) ? this.$route.params.id.id : cookie.get('user_id'), {tool_list: val}).then((res) => {
+      studentinfor(this.userId ? this.userId : cookie.get('user_id'), {tool_list: val}).then((res) => {
         console.log(res.data)
         if (res.data.success === ERR_OK) {
           this.student()
@@ -158,7 +162,8 @@ export default {
     },
     skillChage(val) {
       this.skillList = val
-      studentinfor((this.$route.params.id && this.$route.params.id.id) ? this.$route.params.id.id : cookie.get('user_id'), {skill_list: val}).then((res) => {
+      // studentinfor((this.$route.params.id && this.$route.params.id.id) ? this.$route.params.id.id : cookie.get('user_id'), {skill_list: val}).then((res) => {
+      studentinfor(this.userId ? this.userId : cookie.get('user_id'), {skill_list: val}).then((res) => {
         console.log(res.data)
         if (res.data.success === ERR_OK) {
           this.student()
@@ -178,7 +183,8 @@ export default {
     },
     student() {
       let parmes = {}
-      Object.assign(parmes, {'user_id': (this.$route.params.id && this.$route.params.id.id) ? this.$route.params.id.id : cookie.get('user_id')})
+      // Object.assign(parmes, {'user_id': (this.$route.params.id && this.$route.params.id.id) ? this.$route.params.id.id : cookie.get('user_id')})
+      Object.assign(parmes, {'user_id': this.userId ? this.userId : cookie.get('user_id')})
       studentData(parmes).then((res) => {
         if (res.data.success === ERR_OK) {
           this.information = res.data.data
@@ -192,7 +198,8 @@ export default {
       })
     },
     getListData(parmes, type) {
-      Object.assign(parmes, {'user_id': (this.$route.params.id && this.$route.params.id.id) ? this.$route.params.id.id : cookie.get('user_id')})
+      // Object.assign(parmes, {'user_id': (this.$route.params.id && this.$route.params.id.id) ? this.$route.params.id.id : cookie.get('user_id')})
+      Object.assign(parmes, {'user_id': this.userId ? this.userId : cookie.get('user_id')})
       staskList(parmes).then((res) => {
         if (res.data.success === ERR_OK) {
           if (type === 'more') {
@@ -213,7 +220,8 @@ export default {
     },
     getEvaluateList() {
       console.log('qq')
-      getEvaluateList().then((res) => {
+      let userId = this.userId ? this.userId : cookie.get('user_id')
+      getEvaluateList({user_id: userId}).then((res) => {
         this.evaluate = res.data.data.results
       })
     }
@@ -226,6 +234,8 @@ export default {
   },
   mounted() {
     console.log(this.task_id, 89898)
+    let url = this.$route.path
+    this.userId = url.substring(url.lastIndexOf('/') + 1, url.length)
     this.student()
     let data = {
       limit: this.limit,
@@ -237,10 +247,10 @@ export default {
     // this.getPortfolio()
   },
   computed: {
-    showUpload: function () {
-      let id = JSON.stringify(this.information.id)
-      return id === cookie.get('user_id') ? 1 : 0
-    },
+    // showUpload: function () {
+    //   let id = JSON.stringify(this.information.id)
+    //   return id === cookie.get('user_id') ? 1 : 0
+    // },
     showE: function () {
       return this.evaluate.length > 0 ? 1 : 0
     }

@@ -10,7 +10,7 @@
         </div>
         <ul class="page-map--ul">
           <li v-for="(item,index) in maplist" :key="index" @click="handelclick(item,index)">
-            <img :src="item.img" alt />
+            <svg-icon :name="item.icons" size="60"  ref="svg_icon"></svg-icon>
             <div class="page-map--p">
               <p :class="{'active':item.disable}">{{item.name}}</p>
             </div>
@@ -65,34 +65,34 @@ export default {
       searchVal: '',
       maplist: [
         {
-          img: require('@/assets/imgs/copy1.png'),
           name: '文案',
           disable: false,
-          type: '7'
+          type: '7',
+          icons: 'official'
         },
         {
-          img: require('@/assets/imgs/copy2.png'),
           name: '设计',
           disable: false,
-          type: '8'
+          type: '8',
+          icons: 'design'
         },
         {
-          img: require('@/assets/imgs/copy3.png'),
           name: '代码',
           disable: false,
-          type: '9'
+          type: '9',
+          icons: 'code'
         },
         {
-          img: require('@/assets/imgs/copy4.png'),
           name: '手绘',
           disable: false,
-          type: '10'
+          type: '10',
+          icons: 'hand'
         },
         {
-          img: require('@/assets/imgs/copy5.png'),
           name: 'PPT',
           disable: false,
-          type: '11'
+          type: '11',
+          icons: 'ppt'
         }
       ]
     }

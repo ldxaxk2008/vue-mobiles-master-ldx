@@ -79,7 +79,7 @@ export default new Router({
     //   component: (resolve) => require(['@/pages/detail'], resolve)
     // },
     {
-      path: '/User/Task',
+      path: '/User/Task/:id',
       name: 'Task',
       component: (resolve) => require(['@/pages/user/task'], resolve)
     },
@@ -89,17 +89,17 @@ export default new Router({
       component: (resolve) => require(['@/pages/chat/chatRoom'], resolve)
     },
     {
-      path: '/Pay',
+      path: '/Pay/:id',
       name: 'Pay',
       component: (resolve) => require(['@/pages/pay/pay'], resolve)
     },
     {
-      path: '/User/TaskList',
+      path: '/User/TaskList/:id',
       name: 'TaskList',
       component: (resolve) => require(['@/pages/taskList/taskList'], resolve)
     },
     {
-      path: '/User/Student',
+      path: '/User/Student/:id',
       name: 'student',
       component: (resolve) => require(['@/pages/student/student'], resolve)
     },
@@ -119,7 +119,7 @@ export default new Router({
       component: (resolve) => require(['@/pages/registercom'], resolve)
     },
     {
-      path: '/taskeditor/:type',
+      path: '/taskeditor/:id',
       name: 'taskeditor',
       component: (resolve) => require(['@/pages/taskEditor/task'], resolve)
     },

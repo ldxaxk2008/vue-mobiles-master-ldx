@@ -66,7 +66,8 @@ export default {
       this.type = 'task_pay'
     },
     handelClick() {
-      this.$router.push({name: 'TaskList', params: {id: this.information}})
+      let id = this.information.id
+      this.$router.push('/User/TaskList/' + id)
     },
     dialogClick() {
       this.$refs['dialog'].show = true
@@ -97,13 +98,13 @@ export default {
       let id = cookie.get('user_id')
       let type = cookie.get('user_type')
       if (type === '0') {
-        if (JSON.stringify(this.taskList.user_id) === id && !this.taskList.is_confirm_stage) {
+        if (JSON.stringify(this.taskList.user_id) === id && !this.taskList.is_confirm_stage && this.taskList.is_confirm_status === 0) {
           return true
         } else {
           return false
         }
       } else {
-        if (JSON.stringify(this.taskList.company_id) === id && this.taskList.is_confirm_stage) {
+        if (JSON.stringify(this.taskList.company_id) === id && this.taskList.is_confirm_stage && this.taskList.is_confirm_status === 0) {
           return true
         } else {
           return false
@@ -113,7 +114,7 @@ export default {
     pay: function () {
       let type = cookie.get('user_type')
       if (type === '0') {
-        return this.taskList.progress === '1' && !this.taskList.is_confirm_stage
+        return this.taskList.is_confirm_status === 1
       } else {
         return false
       }
@@ -123,7 +124,7 @@ export default {
       if (type === '0') {
         return false
       } else {
-        return this.taskList.progress === '1' && this.taskList.is_confirm_stage
+        return this.taskList.is_confirm_status === 2
       }
     },
     showUpload: function () {
@@ -131,13 +132,21 @@ export default {
       let type = cookie.get('user_type')
       if (type === '0') {
         if (JSON.stringify(this.taskList.user_id) === id && this.taskList.user_id) {
-          return 1
+          if (this.taskList.is_confirm_stage !== 'finish') {
+            return 1
+          } else {
+            return 0
+          }
         } else {
           return 0
         }
       } else {
         if (JSON.stringify(this.taskList.company_id) === id && this.taskList.user_id) {
-          return 1
+          if (this.taskList.is_confirm_stage !== 'finish') {
+            return 1
+          } else {
+            return 0
+          }
         } else {
           return 0
         }

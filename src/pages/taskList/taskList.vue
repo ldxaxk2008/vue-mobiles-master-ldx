@@ -57,6 +57,7 @@ export default {
       information: {},
       currentList: [],
       currentNList: [],
+      userId: '',
       limit: 5,
       offset: 0,
       count: 0,
@@ -117,7 +118,8 @@ export default {
     },
     getData() {
       let parmes = {}
-      Object.assign(parmes, {'user_id': (this.$route.params.id && this.$route.params.id.id) ? this.$route.params.id.id : cookie.get('user_id')})
+      // Object.assign(parmes, {'user_id': (this.$route.params.id && this.$route.params.id.id) ? this.$route.params.id.id : cookie.get('user_id')})
+      Object.assign(parmes, {'user_id': this.userId ? this.userId : cookie.get('user_id')})
       companyDetails(parmes).then(res => {
         if (res.data.success === ERR_OK) {
           this.information = res.data.data
@@ -127,7 +129,8 @@ export default {
       })
     },
     getListNData(parmes, type) {
-      Object.assign(parmes, {'user_id': (this.$route.params.id && this.$route.params.id.id) ? this.$route.params.id.id : cookie.get('user_id')})
+      // Object.assign(parmes, {'user_id': (this.$route.params.id && this.$route.params.id.id) ? this.$route.params.id.id : cookie.get('user_id')})
+      Object.assign(parmes, {'user_id': this.userId ? this.userId : cookie.get('user_id')})
       staskList(parmes).then(res => {
         if (res.data.success === ERR_OK) {
           if (type === 'more') {
@@ -146,7 +149,8 @@ export default {
       }).catch({})
     },
     getListData(parmes, type) {
-      Object.assign(parmes, {'user_id': (this.$route.params.id && this.$route.params.id.id) ? this.$route.params.id.id : cookie.get('user_id')})
+      // Object.assign(parmes, {'user_id': (this.$route.params.id && this.$route.params.id.id) ? this.$route.params.id.id : cookie.get('user_id')})
+      Object.assign(parmes, {'user_id': this.userId ? this.userId : cookie.get('user_id')})
       staskList(parmes).then(res => {
         if (res.data.success === ERR_OK) {
           if (type === 'more') {
@@ -166,12 +170,15 @@ export default {
     },
     getEvaluateList() {
       console.log('qq')
-      getEvaluateList().then((res) => {
+      let userId = this.userId ? this.userId : cookie.get('user_id')
+      getEvaluateList({user_id: userId}).then((res) => {
         this.evaluate = res.data.data.results
       })
     }
   },
   mounted() {
+    let url = this.$route.path
+    this.userId = url.substring(url.lastIndexOf('/') + 1, url.length)
     this.getData()
     let data = {
       limit: this.limit,

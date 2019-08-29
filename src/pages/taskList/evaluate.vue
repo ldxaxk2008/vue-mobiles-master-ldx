@@ -24,9 +24,9 @@ export default {
   methods: {
     handelclick(item) {
       if (cookie.get('user_type') === '0') {
-        this.$router.push({name: 'TaskList', params: {id: item}})
+        this.$router.push('/User/Student/' + item)
       } else if (cookie.get('user_type') === '1') {
-        this.$router.push({name: 'student', params: {id: item}})
+        this.$router.push('/User/TaskList/' + item)
       }
     }
   }
