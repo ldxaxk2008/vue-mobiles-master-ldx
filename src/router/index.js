@@ -120,6 +120,7 @@ export default new Router({
     },
     {
       path: '/taskeditor/:type',
+      // path: '/taskeditor/:type/:id',
       name: 'taskeditor',
       component: (resolve) => require(['@/pages/taskEditor/task'], resolve)
     },

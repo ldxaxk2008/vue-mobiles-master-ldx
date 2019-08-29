@@ -39,7 +39,7 @@
             :key="index"
             @click="hanleclick(item,index)"
           >
-            <img :src="item.img" alt />
+            <svg-icon :name="item.icons" size="60"  ref="svg_icon"></svg-icon>
             <p :class="{'active':item.disable===true}">{{item.name}}</p>
           </li>
         </ul>
@@ -124,39 +124,39 @@ export default {
       tittle: '返回首页',
       maplist: [
         {
-          img: require('@/assets/imgs/copy1.png'),
           name: '文案',
           value: '7',
           disable: true,
-          color: '#1B9EA7'
+          color: '#1B9EA7',
+          icons: 'official'
         },
         {
-          img: require('@/assets/imgs/copy2.png'),
           name: '设计',
           value: '8',
           disable: false,
-          color: '#F79D33'
+          color: '#F79D33',
+          icons: 'design'
         },
         {
-          img: require('@/assets/imgs/copy3.png'),
           name: '代码',
           value: '9',
           disable: false,
-          color: '#1B9EA7'
+          color: '#1B9EA7',
+          icons: 'code'
         },
         {
-          img: require('@/assets/imgs/copy4.png'),
           name: '手绘',
           value: '10',
           disable: false,
-          color: '#3BDA8A'
+          color: '#3BDA8A',
+          icons: 'hand'
         },
         {
-          img: require('@/assets/imgs/copy5.png'),
           name: 'PPT',
           value: '11',
           disable: false,
-          color: '#F79D33'
+          color: '#F79D33',
+          icons: 'ppt'
         }
       ]
     }
@@ -325,11 +325,9 @@ export default {
           }
         })
       }
-    }
-  },
-  mounted() {
-    this.getType()
-    if (this.$route.params.type === 'get') {
+    },
+    // 编辑
+    edit() {
       taskDetails(this.$route.query.id).then(res => {
         this.valueData.tool_list = res.data.data.tool_list
         let arr = res.data.data.tool_list
@@ -354,6 +352,12 @@ export default {
           if (item.id === res.data.data.task_type_id) { this.invalue = item.title }
         })
       })
+    }
+  },
+  mounted() {
+    this.getType()
+    if (this.$route.params.type === 'get') {
+      this.edit()
     }
   }
 }
