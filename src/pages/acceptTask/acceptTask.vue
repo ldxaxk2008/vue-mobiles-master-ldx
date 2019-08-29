@@ -51,7 +51,7 @@ export default {
     cancel(data) {
       selectstudents({task_user_ids: this.acceptList[this.result].task_user_id}).then(res => {
         console.log(res, 77744)
-        this.$router.push('/User/Task')
+        this.$router.push('/User/Task' + this.task_id)
       })
     },
     getList () {

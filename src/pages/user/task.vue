@@ -36,6 +36,7 @@ export default {
       rules: {},
       textData: {},
       status: 1,
+      taskId: '',
       tittle: '任务详情',
       companyList: {},
       information: {},
@@ -173,14 +174,13 @@ export default {
     }
   },
   mounted() {
-    console.log(this.task_id, this.user_id)
-    if (JSON.stringify(this.$route.params) === '{}' && !this.task_id) {
+    let url = this.$route.path
+    this.taskId = url.substring(url.lastIndexOf('/') + 1, url.length)
+    if (!this.taskId) {
       this.$router.push('/home')
       return
     } else {
-      if (this.$route.params.id) {
-        this.SET_TASK_ID(this.$route.params.id.id)
-      }
+      this.SET_TASK_ID(this.taskId)
     }
     // this.getData()
     // this.informationData()

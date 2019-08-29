@@ -23,16 +23,22 @@ export default {
   },
   data() {
     return {
+      taskId: '',
       tittle: ''
     }
   },
   methods: {
     watcher() {
-      this.$router.push({name: 'Task', params: {id: this.$route.params.id}})
+      this.$router.push('/User/Task/' + this.taskId)
+      // this.$router.push({name: 'Task', params: {id: this.taskId}})
     },
     prev() {
       this.$router.goBack()
     }
+  },
+  mounted () {
+    let url = this.$route.path
+    this.taskId = url.substring(url.lastIndexOf('/') + 1, url.length)
   }
 }
 </script>

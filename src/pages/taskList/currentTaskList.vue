@@ -49,8 +49,8 @@ export default {
   },
   methods: {
     handleclick(item) {
-      this.$router.push({name: 'Task', params: {id: item}})
-      // this.$router.push('/User/Task')
+      // this.$router.push({name: 'Task', params: {id: item}})
+      this.$router.push('/User/Task/' + item.id)
     },
     more() {
       this.$emit('more')

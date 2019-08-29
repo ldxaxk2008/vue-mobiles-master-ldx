@@ -79,7 +79,7 @@ export default new Router({
     //   component: (resolve) => require(['@/pages/detail'], resolve)
     // },
     {
-      path: '/User/Task',
+      path: '/User/Task/:id',
       name: 'Task',
       component: (resolve) => require(['@/pages/user/task'], resolve)
     },
@@ -89,7 +89,7 @@ export default new Router({
       component: (resolve) => require(['@/pages/chat/chatRoom'], resolve)
     },
     {
-      path: '/Pay',
+      path: '/Pay/:id',
       name: 'Pay',
       component: (resolve) => require(['@/pages/pay/pay'], resolve)
     },

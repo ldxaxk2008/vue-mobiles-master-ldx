@@ -305,11 +305,11 @@ export default {
         })
         return
       }
-      if (this.$route.params.type === 'post') {
+      if (this.$route.params.id === 'create') {
         publishtask(this.valueData).then(res => {
           console.log(this.valueData, 7865)
           if (res.data.success === ERR_OK) {
-            this.$router.push({name: 'Pay', params: {id: res.data.data}})
+            this.$router.push('/pay/' + res.data.data.id)
           } else {
             this.$toast(res.data.msg)
             this.$router.push('/error')
@@ -319,7 +319,7 @@ export default {
         let id = this.$route.query.id
         edittask(id, this.valueData).then(res => {
           if (res.data.success === ERR_OK) {
-            this.$router.push({name: 'Pay', params: {id: res.data.data}})
+            this.$router.push('/pay/' + res.data.data.id)
           } else {
             this.$toast(res.data.msg)
             this.$router.push('/error')
