@@ -33,7 +33,7 @@ import { mapMutations, mapGetters, mapState } from 'vuex'
 import commonHeader from 'common/common-header'
 import dialogBox from 'common/dialog'
 import {studentinfor, studentData} from 'api/student-api'
-
+import cookie from 'vue-cookies'
 export default {
   data() {
     return {
@@ -125,7 +125,8 @@ export default {
     }),
     resetContent(val, item) {
       console.log(val, item, 2222222222)
-      let id = sessionStorage.getItem('user_id')
+      // let id = sessionStorage.getItem('user_id')
+      let id = cookie.get('user_id')
       let data
       if (item === 'nickName') {
         data = {
@@ -177,7 +178,8 @@ export default {
     })
   },
   mounted() {
-    let usertype = sessionStorage.getItem('user_type')
+    let usertype = cookie.get('user_type')
+    // let usertype = sessionStorage.getItem('user_type')
     if (usertype === '1') {
       this.userList[1].hide = false
       this.userList[0].hide = true

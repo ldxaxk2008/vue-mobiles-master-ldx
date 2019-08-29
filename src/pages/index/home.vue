@@ -131,7 +131,7 @@ export default {
       this.type = item.type
       this.offset = 0
       let data = {
-        search: this.searchVal,
+        search: this.searchVal || '',
         design_id: this.type,
         ordering: 'payment',
         limit: this.limit,

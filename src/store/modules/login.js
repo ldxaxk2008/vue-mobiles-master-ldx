@@ -2,6 +2,7 @@
  * login.js
  * 用于login模块的状态管理
  */
+import cookie from 'vue-cookies'
 import * as types from '../mutation-type' // 引入定义的方法
 const login = {
   state: {
@@ -16,13 +17,17 @@ const login = {
       state.user_id = data.user_id
       state.task_id = data.task_id
       state.user_type = data.user_type
-      sessionStorage.setItem('token', data.token)
-      sessionStorage.setItem('user_id', data.user_id)
-      sessionStorage.setItem('user_type', data.user_type)
+      cookie.set('token', data.token, -1)
+      cookie.set('user_id', data.user_id, -1)
+      cookie.set('user_type', data.user_type, -1)
+      // sessionStorage.setItem('token', data.token)
+      // sessionStorage.setItem('user_id', data.user_id)
+      // sessionStorage.setItem('user_type', data.user_type)
     },
     [types.DEL_TOKEN](state) {
       state.token = ''
-      sessionStorage.removeItem('token')
+      cookie.remove('token')
+      // sessionStorage.removeItem('token')
     },
     [types.SET_TASK_ID](state, data) {
       state.task_id = data

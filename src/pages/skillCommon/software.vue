@@ -4,8 +4,8 @@
       <h4 class="personal-skill">软件</h4>
       <ul>
         <li v-for="(item,index) in actions" :key="index">
-          <span v-if="item==='+'"><van-icon v-if="addShow" name="add-o" color="#c14182" class="add" @click="skillClick"/></span>
-          <span v-else>{{item}}</span>
+          <span v-if="item==='+'"><van-icon style="margin-left:-30%;" v-if="addShow" name="add-o" color="#c14182" class="add" @click="skillClick"/></span>
+          <span v-else>{{item}}<van-icon class="e" size="15" name="close" @click="remove(item)"/></span>
         </li>
         <li v-if="!actions.length"><van-icon name="add-o" color="#c14182" class="add" @click="skillClick"/></li>
       </ul>
@@ -15,7 +15,7 @@
         <li class="list" v-for="(item,index) in artList" :key="item+index">
           <span @click="artClick($event,item)">{{item}}</span>
         </li>
-        <li v-for="(item,index) in softwareList" :key="index"><span><van-field v-model="item.value" placeholder="软件名" :max="3"/></span></li>
+        <li v-for="(item,index) in softwareList" :key="index"><span><van-field v-model="item.value" placeholder="软件名" :maxlength="5"/></span></li>
         <li><van-icon v-if="addShow" name="add-o" color="#c14182" class="add" @click="addSoftware"/></li>
       </ul>
       <div class="btn">
@@ -50,6 +50,14 @@ export default {
     }
   },
   methods: {
+    remove(val) {
+      this.actions.forEach((item, index) => {
+        if (item === val) {
+          this.actions.splice(index, 1)
+        }
+      })
+      this.confirm()
+    },
     artClick(event, val) {
       if (event.target.className) {
         event.target.className = ''
@@ -156,16 +164,23 @@ export default {
     li{
       display: flex;
       float: left;
-      .mb(-30);
+      position: relative;
+      .mb(-20);
       justify-content: center;
       align-items: center;
       width: 33%;
-      .fs(35);
+      .fs(30);
       // .w(100);
       .h(105);
       background: url('../../assets/imgs/skill.png') no-repeat;
       .add,span{
-        .ml(-10);
+        .ml(-20);
+      }
+      .e{
+        color: #bbb;
+        position: absolute;
+        .top(8);
+        .right(25);
       }
     }
     li:nth-child(odd){color:#14BFE4;}
@@ -197,7 +212,7 @@ export default {
       .mb(-30);
       justify-content: center;
       align-items: center;
-      .fs(35);
+      .fs(30);
       .w(100);
       .mr(30);
       .h(105);

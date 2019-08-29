@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import cookie from 'vue-cookies'
 export default {
   data() {
     return {
@@ -50,7 +51,8 @@ export default {
   },
   methods: {},
   mounted() {
-    let userType = sessionStorage.getItem('user_type')
+    // let userType = sessionStorage.getItem('user_type')
+    let userType = cookie.get('user_type')
     if (userType === '1') {
       this.navList[1].isshow = true
     } else {

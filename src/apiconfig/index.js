@@ -3,6 +3,7 @@ import axios from 'axios'
 import { Toast } from 'vant'
 import Vue from 'vue'
 import router from '@/router'
+import cookie from 'vue-cookies'
 
 Vue.use(Toast);
 /**
@@ -19,7 +20,8 @@ axios.defaults.timeout = TIME_OUT
 // 封装请求拦截
 axios.interceptors.request.use(
 	config => {
-    let token = sessionStorage.getItem('token')   // 获取token
+    // let token = sessionStorage.getItem('token')   // 获取token
+    let token = cookie.get('token')   // 获取token
 		config.headers['Content-Type'] = 'application/json;charset=UTF-8'
 		config.headers['Authorization'] = ''
 		if(token != null){                          // 如果token不为null，否则传token给后台
@@ -37,7 +39,8 @@ axios.interceptors.response.use(
     let {data} = response
     if (data.code === 1008 || data.code === 1009 ) {    // 如果后台返回的错误标识为token过期，则重新登录
       Toast(data.msg)     
-      sessionStorage.removeItem('token')          // token过期，移除token
+      // sessionStorage.removeItem('token')          // token过期，移除token
+      cookie.remove('token')
       router.push('/loginpage')
       // 进行重新登录操作
     } else {
@@ -49,7 +52,8 @@ axios.interceptors.response.use(
     if(data){
       if (data && data.data && (data.data.code === 1008 || data.data.code === 1009)) {    // 如果后台返回的错误标识为token过期，则重新登录
         Toast(data.data.msg)     
-        sessionStorage.removeItem('token')          // token过期，移除token
+        // sessionStorage.removeItem('token')          // token过期，移除token
+        cookie.remove('token')
         router.push('/loginpage')
         // 进行重新登录操作
       } 

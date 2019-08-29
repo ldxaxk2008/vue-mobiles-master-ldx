@@ -11,6 +11,7 @@ import SvgIcon from'@/components/SvgIcon'
 // import 'mint-ui/lib/style.css'
 import Vant from 'vant';
 import 'vant/lib/index.css';
+import cookie from 'js-cookie'
 import FastClick from 'fastclick'
 import '../static/js/flexible.js'
 import vantDialog from '@/components/vantDialog'
@@ -54,7 +55,8 @@ window.addEventListener('popstate', function(e) {
 }, false)
 
 router.beforeEach((to, from, next) => {
-  const isLogin = sessionStorage.getItem('token')
+  // const isLogin = sessionStorage.getItem('token')
+  const isLogin = cookie.get('token')
   if (isLogin) {
       next()
   } else {

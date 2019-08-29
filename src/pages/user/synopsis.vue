@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import cookie from 'vue-cookies'
 export default {
   props: {
     information: {
@@ -45,12 +46,12 @@ export default {
       appstate: true,
       disable: false,
       logoImg: require('@/assets/imgs/img5.png'),
-      sessionId: sessionStorage.getItem('user_id')
+      sessionId: cookie.get('user_id')
     }
   },
   mounted () {
     console.log('qqqqqqq')
-    let type = sessionStorage.getItem('user_type')
+    let type = cookie.get('user_type')
     if (type === '1') {
       this.appstate = false
     }
@@ -74,11 +75,11 @@ export default {
   watch: {
     async information (newVal, oldVal) {
       console.log(newVal)
-      if (sessionStorage.getItem('user_type') === '0') {
+      if (cookie.get('user_type') === '0') {
         if (newVal.is_enroll === 1) {
           this.appstate = false
           if (JSON.stringify(newVal.user_id) !== '0') {
-            if (sessionStorage.getItem('user_id') === JSON.stringify(newVal.user_id)) {
+            if (cookie.get('user_id') === JSON.stringify(newVal.user_id)) {
               this.state = true
               this.wait = false
             } else {

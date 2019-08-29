@@ -27,6 +27,7 @@ import FileDown from './fileDown'
 import progressBar from 'common/progressBar'
 import { stageConfirm } from 'api/stage-api'
 import { ERR_OK } from 'config/index'
+import cookie from 'vue-cookies'
 export default {
   props: {
     information: {
@@ -94,8 +95,8 @@ export default {
   },
   computed: {
     show: function () {
-      let id = sessionStorage.getItem('user_id')
-      let type = sessionStorage.getItem('user_type')
+      let id = cookie.get('user_id')
+      let type = cookie.get('user_type')
       if (type === '0') {
         if (JSON.stringify(this.taskList.user_id) === id && !this.taskList.is_confirm_stage && this.taskList.is_confirm_status === 0) {
           return true
@@ -111,7 +112,7 @@ export default {
       }
     },
     pay: function () {
-      let type = sessionStorage.getItem('user_type')
+      let type = cookie.get('user_type')
       if (type === '0') {
         return this.taskList.is_confirm_status === 1
       } else {
@@ -119,7 +120,7 @@ export default {
       }
     },
     cpay: function () {
-      let type = sessionStorage.getItem('user_type')
+      let type = cookie.get('user_type')
       if (type === '0') {
         return false
       } else {
@@ -127,8 +128,8 @@ export default {
       }
     },
     showUpload: function () {
-      let id = sessionStorage.getItem('user_id')
-      let type = sessionStorage.getItem('user_type')
+      let id = cookie.get('user_id')
+      let type = cookie.get('user_type')
       if (type === '0') {
         if (JSON.stringify(this.taskList.user_id) === id && this.taskList.user_id) {
           if (this.taskList.is_confirm_stage !== 'finish') {
