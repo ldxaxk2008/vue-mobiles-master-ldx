@@ -86,8 +86,8 @@ export default {
     },
     edit() {
       console.log('再次编辑')
-      this.$router.push({path: '/taskeditor/get', query: {id: this.information.id}})
-      // this.$router.push('/taskeditor/get/' + this.information.id)
+      this.$router.push('/taskeditor/' + this.information.id)
+      // this.$router.push({path: '/taskeditor/get', query: {id: this.information.id}})
     },
     confirm() {
       console.log('确认申请人')

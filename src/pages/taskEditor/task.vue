@@ -120,6 +120,7 @@ export default {
       show: false,
       disabled: false,
       inputList: [],
+      taskId: '',
       actions: [],
       tittle: '返回首页',
       maplist: [
@@ -304,9 +305,9 @@ export default {
         })
         return
       }
-      if (this.$route.params.type === 'post') {
+      if (this.taskId === 'create') {
+      // 发布任务
         publishtask(this.valueData).then(res => {
-          console.log(this.valueData, 7865)
           if (res.data.success === ERR_OK) {
             this.$router.push({name: 'Pay', params: {id: res.data.data}})
           } else {
@@ -314,9 +315,9 @@ export default {
             this.$router.push('/error')
           }
         })
-      } else if (this.$route.params.type === 'get') {
-        let id = this.$route.query.id
-        edittask(id, this.valueData).then(res => {
+      } else {
+      // 编辑任务
+        edittask(this.taskId, this.valueData).then(res => {
           if (res.data.success === ERR_OK) {
             this.$router.push({name: 'Pay', params: {id: res.data.data}})
           } else {
@@ -326,9 +327,9 @@ export default {
         })
       }
     },
-    // 编辑
+    // 编辑任务
     edit() {
-      taskDetails(this.$route.query.id).then(res => {
+      taskDetails(this.taskId).then(res => {
         this.valueData.tool_list = res.data.data.tool_list
         let arr = res.data.data.tool_list
         arr.splice(parseInt(arr.length / 2), 0, '+')
@@ -355,10 +356,12 @@ export default {
     }
   },
   mounted() {
-    this.getType()
-    if (this.$route.params.type === 'get') {
+    let url = this.$route.path
+    this.taskId = url.substring(url.lastIndexOf('/') + 1, url.length)
+    if (this.taskId !== 'create') {
       this.edit()
     }
+    this.getType()
   }
 }
 </script>

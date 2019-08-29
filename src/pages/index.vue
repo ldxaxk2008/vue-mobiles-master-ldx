@@ -31,7 +31,7 @@ export default {
           isshow: true
         },
         {
-          path: '/taskeditor/post',
+          path: '/taskeditor/create',
           name: '发布任务',
           isshow: true
         },
