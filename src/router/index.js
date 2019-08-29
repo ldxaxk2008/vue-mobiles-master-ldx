@@ -119,7 +119,7 @@ export default new Router({
       component: (resolve) => require(['@/pages/registercom'], resolve)
     },
     {
-      path: '/taskeditor/:type',
+      path: '/taskeditor/:id',
       name: 'taskeditor',
       component: (resolve) => require(['@/pages/taskEditor/task'], resolve)
     },

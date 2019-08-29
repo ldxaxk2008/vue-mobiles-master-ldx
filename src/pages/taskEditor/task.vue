@@ -120,6 +120,7 @@ export default {
       show: false,
       disabled: false,
       inputList: [],
+      taskId: '',
       actions: [],
       tittle: '返回首页',
       maplist: [
@@ -328,6 +329,13 @@ export default {
     }
   },
   mounted() {
+    let url = this.$route.path
+    this.taskId = url.substring(url.lastIndexOf('/') + 1, url.length)
+    if (this.taskId === 'create') {
+      // 发布任务
+    } else {
+      // 编辑任务
+    }
     this.getType()
     if (this.$route.params.type === 'get') {
       taskDetails(this.$route.query.id).then(res => {
