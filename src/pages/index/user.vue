@@ -146,7 +146,7 @@ export default {
     },
     handelClick(val) {
       if (val.id) {
-        this.$router.push(val.path + '/' + sessionStorage.getItem('user_id'))
+        this.$router.push(val.path + '/' + cookie.get('user_id'))
       } else {
         this.$router.push(val.path)
       }
