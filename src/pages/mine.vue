@@ -27,7 +27,7 @@ import currentList from '@/pages/taskList/currentTaskList'
 import commonHeader from 'common/common-header'
 import {staskList} from 'api/home-api'
 import { ERR_OK } from 'config/index'
-
+import cookie from 'vue-cookies'
 export default {
   components: {
     currentList,
@@ -57,7 +57,8 @@ export default {
     },
     getData(params, type) {
       this.dmore = false
-      if (sessionStorage.getItem('user_type') === '0') {
+      // if (sessionStorage.getItem('user_type') === '0') {
+      if (cookie.get('user_type') === '0') {
         params.status += 1
       }
       staskList(params).then((res) => {

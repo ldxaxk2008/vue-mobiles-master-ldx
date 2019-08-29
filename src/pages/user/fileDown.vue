@@ -26,6 +26,7 @@
 <script>
 import { fileUp } from 'api/file-api'
 import { ERR_OK } from 'config/index'
+import cookie from 'vue-cookies'
 export default {
   props: {
     down: {
@@ -53,7 +54,7 @@ export default {
       formdata.append('file', file.file)
       let data = {
         task_id: this.fileObj.id,
-        attach_type: sessionStorage.getItem('user_type') === '0' ? '1' : '0',
+        attach_type: cookie.get('user_type') === '0' ? '1' : '0',
         data: formdata
       }
       fileUp(data).then((res) => {

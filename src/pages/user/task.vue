@@ -22,7 +22,7 @@ import {taskDetails, applyTask, cancelTask} from 'api/home-api'
 import {companyDetails} from 'api/company-api'
 import {mapState, mapMutations} from 'vuex'
 import dialogBox from 'common/dialog'
-// import { getPortfolio } from 'api/student-api'
+import cookie from 'vue-cookies'
 
 export default {
   components: {
@@ -110,14 +110,14 @@ export default {
         this.informationData()
         if (val === 'task_pay') {
           let id = this.information.task_user_id
-          sessionStorage.setItem('task_user_id', id)
+          cookie.set('task_user_id', id)
           this.$router.push({name: 'evaluate', params: {task_user_id: id}})
         }
       }
     },
     handelClick(val, back) {
       if (val === 'applyTask') {
-        applyTask({task_id: (this.$route.params.id && this.$route.params.id.id) || this.task_id, user_id: sessionStorage.getItem('user_id')}).then((res) => {
+        applyTask({task_id: (this.$route.params.id && this.$route.params.id.id) || this.task_id, user_id: cookie.get('user_id')}).then((res) => {
           console.log(res)
           if (res.data.success) {
             back(true)
@@ -127,7 +127,7 @@ export default {
         }).catch(() => {
         })
       } else {
-        cancelTask({task_id: (this.$route.params.id && this.$route.params.id.id) || this.task_id, user_id: sessionStorage.getItem('user_id')}).then((res) => {
+        cancelTask({task_id: (this.$route.params.id && this.$route.params.id.id) || this.task_id, user_id: cookie.get('user_id')}).then((res) => {
           this.$toast(res.data.msg)
           if (res.data.success) {
             back(true)
@@ -193,7 +193,7 @@ export default {
       return this.information.company_id
     },
     show: function () {
-      let id = sessionStorage.getItem('user_id')
+      let id = cookie.get('user_id')
       if (id === JSON.stringify(this.comId) && this.userId === 0) {
         return true
       } else {
@@ -222,7 +222,7 @@ export default {
 }
 .task-footer {
   .padding(30,20,30,20);
-  background:#222230;
+  background:rgb(245, 245, 245);
   position: sticky;
   bottom: 0;
   left:0;

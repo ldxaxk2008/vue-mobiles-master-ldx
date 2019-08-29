@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import cookie from 'vue-cookies'
 export default {
   props: {
     evaluate: {
@@ -22,9 +23,9 @@ export default {
   },
   methods: {
     handelclick(item) {
-      if (sessionStorage.getItem('user_type') === '0') {
+      if (cookie.get('user_type') === '0') {
         this.$router.push({name: 'TaskList', params: {id: item}})
-      } else if (sessionStorage.getItem('user_type') === '1') {
+      } else if (cookie.get('user_type') === '1') {
         this.$router.push({name: 'student', params: {id: item}})
       }
     }

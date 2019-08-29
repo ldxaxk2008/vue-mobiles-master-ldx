@@ -238,6 +238,9 @@ export default {
       })
     },
     softwareChange(val) {
+      if (!val) {
+        return
+      }
       let arr = val
       arr.splice(parseInt(arr.length / 2), 0, '+')
       this.softwareLists = [...new Set(arr)]

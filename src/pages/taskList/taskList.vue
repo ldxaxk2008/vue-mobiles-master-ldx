@@ -40,7 +40,7 @@ import {studentinfor, getEvaluateList} from 'api/student-api'
 import {staskList} from 'api/home-api'
 import dialogBox from 'common/dialog'
 import { ERR_OK } from 'config/index'
-
+import cookie from 'vue-cookies'
 export default {
   components: {
     commonHeader,
@@ -86,7 +86,7 @@ export default {
     },
     // 修改成功
     resetContent(val, item) {
-      let id = sessionStorage.getItem('user_id')
+      let id = cookie.get('user_id')
       let data
       if (item === 'desc') {
         data = {
@@ -117,7 +117,7 @@ export default {
     },
     getData() {
       let parmes = {}
-      Object.assign(parmes, {'user_id': (this.$route.params.id && this.$route.params.id.id) ? this.$route.params.id.id : sessionStorage.getItem('user_id')})
+      Object.assign(parmes, {'user_id': (this.$route.params.id && this.$route.params.id.id) ? this.$route.params.id.id : cookie.get('user_id')})
       companyDetails(parmes).then(res => {
         if (res.data.success === ERR_OK) {
           this.information = res.data.data
@@ -127,7 +127,7 @@ export default {
       })
     },
     getListNData(parmes, type) {
-      Object.assign(parmes, {'user_id': (this.$route.params.id && this.$route.params.id.id) ? this.$route.params.id.id : sessionStorage.getItem('user_id')})
+      Object.assign(parmes, {'user_id': (this.$route.params.id && this.$route.params.id.id) ? this.$route.params.id.id : cookie.get('user_id')})
       staskList(parmes).then(res => {
         if (res.data.success === ERR_OK) {
           if (type === 'more') {
@@ -146,7 +146,7 @@ export default {
       }).catch({})
     },
     getListData(parmes, type) {
-      Object.assign(parmes, {'user_id': (this.$route.params.id && this.$route.params.id.id) ? this.$route.params.id.id : sessionStorage.getItem('user_id')})
+      Object.assign(parmes, {'user_id': (this.$route.params.id && this.$route.params.id.id) ? this.$route.params.id.id : cookie.get('user_id')})
       staskList(parmes).then(res => {
         if (res.data.success === ERR_OK) {
           if (type === 'more') {
