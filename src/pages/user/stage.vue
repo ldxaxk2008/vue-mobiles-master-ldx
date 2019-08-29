@@ -97,13 +97,13 @@ export default {
       let id = sessionStorage.getItem('user_id')
       let type = sessionStorage.getItem('user_type')
       if (type === '0') {
-        if (JSON.stringify(this.taskList.user_id) === id && !this.taskList.is_confirm_stage) {
+        if (JSON.stringify(this.taskList.user_id) === id && !this.taskList.is_confirm_stage && this.taskList.is_confirm_status === 0) {
           return true
         } else {
           return false
         }
       } else {
-        if (JSON.stringify(this.taskList.company_id) === id && this.taskList.is_confirm_stage) {
+        if (JSON.stringify(this.taskList.company_id) === id && this.taskList.is_confirm_stage && this.taskList.is_confirm_status === 0) {
           return true
         } else {
           return false
@@ -113,7 +113,7 @@ export default {
     pay: function () {
       let type = sessionStorage.getItem('user_type')
       if (type === '0') {
-        return this.taskList.progress === '1' && this.taskList.is_confirm_stage === false
+        return this.taskList.is_confirm_status === 1
       } else {
         return false
       }
@@ -123,7 +123,7 @@ export default {
       if (type === '0') {
         return false
       } else {
-        return this.taskList.progress === '1' && this.taskList.is_confirm_stage === true
+        return this.taskList.is_confirm_status === 2
       }
     },
     showUpload: function () {
