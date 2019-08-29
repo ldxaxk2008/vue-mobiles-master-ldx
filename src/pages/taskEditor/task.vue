@@ -39,7 +39,7 @@
             :key="index"
             @click="hanleclick(item,index)"
           >
-            <img :src="item.img" alt />
+            <svg-icon :name="item.icons" size="60"  ref="svg_icon"></svg-icon>
             <p :class="{'active':item.disable===true}">{{item.name}}</p>
           </li>
         </ul>
@@ -125,39 +125,39 @@ export default {
       tittle: '返回首页',
       maplist: [
         {
-          img: require('@/assets/imgs/copy1.png'),
           name: '文案',
           value: '7',
           disable: true,
-          color: '#1B9EA7'
+          color: '#1B9EA7',
+          icons: 'official'
         },
         {
-          img: require('@/assets/imgs/copy2.png'),
           name: '设计',
           value: '8',
           disable: false,
-          color: '#F79D33'
+          color: '#F79D33',
+          icons: 'design'
         },
         {
-          img: require('@/assets/imgs/copy3.png'),
           name: '代码',
           value: '9',
           disable: false,
-          color: '#1B9EA7'
+          color: '#1B9EA7',
+          icons: 'code'
         },
         {
-          img: require('@/assets/imgs/copy4.png'),
           name: '手绘',
           value: '10',
           disable: false,
-          color: '#3BDA8A'
+          color: '#3BDA8A',
+          icons: 'hand'
         },
         {
-          img: require('@/assets/imgs/copy5.png'),
           name: 'PPT',
           value: '11',
           disable: false,
-          color: '#F79D33'
+          color: '#F79D33',
+          icons: 'ppt'
         }
       ]
     }
@@ -307,7 +307,6 @@ export default {
       }
       if (this.$route.params.id === 'create') {
         publishtask(this.valueData).then(res => {
-          console.log(this.valueData, 7865)
           if (res.data.success === ERR_OK) {
             this.$router.push('/pay/' + res.data.data.id)
           } else {
@@ -315,9 +314,9 @@ export default {
             this.$router.push('/error')
           }
         })
-      } else if (this.$route.params.type === 'get') {
-        let id = this.$route.query.id
-        edittask(id, this.valueData).then(res => {
+      } else {
+      // 编辑任务
+        edittask(this.taskId, this.valueData).then(res => {
           if (res.data.success === ERR_OK) {
             this.$router.push('/pay/' + res.data.data.id)
           } else {
@@ -326,19 +325,10 @@ export default {
           }
         })
       }
-    }
-  },
-  mounted() {
-    let url = this.$route.path
-    this.taskId = url.substring(url.lastIndexOf('/') + 1, url.length)
-    if (this.taskId === 'create') {
-      // 发布任务
-    } else {
-      // 编辑任务
-    }
-    this.getType()
-    if (this.$route.params.type === 'get') {
-      taskDetails(this.$route.query.id).then(res => {
+    },
+    // 编辑任务
+    edit() {
+      taskDetails(this.taskId).then(res => {
         this.valueData.tool_list = res.data.data.tool_list
         let arr = res.data.data.tool_list
         arr.splice(parseInt(arr.length / 2), 0, '+')
@@ -363,6 +353,14 @@ export default {
         })
       })
     }
+  },
+  mounted() {
+    let url = this.$route.path
+    this.taskId = url.substring(url.lastIndexOf('/') + 1, url.length)
+    if (this.taskId !== 'create') {
+      this.edit()
+    }
+    this.getType()
   }
 }
 </script>
