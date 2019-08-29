@@ -22,7 +22,7 @@ import {taskDetails, applyTask, cancelTask} from 'api/home-api'
 import {companyDetails} from 'api/company-api'
 import {mapState, mapMutations} from 'vuex'
 import dialogBox from 'common/dialog'
-// import { getPortfolio } from 'api/student-api'
+import { getPortfolio } from 'api/task-api'
 
 export default {
   components: {
@@ -162,11 +162,11 @@ export default {
       })
     },
     // 获取下载列表
-    // getPortfolio() {
-    //   getPortfolio({'user_id': this.userId, 'task_id': this.task_id}).then(res => {
-    //     console.log(res, 'hhhhhhh')
-    //   })
-    // },
+    getPortfolio() {
+      getPortfolio({'user_id': this.userId, 'task_id': this.taskId}).then(res => {
+        console.log(res, 'hhhhhhh')
+      })
+    },
     async asyncPrint() {
       await this.informationData()
       this.getData()
@@ -185,6 +185,7 @@ export default {
     // this.getData()
     // this.informationData()
     this.asyncPrint()
+    this.getPortfolio()
   },
   computed: {
     userId: function () {

@@ -44,8 +44,8 @@ import fileDown from '@/pages/user/fileDown'
 import software from '@/pages/skillCommon/software'
 import skill from '@/pages/skillCommon/skill'
 import {staskList} from 'api/home-api'
-import {studentData, studentinfor, getEvaluateList
-// getPortfolio
+import {studentData, studentinfor, getEvaluateList,
+getPortfolio
 } from 'api/student-api'
 import { ERR_OK } from 'config/index'
 import dialogBox from 'common/dialog'
@@ -220,13 +220,13 @@ export default {
       getEvaluateList({user_id: userId}).then((res) => {
         this.evaluate = res.data.data.results
       })
-    }
+    },
     // 获取下载列表
-    // getPortfolio() {
-    //   getPortfolio({'user_id': (this.$route.params.id && this.$route.params.id.id) ? this.$route.params.id.id : sessionStorage.getItem('user_id')}).then(res => {
-    //     console.log(res, 'hhhhhhh')
-    //   })
-    // }
+    getPortfolio() {
+      getPortfolio({'user_id': this.userId ? this.userId : sessionStorage.getItem('user_id')}).then(res => {
+        console.log(res, 'hhhhhhh')
+      })
+    }
   },
   mounted() {
     console.log(this.task_id, 89898)
@@ -240,7 +240,7 @@ export default {
     }
     this.getListData(data)
     this.getEvaluateList()
-    // this.getPortfolio()
+    this.getPortfolio()
   },
   computed: {
     showE: function () {
