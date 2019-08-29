@@ -44,9 +44,7 @@ import fileDown from '@/pages/user/fileDown'
 import software from '@/pages/skillCommon/software'
 import skill from '@/pages/skillCommon/skill'
 import {staskList} from 'api/home-api'
-import {studentData, studentinfor, getEvaluateList,
-getPortfolio
-} from 'api/student-api'
+import {studentData, studentinfor, getEvaluateList, getPortfolio} from 'api/student-api'
 import { ERR_OK } from 'config/index'
 import dialogBox from 'common/dialog'
 import cookie from 'vue-cookies'
