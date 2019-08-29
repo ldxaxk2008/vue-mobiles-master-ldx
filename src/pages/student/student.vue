@@ -216,7 +216,8 @@ export default {
     },
     getEvaluateList() {
       console.log('qq')
-      getEvaluateList().then((res) => {
+      let userId = this.userId ? this.userId : sessionStorage.getItem('user_id')
+      getEvaluateList({user_id: userId}).then((res) => {
         this.evaluate = res.data.data.results
       })
     }
