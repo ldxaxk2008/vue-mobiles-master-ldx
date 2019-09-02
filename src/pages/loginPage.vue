@@ -1,7 +1,7 @@
 <template>
   <div class="login-page">
     <common-header :tittle="tittle" :headerColor="headerColor"></common-header>
-    <div style="flex:1;">
+    <div style="height:100vh;flex:1;">
       <div class="login-img">
         <svg-icon name="logo" size="250" ref="svg_icon"></svg-icon>
       </div>
@@ -92,6 +92,8 @@ export default {
 @import "~styles/index.less";
 @import "~styles/variable.less";
 .login-page {
+  height: 100vh;
+  overflow: hidden;
   * {
     touch-action: pan-y;
   }

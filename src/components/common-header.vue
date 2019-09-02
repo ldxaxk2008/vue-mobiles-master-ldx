@@ -22,6 +22,7 @@ import cusInput from 'common/cus-input'
 import {singOut} from 'api/login-api'
 import { ERR_OK } from 'config/index'
 import { mapMutations } from 'vuex'
+import cookie from 'vue-cookies'
 export default {
   data() {
     return {
@@ -70,7 +71,8 @@ export default {
         message: '退出登录？',
         showCancelButton: true
       }).then(res => {
-        singOut({token: sessionStorage.getItem('token')}).then((res) => {
+        // singOut({token: sessionStorage.getItem('token')}).then((res) => {
+        singOut({token: cookie.get('token')}).then((res) => {
           console.log(res.data)
           if (res.data.success === ERR_OK) {
             this.$toast(res.data.msg)

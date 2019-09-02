@@ -29,3 +29,6 @@ export function getacceptuserlist(data) {
 export function selectstudents(data) {
   return fetchGet(`${baseUrl}/api/task/select/user/`, data)
 }
+export function getPortfolio(data) {
+  return fetchGet(`${baseUrl}/api/task/attachment/download/`, data)
+}

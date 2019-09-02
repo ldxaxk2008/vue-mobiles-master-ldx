@@ -36,7 +36,9 @@
     </div>
   </div>
 </template>
+
 <script>
+import cookie from 'vue-cookies'
 import commonHeader from 'common/common-header'
 import { companyEvaluate, userEvaluate } from 'api/evaluate-api'
 // import { ERR_OK } from 'config/index'
@@ -154,8 +156,10 @@ export default {
     }
   },
   mounted() {
-    this.user_type = sessionStorage.getItem('user_type')
-    this.task_user_id = sessionStorage.getItem('task_user_id')
+    // this.user_type = sessionStorage.getItem('user_type')
+    // this.task_user_id = sessionStorage.getItem('task_user_id')
+    this.user_type = cookie.get('user_type')
+    this.task_user_id = cookie.get('task_user_id')
   }
 }
 </script>

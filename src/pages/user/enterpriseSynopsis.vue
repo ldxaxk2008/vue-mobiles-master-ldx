@@ -54,6 +54,7 @@
 </template>
 
 <script>
+import cookie from 'vue-cookies'
 export default {
   props: {
     imgShow: {
@@ -70,7 +71,7 @@ export default {
       company: false,
       student: false,
       headimg: require('@/assets/imgs/user-img.png'),
-      sessionId: sessionStorage.getItem('user_id')
+      sessionId: cookie.get('user_id')
     }
   },
   methods: {
@@ -86,7 +87,7 @@ export default {
     }
   },
   mounted() {
-    if (sessionStorage.getItem('user_type') === '0') {
+    if (cookie.get('user_type') === '0') {
       this.company = false
       this.student = true
     } else {

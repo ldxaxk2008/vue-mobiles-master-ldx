@@ -44,12 +44,10 @@ import fileDown from '@/pages/user/fileDown'
 import software from '@/pages/skillCommon/software'
 import skill from '@/pages/skillCommon/skill'
 import {staskList} from 'api/home-api'
-import {studentData, studentinfor, getEvaluateList
-// getPortfolio
-} from 'api/student-api'
+import {studentData, studentinfor, getEvaluateList, getPortfolio} from 'api/student-api'
 import { ERR_OK } from 'config/index'
 import dialogBox from 'common/dialog'
-
+import cookie from 'vue-cookies'
 export default {
   components: {
     commonHeader,
@@ -126,7 +124,7 @@ export default {
     // 修改完成
     resetContent(val, item) {
       console.log(val, item, 876554)
-      let id = sessionStorage.getItem('user_id')
+      let id = cookie.get('user_id')
       let data
       if (item === 'desc') {
         data = {
@@ -150,7 +148,8 @@ export default {
         }
       })
       this.softwareLists = val
-      studentinfor(this.userId ? this.userId : sessionStorage.getItem('user_id'), {tool_list: val}).then((res) => {
+      // studentinfor((this.$route.params.id && this.$route.params.id.id) ? this.$route.params.id.id : cookie.get('user_id'), {tool_list: val}).then((res) => {
+      studentinfor(this.userId ? this.userId : cookie.get('user_id'), {tool_list: val}).then((res) => {
         console.log(res.data)
         if (res.data.success === ERR_OK) {
           this.student()
@@ -161,7 +160,8 @@ export default {
     },
     skillChage(val) {
       this.skillList = val
-      studentinfor(this.userId ? this.userId : sessionStorage.getItem('user_id'), {skill_list: val}).then((res) => {
+      // studentinfor((this.$route.params.id && this.$route.params.id.id) ? this.$route.params.id.id : cookie.get('user_id'), {skill_list: val}).then((res) => {
+      studentinfor(this.userId ? this.userId : cookie.get('user_id'), {skill_list: val}).then((res) => {
         console.log(res.data)
         if (res.data.success === ERR_OK) {
           this.student()
@@ -181,7 +181,8 @@ export default {
     },
     student() {
       let parmes = {}
-      Object.assign(parmes, {'user_id': this.userId ? this.userId : sessionStorage.getItem('user_id')})
+      // Object.assign(parmes, {'user_id': (this.$route.params.id && this.$route.params.id.id) ? this.$route.params.id.id : cookie.get('user_id')})
+      Object.assign(parmes, {'user_id': this.userId ? this.userId : cookie.get('user_id')})
       studentData(parmes).then((res) => {
         if (res.data.success === ERR_OK) {
           this.information = res.data.data
@@ -195,7 +196,8 @@ export default {
       })
     },
     getListData(parmes, type) {
-      Object.assign(parmes, {'user_id': this.userId ? this.userId : sessionStorage.getItem('user_id')})
+      // Object.assign(parmes, {'user_id': (this.$route.params.id && this.$route.params.id.id) ? this.$route.params.id.id : cookie.get('user_id')})
+      Object.assign(parmes, {'user_id': this.userId ? this.userId : cookie.get('user_id')})
       staskList(parmes).then((res) => {
         if (res.data.success === ERR_OK) {
           if (type === 'more') {
@@ -216,17 +218,17 @@ export default {
     },
     getEvaluateList() {
       console.log('qq')
-      let userId = this.userId ? this.userId : sessionStorage.getItem('user_id')
+      let userId = this.userId ? this.userId : cookie.get('user_id')
       getEvaluateList({user_id: userId}).then((res) => {
         this.evaluate = res.data.data.results
       })
-    }
+    },
     // 获取下载列表
-    // getPortfolio() {
-    //   getPortfolio({'user_id': (this.$route.params.id && this.$route.params.id.id) ? this.$route.params.id.id : sessionStorage.getItem('user_id')}).then(res => {
-    //     console.log(res, 'hhhhhhh')
-    //   })
-    // }
+    getPortfolio() {
+      getPortfolio({'user_id': this.userId ? this.userId : cookie.get('user_id')}).then(res => {
+        console.log(res, 'hhhhhhh')
+      })
+    }
   },
   mounted() {
     console.log(this.task_id, 89898)
@@ -240,7 +242,7 @@ export default {
     }
     this.getListData(data)
     this.getEvaluateList()
-    // this.getPortfolio()
+    this.getPortfolio()
   },
   computed: {
     showE: function () {
