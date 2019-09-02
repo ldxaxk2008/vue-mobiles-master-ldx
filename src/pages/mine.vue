@@ -27,7 +27,7 @@ import currentList from '@/pages/taskList/currentTaskList'
 import commonHeader from 'common/common-header'
 import {staskList} from 'api/home-api'
 import { ERR_OK } from 'config/index'
-import cookie from 'vue-cookies'
+// import cookie from 'vue-cookies'
 export default {
   components: {
     currentList,

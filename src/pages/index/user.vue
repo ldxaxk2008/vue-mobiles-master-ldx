@@ -79,8 +79,8 @@ export default {
         {
           bg: '#b92671',
           color: '#fff',
-          // path: '/User/taskList',
-          label: '客服'
+          path: '/bankInfor',
+          label: '钱包'
         }
       ],
       rules: {

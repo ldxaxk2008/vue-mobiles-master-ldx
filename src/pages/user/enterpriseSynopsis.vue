@@ -64,11 +64,15 @@ export default {
     information: {
       type: Object,
       default: () => {}
+    },
+    isStudent: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
     return {
-      company: false,
+      company: true,
       student: false,
       headimg: require('@/assets/imgs/user-img.png'),
       sessionId: cookie.get('user_id')
@@ -87,12 +91,12 @@ export default {
     }
   },
   mounted() {
-    if (cookie.get('user_type') === '0') {
-      this.company = false
+    if (this.isStudent) {
       this.student = true
+      this.company = false
     } else {
-      this.company = true
       this.student = false
+      this.company = true
     }
   }
 }

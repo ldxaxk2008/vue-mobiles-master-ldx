@@ -3,7 +3,7 @@
     <common-header :tittle="tittle"></common-header>
     <div class="student-main">
       <div class="company-introduce">
-        <companyIntorduce :information="information" :imgShow="true" @handelEdit="handelEdit"/>
+        <companyIntorduce :information="information" :imgShow="true" @handelEdit="handelEdit" :isStudent="isStudent"/>
         <div class="skill-main">
           <skill @skillChage="skillChage" :skillList="skillList" class="software"></skill>
           <software @softwareChange="softwareChange" :softwareLists="softwareLists" class="skill-user"/>
@@ -66,6 +66,7 @@ export default {
       tittle: '',
       information: {},
       limit: 5,
+      isStudent: true,
       userId: '',
       showUpload: false,
       offset: 0,
