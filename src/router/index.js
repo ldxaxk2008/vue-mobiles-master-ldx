@@ -157,6 +157,16 @@ export default new Router({
       path: '/agreepage',
       name: 'agreepage',
       component: (resolve) => require(['@/pages/agreepage'], resolve)
+    },
+    {
+      path: '/addbank',
+      name: 'addbank',
+      component: (resolve) => require(['@/pages/bankCard/addbank'], resolve)
+    },
+    {
+      path: '/bankInfor',
+      name: 'bankInfor',
+      component: (resolve) => require(['@/pages/bankCard/bankInfor'], resolve)
     }
   ]
 })
