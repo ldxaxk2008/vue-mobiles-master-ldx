@@ -20,10 +20,10 @@ import taskSynopsis from './synopsis'
 import taskStage from './stage'
 import {taskDetails, applyTask, cancelTask} from 'api/home-api'
 import {companyDetails} from 'api/company-api'
-import {canceltask} from 'api/task-api'
+import {canceltask, getPortfolio} from 'api/task-api'
 import {mapState, mapMutations} from 'vuex'
 import dialogBox from 'common/dialog'
-import { getPortfolio } from 'api/task-api'
+
 import cookie from 'vue-cookies'
 
 export default {
