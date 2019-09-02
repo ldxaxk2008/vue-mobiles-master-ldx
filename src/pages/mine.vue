@@ -58,9 +58,9 @@ export default {
     getData(params, type) {
       this.dmore = false
       // if (sessionStorage.getItem('user_type') === '0') {
-      if (cookie.get('user_type') === '0') {
-        params.status += 1
-      }
+      // if (cookie.get('user_type') === '0') {
+      //   params.status += 1
+      // }
       staskList(params).then((res) => {
         if (res.data.success === ERR_OK) {
           if (type === 'more') {
