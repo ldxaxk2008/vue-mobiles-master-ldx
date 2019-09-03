@@ -5,6 +5,7 @@
     :show-cancel-button="false"
     :showConfirmButton="false"
   >
+    <img class="position" src="@/assets/imgs/bg.png" alt="">
     <div class="main" v-if="type==='student_cancel'">取消任务需要和甲方沟通，双方同意后方可取消。</div>
     <div class="main" v-if="type==='student_complete'">乙方申请任务结束，请与甲方沟通后选择决定。</div>
     <div class="main" v-if="type==='company_progress'">
@@ -65,7 +66,19 @@ export default {
 @import "~styles/index.less";
 @import "~styles/variable.less";
 .dialog-container{
+  // border: 10px solid;
+  // background: url('../assets/imgs/bg.png') no-repeat;
+  // background-size: 100%;
+  // background-position: 1px;
+  overflow: inherit;
   .padding(20,20,20,20);
+  .position{
+    position: absolute;
+    .top(-80);
+    .right(-50);
+    width: 90%;
+    z-index: -1;
+  }
   .main{
     text-align:left;
     .mt(60);
