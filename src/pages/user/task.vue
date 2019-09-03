@@ -20,9 +20,10 @@ import taskSynopsis from './synopsis'
 import taskStage from './stage'
 import {taskDetails, applyTask, cancelTask} from 'api/home-api'
 import {companyDetails} from 'api/company-api'
+import {canceltask, getPortfolio} from 'api/task-api'
 import {mapState, mapMutations} from 'vuex'
 import dialogBox from 'common/dialog'
-import { getPortfolio } from 'api/task-api'
+
 import cookie from 'vue-cookies'
 
 export default {
@@ -73,12 +74,16 @@ export default {
       this.$router.goBack()
     },
     cancel(data) {
-      console.log('取消', data)
+      canceltask({task_id: this.information.id}).then(res => {
+        if (res.data.success) {
+          this.$router.push('/home')
+        }
+      }).catch(() => {
+      })
     },
     edit() {
       console.log('再次编辑')
       this.$router.push('/taskeditor/' + this.information.id)
-      // this.$router.push({path: '/taskeditor/get', query: {id: this.information.id}})
     },
     confirm() {
       console.log('确认申请人')

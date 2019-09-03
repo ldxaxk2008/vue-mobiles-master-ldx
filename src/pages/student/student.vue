@@ -3,7 +3,7 @@
     <common-header :tittle="tittle"></common-header>
     <div class="student-main">
       <div class="company-introduce">
-        <companyIntorduce :information="information" :imgShow="true" @handelEdit="handelEdit"/>
+        <companyIntorduce :information="information" :imgShow="true" @handelEdit="handelEdit" :isStudent="isStudent"/>
         <div class="skill-main">
           <skill @skillChage="skillChage" :skillList="skillList" class="software"></skill>
           <software @softwareChange="softwareChange" :softwareLists="softwareLists" class="skill-user"/>
@@ -66,38 +66,16 @@ export default {
       tittle: '',
       information: {},
       limit: 5,
+      isStudent: true,
       userId: '',
       showUpload: false,
       offset: 0,
       dmore: false,
       count: 0,
-      down: [
-        {
-          imgSrc: '',
-          title: '设计案例1.psd',
-          downSrc: 'www.baidu.com'
-        },
-        {
-          imgSrc: '',
-          title: '设计案例1.word',
-          downSrc: 'www.baidu.com'
-        }
-      ],
+      down: [],
       currentList: [],
       evaluate: [],
-      imgList: [
-        {
-          imgSrc: require('@/assets/imgs/img0.png')
-        }, {
-          imgSrc: require('@/assets/imgs/img1.png')
-        }, {
-          imgSrc: require('@/assets/imgs/img5.png')
-        }, {
-          imgSrc: require('@/assets/imgs/img3.png')
-        }, {
-          imgSrc: require('@/assets/imgs/img4.png')
-        }
-      ],
+      imgList: [],
       navList: [
         {
           label: '与他沟通',
@@ -226,6 +204,17 @@ export default {
     // 获取下载列表
     getPortfolio() {
       getPortfolio({'user_id': this.userId ? this.userId : cookie.get('user_id')}).then(res => {
+        let down = this.down
+        let imgArray = []
+        res.data.data.results.map((item) => {
+          if (item.type === 'img') {
+            imgArray.push(item)
+          } else {
+            down.push(item)
+          }
+        })
+        this.down = down
+        this.imgList = imgArray
         console.log(res, 'hhhhhhh')
       })
     }

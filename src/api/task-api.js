@@ -17,6 +17,10 @@ export function publishtask(data) {
 export function edittask(params, data) {
   return fetchPetch(`${baseUrl}/api/task/task/` + params + `/`, data)
 }
+// 取消发布
+export function canceltask(data) {
+  return fetchPost(`${baseUrl}/api/task/cancel_task/`, data)
+}
 // 获取taskuser未调取
 export function getacceptuserlist(data) {
   return fetchGet(`${baseUrl}/api/task/user/`, data)

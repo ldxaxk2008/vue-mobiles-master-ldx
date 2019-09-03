@@ -12,7 +12,7 @@
       </div>
       <div class="right-icon">
         <!-- <span v-if="showmore" class="icon"></span> -->
-        <van-icon name="ellipsis" v-if="showmore" class="icon" @click="signOut"/>
+<!--        <van-icon name="ellipsis" v-if="showmore" class="icon" @click="signOut"/>-->
       </div>
     </div>
 </template>

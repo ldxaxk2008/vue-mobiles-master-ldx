@@ -2,10 +2,10 @@
   <div class="evaluate">
     <ul>
       <li v-for="(item,index) in evaluate" :key="index" @click="handelclick(item)">
-        <img :src="item.imgSrc" alt="">
+        <img :src="item.company_img || item.student_img" alt="">
         <div class="remark">
-          <span>{{item.remark}}</span>
-          <span>{{item.data}}</span>
+          <span>{{item.company_comment || item.user_comment}}</span>
+          <span>{{item.company_comment_time || item.student_comment_time}}</span>
         </div>
       </li>
     </ul>
@@ -23,12 +23,20 @@ export default {
   },
   methods: {
     handelclick(item) {
-      if (cookie.get('user_type') === '0') {
-        this.$router.push('/User/Student/' + item)
+      var htmlHref = window.location.href
+      htmlHref = htmlHref.replace(/^http:\/\/[^/]+/, '')
+      var addr = htmlHref.substr(htmlHref.lastIndexOf('/', htmlHref.lastIndexOf('/') - 1) + 1)
+      var index = addr.lastIndexOf('/')
+      var str = decodeURI(addr.substring(0, index))
+      if (str === 'Student') {
+        this.$router.push('/User/TaskList/' + item.company_id)
       } else if (cookie.get('user_type') === '1') {
-        this.$router.push('/User/TaskList/' + item)
+        this.$router.push('/User/Student/' + item.user_id)
       }
     }
+  },
+  mounted() {
+    console.log(this.evaluate)
   }
 }
 </script>
@@ -43,22 +51,22 @@ export default {
       .mb(30);
       align-items: center;
       img{
-        .w(150);
-        .h(150);
+        .w(100);
+        .h(100);
         .mr(30);
         .b-radius(30);
       }
       .remark{
         display: flex;
         color: #000;
-        .h(150);
+        .h(100);
         flex-direction: column;
         span:nth-child(1){
           flex:1;
-          .mt(40);
+          .mt(15);
         }
         span:nth-child(2){
-          .mt(20);
+          .mt(15);
           color: #433e51;
         }
       }
