@@ -462,6 +462,7 @@ export default {
     box-sizing: border-box;
     .task-editor--tool__left {
       flex:1;
+      .mr(20);
       .skill-user{
         flex:1;
         .mr(-10);
@@ -503,7 +504,7 @@ export default {
     .pt(30);
     .pb(30);
     background-color: #f5f5f5;
-    position: fixed;
+    position: sticky;
     bottom: 0;
     left: 0;
     width: 100%;

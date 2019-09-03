@@ -5,7 +5,7 @@
       <li v-if="show">
         <van-icon name="send-gift-o" />
         <span class="title"></span>
-        <van-uploader class="up-click" name="ldx" :after-read="afterRead">
+        <van-uploader class="up-click" accept="*" name="ldx" :after-read="afterRead">
           <span>点击上传</span>
         </van-uploader>
       </li>
@@ -13,7 +13,8 @@
         <!-- <img class="img" src="" alt=""> -->
         <van-icon name="send-gift-o" />
         <span class="title">{{item.title}}</span>
-        <span class="down-click">点击下载</span>
+        <span class="down-click" @click="downFile(item)">点击下载</span>
+        <!-- <a class="down-click" :href="item.link" :download="item.title">点击下载</a> -->
       </li>
     </ul>
     <span class="more">
@@ -24,7 +25,7 @@
 </template>
 
 <script>
-import { fileUp } from 'api/file-api'
+import { fileUp, fileDown } from 'api/file-api'
 import { ERR_OK } from 'config/index'
 import cookie from 'vue-cookies'
 export default {
@@ -38,7 +39,7 @@ export default {
       default: () => {}
     },
     showUpload: {
-      type: [String, Number],
+      type: [String, Number, Boolean],
       default: ''
     }
   },
@@ -49,6 +50,20 @@ export default {
     }
   },
   methods: {
+    downFile(value) {
+      fileDown({task_id: value.task_id}).then(function(res) {
+        console.log(res)
+        var blob = new Blob(res.data.data.results[0].link)
+        const a = document.createElement('a')
+        a.style.display = 'none'
+        a.href = URL.createObjectURL(blob)
+        a.download = name
+        document.body.appendChild(a)
+        a.click()
+        // 移除元素
+        document.body.removeChild(a)
+      })
+    },
     afterRead(file) {
       var formdata = new FormData()
       formdata.append('file', file.file)
@@ -74,6 +89,9 @@ export default {
     showUpload(val) {
       this.show = val
     }
+  },
+  mounted() {
+    console.log(this.down)
   }
 }
 </script>

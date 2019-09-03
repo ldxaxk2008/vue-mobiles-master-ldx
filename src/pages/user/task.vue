@@ -41,18 +41,7 @@ export default {
       tittle: '任务详情',
       companyList: {},
       information: {},
-      down: [
-        {
-          imgSrc: '',
-          title: '设计案例1.psd',
-          downSrc: 'www.baidu.com'
-        },
-        {
-          imgSrc: '',
-          title: '设计案例1.word',
-          downSrc: 'www.baidu.com'
-        }
-      ],
+      down: [],
       navList: [
         {
           label: '取消发布',
@@ -165,7 +154,8 @@ export default {
     // 获取下载列表
     getPortfolio() {
       getPortfolio({'user_id': this.userId, 'task_id': this.taskId}).then(res => {
-        console.log(res, 'hhhhhhh')
+        console.log(res.data.data.results, this.information, 'hhhhhhh')
+        this.down = res.data.data.results
       })
     },
     async asyncPrint() {

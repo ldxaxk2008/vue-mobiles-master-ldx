@@ -165,7 +165,7 @@ export default {
       display: flex;
       float: left;
       position: relative;
-      .mb(-20);
+      .mb(-10);
       justify-content: center;
       align-items: center;
       width: 33%;
@@ -186,10 +186,10 @@ export default {
     li:nth-child(odd){color:#14BFE4;}
     li:nth-child(even){color:#FEAE62;}
     li:nth-child(5n + 4) {
-      .ml(60);
+      .ml(40);
     }
     li:nth-child(5n + 5) {
-      .mr(60);
+      .mr(40);
     }
     // li:nth-child(3){color:#96D6C6;}
     // li:nth-child(4){color:#EF7272;}
@@ -205,6 +205,7 @@ export default {
     // flex-wrap: wrap;
     // justify-content: center;
     .pl(30);
+    .pb(20);
     overflow: hidden;
     li{
       float: left;
@@ -233,6 +234,8 @@ export default {
   .btn{
     overflow: hidden;
     .mt(40);
+    justify-content: space-around;
+    display: flex;
   }
 }
 .colors{
