@@ -171,6 +171,7 @@ export default {
     getPortfolio() {
       getPortfolio({'user_id': this.userId, 'task_id': this.taskId}).then(res => {
         console.log(res, 'hhhhhhh')
+        this.down = res.data.data.results
       })
     },
     async asyncPrint() {

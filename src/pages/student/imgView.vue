@@ -4,7 +4,7 @@
     <div class="image-list">
       <div class="small-img" v-for="(item,index) in imgList" :key="index">
         <span :class="{active:curtab===index}"></span>
-        <img :src="item.imgSrc" @click="imgClick(item.imgSrc,index)" alt="">
+        <img :src="item.link" @click="imgClick(item.link,index)" alt="">
       </div>
     </div>
   </div>
@@ -30,8 +30,10 @@ export default {
       this.curtab = index
     }
   },
-  mounted() {
-    this.firstSrc = this.imgList[0].imgSrc
+  watch: {
+    imgList(val) {
+      this.firstSrc = val[0] && val[0].link
+    }
   }
 }
 </script>

@@ -13,7 +13,7 @@
         <!-- <img class="img" src="" alt=""> -->
         <van-icon name="send-gift-o" />
         <span class="title">{{item.title}}</span>
-        <span class="down-click">点击下载</span>
+        <span class="down-click" @click="downLoad(item.link)">点击下载</span>
       </li>
     </ul>
     <span class="more">
@@ -38,7 +38,7 @@ export default {
       default: () => {}
     },
     showUpload: {
-      type: [String, Number],
+      type: [String, Number, Boolean],
       default: ''
     }
   },
@@ -49,6 +49,14 @@ export default {
     }
   },
   methods: {
+    downLoad (url) {
+      // var $form = $('<form method="GET"></form>')
+      var $form = document.createElement('FORM')
+      $form.method = 'GET'
+      $form.setAttribute('action', url)
+      document.getElementsByTagName('body')[0].appendChild($form)
+      $form.submit()
+    },
     afterRead(file) {
       var formdata = new FormData()
       formdata.append('file', file.file)
