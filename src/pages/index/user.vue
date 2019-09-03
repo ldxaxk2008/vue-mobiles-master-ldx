@@ -33,6 +33,8 @@ import { mapMutations, mapGetters, mapState } from 'vuex'
 import commonHeader from 'common/common-header'
 import dialogBox from 'common/dialog'
 import {studentinfor, studentData} from 'api/student-api'
+import {singOut} from 'api/login-api'
+import { ERR_OK } from '@/apiconfig/index'
 import cookie from 'vue-cookies'
 export default {
   data() {
@@ -81,6 +83,12 @@ export default {
           color: '#fff',
           path: '/bankInfor',
           label: '钱包'
+        },
+        {
+          bg: '#b92671',
+          color: '#fff',
+          type: 'logout',
+          label: '退出登录'
         }
       ],
       rules: {
@@ -120,9 +128,13 @@ export default {
     }
   },
   methods: {
-    ...mapMutations({
-      setNum: 'SET_NUM'
-    }),
+    ...mapMutations(
+      ['DEL_TOKEN',
+        {
+          setNum: 'SET_NUM'
+        }
+      ]
+    ),
     resetContent(val, item) {
       console.log(val, item, 2222222222)
       // let id = sessionStorage.getItem('user_id')
@@ -148,7 +160,28 @@ export default {
       if (val.id) {
         this.$router.push(val.path + '/' + cookie.get('user_id'))
       } else {
-        this.$router.push(val.path)
+        if (val.type === 'logout') {
+          this.$dialog.alert({
+            message: '退出登录？',
+            showCancelButton: true
+          }).then(res => {
+            // singOut({token: sessionStorage.getItem('token')}).then((res) => {
+            singOut({token: cookie.get('token')}).then((res) => {
+              console.log(res.data)
+              if (res.data.success === ERR_OK) {
+                this.$toast(res.data.msg)
+                this.DEL_TOKEN()
+                this.$router.push('/loginpage')
+              } else {
+              }
+            }).catch(() => {
+            })
+          }).catch(error => {
+            console.log(error, 222)
+          })
+        } else {
+          this.$router.push(val.path)
+        }
       }
     },
     reset(event, item, label) {
