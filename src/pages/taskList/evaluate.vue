@@ -23,10 +23,15 @@ export default {
   },
   methods: {
     handelclick(item) {
-      if (cookie.get('user_type') === '0') {
-        this.$router.push('/User/Student/' + item)
+      var htmlHref = window.location.href
+      htmlHref = htmlHref.replace(/^http:\/\/[^/]+/, '')
+      var addr = htmlHref.substr(htmlHref.lastIndexOf('/', htmlHref.lastIndexOf('/') - 1) + 1)
+      var index = addr.lastIndexOf('/')
+      var str = decodeURI(addr.substring(0, index))
+      if (str === 'Student') {
+        this.$router.push('/User/TaskList/' + item.company_id)
       } else if (cookie.get('user_type') === '1') {
-        this.$router.push('/User/TaskList/' + item)
+        this.$router.push('/User/Student/' + item.user_id)
       }
     }
   },
