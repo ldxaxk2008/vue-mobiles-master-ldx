@@ -149,7 +149,7 @@ export default new Router({
       component: (resolve) => require(['@/pages/registPage'], resolve)
     },
     {
-      path: '/mine',
+      path: '/mine/:id',
       name: 'mine',
       component: (resolve) => require(['@/pages/mine'], resolve)
     },

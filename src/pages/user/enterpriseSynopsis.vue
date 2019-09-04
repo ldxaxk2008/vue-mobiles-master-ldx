@@ -80,11 +80,8 @@ export default {
   },
   methods: {
     handelClick() {
-      // this.$router.push('/mine')
-      let data = {
-        id: this.information.id
-      }
-      this.$router.push({ name: 'mine', params: { id: data } })
+      this.$router.push('/mine/' + this.information.id)
+      // this.$router.push({ name: 'mine', params: { id: data } })
     },
     handelEdit(data, sign, label) {
       this.$emit('handelEdit', data, sign, label)

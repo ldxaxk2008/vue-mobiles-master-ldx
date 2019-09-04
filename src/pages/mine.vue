@@ -27,7 +27,7 @@ import currentList from '@/pages/taskList/currentTaskList'
 import commonHeader from 'common/common-header'
 import {staskList} from 'api/home-api'
 import { ERR_OK } from 'config/index'
-// import cookie from 'vue-cookies'
+import cookie from 'vue-cookies'
 export default {
   components: {
     currentList,
@@ -38,6 +38,7 @@ export default {
       tittle: '任务列表',
       limit: 10,
       offset: 0,
+      userId: '',
       count: 0,
       dmore: false,
       active: 0,
@@ -61,6 +62,9 @@ export default {
       // if (cookie.get('user_type') === '0') {
       //   params.status += 1
       // }
+      if (this.userId !== cookie.get('user_id')) {
+        params['user_id'] = this.userId
+      }
       staskList(params).then((res) => {
         if (res.data.success === ERR_OK) {
           if (type === 'more') {
@@ -92,6 +96,8 @@ export default {
     }
   },
   mounted() {
+    let url = this.$route.path
+    this.userId = url.substring(url.lastIndexOf('/') + 1, url.length)
     this.onClick()
   }
 }

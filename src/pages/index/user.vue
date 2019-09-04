@@ -69,6 +69,7 @@ export default {
           bg: '#b92671',
           color: '#fff',
           path: '/mine',
+          id: true,
           label: '我的任务'
         },
         {
