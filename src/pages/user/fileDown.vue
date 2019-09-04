@@ -13,8 +13,8 @@
         <!-- <img class="img" src="" alt=""> -->
         <van-icon name="send-gift-o" />
         <span class="title">{{item.title}}</span>
-        <span class="down-click" @click="downFile(item)">点击下载</span>
-        <!-- <a class="down-click" :href="item.link" :download="item.title">点击下载</a> -->
+        <!-- <span class="down-click" @click="downFile(item)" id="downLoad">点击下载</span> -->
+        <a class="down-click"  target="_blank" :href="item.link" :download="item.title">点击下载</a>
       </li>
     </ul>
     <span class="more">
@@ -25,7 +25,8 @@
 </template>
 
 <script>
-import { fileUp, fileDown } from 'api/file-api'
+// import { fileUp, fileDown } from 'api/file-api'
+import { fileUp } from 'api/file-api'
 import { ERR_OK } from 'config/index'
 import cookie from 'vue-cookies'
 export default {
@@ -51,18 +52,18 @@ export default {
   },
   methods: {
     downFile(value) {
-      fileDown({task_id: value.task_id}).then(function(res) {
-        console.log(res)
-        var blob = new Blob(res.data.data.results[0].link)
-        const a = document.createElement('a')
-        a.style.display = 'none'
-        a.href = URL.createObjectURL(blob)
-        a.download = name
-        document.body.appendChild(a)
-        a.click()
-        // 移除元素
-        document.body.removeChild(a)
-      })
+      console.log(value)
+      var download = document.getElementById('downLoad')
+      var aHtml = document.createElement('a')
+      aHtml.id = 'downs'
+      aHtml.href = value.link
+      aHtml.target = '_blank'
+      aHtml.download = value.title
+      aHtml.style.display = 'none'
+      // aHtml = `<a id="downs" href="${value.link}" target="_blank" download="${value.title}" style="display:none">下载该文件</a>`
+      download.append(aHtml)
+      // console.log(aHtml)
+      document.getElementById('downs').click = true
     },
     afterRead(file) {
       var formdata = new FormData()

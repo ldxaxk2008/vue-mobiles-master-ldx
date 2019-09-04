@@ -6,7 +6,10 @@
       <div class="user-label-name" @click="reset(labelName,'labelName', '标签')">{{labelName}}</div>
     </div>
     <div class="user-list">
-      <img class="user-img" :src="userImg" alt srcset />
+      <van-uploader :after-read="afterRead" accept="image/png, image/jpeg">
+        <!-- <img class="user-img" :src="userImg" alt srcset /> -->
+        <img class="user-img" :src="userImg" alt ref="goodimg" />
+      </van-uploader>
       <ul>
         <li
           v-for="(item,index) in userList"
@@ -136,6 +139,23 @@ export default {
         }
       ]
     ),
+    afterRead(file) {
+      this.imgShow = true
+      this.userImg = file.content
+      this.img = file
+      var formdata = new FormData()
+      formdata.append('image', this.img.file)
+      studentinfor(cookie.get('user_id'), formdata)
+        .then(res => {
+          if (res.data.success === ERR_OK) {
+            // this.SET_TOKEN(res.data)
+            this.$toast(res.data.msg)
+          } else {
+            this.$toast(res.data.msg)
+          }
+        })
+        .catch(() => {})
+    },
     resetContent(val, item) {
       console.log(val, item, 2222222222)
       // let id = sessionStorage.getItem('user_id')
