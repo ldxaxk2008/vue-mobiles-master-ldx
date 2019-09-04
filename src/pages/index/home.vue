@@ -47,6 +47,7 @@
 import { mapMutations, mapGetters, mapState } from 'vuex'
 import commonHeader from 'common/common-header'
 import currentList from '@/pages/taskList/currentTaskList'
+import {createWebSocket} from '../../utils/websocket'
 
 import {taskList} from 'api/home-api'
 import { ERR_OK } from 'config/index'
@@ -192,9 +193,13 @@ export default {
         }
       }).catch(() => {
       })
+    },
+    back (val) {
+      console.log(val, 'message')
     }
   },
   mounted() {
+    createWebSocket(this.back)
     this.handelclick({type: '7'}, 0)
     // this.getData()
   },

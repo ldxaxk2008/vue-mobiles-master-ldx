@@ -23,13 +23,14 @@
 
 <script>
 import commonHeader from 'common/common-header'
-import {createWebSocket, webs} from '../../utils/websocket'
+import {webs} from '../../utils/websocket'
 export default {
   components: {
     commonHeader
   },
   data() {
     return {
+      userId: '',
       pulldownConfig: {
         default: '下拉刷新',
         up: "<div style='color:red'>下拉刷新</div>",
@@ -55,7 +56,14 @@ export default {
   },
   methods: {
     senRequest(val) {
-      webs().send(val)
+      let data = {
+        message: {
+          content: val,
+          to_user: this.userId
+        }
+      }
+      console.log(JSON.stringify(data))
+      webs().send(JSON.stringify(data))
       this.messageData.push({
         type: 1,
         text: val
@@ -87,6 +95,8 @@ export default {
       }
     },
     back(val) {
+      console.log(val, 'ddddd)')
+      // {"content": "人家等不及了", "from": 0, "time": "2019-09-04T23:11:01.579985"}
       if (val === 'error') {
         // 连接失败
         this.messageData.push({
@@ -102,25 +112,22 @@ export default {
     }
   },
   mounted() {
-    let arr = `<div style="text-align:left;">
-                  <p>苹果笔记本钢化膜</p>
-                  <p>macBookPromkPro....</p>
-                  <div style="display:flex;justify-content:space-around;margin-top:10px;">
-                    <button class="yes" style="color:#fff;border:0;padding:2px 8px;border-radius:4px;background:rgb(185, 38, 113);">同意</button>
-                    <button class="no" style="color:#fff;border:0;padding:2px 8px;border-radius:4px;background:rgb(249, 206, 32);">拒绝</button>
-                  </div>
-               </div>`
-    let brr = {
-      type: 3,
-      text: arr
-    }
-    this.messageData.push(brr)
-    createWebSocket(this.back)
+    let url = this.$route.path
+    this.userId = url.substring(url.lastIndexOf('/') + 1, url.length)
+    // let arr = `<div style="text-align:left;">
+    //               <p>苹果笔记本钢化膜</p>
+    //               <p>macBookPromkPro....</p>
+    //               <div style="display:flex;justify-content:space-around;margin-top:10px;">
+    //                 <button class="yes" style="color:#fff;border:0;padding:2px 8px;border-radius:4px;background:rgb(185, 38, 113);">同意</button>
+    //                 <button class="no" style="color:#fff;border:0;padding:2px 8px;border-radius:4px;background:rgb(249, 206, 32);">拒绝</button>
+    //               </div>
+    //            </div>`
+    // let brr = {
+    //   type: 3,
+    //   text: arr
+    // }
+    // this.messageData.push(brr)
     webs().onerror(this.back)
-  },
-  beforeRouteLeave(to, form, next) {
-    webs().close()
-    next()
   }
 }
 </script>

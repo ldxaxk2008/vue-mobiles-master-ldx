@@ -63,7 +63,8 @@ export default {
       //   params.status += 1
       // }
       if (this.userId !== cookie.get('user_id')) {
-        params['user_id'] = this.userId
+        params['limit'] = 5
+        params['offset'] = 0
       }
       staskList(params).then((res) => {
         if (res.data.success === ERR_OK) {

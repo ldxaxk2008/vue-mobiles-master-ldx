@@ -23,15 +23,19 @@
 // }
 var lockReconnect = false // 避免ws重复连接
 var ws = null // 判断当前浏览器是否支持WebSocket
-var getCookie = function (name) {
+function Trim(str) {
+  return str.replace(/(^\s*)|(\s*$)/g, '')
+}
+var getCookie = function () {
   var cookieArray = document.cookie.split(';')
   for (var i = 0; i < cookieArray.length; i++) {
     var arr = cookieArray[i].split('=')
-    if (arr[0] === name) return unescape(arr[1])
+    if (Trim(arr[0]) === 'token') return unescape(arr[1])
   }
   return ''
 }
-var token = getCookie('token')
+var token = getCookie()
+console.log(token, 111111)
 var url = 'ws://47.99.240.71:10000/ws/chat/room0/?token=' + token
 // createWebSocket(url) // 连接ws
 export function webs() {

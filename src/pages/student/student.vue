@@ -90,6 +90,9 @@ export default {
     }
   },
   methods: {
+    cancel() {
+      this.$router.push('/chat/' + this.userId)
+    },
     // 点击修改
     handelEdit(data, sign, label) {
       this.textData = {

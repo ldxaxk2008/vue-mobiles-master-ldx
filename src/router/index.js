@@ -84,7 +84,7 @@ export default new Router({
       component: (resolve) => require(['@/pages/user/task'], resolve)
     },
     {
-      path: '/Chat',
+      path: '/Chat/:id',
       name: 'Chat',
       component: (resolve) => require(['@/pages/chat/chatRoom'], resolve)
     },
