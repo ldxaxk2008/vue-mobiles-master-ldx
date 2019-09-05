@@ -56,7 +56,7 @@ export default {
     filter: function(data) {
       if (data.length > 0) {
         data = JSON.parse(data)
-        // 获取收到信息的用户信息和最后一条消息以及时间
+        // 获取收到信息的用户信息和最后一条消息以及时间，还有未读消息条数
       }
       console.log(data, 'fffffff')
       return data
