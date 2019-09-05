@@ -41,7 +41,10 @@ var url = 'ws://47.99.240.71:10000/ws/chat/room0/?token=' + token
 export function webs() {
   return ws
 }
-export function createWebSocket (back, msg) {
+export function createWebSocket (tokens, back, msg) {
+  if (!token && tokens) {
+    url = url + tokens
+  }
   try {
     if ('WebSocket' in window) {
       ws = new WebSocket(url)
@@ -112,9 +115,9 @@ var heartCheck = {
       // onmessage拿到返回的心跳就说明连接正常
       ws.send('ping')
       console.log('ping!')
-      // self.serverTimeoutObj = setTimeout(function () { // 如果超过一定时间还没重置，说明后端主动断开了
-      //   ws.close() // 如果onclose会执行reconnect，我们执行ws.close()就行了.如果直接执行reconnect 会触发onclose导致重连两次
-      // }, self.timeout)
+      self.serverTimeoutObj = setTimeout(function () { // 如果超过一定时间还没重置，说明后端主动断开了
+        ws.close() // 如果onclose会执行reconnect，我们执行ws.close()就行了.如果直接执行reconnect 会触发onclose导致重连两次
+      }, self.timeout)
     }, this.timeout)
   }
 }

@@ -22,7 +22,7 @@
             :style="{backgroundColor:item.bg}"
           >
             <span :style="{color:item.color}" class="text">{{item.label}}</span>
-            <span v-if="item.tips" class="tips">{{item.tips}}</span>
+            <span v-if="item.tips" class="tips">{{message.length}}</span>
           </div>
         </li>
       </ul>
@@ -47,6 +47,7 @@ export default {
       show: false,
       hide: true,
       tittle: '',
+      messageArray: [],
       num: 0,
       nickName: '你的昵称',
       labelName: '炫酷的标签名称',
@@ -79,6 +80,7 @@ export default {
           bg: '#f9ce20',
           color: '#fff',
           path: '/message',
+          id: true,
           label: '消息',
           tips: 6
         },
@@ -228,7 +230,8 @@ export default {
   computed: {
     ...mapGetters(['number']),
     ...mapState({
-      number: state => state.home.number
+      number: state => state.home.number,
+      message: state => state.login.message
     })
   },
   mounted() {

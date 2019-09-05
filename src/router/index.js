@@ -124,7 +124,7 @@ export default new Router({
       component: (resolve) => require(['@/pages/taskEditor/task'], resolve)
     },
     {
-      path: '/message',
+      path: '/message/:id',
       name: 'message',
       component: (resolve) => require(['@/pages/messagelist'], resolve)
     },

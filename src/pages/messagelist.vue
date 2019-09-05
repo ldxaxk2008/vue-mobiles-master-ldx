@@ -14,6 +14,7 @@
             </div>
             <span class="time-remark">{{item.remark}}</span>
           </div>
+          <div>{{countPlusLocalState}}</div>
         </li>
       </ul>
     </div>
@@ -21,6 +22,7 @@
 </template>
 <script>
 import commonHeader from 'common/common-header'
+import { mapState } from 'vuex'
 export default {
   components: {
     commonHeader
@@ -49,6 +51,23 @@ export default {
         }
       ]
     }
+  },
+  methods: {
+    filter: function(data) {
+      if (data.length > 0) {
+        data = JSON.parse(data)
+      }
+      console.log(data, 'fffffff')
+      return data
+    }
+  },
+  computed: {
+    ...mapState({
+      message: state => state.login.message,
+      countPlusLocalState (state) {
+        return this.filter(state.login.message)
+      }
+    })
   }
 }
 </script>

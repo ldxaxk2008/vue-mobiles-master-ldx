@@ -17,7 +17,9 @@ import '../static/js/flexible.js'
 import vantDialog from '@/components/vantDialog'
 import thor from 'thor-x'
 import 'thor-x/dist/index.css'
-import {createWebSocket} from '@/utils/websocket'
+import {createWebSocket, webs} from '@/utils/websocket'
+import { mapMutations } from 'vuex'
+
 Vue.use(thor)
 // import {fetchGet,fetchPost} from '@/apiconfig/index.js'
 if (process.env.MOCK) {    // 判断是否为mock模式
@@ -28,10 +30,13 @@ if (process.env.MOCK) {    // 判断是否为mock模式
 *浏览器端使用需要注意路由path的创建，二级应该在一级的基础上添加
 *如一级/Home，则二级为/Home/Detail，依次往后加，如果是app的话可忽略以下代码
 */
-const login = cookie.get('token')
-login && createWebSocket(function(){
-  console.log('dxdxddddddd')
-})
+// console.log(webs(), '.......ld')
+// if (webs() == null) {
+//   createWebSocket(function(){
+//     console.log('dxdxddddddd')
+//   })
+// }
+console.log(store, '.......ld')
 let init = 0
 window.addEventListener('popstate', function(e) {
   init++
@@ -63,6 +68,19 @@ router.beforeEach((to, from, next) => {
   // const isLogin = sessionStorage.getItem('token')
   const isLogin = cookie.get('token')
   if (isLogin) {
+      if (webs() == null) {
+        createWebSocket(isLogin, function(msg){
+          store.commit('SET_MESSAGE', msg)
+          console.log('dxdxddddddd')
+        })
+      } else {
+        if (webs().readyState !== 1) {
+          createWebSocket(isLogin, function(msg){
+            store.commit('SET_MESSAGE', msg)
+            console.log('dxdxddddddd')
+          })
+        }
+      }
       next()
   } else {
     console.log(to.name)

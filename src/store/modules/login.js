@@ -9,7 +9,8 @@ const login = {
     token: '',
     user_id: '',
     user_type: '',
-    task_id: ''
+    task_id: '',
+    message: []
   },
   mutations: {
     [types.SET_TOKEN](state, data) {
@@ -31,11 +32,14 @@ const login = {
     },
     [types.SET_TASK_ID](state, data) {
       state.task_id = data
+    },
+    [types.SET_MESSAGE](state, data) {
+      state.message.push(data)
     }
   },
-  actions: {},
+  actions: {
+  },
   getters: { // 定义getters，可以通过mapGetters拓展函数调用
-
   }
 }
 export default login // 输出login模块
