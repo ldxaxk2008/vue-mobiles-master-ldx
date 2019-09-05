@@ -22,7 +22,7 @@
             :style="{backgroundColor:item.bg}"
           >
             <span :style="{color:item.color}" class="text">{{item.label}}</span>
-            <span v-if="item.tips" class="tips">{{message.length}}</span>
+            <span v-if="item.tips" class="tips">{{countPlusLocalState}}</span>
           </div>
         </li>
       </ul>
@@ -207,6 +207,14 @@ export default {
         }
       }
     },
+    filter (data) {
+      if (data.length > 0) {
+        data = JSON.parse(data)
+        // 获取未读消息
+      }
+      console.log(data, 'fffffff')
+      return data.length
+    },
     reset(event, item, label) {
       this.textData = {
         defaultVal: event,
@@ -231,7 +239,10 @@ export default {
     ...mapGetters(['number']),
     ...mapState({
       number: state => state.home.number,
-      message: state => state.login.message
+      message: state => state.login.message,
+      countPlusLocalState (state) {
+        return this.filter(state.login.message)
+      }
     })
   },
   mounted() {
