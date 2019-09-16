@@ -7,7 +7,7 @@
           class="task-editor--input"
           v-model="invalue"
           type="text"
-          placeholder="请输入选择类型"
+          placeholder="请选择任务所处行业/领域"
           @focus="changedata"
           ref="typeinput"
         />

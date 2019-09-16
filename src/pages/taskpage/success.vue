@@ -33,7 +33,7 @@ export default {
       // this.$router.push({name: 'Task', params: {id: this.taskId}})
     },
     prev() {
-      this.$router.goBack()
+      this.$router.push('/home')
     }
   },
   mounted () {
