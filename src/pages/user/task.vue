@@ -74,11 +74,20 @@ export default {
       this.$router.goBack()
     },
     cancel(data) {
-      canceltask({task_id: this.information.id}).then(res => {
-        if (res.data.success) {
-          this.$router.push('/home')
+      this.$dialog.alert(
+        {
+          message: '确认取消发布？',
+          showCancelButton: true
         }
-      }).catch(() => {
+      ).then(item => {
+        canceltask({task_id: this.information.id}).then(res => {
+          if (res.data.success) {
+            this.$router.push('/home')
+          }
+        }).catch(() => {
+        })
+      }).catch(error => {
+        console.log(error, 222)
       })
     },
     edit() {

@@ -120,9 +120,10 @@ export default {
           }
         }],
         labelName: [{
-          message: '个性签名不能大于8个字符',
+          message: '个性签名不能大于10个字符',
           valid: function(data) {
-            if (data && data.length > 8) {
+            console.log(data.length, 99999)
+            if (data && data.length > 10) {
               return false
             } else {
               return true

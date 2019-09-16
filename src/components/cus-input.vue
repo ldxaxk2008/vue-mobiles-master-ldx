@@ -30,7 +30,7 @@ export default {
     .h(45);
     top: 50%;
     .mt(-18);
-    .left(-20);
+    .left(-5);
     background-image: url("../assets/imgs/search.svg");
     color: #11AC84;
     background-size: cover;
