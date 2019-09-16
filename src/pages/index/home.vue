@@ -5,8 +5,8 @@
       <!-- <mt-button @click="todetail">home</mt-button> -->
       <div class="page-map">
         <div class="page-map--van">
-          <van-icon name="clock-o" />
-          <p>平面设计 文案代码</p>
+          <!-- <van-icon name="clock-o" /> -->
+          <van-tag style="padding:2px 4px;" plain v-for="item in 1" :key="item" @click="hotClick('kkkk')">kkkk</van-tag>
         </div>
         <ul class="page-map--ul">
           <li v-for="(item,index) in maplist" :key="index" @click="handelclick(item,index)">
@@ -69,6 +69,31 @@ export default {
           disable: false,
           type: '7',
           icons: 'official'
+        }, {
+          name: '文案',
+          disable: false,
+          type: '7',
+          icons: 'official'
+        }, {
+          name: '文案',
+          disable: false,
+          type: '7',
+          icons: 'official'
+        }, {
+          name: '文案',
+          disable: false,
+          type: '7',
+          icons: 'official'
+        }, {
+          name: '文案',
+          disable: false,
+          type: '7',
+          icons: 'official'
+        }, {
+          name: '文案',
+          disable: false,
+          type: '7',
+          icons: 'official'
         },
         {
           name: '设计',
@@ -102,8 +127,11 @@ export default {
     ...mapMutations({
       setNum: 'SET_NUM'
     }),
+    hotClick(val) {
+      this.search(val)
+    },
     orderingType() {
-      return this.active === 0 ? 'payment' : this.active === 1 ? 'created_time' : 'end_date'
+      return this.active === 0 ? '-payment' : this.active === 1 ? '-created_time' : '-end_date'
     },
     search(val) {
       // if (val === '') return false
@@ -133,7 +161,7 @@ export default {
       let data = {
         search: this.searchVal || '',
         design_id: this.type,
-        ordering: 'payment',
+        ordering: '-payment',
         limit: this.limit,
         offset: 0
       }
@@ -146,11 +174,11 @@ export default {
     onClick(sort) {
       this.offset = 0
       if (sort === 0) {
-        sort = 'payment'
+        sort = '-payment'
       } else if (sort === 1) {
-        sort = 'created_time'
+        sort = '-created_time'
       } else {
-        sort = 'end_date'
+        sort = '-end_date'
       }
       this.sort = sort
       let data = {
@@ -240,8 +268,17 @@ export default {
       .mt(30);
       .pl(20);
       .pr(20);
-      display: flex;
-      justify-content: space-between;
+      display: -webkit-box;
+      overflow-x: scroll;
+      -webkit-overflow-scrolling: touch;
+      -ms-overflow-style: none;
+      overflow: -moz-scrollbars-none;
+      li{
+        width: 20%;
+        text-align: center;
+      }
+      // display: flex;
+      // justify-content: space-between;
       img {
         box-sizing: border-box;
         width: 80%;
@@ -251,6 +288,9 @@ export default {
         color: #898798;
         font-weight: bold;
       }
+    }
+    .page-map--ul::-webkit-scrollbar {
+      background-color: transparent;
     }
   }
   .page-map-vantabs {
