@@ -22,7 +22,7 @@
       <van-icon name="arrow-down" />
       <span>查看更多</span>
     </div>
-    <div v-if="!currentList.length" style="color:#333;text-align:center">暂无数据</div>
+    <div v-if="!currentList.length" style="color:#333;text-align:center">暂无任务</div>
   </div>
 </template>
 
