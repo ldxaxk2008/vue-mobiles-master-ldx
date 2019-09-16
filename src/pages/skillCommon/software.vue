@@ -4,7 +4,7 @@
       <h4 class="personal-skill">软件</h4>
       <ul>
         <li v-for="(item,index) in actions" :key="index">
-          <span v-if="item==='+'"><van-icon style="margin-left:-30%;" v-if="addShow" name="add-o" color="#c14182" class="add" @click="skillClick"/></span>
+          <span v-if="item==='+'"><van-icon v-if="addShow" name="add-o" color="#c14182" class="add" @click="skillClick"/></span>
           <span v-else>{{item}}<van-icon class="e" size="15" name="close" @click="remove(item)"/></span>
         </li>
         <li v-if="!actions.length"><van-icon name="add-o" color="#c14182" class="add" @click="skillClick"/></li>
@@ -170,11 +170,20 @@ export default {
       align-items: center;
       width: 33%;
       .fs(30);
+      .pb(130);
       // .w(100);
-      .h(105);
       background: url('../../assets/imgs/skill.png') no-repeat;
+      background-size: 100% 100%;
       .add,span{
-        .ml(-20);
+        position: absolute;
+        top:0;
+        left:0;
+        bottom: 0;
+        right: 0;
+        margin: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
       .e{
         color: #bbb;
