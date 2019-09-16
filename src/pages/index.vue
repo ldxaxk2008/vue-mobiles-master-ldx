@@ -52,6 +52,7 @@ export default {
   methods: {},
   mounted() {
     // let userType = sessionStorage.getItem('user_type')
+    // this.navList[2].path = this.navList[2].path + '/' + cookie.get('user_id')
     let userType = cookie.get('user_type')
     if (userType === '1') {
       this.navList[1].isshow = true
