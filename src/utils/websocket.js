@@ -37,6 +37,7 @@ var getCookie = function () {
 var token = getCookie()
 console.log(token, 111111)
 var url = 'ws://47.99.240.71:10000/ws/chat/room0/?token=' + token
+// var url = 'ws://47.99.240.71:10000/ws/chat/room0/?token=dc6a2a11bae3cfc7419fbbe0d098919d4d6709d0'
 // createWebSocket(url) // 连接ws
 export function webs() {
   return ws

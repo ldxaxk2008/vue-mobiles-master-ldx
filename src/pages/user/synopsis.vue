@@ -10,7 +10,7 @@
           <button v-if="!appstate && wait" class="wait">等待甲方确认</button>
         </div>
         <div class="right">
-          <span class="assets">{{information.total_payment}}</span>
+          <span class="assets">￥{{information.total_payment}}</span>
           <span class="number" v-if="information.user_id!==0">{{information.user_name}} 已申请</span>
           <span class="number" v-else>{{information.apply_num}} 人在申请</span>
           <button v-if="state" class="cancel" @click="handelClick('cancelTask')" :disabled="disable">取消申请</button>
@@ -59,6 +59,7 @@ export default {
   methods: {
     handelClick(val) {
       this.disable = true
+      this.wait = true
       this.$emit('taskSele', val, this.back)
     },
     back (val) {

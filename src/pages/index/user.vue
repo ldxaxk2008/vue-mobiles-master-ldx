@@ -214,7 +214,7 @@ export default {
         // 获取未读消息
       }
       console.log(data, 'fffffff')
-      return data.length
+      return data.unread && data.unread.length
     },
     reset(event, item, label) {
       this.textData = {
