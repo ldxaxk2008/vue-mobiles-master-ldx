@@ -86,13 +86,13 @@ export default {
     },
     close() {
       this.show = false
-      this.actions = []
-      this.softwareList = []
-      let arr = document.querySelectorAll('.list span')
-      arr.forEach(item => {
-        item.className = ''
-      })
-      this.$emit('softwareChange')
+      // this.actions = []
+      // this.softwareList = []
+      // let arr = document.querySelectorAll('.list span')
+      // arr.forEach(item => {
+      //   item.className = ''
+      // })
+      // this.$emit('softwareChange')
     },
     confirm() {
       let arr = Array.from(new Set(this.actions))
@@ -107,9 +107,9 @@ export default {
         arr = []
         return
       }
-      this.softwareList = []
+      // this.softwareList = []
       this.show = false
-      this.actions = []
+      // this.actions = []
       this.$emit('softwareChange', arr)
     },
     softwareListData() {
