@@ -210,9 +210,6 @@ export default {
   .padding(20,20,20,20);
   box-sizing: border-box;
   ul{
-    // display: flex;
-    // flex-wrap: wrap;
-    // justify-content: center;
     .pl(30);
     .pb(20);
     overflow: hidden;
@@ -227,6 +224,7 @@ export default {
       .mr(30);
       .h(105);
       background: url('../../assets/imgs/skill.png') no-repeat;
+      background-size:100% 100%;
     }
     li:nth-child(odd){color:#14BFE4;}
     li:nth-child(even){color:#FEAE62;}
