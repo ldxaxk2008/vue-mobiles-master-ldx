@@ -105,9 +105,9 @@ export default {
 @import "~styles/index.less";
 @import "~styles/variable.less";
 .bankinfor {
-  * {
-    touch-action: pan-y;
-  }
+  // * {
+  //   touch-action: pan-y;
+  // }
   .bankinfor_top-con {
     .pt(20);
     background-color: #f5f5f5;

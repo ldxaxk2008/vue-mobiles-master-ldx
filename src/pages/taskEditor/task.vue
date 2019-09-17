@@ -371,9 +371,9 @@ export default {
 @import "~styles/index.less";
 @import "~styles/variable.less";
 .task-editor {
-  * {
-    touch-action: pan-y;
-  }
+  // * {
+  //   touch-action: pan-y;
+  // }
   background-color: #fff;
   .task-editor--select {
     .margin(40,20,40,20);

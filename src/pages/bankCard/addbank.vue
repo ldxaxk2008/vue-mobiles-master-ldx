@@ -42,9 +42,9 @@ export default {
 @import "~styles/index.less";
 @import "~styles/variable.less";
 .addbank{
-  * {
-    touch-action: pan-y;
-  }
+  // * {
+  //   touch-action: pan-y;
+  // }
   background-color: #fff;
   color: @base-font-color;
   .content_add{

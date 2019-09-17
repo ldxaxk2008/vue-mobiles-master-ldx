@@ -167,9 +167,9 @@ export default {
 @import "~styles/index.less";
 @import "~styles/variable.less";
 .evaluate {
-  * {
-    touch-action: pan-y;
-  }
+  // * {
+  //   touch-action: pan-y;
+  // }
   background-color: #fff;
   .evaluate-content {
     flex: 1;
