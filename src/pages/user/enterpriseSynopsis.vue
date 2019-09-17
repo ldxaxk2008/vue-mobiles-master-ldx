@@ -9,9 +9,10 @@
       />
       <div class="contenr">
         <div class="company" v-if="imgShow">
-          <span class="name">{{information.nick_name===''?'未添加昵称':information.nick_name}}</span>
+          <span class="name" v-if="isStudent">{{information.nick_name===''?'未添加昵称':information.nick_name}}</span>
+          <span class="name">{{information.company_name===''?'未添加名称':information.company_name}}</span>
           <span class="autograph">
-            {{(information.school_name==='' || information.company_name ==='') ?'未添加名称':(information.school_name || information.company_name)}}
+              {{(information.school_name==='' || information.industry ==='') ?'未添加':(information.school_name || information.industry)}}
             <van-icon
              v-if="(information.company_id===sessionId)||(information.id==sessionId)"
               class="about-icon"
