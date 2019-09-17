@@ -18,6 +18,7 @@
           <div class="register-content__info">
             <van-field v-model="registerlist.company_name" placeholder="公司名称" />
             <van-field v-model="registerlist.code" placeholder="工商编号" />
+            <van-field v-model="registerlist.industry" placeholder="行业" />
             <van-field v-model="registerlist.contact_person" placeholder="联系人" />
             <van-field v-model="registerlist.email" placeholder="联系邮箱" />
             <van-field v-model="registerlist.phone" placeholder="联系电话">
@@ -67,7 +68,8 @@ export default {
         vercode: '', // 验证码
         email: '',
         password: '',
-        confirm_password: ''
+        confirm_password: '',
+        industry: ''
       }
     }
   },
@@ -169,6 +171,7 @@ export default {
       var formdata = new FormData()
       formdata.append('image', this.img.file)
       formdata.append('username', this.registerlist.username)
+      formdata.append('industry', this.registerlist.industry)
       formdata.append('phone', this.registerlist.phone)
       formdata.append('user_type', this.registerlist.user_type)
       formdata.append('password', this.registerlist.password)
