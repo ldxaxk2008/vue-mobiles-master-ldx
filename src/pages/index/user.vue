@@ -264,9 +264,9 @@ export default {
   @import "~styles/variable.less";
   .page-content {
     .mb(98);
-    * {
-      touch-action: pan-y;
-    }
+    // * {
+    //   touch-action: pan-y;
+    // }
   }
   .user-main {
     .h(300);

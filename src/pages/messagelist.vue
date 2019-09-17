@@ -76,9 +76,9 @@ export default {
 @import "~styles/index.less";
 @import "~styles/variable.less";
 .message-box {
-  * {
-    touch-action: pan-y;
-  }
+  // * {
+  //   touch-action: pan-y;
+  // }
   background-color: #fff;
   .evaluate {
     ul {

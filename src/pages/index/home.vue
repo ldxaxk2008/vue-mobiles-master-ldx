@@ -69,33 +69,28 @@ export default {
           disable: false,
           type: '7',
           icons: 'official'
-        }, {
-          name: '文案',
-          disable: false,
-          type: '7',
-          icons: 'official'
-        }, {
-          name: '文案',
-          disable: false,
-          type: '7',
-          icons: 'official'
-        }, {
-          name: '文案',
-          disable: false,
-          type: '7',
-          icons: 'official'
-        }, {
-          name: '文案',
-          disable: false,
-          type: '7',
-          icons: 'official'
-        }, {
-          name: '文案',
-          disable: false,
-          type: '7',
-          icons: 'official'
         },
         {
+          name: '设计',
+          disable: false,
+          type: '8',
+          icons: 'design'
+        }, {
+          name: '设计',
+          disable: false,
+          type: '8',
+          icons: 'design'
+        }, {
+          name: '设计',
+          disable: false,
+          type: '8',
+          icons: 'design'
+        }, {
+          name: '设计',
+          disable: false,
+          type: '8',
+          icons: 'design'
+        }, {
           name: '设计',
           disable: false,
           type: '8',

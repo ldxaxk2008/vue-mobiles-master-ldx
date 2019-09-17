@@ -202,9 +202,9 @@ export default {
 @import "~styles/variable.less";
 .register {
   //全局样式样式去掉
-  * {
-    touch-action: pan-y;
-  }
+  // * {
+  //   touch-action: pan-y;
+  // }
   background-color: hsl(0, 0%, 100%);
   .register-content--img {
     position: relative;

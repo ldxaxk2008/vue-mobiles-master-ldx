@@ -109,9 +109,9 @@ export default {
 @import "~styles/index.less";
 @import "~styles/variable.less";
 .regist-page {
-  * {
-    touch-action: pan-y;
-  }
+  // * {
+  //   touch-action: pan-y;
+  // }
   color: #f5f5f5;
    /*! autoprefixer: off */
   background: -webkit-linear-gradient(bottom, #b92671 0%, #f9ce20 90%, #f9ce20 100%);
