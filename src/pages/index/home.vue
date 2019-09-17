@@ -8,16 +8,14 @@
           <!-- <van-icon name="clock-o" /> -->
           <van-tag style="padding:2px 4px;" plain v-for="item in 1" :key="item" @click="hotClick('kkkk')">kkkk</van-tag>
         </div>
-        <div style="overflow:auto;">
-          <ul class="page-map--ul" style="width:1000px;">
-            <li v-for="(item,index) in maplist" :key="index" @click="handelclick(item,index)">
-              <svg-icon :name="item.icons" size="60"  ref="svg_icon"></svg-icon>
-              <div class="page-map--p">
-                <p :class="{'active':item.disable}">{{item.name}}</p>
-              </div>
-            </li>
-          </ul>
-        </div>
+        <ul class="page-map--ul">
+          <li v-for="(item,index) in maplist" :key="index" @click="handelclick(item,index)">
+            <svg-icon :name="item.icons" size="60"  ref="svg_icon"></svg-icon>
+            <div class="page-map--p">
+              <p :class="{'active':item.disable}">{{item.name}}</p>
+            </div>
+          </li>
+        </ul>
       </div>
       <div class="page-map-vantabs">
         <div class="page-map--search">
@@ -245,11 +243,11 @@ export default {
 <style scoped lang="less">
 @import "~styles/index.less";
 @import "~styles/variable.less";
-.content-box{
-  * {
-    touch-action: pan-y;
-  }
-}
+// .content-box{
+//   * {
+//     touch-action: pan-y;
+//   }
+// }
 .page-content {
   .mb(98);
   .page-map {
