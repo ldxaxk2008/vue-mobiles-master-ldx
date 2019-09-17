@@ -8,14 +8,16 @@
           <!-- <van-icon name="clock-o" /> -->
           <van-tag style="padding:2px 4px;" plain v-for="item in 1" :key="item" @click="hotClick('kkkk')">kkkk</van-tag>
         </div>
-        <ul class="page-map--ul">
-          <li v-for="(item,index) in maplist" :key="index" @click="handelclick(item,index)">
-            <svg-icon :name="item.icons" size="60"  ref="svg_icon"></svg-icon>
-            <div class="page-map--p">
-              <p :class="{'active':item.disable}">{{item.name}}</p>
-            </div>
-          </li>
-        </ul>
+        <div style="overflow:auto;">
+          <ul class="page-map--ul" style="width:1000px;">
+            <li v-for="(item,index) in maplist" :key="index" @click="handelclick(item,index)">
+              <svg-icon :name="item.icons" size="60"  ref="svg_icon"></svg-icon>
+              <div class="page-map--p">
+                <p :class="{'active':item.disable}">{{item.name}}</p>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
       <div class="page-map-vantabs">
         <div class="page-map--search">
@@ -174,11 +176,11 @@ export default {
     onClick(sort) {
       this.offset = 0
       if (sort === 0) {
-        sort = '-payment'
+        sort = this.sort === '-payment' ? 'payment' : '-payment'
       } else if (sort === 1) {
-        sort = '-created_time'
+        sort = this.sort === '-created_time' ? 'created_time' : '-created_time'
       } else {
-        sort = '-end_date'
+        sort = this.sort === '-end_date' ? 'end_date' : '-end_date'
       }
       this.sort = sort
       let data = {
@@ -268,17 +270,17 @@ export default {
       .mt(30);
       .pl(20);
       .pr(20);
-      // display: -webkit-box;
-      // overflow-x: scroll;
-      // -webkit-overflow-scrolling: touch;
+      display: -webkit-box;
+      overflow-x: scroll;
+      -webkit-overflow-scrolling: touch;
       // -ms-overflow-style: none;
       // overflow: -moz-scrollbars-none;
-      white-space: nowrap;
-      overflow:auto;
+      // white-space: nowrap;
+      // overflow:auto;
       li{
-        width: 20%;
+        // width: 20%;
         text-align: center;
-        display:inline-block;
+        // display:inline-block;
       }
       // display: flex;
       // justify-content: space-between;
