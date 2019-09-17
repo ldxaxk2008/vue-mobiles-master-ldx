@@ -268,14 +268,17 @@ export default {
       .mt(30);
       .pl(20);
       .pr(20);
-      display: -webkit-box;
-      overflow-x: scroll;
-      -webkit-overflow-scrolling: touch;
-      -ms-overflow-style: none;
-      overflow: -moz-scrollbars-none;
+      // display: -webkit-box;
+      // overflow-x: scroll;
+      // -webkit-overflow-scrolling: touch;
+      // -ms-overflow-style: none;
+      // overflow: -moz-scrollbars-none;
+      white-space: nowrap;
+      overflow:auto;
       li{
         width: 20%;
         text-align: center;
+        display:inline-block;
       }
       // display: flex;
       // justify-content: space-between;
@@ -289,9 +292,9 @@ export default {
         font-weight: bold;
       }
     }
-    .page-map--ul::-webkit-scrollbar {
-      background-color: transparent;
-    }
+    // .page-map--ul::-webkit-scrollbar {
+    //   background-color: transparent;
+    // }
   }
   .page-map-vantabs {
     display: flex;
