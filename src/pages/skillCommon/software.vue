@@ -11,7 +11,7 @@
       </ul>
     </div>
     <van-popup class="popup" v-model="show" @click-overlay="close">
-      <ul>
+      <ul v-if="show">
         <li class="list" v-for="(item,index) in artList" :key="index">
           <span :class="item.select? 'colors' : ''" @click="artClick($event,item)">{{item.title}}</span>
         </li>
@@ -72,12 +72,12 @@ export default {
         })
         if (!h) {
           this.selectList.push({
-            target: event.target,
+            target: val.title,
             type: -1
           })
         }
       } else {
-        event.target.className = 'colors now'
+        event.target.className = 'colors'
         let j = 0
         this.selectList.forEach((item, index) => {
           if (item === val.title) {
@@ -87,7 +87,7 @@ export default {
         })
         if (!j) {
           this.selectList.push({
-            target: event.target,
+            target: val.title,
             type: 1
           })
         }
@@ -108,13 +108,6 @@ export default {
     },
     close() {
       this.show = false
-      this.softwareList.forEach(item => {
-        if (item.type === 1) {
-          item.target.class = ''
-        } else if (item.type === -1) {
-          item.target.class = 'colors'
-        }
-      })
       // console.log(this.actions,this.selectList)
       // this.actions = []
       // this.softwareList = []
@@ -125,21 +118,37 @@ export default {
       // this.$emit('softwareChange')
     },
     confirm() {
-      let arr = Array.from(new Set(this.selectList))
+      let data = []
+      this.artList.map((item) => {
+        if (item.select) {
+          data.push(item.title)
+        }
+      })
+      this.selectList.map((value) => {
+        if (value.type === -1) {
+          data.forEach((item, index) => {
+            if (item === value.target){
+              data.splice(index, 1)
+            }
+          })
+        } else {
+          data.push(value.target)
+        }
+      })
       this.softwareList.forEach(item => {
         if (item.value !== '') {
-          arr.push(item.value)
+          data.push(item.value)
         }
       })
       if (this.selectList.length >= 9) {
         this.$toast('软件最多选/填8个')
-        arr = []
+        data = []
         return
       }
       // this.softwareList = []
       this.show = false
       // this.actions = []
-      // this.$emit('softwareChange', arr)
+      this.$emit('softwareChange', data)
     },
     softwareListData() {
       softwareList({resource_type: 2}).then((res) => {
@@ -148,6 +157,15 @@ export default {
           arr.map((item) => {
             this.actions.map((val) => {
               if (item.title === val) {
+                item['select'] = true
+              }
+            })
+          })
+          arr.map((item) => {
+            this.selectList.map((val) => {
+              if (item.title === val.target && val.type === 1) {
+                item['select'] = false
+              } else if (item.title === val.target && val.type === -1) {
                 item['select'] = true
               }
             })

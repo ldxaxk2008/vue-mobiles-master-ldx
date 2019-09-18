@@ -134,6 +134,7 @@ export default {
         console.log(res.data)
         if (res.data.success === ERR_OK) {
           this.student()
+          window.location.reload()
         } else {
         }
       }).catch(() => {
