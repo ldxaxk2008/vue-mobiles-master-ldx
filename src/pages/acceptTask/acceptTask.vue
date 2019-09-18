@@ -7,8 +7,8 @@
         <div class="accept-main-box" v-for="(item,index) in acceptList" :key="index">
           <introduce @changeRadio="changeRadio" :information="item" :keys="index" :imgShow="true" />
           <div class="skill-main">
-            <software :addShow="false" :softwareLists="softwareLists" class="skill-user" />
-            <skill :addShow="false"  :skillList="skillList" class="software"></skill>
+            <software :softwareLists="softwareLists" class="skill-user" />
+            <skill :addShow="addShow"  :skillList="skillList" class="software"></skill>
           </div>
           <comment :commentList="item" />
         </div>
@@ -43,6 +43,7 @@ export default {
       skillList: [],
       softwareLists: [],
       userId: '',
+      addShow: true,
       result: null,
       tittle: '任务接受者确认',
       task_id: '',
@@ -73,7 +74,7 @@ export default {
         this.acceptList = res.data.data.results
         // this.skillList = this.acceptList[0].skill_list
         let arr = this.acceptList[0].tool_list
-        arr.splice(parseInt(arr.length / 2), 0, '+')
+        // arr.splice(parseInt(arr.length / 2), 0, '+')
         this.softwareLists = arr
       })
     },
