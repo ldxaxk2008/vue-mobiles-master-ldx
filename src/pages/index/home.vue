@@ -312,7 +312,7 @@ export default {
       background: #fff;
       color: #fff;
       .mt(10);
-      .padding(20, 40, 20, 20);
+      .padding(20, 40, 0, 20);
       text-align: left;
       h4 {
         color: #0f7f9b;
