@@ -37,8 +37,8 @@
             :key="index"
             @click="hanleclick(item,index)"
           >
-            <!-- <svg-icon :name="item.icons" size="60"  ref="svg_icon"></svg-icon> -->
-            <p :class="{'active':item.disable===true}">{{item.title}}</p>
+            <svg-icon :name="item.icons" size="60"  ref="svg_icon"></svg-icon>
+            <p :class="{'active':item.disable===true}">{{item.name}}</p>
           </li>
         </ul>
       </div>
@@ -272,17 +272,20 @@ export default {
       let params = {
         resource_type: 3
       }
+      let iconList = ['official', 'design', 'code', 'hand', 'ppt']
+      let index = 0
       gettype(params).then(response => {
         if (response.data.success === ERR_OK) {
           this.maplist = []
-          response.data.data.results.forEach(res => {
+          response.data.data.results.forEach((res) => {
             let obj = {
               name: res.title,
               value: res.id,
-              disable: false
+              disable: false,
+              icons: iconList[index]
             }
             this.maplist.push(obj)
-            console.log(this.maplist)
+            index = index === iconList.length - 1 ? 0 : index + 1
           })
         }
       })
@@ -405,7 +408,6 @@ export default {
       })
     }
   },
-
   mounted() {
     let url = this.$route.path
     this.taskId = url.substring(url.lastIndexOf('/') + 1, url.length)
