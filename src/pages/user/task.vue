@@ -10,6 +10,13 @@
         <li v-for="(item,index) in navList" :key="index" @click="item.fun">{{item.label}}</li>
       </ul>
     </div>
+    <div class="task-footer" v-if="connectShow">
+      <ul>
+        <!-- <li v-if="connectState===JSON.stringify(information.user_id)" style="background: #b92671;width:100%;" @click="connect">与企业沟通</li>
+        <li v-else style="background: #b92671;width:100%;" @click="connect">与他沟通</li> -->
+        <li style="background: #b92671;width:100%;" @click="connect">与他沟通</li>
+      </ul>
+    </div>
     <dialogBox ref="dialog" :rules="rules" :data="textData" @close="resetContent"/>
   </div>
 </template>
@@ -39,6 +46,7 @@ export default {
       textData: {},
       status: 1,
       taskId: '',
+      connectState: cookie.get('user_id'),
       tittle: '任务详情',
       companyList: {},
       information: {},
@@ -72,6 +80,10 @@ export default {
     ...mapMutations(['SET_TASK_ID']),
     tohome() {
       this.$router.goBack()
+    },
+    connect(data) {
+      console.log(data)
+      this.$router.push('/chat/' + this.userId)
     },
     cancel(data) {
       this.$dialog.alert(
@@ -193,6 +205,22 @@ export default {
     this.getPortfolio()
   },
   computed: {
+    connectShow() {
+      let id = cookie.get('user_id')
+      if (cookie.get('user_type') === '0') {
+        if (this.userId !== 0 && id === this.userId) {
+          return true
+        } else {
+          return false
+        }
+      } else if (cookie.get('user_type') === '1') {
+        if (this.userId !== 0 && id === this.comId) {
+          return true
+        } else {
+          return false
+        }
+      }
+    },
     userId: function () {
       return this.information.user_id
     },
