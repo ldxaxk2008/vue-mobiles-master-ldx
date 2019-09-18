@@ -47,7 +47,7 @@
 import { mapMutations, mapGetters, mapState } from 'vuex'
 import commonHeader from 'common/common-header'
 import currentList from '@/pages/taskList/currentTaskList'
-
+import {gettype} from 'api/task-api'
 import {taskList} from 'api/home-api'
 import { ERR_OK } from 'config/index'
 export default {
@@ -71,26 +71,6 @@ export default {
           icons: 'official'
         },
         {
-          name: '设计',
-          disable: false,
-          type: '8',
-          icons: 'design'
-        }, {
-          name: '设计',
-          disable: false,
-          type: '8',
-          icons: 'design'
-        }, {
-          name: '设计',
-          disable: false,
-          type: '8',
-          icons: 'design'
-        }, {
-          name: '设计',
-          disable: false,
-          type: '8',
-          icons: 'design'
-        }, {
           name: '设计',
           disable: false,
           type: '8',
@@ -127,6 +107,31 @@ export default {
     },
     orderingType() {
       return this.active === 0 ? '-payment' : this.active === 1 ? '-created_time' : '-end_date'
+    },
+    // 获取选择类型
+    getType() {
+      let params = {
+        resource_type: 3
+      }
+      let iconList = ['official', 'design', 'code', 'hand', 'ppt']
+      let index = 0
+      gettype(params).then(response => {
+        if (response.data.success === ERR_OK) {
+          this.maplist = []
+          this.inputList = response.data.data.results
+          this.inputList.forEach((res) => {
+            // if (index >= iconList.length) index = 0
+            let obj = {
+              'name': res.title,
+              'type': res.id,
+              'icons': iconList[index],
+              'disable': false
+            }
+            this.maplist.push(obj)
+            index = index === iconList.length - 1 ? 0 : index + 1
+          })
+        }
+      })
     },
     search(val) {
       // if (val === '') return false
@@ -219,7 +224,7 @@ export default {
   },
   mounted() {
     this.handelclick({type: '7'}, 0)
-    // this.getData()
+    this.getType()
   },
   components: {
     commonHeader,
@@ -307,7 +312,7 @@ export default {
       background: #fff;
       color: #fff;
       .mt(10);
-      .padding(20, 40, 20, 20);
+      .padding(20, 40, 0, 20);
       text-align: left;
       h4 {
         color: #0f7f9b;
