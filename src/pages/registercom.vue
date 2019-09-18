@@ -99,6 +99,12 @@ export default {
         })
         return
       }
+      if (this.registerlist.industry === '') {
+        this.$toast({
+          message: '请输入行业'
+        })
+        return
+      }
       if (this.registerlist.contact_person === '') {
         this.$toast({
           message: '请输入联系人'

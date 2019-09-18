@@ -8,10 +8,8 @@
           v-model="invalue"
           type="text"
           placeholder="请选择任务所处行业/领域"
-          @focus="changedata"
-          ref="typeinput"
         />
-        <van-icon class="task-editor-secicon" name="arrow-down" />
+        <van-icon class="task-editor-secicon" name="arrow-down" @click="changedata"/>
         <van-action-sheet v-model="show" :actions="actions" @select="onSelect" />
       </div>
       <div class="task-editor--describe">
@@ -39,8 +37,8 @@
             :key="index"
             @click="hanleclick(item,index)"
           >
-            <svg-icon :name="item.icons" size="60"  ref="svg_icon"></svg-icon>
-            <p :class="{'active':item.disable===true}">{{item.name}}</p>
+            <!-- <svg-icon :name="item.icons" size="60"  ref="svg_icon"></svg-icon> -->
+            <p :class="{'active':item.disable===true}">{{item.title}}</p>
           </li>
         </ul>
       </div>
@@ -123,43 +121,72 @@ export default {
       taskId: '',
       actions: [],
       tittle: '返回首页',
-      maplist: [
-        {
-          name: '文案',
-          value: '7',
-          disable: true,
-          color: '#1B9EA7',
-          icons: 'official'
-        },
-        {
-          name: '设计',
-          value: '8',
-          disable: false,
-          color: '#F79D33',
-          icons: 'design'
-        },
-        {
-          name: '代码',
-          value: '9',
-          disable: false,
-          color: '#1B9EA7',
-          icons: 'code'
-        },
-        {
-          name: '手绘',
-          value: '10',
-          disable: false,
-          color: '#3BDA8A',
-          icons: 'hand'
-        },
-        {
-          name: 'PPT',
-          value: '11',
-          disable: false,
-          color: '#F79D33',
-          icons: 'ppt'
-        }
-      ]
+      maplist: []
+      // maplist: [
+      //   {
+      //     // name: '文案',
+      //     // value: '7',
+      //     disable: true,
+      //     color: '#1B9EA7'
+      //     // icons: 'official'
+      //   },
+      //   {
+      //     // name: '设计',
+      //     // value: '8',
+      //     disable: false,
+      //     color: '#F79D33'
+      //     // icons: 'design'
+      //   },
+      //   {
+      //     // name: '代码',
+      //     // value: '9',
+      //     disable: false,
+      //     color: '#1B9EA7'
+      //     // icons: 'code'
+      //   },
+      //   {
+      //     // name: '手绘',
+      //     // value: '10',
+      //     disable: false,
+      //     color: '#3BDA8A'
+      //     // icons: 'hand'
+      //   },
+      //   {
+      //     // name: 'PPT',
+      //     // value: '11',
+      //     disable: false,
+      //     color: '#F79D33'
+      //     // icons: 'ppt'
+      //   },
+      //   {
+      //     // name: '应用',
+      //     // value: '20',
+      //     disable: false,
+      //     color: '#F79D33'
+      //     // icons: 'ppt'
+      //   },
+      //   {
+      //     // name: '策划',
+      //     // value: '21',
+      //     disable: false,
+      //     color: '#F79D33'
+      //     // icons: 'ppt'
+      //   },
+      //   {
+      //     // name: '软件',
+      //     // value: '22',
+      //     disable: false,
+      //     color: '#F79D33'
+      //     // icons: 'ppt'
+      //   },
+      //   {
+      //     // name: '课件',
+      //     // value: '23',
+      //     disable: false,
+      //     color: '#F79D33'
+      //     // icons: 'ppt'
+      //   }
+      // ]
     }
   },
   methods: {
@@ -173,12 +200,12 @@ export default {
     // input框筛选
     changedata(val) {
       this.show = true
-      this.$refs.typeinput.readOnly = true
+      // this.$refs.typeinput.readOnly = true  //input框为只读
     },
-    // input框筛选
+    // input时间框筛选
     popup() {
       this.disabled = true
-      this.$refs.timeinput.readOnly = true
+      this.$refs.timeinput.readOnly = true // input时间框为只读
     },
     // 时间筛选chang事件 返回当前选定的值
     timeSelect(e) {
@@ -213,6 +240,7 @@ export default {
     },
     // tab设计选择
     hanleclick(data, index) {
+      console.log(data)
       this.maplist.map(res => {
         res.disable = false
       })
@@ -235,6 +263,26 @@ export default {
               id: res.id
             }
             this.actions.push(obj)
+          })
+        }
+      })
+    },
+    // 获取设计类型
+    getDesign() {
+      let params = {
+        resource_type: 3
+      }
+      gettype(params).then(response => {
+        if (response.data.success === ERR_OK) {
+          this.maplist = []
+          response.data.data.results.forEach(res => {
+            let obj = {
+              name: res.title,
+              value: res.id,
+              disable: false
+            }
+            this.maplist.push(obj)
+            console.log(this.maplist)
           })
         }
       })
@@ -357,6 +405,7 @@ export default {
       })
     }
   },
+
   mounted() {
     let url = this.$route.path
     this.taskId = url.substring(url.lastIndexOf('/') + 1, url.length)
@@ -364,6 +413,7 @@ export default {
       this.edit()
     }
     this.getType()
+    this.getDesign()
   }
 }
 </script>
@@ -441,8 +491,12 @@ export default {
       .mt(30);
       .pl(10);
       .pr(10);
-      display: flex;
-      justify-content: space-between;
+      display: -webkit-box;
+      overflow-x: scroll;
+      -webkit-overflow-scrolling: touch;
+      li{
+        text-align: center;
+      }
       img {
         box-sizing: border-box;
         width: 80%;
@@ -451,7 +505,7 @@ export default {
         .fs(25);
         color: #898798;
         font-weight: bold;
-        text-align: center;
+        // text-align: center;
       }
     }
   }
@@ -535,5 +589,9 @@ export default {
    .mr(15);
    .mb(10);
   }
+  .van-action-sheet {
+    max-height: 30%;
+    color: #323233;
+}
 }
 </style>
