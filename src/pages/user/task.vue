@@ -12,9 +12,8 @@
     </div>
     <div class="task-footer" v-if="connectShow">
       <ul>
-        <!-- <li v-if="connectState===JSON.stringify(information.user_id)" style="background: #b92671;width:100%;" @click="connect">与企业沟通</li>
-        <li v-else style="background: #b92671;width:100%;" @click="connect">与他沟通</li> -->
-        <li style="background: #b92671;width:100%;" @click="connect">与他沟通</li>
+        <li v-if="connectState===JSON.stringify(information.user_id)" style="background: #b92671;width:100%;" @click="connect">与企业沟通</li>
+        <li v-else style="background: #b92671;width:100%;" @click="connect">与他沟通</li>
       </ul>
     </div>
     <dialogBox ref="dialog" :rules="rules" :data="textData" @close="resetContent"/>
@@ -206,7 +205,7 @@ export default {
   },
   computed: {
     connectShow() {
-      let id = cookie.get('user_id')
+      let id = parseInt(cookie.get('user_id'))
       if (cookie.get('user_type') === '0') {
         if (this.userId !== 0 && id === this.userId) {
           return true
