@@ -75,7 +75,7 @@ export default {
       let taskid = this.task_id
       getacceptuserlist({ task_id: taskid }).then(res => {
         this.acceptList = res.data.data.results
-        // this.skillList = this.acceptList[0].skill_list
+        this.skillList = this.acceptList[0].skill_list
         let arr = this.acceptList[0].tool_list
         // arr.splice(parseInt(arr.length / 2), 0, '+')
         this.softwareLists = arr
