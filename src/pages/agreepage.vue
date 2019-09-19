@@ -8,10 +8,10 @@
           <div v-else>{{item.text}}</div>
         </li>
       </ul>
-      <van-checkbox class="btn" v-model="checked">我已阅读完此协议，并且同意此协议的所有条款</van-checkbox>
+      <van-checkbox class="btn" v-model="checked" @change="check">我已阅读完此协议，并且同意此协议的所有条款</van-checkbox>
     </div>
     <div class="evaluate-footer">
-      <button class="evaluate-footer--btn" @click="confirm">确认</button>
+      <van-button class="evaluate-footer--btn" :disabled="disabled" @click="confirm">确认</van-button>
     </div>
   </div>
 </template>
@@ -27,6 +27,7 @@ export default {
     return {
       tittle: '重要条款',
       checked: false,
+      disabled: true,
       agreeArr: []
     }
   },
@@ -38,6 +39,13 @@ export default {
         })
       } else {
         console.log(111)
+      }
+    },
+    check(val) {
+      if (val) {
+        this.disabled = false
+      } else {
+        this.disabled = true
       }
     }
   },

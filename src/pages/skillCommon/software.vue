@@ -4,16 +4,16 @@
       <h4 class="personal-skill">软件</h4>
       <ul>
         <li v-for="(item,index) in actions" :key="index">
-          <span v-if="item==='+'"><van-icon v-if="addShow" name="add-o" color="#c14182" class="add" @click="skillClick"/></span>
-          <span v-else>{{item}}<van-icon class="e" size="15" name="close" @click="remove(item)"/></span>
-        </li>
+        <span class="test" v-if="item==='+'"><van-icon v-if="addShow" name="add-o" color="#c14182" class="add" @click="skillClick"/></span>
+        <span v-else>{{item}}<van-icon v-if="showre" class="e" size="15" name="close" @click="remove(item)"/></span>
+      </li>
         <li v-if="!actions.length"><van-icon name="add-o" color="#c14182" class="add" @click="skillClick"/></li>
       </ul>
     </div>
     <van-popup class="popup" v-model="show" @click-overlay="close">
-      <ul>
-        <li class="list" v-for="(item,index) in artList" :key="item+index">
-          <span @click="artClick($event,item)">{{item}}</span>
+      <ul v-if="show">
+        <li class="list" v-for="(item,index) in artList" :key="index">
+          <span :class="item.select? 'colors' : ''" @click="artClick($event,item)">{{item.title}}</span>
         </li>
         <li v-for="(item,index) in softwareList" :key="index"><span><van-field v-model="item.value" placeholder="软件名" :maxlength="5"/></span></li>
         <li><van-icon v-if="addShow" name="add-o" color="#c14182" class="add" @click="addSoftware"/></li>
@@ -38,39 +38,64 @@ export default {
     softwareLists: {
       type: Array,
       default: () => []
+    },
+    showre: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
     return {
       show: false,
-      actions: [],
       artList: [],
       newList: [],
-      softwareList: []
+      actions: [],
+      selectList: [],
+      softwareList: [],
+      colors: 'colors'
     }
   },
   methods: {
     remove(val) {
-      this.actions.forEach((item, index) => {
-        if (item === val) {
-          this.actions.splice(index, 1)
-        }
-      })
+      // this.actions.forEach((item, index) => {
+      //   if (item === val) {
+      //     this.actions.splice(index, 1)
+      //   }
+      // })
       this.confirm()
     },
     artClick(event, val) {
-      if (event.target.className) {
+      if (event.target.className === 'colors') {
         event.target.className = ''
-        this.actions.forEach((item, index) => {
-          if (item === val) {
-            this.actions.splice(index, 1)
+        let h = 0
+        this.selectList.forEach((item, index) => {
+          if (item === val.title) {
+            h = 1
+            this.selectList.splice(index, 1)
           }
         })
+        if (!h) {
+          this.selectList.push({
+            target: val.title,
+            type: -1
+          })
+        }
       } else {
         event.target.className = 'colors'
-        this.actions.push(val)
+        let j = 0
+        this.selectList.forEach((item, index) => {
+          if (item === val.title) {
+            j = 1
+            this.selectList.splice(index, 1)
+          }
+        })
+        if (!j) {
+          this.selectList.push({
+            target: val.title,
+            type: 1
+          })
+        }
       }
-      this.newList = this.actions
     },
     onSelect(item) {
       // 点击选项时默认不会关闭菜单，可以手动关闭
@@ -78,6 +103,7 @@ export default {
     },
     skillClick() {
       this.show = true
+      this.softwareListData()
     },
     addSoftware() {
       this.softwareList.push({
@@ -86,6 +112,7 @@ export default {
     },
     close() {
       this.show = false
+      // console.log(this.actions,this.selectList)
       // this.actions = []
       // this.softwareList = []
       // let arr = document.querySelectorAll('.list span')
@@ -95,29 +122,57 @@ export default {
       // this.$emit('softwareChange')
     },
     confirm() {
-      let arr = Array.from(new Set(this.actions))
-      this.softwareList.forEach(item => {
-        if (item.value !== '') {
-          arr.push(item.value)
+      let data = []
+      this.artList.map((item) => {
+        if (item.select) {
+          data.push(item.title)
         }
       })
-      if (this.actions.length >= 9) {
-        console.log(this.actions)
+      this.selectList.map((value) => {
+        if (value.type === -1) {
+          data.forEach((item, index) => {
+            if (item === value.target) {
+              data.splice(index, 1)
+            }
+          })
+        } else {
+          data.push(value.target)
+        }
+      })
+      this.softwareList.forEach(item => {
+        if (item.value !== '') {
+          data.push(item.value)
+        }
+      })
+      if (this.selectList.length >= 9) {
         this.$toast('软件最多选/填8个')
-        arr = []
+        data = []
         return
       }
       // this.softwareList = []
       this.show = false
       // this.actions = []
-      this.$emit('softwareChange', arr)
+      this.$emit('softwareChange', data)
     },
     softwareListData() {
       softwareList({resource_type: 2}).then((res) => {
         if (res.data.success === ERR_OK) {
-          let arr = []
-          res.data.data.results.forEach(item => {
-            arr.push(item.title)
+          let arr = res.data.data.results
+          arr.map((item) => {
+            this.actions.map((val) => {
+              if (item.title === val) {
+                item['select'] = true
+              }
+            })
+          })
+          arr.map((item) => {
+            this.selectList.map((val) => {
+              if (item.title === val.target && val.type === 1) {
+                item['select'] = false
+              } else if (item.title === val.target && val.type === -1) {
+                item['select'] = true
+              }
+            })
           })
           this.artList = arr
         }
@@ -125,9 +180,23 @@ export default {
       })
     }
   },
-  mounted() {
-    this.softwareListData()
+  created() {
+    console.log(this.softwareLists, '323232')
   },
+  mounted() {
+    this.actions = this.softwareLists
+    // this.softwareListData()
+  },
+  // actions: {
+  //   userId: function () {
+  //     return this.softwareLists
+  //   }
+  // }
+  // computed: {
+  //   actions: function () {
+  //     return this.softwareLists
+  //   }
+  // },
   watch: {
     // softwareLists: {
     //   handler: function(newValue, oldValue) {
@@ -136,6 +205,7 @@ export default {
     //   deep: true
     // }
     softwareLists(val) {
+      console.log(val)
       this.actions = val
     }
   }
