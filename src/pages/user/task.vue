@@ -135,6 +135,11 @@ export default {
     },
     handelClick(val, back) {
       if (val === 'applyTask') {
+        if (!this.agreepage) {
+          this.$toast('请同意协议')
+          this.$router.push({name: 'agreepage', query: {id: this.information}})
+          return
+        }
         applyTask({task_id: (this.$route.params.id && this.$route.params.id.id) || this.task_id, user_id: cookie.get('user_id')}).then((res) => {
           console.log(res)
           if (res.data.success) {
@@ -145,6 +150,8 @@ export default {
         }).catch(() => {
         })
       } else {
+        this.$router.push({name: 'Task', params: {id: this.information.id}})
+        this.agreepage = false
         cancelTask({task_id: (this.$route.params.id && this.$route.params.id.id) || this.task_id, user_id: cookie.get('user_id')}).then((res) => {
           this.$toast(res.data.msg)
           if (res.data.success) {
@@ -192,6 +199,9 @@ export default {
   },
   mounted() {
     this.agreepage = !!this.$route.query.agreepage
+    if (this.agreepage) {
+      this.handelClick('applyTask')
+    }
     let url = this.$route.path
     this.taskId = url.substring(url.lastIndexOf('/') + 1, url.length)
     if (!this.taskId) {
@@ -240,6 +250,13 @@ export default {
       user_id: state => state.login.user_id,
       task_id: state => state.login.task_id
     })
+  },
+  watch: {
+    agreepage(val) {
+      if (val) {
+        this.handelClick('applyTask')
+      }
+    }
   }
 }
 </script>
