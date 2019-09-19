@@ -2,15 +2,30 @@
   <div class="task-editor">
     <common-header :tittle="tittle" :showback="true"></common-header>
     <div class="task-editor--con">
+      <!-- <div class="task-editor--select">
+        <input class="task-editor--input" v-model="invalue" type="text" placeholder="请选择任务所处行业/领域" />
+        <van-icon class="task-editor-secicon" name="arrow-down" @click="changedata" />
+        <van-action-sheet v-model="show" :actions="actions" @select="onSelect" />
+      </div> -->
       <div class="task-editor--select">
         <input
-          class="task-editor--input"
-          v-model="invalue"
+        style="flex:1; background: none;outline: none;"
+          id="datashow"
           type="text"
-          placeholder="请选择任务所处行业/领域"
+          v-model="Invalue"
+          ref="input_van"
+         @change="Enter" @keyup.enter="Enter"
         />
-        <van-icon class="task-editor-secicon" name="arrow-down" @click="changedata"/>
-        <van-action-sheet v-model="show" :actions="actions" @select="onSelect" />
+         <select
+         class="task-editor-secicons"
+          style="opacity:0;width:20px;position:absolute;right:10px;z-index:100;"
+          id="select"
+          v-model="selectItem"
+          @change="selectFn($event,selectItem)"
+        >
+          <option v-for="item in actions" :value="item.name" :key="item.id">{{item.name}}</option>
+        </select>
+          <van-icon  class="task-editor-secicon" name="arrow-down" />
       </div>
       <div class="task-editor--describe">
         <input
@@ -32,24 +47,24 @@
       <div class="task-editor--filed">
         <button class="evaluate-footer--btn" ref="tabBtn">{{desctab}}</button>
         <ul class="page-map--ul">
-          <li
-            v-for="(item,index) in maplist"
-            :key="index"
-            @click="hanleclick(item,index)"
-          >
-            <svg-icon :name="item.icons" size="60"  ref="svg_icon"></svg-icon>
+          <li v-for="(item,index) in maplist" :key="index" @click="hanleclick(item,index)">
+            <svg-icon :name="item.icons" size="60" ref="svg_icon"></svg-icon>
             <p :class="{'active':item.disable===true}">{{item.name}}</p>
           </li>
         </ul>
       </div>
       <div class="task-editor--tool">
         <div class="task-editor--tool__left">
-            <software @softwareChange="softwareChange" :softwareLists="softwareLists" class="skill-user"/>
+          <software
+            @softwareChange="softwareChange"
+            :softwareLists="softwareLists"
+            class="skill-user"
+          />
         </div>
         <div class="task-editor--tool__right">
           <div>
             <p>报酬 RMB</p>
-            <input class="tool-input" v-model="valueData.payment" type="number" pattern="[0-9]"/>
+            <input class="tool-input" v-model="valueData.payment" type="number" pattern="[0-9]" />
           </div>
           <div>
             <p class="tool-input--time">截止日期</p>
@@ -85,11 +100,7 @@
 <script>
 import commonHeader from 'common/common-header'
 import software from '@/pages/skillCommon/software'
-import {
-  publishtask,
-  gettype,
-  edittask
-} from 'api/task-api'
+import { publishtask, gettype, edittask } from 'api/task-api'
 import { taskDetails } from 'api/home-api'
 
 import { ERR_OK } from 'config/index'
@@ -104,7 +115,8 @@ export default {
       softwareLists: [],
       desctab: '文案',
       valueData: {
-        task_type_id: '',
+        // task_type_id: '',
+        task_type: '',
         design_id: '7',
         title: '',
         desc: '',
@@ -112,6 +124,7 @@ export default {
         end_date: '',
         tool_list: []
       },
+      Invalue: '',
       invalue: '',
       minDate: new Date(),
       currentDate: new Date(),
@@ -121,81 +134,35 @@ export default {
       taskId: '',
       actions: [],
       tittle: '返回首页',
-      maplist: []
-      // maplist: [
-      //   {
-      //     // name: '文案',
-      //     // value: '7',
-      //     disable: true,
-      //     color: '#1B9EA7'
-      //     // icons: 'official'
-      //   },
-      //   {
-      //     // name: '设计',
-      //     // value: '8',
-      //     disable: false,
-      //     color: '#F79D33'
-      //     // icons: 'design'
-      //   },
-      //   {
-      //     // name: '代码',
-      //     // value: '9',
-      //     disable: false,
-      //     color: '#1B9EA7'
-      //     // icons: 'code'
-      //   },
-      //   {
-      //     // name: '手绘',
-      //     // value: '10',
-      //     disable: false,
-      //     color: '#3BDA8A'
-      //     // icons: 'hand'
-      //   },
-      //   {
-      //     // name: 'PPT',
-      //     // value: '11',
-      //     disable: false,
-      //     color: '#F79D33'
-      //     // icons: 'ppt'
-      //   },
-      //   {
-      //     // name: '应用',
-      //     // value: '20',
-      //     disable: false,
-      //     color: '#F79D33'
-      //     // icons: 'ppt'
-      //   },
-      //   {
-      //     // name: '策划',
-      //     // value: '21',
-      //     disable: false,
-      //     color: '#F79D33'
-      //     // icons: 'ppt'
-      //   },
-      //   {
-      //     // name: '软件',
-      //     // value: '22',
-      //     disable: false,
-      //     color: '#F79D33'
-      //     // icons: 'ppt'
-      //   },
-      //   {
-      //     // name: '课件',
-      //     // value: '23',
-      //     disable: false,
-      //     color: '#F79D33'
-      //     // icons: 'ppt'
-      //   }
-      // ]
+      maplist: [],
+      selectItem: '分类1',
+      inputItem: '',
+      items: [
+        { id: 1, name: '分类1' },
+        { id: 2, name: '分类2' },
+        { id: 3, name: '分类3' },
+        { id: 4, name: '分类1' },
+        { id: 5, name: '分类2' },
+        { id: 6, name: '分类3' }
+      ]
     }
   },
   methods: {
+    Enter() {
+      this.valueData.task_type = this.Invalue
+    },
+    selectFn(e, selectItem) {
+      console.log(e, selectItem, 9999)
+      this.Invalue = selectItem
+      this.valueData.task_type = selectItem
+    },
     // 筛选
     onSelect(item) {
+      console.log(item)
       // 点击选项时默认不会关闭菜单，可以手动关闭
       this.show = false
       this.invalue = item.name
-      this.valueData.task_type_id = item.id
+      // this.valueData.task_type_id = item.id
     },
     // input框筛选
     changedata(val) {
@@ -218,7 +185,7 @@ export default {
       return this.valueData.end_date
     },
     // 时间格式转换
-    timeFormat (timer) {
+    timeFormat(timer) {
       let date = new Date(timer)
       let year = date.getFullYear()
       let month = date.getMonth() + 1
@@ -231,7 +198,19 @@ export default {
       hour = hour < 10 ? '0' + hour : hour
       minutes = minutes < 10 ? '0' + minutes : minutes
       seconds = seconds < 10 ? '0' + seconds : seconds
-      return year + '-' + month + '-' + day + ' ' + hour + ':' + minutes + ':' + seconds
+      return (
+        year +
+        '-' +
+        month +
+        '-' +
+        day +
+        ' ' +
+        hour +
+        ':' +
+        minutes +
+        ':' +
+        seconds
+      )
     },
     // 确定 确定最终的时间
     confirm(value) {
@@ -240,7 +219,7 @@ export default {
     },
     // tab设计选择
     hanleclick(data, index) {
-      console.log(data)
+      console.log(data.value, 9999)
       this.maplist.map(res => {
         res.disable = false
       })
@@ -277,7 +256,7 @@ export default {
       gettype(params).then(response => {
         if (response.data.success === ERR_OK) {
           this.maplist = []
-          response.data.data.results.forEach((res) => {
+          response.data.data.results.forEach(res => {
             let obj = {
               name: res.title,
               value: res.id,
@@ -311,7 +290,7 @@ export default {
     },
     // 发布任务
     publish() {
-      if (!this.valueData.task_type_id) {
+      if (!this.valueData.task_type) {
         this.$toast({
           message: '请选择类型'
         })
@@ -369,7 +348,7 @@ export default {
           }
         })
       } else {
-      // 编辑任务
+        // 编辑任务
         edittask(this.taskId, this.valueData).then(res => {
           if (res.data.success === ERR_OK) {
             this.$router.push('/pay/' + res.data.data.id)
@@ -403,7 +382,9 @@ export default {
         })
         this.valueData.task_type_id = res.data.data.task_type_id
         this.inputList.map(item => {
-          if (item.id === res.data.data.task_type_id) { this.invalue = item.title }
+          if (item.id === res.data.data.task_type_id) {
+            this.invalue = item.title
+          }
         })
       })
     }
@@ -423,12 +404,14 @@ export default {
 @import "~styles/index.less";
 @import "~styles/variable.less";
 .task-editor {
+
   // * {
   //   touch-action: pan-y;
   // }
   background-color: #fff;
   .task-editor--select {
-    .margin(40,20,40,20);
+    position: relative;
+    .margin(40, 20, 40, 20);
     .padding(5, 20, 5, 20);
     height: 30px;
     display: flex;
@@ -482,7 +465,7 @@ export default {
     .evaluate-footer--btn {
       .ml(20);
       display: flex;
-      background-color: #1B9EA7;
+      background-color: #1b9ea7;
       color: white;
       .fs(25);
       .padding(10, 30, 10, 30);
@@ -496,7 +479,7 @@ export default {
       display: -webkit-box;
       overflow-x: scroll;
       -webkit-overflow-scrolling: touch;
-      li{
+      li {
         text-align: center;
       }
       img {
@@ -517,15 +500,15 @@ export default {
     text-align: left;
     box-sizing: border-box;
     .task-editor--tool__left {
-      flex:1;
+      flex: 1;
       .mr(20);
-      .skill-user{
-        flex:1;
+      .skill-user {
+        flex: 1;
         .mr(-10);
       }
     }
     .task-editor--tool__right {
-       flex:1;
+      flex: 1;
       .tool-input {
         width: 100%;
         .mt(25);
@@ -587,13 +570,14 @@ export default {
     margin-top: 0.53333333rem;
     text-align: center;
   }
-  /deep/.skill-content ul li .add[data-v-92496f84], .skill-content ul li span[data-v-92496f84] {
-   .mr(15);
-   .mb(10);
+  /deep/.skill-content ul li .add[data-v-92496f84],
+  .skill-content ul li span[data-v-92496f84] {
+    .mr(15);
+    .mb(10);
   }
   .van-action-sheet {
     max-height: 30%;
     color: #323233;
-}
+  }
 }
 </style>
