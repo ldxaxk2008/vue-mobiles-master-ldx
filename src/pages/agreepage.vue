@@ -38,7 +38,7 @@ export default {
           message: '请阅读并确认条款'
         })
       } else {
-        console.log(111)
+        this.$router.push({name: 'Task', params: {id: this.$route.query.id.id}, query: {agreepage: true}})
       }
     },
     check(val) {
