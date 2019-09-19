@@ -36,6 +36,10 @@ export default {
     userId: {
       type: Number,
       default: 0
+    },
+    agreepage: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -58,6 +62,11 @@ export default {
   },
   methods: {
     handelClick(val) {
+      if (!this.agreepage) {
+        this.$toast('请同意协议')
+        this.$router.push({name: 'agreepage', query: {id: this.information}})
+        return
+      }
       this.disable = true
       this.wait = true
       this.$emit('taskSele', val, this.back)

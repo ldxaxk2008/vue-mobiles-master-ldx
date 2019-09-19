@@ -2,7 +2,7 @@
   <div class="task-box">
     <common-header :tittle="tittle" :showmore="false"></common-header>
     <div class="task-content">
-      <taskSynopsis @taskSele="handelClick" :information="information" :userId="userId" @handelEdit="handelEdit"></taskSynopsis>
+      <taskSynopsis :agreepage="agreepage" @taskSele="handelClick" :information="information" :userId="userId" @handelEdit="handelEdit"></taskSynopsis>
       <taskStage :taskList='information' :information="companyList" :status="status" :down="down" @stageChange="stageChange"></taskStage>
     </div>
     <div class="task-footer" v-if="show">
@@ -41,6 +41,7 @@ export default {
   },
   data() {
     return {
+      agreepage: false,
       rules: {},
       textData: {},
       status: 1,
@@ -190,6 +191,7 @@ export default {
     }
   },
   mounted() {
+    this.agreepage = !!this.$route.query.agreepage
     let url = this.$route.path
     this.taskId = url.substring(url.lastIndexOf('/') + 1, url.length)
     if (!this.taskId) {
