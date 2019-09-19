@@ -5,7 +5,7 @@
       <ul>
         <li v-for="(item,index) in actions" :key="index">
         <span class="test" v-if="item==='+'"><van-icon v-if="addShow" name="add-o" color="#c14182" class="add" @click="skillClick"/></span>
-        <span v-else>{{item}}<van-icon class="e" size="15" name="close" @click="remove(item)"/></span>
+        <span v-else>{{item}}<van-icon v-if="showre" class="e" size="15" name="close" @click="remove(item)"/></span>
       </li>
         <li v-if="!actions.length"><van-icon name="add-o" color="#c14182" class="add" @click="skillClick"/></li>
       </ul>
@@ -38,6 +38,10 @@ export default {
     softwareLists: {
       type: Array,
       default: () => []
+    },
+    showre: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
@@ -127,7 +131,7 @@ export default {
       this.selectList.map((value) => {
         if (value.type === -1) {
           data.forEach((item, index) => {
-            if (item === value.target){
+            if (item === value.target) {
               data.splice(index, 1)
             }
           })
@@ -176,7 +180,11 @@ export default {
       })
     }
   },
+  created() {
+    console.log(this.softwareLists, '323232')
+  },
   mounted() {
+    this.actions = this.softwareLists
     // this.softwareListData()
   },
   // actions: {

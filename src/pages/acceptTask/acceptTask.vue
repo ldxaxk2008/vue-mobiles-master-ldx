@@ -7,8 +7,8 @@
         <div class="accept-main-box" v-for="(item,index) in acceptList" :key="index">
           <introduce @changeRadio="changeRadio" :information="item" :keys="index" :imgShow="true" />
           <div class="skill-main">
-            <software :softwareLists="softwareLists" class="skill-user" />
-            <skill :addShow="addShow"  :skillList="skillList" class="software"></skill>
+            <software @softwareChange="softwareChange" :showre="false" :softwareLists="softwareLists" class="skill-user" />
+            <skill :addShow="false" :showAdd="false" :skillList="skillList" class="software"></skill>
           </div>
           <comment :commentList="item" />
         </div>
@@ -67,6 +67,9 @@ export default {
         console.log(res, 77744)
         this.$router.push('/User/Task/' + this.task_id)
       })
+    },
+    softwareChange() {
+      this.getList()
     },
     getList() {
       let taskid = this.task_id

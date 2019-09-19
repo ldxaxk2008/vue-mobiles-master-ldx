@@ -2,7 +2,7 @@
   <div class="skill-box">
     <div class="skill-content">
       <h4 class="personal-skill">个人技能<van-icon @click="skillClick" v-if="addShow" name="add-o" color="#c14182"/></h4>
-      <div v-if="!actions.length" style="margin-top:10px;">暂无技能，点击<van-icon name="add-o" color="#c14182"/>添加</div>
+      <div v-if="!actions.length " style="margin-top:10px;">暂无技能<span v-if="showAdd">，点击<van-icon name="add-o" color="#c14182"/>添加</span></div>
       <ul>
         <li v-for="(item,index) in actions" :key="index">
           {{item.title}}
@@ -51,6 +51,10 @@ export default {
     addShow: {
       type: Boolean,
       default: true
+    },
+    showAdd: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
@@ -94,6 +98,7 @@ export default {
     }
   },
   mounted() {
+    this.actions = this.skillList
   },
   watch: {
     skillList(val) {
