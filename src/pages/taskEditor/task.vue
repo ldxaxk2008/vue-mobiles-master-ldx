@@ -504,7 +504,6 @@ export default {
       .mr(20);
       .skill-user {
         flex: 1;
-        .mr(-10);
       }
     }
     .task-editor--tool__right {
@@ -569,11 +568,6 @@ export default {
   /deep/.popup .btn[data-v-92496f84] {
     margin-top: 0.53333333rem;
     text-align: center;
-  }
-  /deep/.skill-content ul li .add[data-v-92496f84],
-  .skill-content ul li span[data-v-92496f84] {
-    .mr(15);
-    .mb(10);
   }
   .van-action-sheet {
     max-height: 30%;
