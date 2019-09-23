@@ -2,7 +2,7 @@
   <div class="task-box">
     <common-header :tittle="tittle" :showmore="false"></common-header>
     <div class="task-content">
-      <taskSynopsis :agreepage="agreepage" @taskSele="handelClick" :information="information" :userId="userId" @handelEdit="handelEdit"></taskSynopsis>
+      <taskSynopsis :agreepage="agreepage" @taskSele="handelClick" :information="information" :userId="userId" :companyList="companyList" @handelEdit="handelEdit"></taskSynopsis>
       <taskStage :taskList='information' :information="companyList" :status="status" :down="down" @stageChange="stageChange"></taskStage>
     </div>
     <div class="task-footer" v-if="show">

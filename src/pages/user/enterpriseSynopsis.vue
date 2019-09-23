@@ -1,21 +1,21 @@
 <template>
   <div class="enterprise" :id="information.id">
     <div class="synopsis-head">
-      <img
-        v-if="imgShow"
-        :src="information.image?information.image:headimg"
-        alt="logo"
-        class="logo"
-      />
+      <div v-if="imgShow" class="register-logoborder">
+        <img :src="information.image?information.image:headimg" alt="logo" class="logo" />
+      </div>
       <div class="contenr">
         <div class="company" v-if="imgShow">
           <!-- <span class="name">{{information.nick_name===''?'未添加昵称':information.nick_name}}</span> -->
-          <span class="name" v-if="isStudent">{{information.nick_name===''?'未添加昵称':information.nick_name}}</span>
+          <span
+            class="name"
+            v-if="isStudent"
+          >{{information.nick_name===''?'未添加昵称':information.nick_name}}</span>
           <span class="name">{{information.company_name===''?'未添加名称':information.company_name}}</span>
           <span class="autograph">
-              {{(information.school_name==='' || information.industry ==='') ?'未添加名称':(information.school_name || information.industry)}}
+            {{(information.school_name==='' || information.industry ==='') ?'未添加名称':(information.school_name || information.industry)}}
             <van-icon
-             v-if="(information.company_id===sessionId)||(information.id==sessionId)"
+              v-if="(information.company_id===sessionId)||(information.id==sessionId)"
               class="about-icon"
               name="edit"
               @click="handelEdit((information.school_name || information.company_name),'nickName','简介')"
@@ -108,12 +108,32 @@ export default {
   .synopsis-head {
     color: #000;
     display: flex;
+    .register-logoborder {
+      .w(220);
+      .h(220);
+      .b-radius(500);
+      // background: linear-gradient(to right, #af002a, #e5d200);
+      /*! autoprefixer: off */
+      background: -webkit-linear-gradient(right, #af002a, #e5d200);
+      /* autoprefixer: on */
+      background: -moz-linear-gradient(right, #af002a, #e5d200);
+      background: -o-linear-gradient(right, #af002a, #e5d200);
+      background: linear-gradient(right, #af002a, #e5d200);
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
     .logo {
-      .w(200);
-      .h(200);
-      .b-radius(125);
-      border: 5px solid #ffffff;
+      .w(190);
+      .h(190);
+      .b-radius(500);
+      border: 4px solid #ffffff;
       background: #ffffff;
+      font-size: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     .contenr {
       flex: 1;

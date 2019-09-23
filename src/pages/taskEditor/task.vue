@@ -14,6 +14,7 @@
           type="text"
           v-model="Invalue"
           ref="input_van"
+          placeholder="请选择任务所处行业/领域"
          @change="Enter" @keyup.enter="Enter"
         />
          <select
