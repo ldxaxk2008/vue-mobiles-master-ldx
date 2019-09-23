@@ -5,8 +5,8 @@
       <div class="company-introduce">
         <companyIntorduce :information="information" :imgShow="true" @handelEdit="handelEdit" :isStudent="isStudent"/>
         <div class="skill-main">
-          <skill @skillChage="skillChage" :skillList="skillList" class="software"></skill>
-          <software @softwareChange="softwareChange" :softwareLists="softwareLists" class="skill-user"/>
+          <skill @skillChage="skillChage" :addShow="addShow" :skillList="skillList" class="software"></skill>
+          <software @softwareChange="softwareChange" :addShow="addShow" :softwareLists="softwareLists" class="skill-user"/>
         </div>
       </div>
       <div class="done-task">
@@ -170,7 +170,9 @@ export default {
           this.information = res.data.data
           this.skillList = res.data.data.skill_list
           let arr = res.data.data.tool_list
-          arr.splice(parseInt(arr.length / 2), 0, '+')
+          if (res.data.data.id === cookie.get('user_id')){
+            arr.splice(parseInt(arr.length / 2), 0, '+')
+          }
           this.softwareLists = arr
         } else {
         }
@@ -240,6 +242,11 @@ export default {
   computed: {
     showE: function () {
       return this.evaluate.length > 0 ? 1 : 0
+    },
+    addShow: function () {
+      let url = this.$route.path
+      let userId = url.substring(url.lastIndexOf('/') + 1, url.length)
+      return userId === cookie.get('user_id')
     }
   }
 }
