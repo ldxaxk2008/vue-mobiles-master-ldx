@@ -4,7 +4,7 @@
       <h4 class="personal-skill">软件</h4>
       <ul>
         <li v-for="(item,index) in actions" :key="index">
-        <span class="test" v-if="item==='+'"><van-icon v-if="addShow" name="add-o" color="#c14182" class="add" @click="skillClick"/></span>
+        <span class="test" v-if="addShow && item==='+'"><van-icon name="add-o" color="#c14182" class="add" @click="skillClick"/></span>
         <span v-else>{{item}}<van-icon v-if="showre" class="e" size="15" name="close" @click="remove(item)"/></span>
       </li>
         <li v-if="!actions.length"><van-icon name="add-o" color="#c14182" class="add" @click="skillClick"/></li>

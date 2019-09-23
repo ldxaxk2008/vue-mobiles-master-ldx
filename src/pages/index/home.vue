@@ -118,6 +118,12 @@ export default {
       gettype(params).then(response => {
         if (response.data.success === ERR_OK) {
           this.maplist = []
+          this.maplist.push({
+            'name': '全部',
+            'type': '',
+            'icons': iconList[3],
+            'disable': false
+          })
           this.inputList = response.data.data.results
           this.inputList.forEach((res) => {
             // if (index >= iconList.length) index = 0
