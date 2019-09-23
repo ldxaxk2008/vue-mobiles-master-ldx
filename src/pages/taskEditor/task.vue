@@ -135,16 +135,8 @@ export default {
       actions: [],
       tittle: '返回首页',
       maplist: [],
-      selectItem: '分类1',
-      inputItem: '',
-      items: [
-        { id: 1, name: '分类1' },
-        { id: 2, name: '分类2' },
-        { id: 3, name: '分类3' },
-        { id: 4, name: '分类1' },
-        { id: 5, name: '分类2' },
-        { id: 6, name: '分类3' }
-      ]
+      selectItem: '',
+      inputItem: ''
     }
   },
   methods: {
@@ -380,10 +372,11 @@ export default {
             item.disable = true
           }
         })
-        this.valueData.task_type_id = res.data.data.task_type_id
+        this.valueData.task_type = res.data.data.task_type
+        this.Invalue = res.data.data.task_type
         this.inputList.map(item => {
-          if (item.id === res.data.data.task_type_id) {
-            this.invalue = item.title
+          if (item.title === res.data.data.task_type) {
+            this.Invalue = item.title
           }
         })
       })
