@@ -136,6 +136,7 @@ export default {
             this.maplist.push(obj)
             index = index === iconList.length - 1 ? 0 : index + 1
           })
+          this.handelclick({type: ''}, 0)
         }
       })
     },
@@ -229,7 +230,6 @@ export default {
     }
   },
   mounted() {
-    this.handelclick({type: '7'}, 0)
     this.getType()
   },
   components: {
