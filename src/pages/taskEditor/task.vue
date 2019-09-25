@@ -384,6 +384,15 @@ export default {
     }
   },
   mounted() {
+    if (/Android/gi.test(navigator.userAgent)) {
+      window.addEventListener('resize', function () {
+        if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') {
+          window.setTimeout(function () {
+            document.activeElement.scrollIntoViewIfNeeded()
+          }, 0)
+        }
+      })
+    }
     let url = this.$route.path
     this.taskId = url.substring(url.lastIndexOf('/') + 1, url.length)
     if (this.taskId !== 'create') {
