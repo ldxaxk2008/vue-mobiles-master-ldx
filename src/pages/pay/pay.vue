@@ -44,17 +44,17 @@ export default {
           label: '支付宝',
           bgColor: '#00A2E9',
           payImg: require('@/assets/imgs/zhifubao.svg')
-        },
-        {
-          label: '银联',
-          bgColor: '#EB6578',
-          payImg: require('@/assets/imgs/yinlian.svg')
-        },
-        {
-          label: '微信',
-          bgColor: '#0DAB4F',
-          payImg: require('@/assets/imgs/weixin.svg')
         }
+        // {
+        //   label: '银联',
+        //   bgColor: '#EB6578',
+        //   payImg: require('@/assets/imgs/yinlian.svg')
+        // },
+        // {
+        //   label: '微信',
+        //   bgColor: '#0DAB4F',
+        //   payImg: require('@/assets/imgs/weixin.svg')
+        // }
       ]
     }
   },
