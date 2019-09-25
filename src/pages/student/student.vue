@@ -170,7 +170,7 @@ export default {
           this.information = res.data.data
           this.skillList = res.data.data.skill_list
           let arr = res.data.data.tool_list
-          if (res.data.data.id === cookie.get('user_id')){
+          if (res.data.data.id === cookie.get('user_id')) {
             arr.splice(parseInt(arr.length / 2), 0, '+')
           }
           this.softwareLists = arr
