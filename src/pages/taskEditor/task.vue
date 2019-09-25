@@ -495,7 +495,6 @@ export default {
     box-sizing: border-box;
     .task-editor--tool__left {
       flex: 1;
-      .mr(20);
       .skill-user {
         flex: 1;
       }
