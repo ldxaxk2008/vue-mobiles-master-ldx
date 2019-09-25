@@ -1,6 +1,6 @@
 module.exports = {
 	'/root/': {
-		target: 'http://47.99.240.71:8000/',
+		target: 'https://m.levelup.org.cn',
 		changeOrigin: true,
 		pathRewrite: {
 			'^/root/': ''
