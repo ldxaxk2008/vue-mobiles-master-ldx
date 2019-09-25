@@ -8,7 +8,7 @@
             <div class="register-logoborder">
               <van-uploader :after-read="afterRead" accept="image/png, image/jpeg">
                 <img v-if="imgShow" class="logo" :src="registerlist.Img?registerlist.Img:headimg" alt ref="goodimg" />
-                <div v-if="!imgShow" class="logo" ref="goodimg">
+                <div v-if="!imgShow" class="logos" ref="goodimg">
                   <van-icon size="40" name="plus" color="rgb(230, 207, 207)"/>
                 </div>
               </van-uploader>
@@ -237,6 +237,17 @@ export default {
     .b-radius(500);
     border: 5px solid #ffffff;
     background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .logos {
+    .w(185);
+    .h(185);
+    .b-radius(500);
+    border: 4px solid #ffffff;
+    background: #ffffff;
+    font-size: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
