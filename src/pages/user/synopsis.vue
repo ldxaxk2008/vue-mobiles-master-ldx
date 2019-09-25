@@ -146,8 +146,8 @@ export default {
     color: #000;
     display: flex;
     .register-logoborder {
-      .w(220);
-      .h(220);
+      .w(200);
+      .h(200);
       .b-radius(500);
       // background: linear-gradient(to right, #af002a, #e5d200);
       /*! autoprefixer: off */
@@ -162,8 +162,8 @@ export default {
       align-items: center;
     }
     .logo {
-      .w(190);
-      .h(190);
+      .w(170);
+      .h(170);
       .b-radius(500);
       border: 4px solid #ffffff;
       background: #ffffff;
