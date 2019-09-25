@@ -17,18 +17,27 @@
       </div>
     </div>
     <div class="bankinfor_bottom">
-      <div class="bankinfor_bottom-bor" v-for="(item,index) in bankList" :key="index">
+      <!-- <div class="bankinfor_bottom-bor" v-for="(item,index) in bankList" :key="index">
         <p class="bottom-bor_add">{{item.name}}</p>
         <div class="bottom-bor_icon">
           <p>{{item.cardNum}}</p>
         </div>
-      </div>
-      <div class="bankinfor_bottom-bor">
+      </div> -->
+      <!-- <div class="bankinfor_bottom-bor">
         <p class="bottom-bor_add">添加交易方式</p>
         <div class="bottom-bor_icon">
           <van-icon size="60" name="plus" color="rgb(225, 76, 103)" />
         </div>
-      </div>
+      </div> -->
+      <ul>
+              <li v-for="(item,index) in payImgList" :key="index">
+                <div>
+                  <img :src="item.payImg" alt="">
+                  <!-- <button :style="{background:item.bgColor}" @click="pay">立即支付</button> -->
+                  <!-- <van-icon :color="item.bgColor" class="pay-small" name="gift" /> -->
+                </div>
+              </li>
+            </ul>
     </div>
     <van-popup round v-model="show" class="popup" @click-overlay="close">
       <div>
@@ -58,6 +67,23 @@ export default {
       totalMoney: '￥ 550.08',
       totalOredr: '5',
       restMoney: '￥ 450.08',
+      payImgList: [
+        {
+          label: '支付宝',
+          bgColor: '#00A2E9',
+          payImg: require('@/assets/imgs/zhifubao.svg')
+        }
+        // {
+        //   label: '银联',
+        //   bgColor: '#EB6578',
+        //   payImg: require('@/assets/imgs/yinlian.svg')
+        // },
+        // {
+        //   label: '微信',
+        //   bgColor: '#0DAB4F',
+        //   payImg: require('@/assets/imgs/weixin.svg')
+        // }
+      ],
       bankList: [
         {
           name: '中国工商银行',
@@ -126,6 +152,7 @@ export default {
   }
   .bankinfor_bottom {
     background-color: #fff;
+    .pt(20);
     .bankinfor_bottom-bor {
       .margin(50, 50, 50, 50);
       .b-radius(20);

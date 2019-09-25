@@ -1,7 +1,7 @@
 <template>
   <div class="task-synopsis">
     <div class="synopsis-head">
-      <div class="register-logoborder">
+      <div class="register-logoborder" @click="jump">
         <img :src="information.image||logoImg" alt="logo" class="logo" />
       </div>
       <div class="contenr">
@@ -95,6 +95,9 @@ export default {
     },
     handelEdit(data, sign, label) {
       this.$emit('handelEdit', data, sign, label)
+    },
+    jump() {
+
     }
   },
   watch: {
