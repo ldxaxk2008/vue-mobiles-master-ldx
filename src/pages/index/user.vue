@@ -292,31 +292,33 @@ export default {
   }
 }
 .user-list {
-  // .register-logoborder {
-  //   .w(300);
-  //   .h(300);
-  //   // .mb(40);
-  //   .b-radius(500);
-  //   // background: linear-gradient(to right, #af002a, #e5d200);
-  //   /*! autoprefixer: off */
-  //   background: -webkit-linear-gradient(right, #af002a, #e5d200);
-  //   /* autoprefixer: on */
-  //   background: -moz-linear-gradient(right, #af002a, #e5d200);
-  //   background: -o-linear-gradient(right, #af002a, #e5d200);
-  //   background: linear-gradient(right, #af002a, #e5d200);
-  //   margin: 0 auto;
-  //   // margin:0 auto 0 auto
-  //   display: flex;
-  //   justify-content: center;
-  //   align-items: center;
-  // }
+  .register-logoborder {
+    .w(300);
+    .h(300);
+    margin:-50px auto 20px auto;
+    .b-radius(500);
+    // background: linear-gradient(to right, #af002a, #e5d200);
+    /*! autoprefixer: off */
+    background: -webkit-linear-gradient(right, #af002a, #e5d200);
+    /* autoprefixer: on */
+    background: -moz-linear-gradient(right, #af002a, #e5d200);
+    background: -o-linear-gradient(right, #af002a, #e5d200);
+    background: linear-gradient(right, #af002a, #e5d200);
+    // margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   .user-img {
     .w(260);
     .h(260);
-    .mt(-100);
-    .mb(40);
     .b-radius(500);
-    border: 10px solid #f5f5f5;
+    border: 6px solid #f5f5f5;
+    background: #ffffff;
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   li {
     .divTips {
