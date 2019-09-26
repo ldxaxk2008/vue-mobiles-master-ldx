@@ -2,7 +2,7 @@
   <div class="task-synopsis">
     <div class="synopsis-head">
       <div class="register-logoborder" @click="jump">
-        <img :src="information.image||logoImg" alt="logo" class="logo" />
+        <img :src="companyList.image||logoImg" alt="logo" class="logo" />
       </div>
       <div class="contenr">
         <div class="left">
@@ -97,12 +97,12 @@ export default {
       this.$emit('handelEdit', data, sign, label)
     },
     jump() {
-
+      this.$router.push('/User/TaskList/' + this.information.id)
     }
   },
   watch: {
     async information(newVal, oldVal) {
-      console.log(newVal)
+      console.log(newVal, 9999999999)
       if (cookie.get('user_type') === '0') {
         if (newVal.is_enroll === 1) {
           this.appstate = false

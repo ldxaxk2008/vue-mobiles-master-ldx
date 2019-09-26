@@ -47,7 +47,7 @@
         </div>
         <div class="popup_bot">
           <van-button class="btn" @click="detailed" round size="small">明细</van-button>
-          <van-button class="btn" @click="confirm" round size="small">提现</van-button>
+          <!-- <van-button class="btn" @click="confirm" round size="small">提现</van-button> -->
         </div>
       </div>
     </van-popup>

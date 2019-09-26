@@ -4,9 +4,10 @@
     <div class="page-content">
       <!-- <mt-button @click="todetail">home</mt-button> -->
       <div class="page-map">
-        <div class="page-map--van">
+        <div class="page-map--van" >
           <!-- <van-icon name="clock-o" /> -->
-          <van-tag style="padding:2px 4px;" plain v-for="item in 1" :key="item" @click="hotClick('kkkk')">kkkk</van-tag>
+          <!-- <van-tag class="page-map--tag" :class="{'vanAct':item.disabled === true}" plain v-for="(item,index) in hotlist" :key="item.id" @click="hotClick(item.title,index)">{{item.title}}</van-tag> -->
+          <p class="page-map--tag" :class="{'vanAct':item.disabled === true}" v-for="(item,index) in hotlist" :key="item.id" @click="hotClick(item.title,index)">{{item.title}}</p>
         </div>
         <ul class="page-map--ul">
           <li v-for="(item,index) in maplist" :key="index" @click="handelclick(item,index)">
@@ -73,6 +74,7 @@ export default {
       offset: 0,
       type: '',
       searchVal: '',
+      hotlist: [],
       maplist: [
         {
           name: '文案',
@@ -112,7 +114,11 @@ export default {
     ...mapMutations({
       setNum: 'SET_NUM'
     }),
-    hotClick(val) {
+    hotClick(val, index) {
+      this.hotlist.map(res => {
+        res.disabled = false
+      })
+      this.hotlist[index].disabled = true
       this.search(val)
     },
     orderingType() {
@@ -228,6 +234,8 @@ export default {
             }
           } else {
             this.currentList = res.data.data.results
+            this.hotlist = this.currentList.slice(1, 5)
+            this.hotlist[0].disabled = true
             this.count = res.data.data.count
             if (this.count > 10) {
               this.dmore = true
@@ -345,6 +353,15 @@ export default {
   }
   .active {
     color: #c54f8b;
+  }
+  .page-map--tag{
+    .padding(5,10,5,10);
+    .mr(10);
+    border: 1px solid #c54f8b;
+  }
+  .vanAct{
+    background-color:#c54f8b;
+    color: #fff !important;
   }
 }
 </style>
