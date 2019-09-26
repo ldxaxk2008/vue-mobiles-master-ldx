@@ -168,6 +168,7 @@ export default {
       companyDetails({user_id: this.information.company_id}).then((res) => {
         if (res.data.success) {
           this.companyList = res.data.data
+          console.log(this.companyList, 'lllllllll')
         } else {
         }
       }).catch(() => {

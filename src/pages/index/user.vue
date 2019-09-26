@@ -6,28 +6,22 @@
       <div class="user-label-name" @click="reset(labelName,'labelName', '标签')">{{labelName}}</div>
     </div>
     <div class="user-list">
-      <van-uploader :after-read="afterRead" accept="image/png, image/jpeg">
-        <!-- <img class="user-img" :src="userImg" alt srcset /> -->
-        <img class="user-img" :src="userImg" alt ref="goodimg" />
-      </van-uploader>
+      <div class="register-logoborder">
+        <van-uploader :after-read="afterRead" accept="image/png, image/jpeg">
+          <!-- <img class="user-img" :src="userImg" alt srcset /> -->
+          <img class="user-img" :src="userImg" alt ref="goodimg" />
+        </van-uploader>
+      </div>
       <ul>
-        <li
-          v-for="(item,index) in userList"
-          :key="index"
-          @click="handelClick(item)"
-        >
-          <div
-            class="divTips"
-            v-if="!item.hide"
-            :style="{backgroundColor:item.bg}"
-          >
+        <li v-for="(item,index) in userList" :key="index" @click="handelClick(item)">
+          <div class="divTips" v-if="!item.hide" :style="{backgroundColor:item.bg}">
             <span :style="{color:item.color}" class="text">{{item.label}}</span>
             <span v-if="item.tips" class="tips">{{countPlusLocalState}}</span>
           </div>
         </li>
       </ul>
     </div>
-    <dialogBox ref="dialog" :rules="rules" :data="textData" @close="resetContent"/>
+    <dialogBox ref="dialog" :rules="rules" :data="textData" @close="resetContent" />
   </div>
 </template>
 
@@ -35,8 +29,8 @@
 import { mapMutations, mapGetters, mapState } from 'vuex'
 import commonHeader from 'common/common-header'
 import dialogBox from 'common/dialog'
-import {studentinfor, studentData} from 'api/student-api'
-import {singOut} from 'api/login-api'
+import { studentinfor, studentData } from 'api/student-api'
+import { singOut } from 'api/login-api'
 import { ERR_OK } from '@/apiconfig/index'
 import cookie from 'vue-cookies'
 export default {
@@ -98,50 +92,53 @@ export default {
         }
       ],
       rules: {
-        nickName: [{
-          message: '昵称不能大于8个字符',
-          valid: function(data) {
-            if (data && data.length > 8) {
-              return false
-            } else {
-              return true
-            }
+        nickName: [
+          {
+            message: '昵称不能大于8个字符',
+            valid: function(data) {
+              if (data && data.length > 8) {
+                return false
+              } else {
+                return true
+              }
+            },
+            require: true
           },
-          require: true
-        },
-        {
-          message: '昵称不能小于3个字符',
-          valid: function(data) {
-            if (data && data.length < 3) {
-              return false
-            } else {
-              return true
+          {
+            message: '昵称不能小于3个字符',
+            valid: function(data) {
+              if (data && data.length < 3) {
+                return false
+              } else {
+                return true
+              }
             }
           }
-        }],
-        labelName: [{
-          message: '个性签名不能大于10个字符',
-          valid: function(data) {
-            console.log(data.length, 99999)
-            if (data && data.length > 10) {
-              return false
-            } else {
-              return true
-            }
-          },
-          require: true
-        }]
+        ],
+        labelName: [
+          {
+            message: '个性签名不能大于10个字符',
+            valid: function(data) {
+              console.log(data.length, 99999)
+              if (data && data.length > 10) {
+                return false
+              } else {
+                return true
+              }
+            },
+            require: true
+          }
+        ]
       }
     }
   },
   methods: {
-    ...mapMutations(
-      ['DEL_TOKEN',
-        {
-          setNum: 'SET_NUM'
-        }
-      ]
-    ),
+    ...mapMutations([
+      'DEL_TOKEN',
+      {
+        setNum: 'SET_NUM'
+      }
+    ]),
     afterRead(file) {
       this.imgShow = true
       this.userImg = file.content
@@ -185,30 +182,34 @@ export default {
         this.$router.push(val.path + '/' + cookie.get('user_id'))
       } else {
         if (val.type === 'logout') {
-          this.$dialog.alert({
-            message: '退出登录？',
-            showCancelButton: true
-          }).then(res => {
-            // singOut({token: sessionStorage.getItem('token')}).then((res) => {
-            singOut({token: cookie.get('token')}).then((res) => {
-              console.log(res.data)
-              if (res.data.success === ERR_OK) {
-                this.$toast(res.data.msg)
-                this.DEL_TOKEN()
-                this.$router.push('/loginpage')
-              } else {
-              }
-            }).catch(() => {
+          this.$dialog
+            .alert({
+              message: '退出登录？',
+              showCancelButton: true
             })
-          }).catch(error => {
-            console.log(error, 222)
-          })
+            .then(res => {
+              // singOut({token: sessionStorage.getItem('token')}).then((res) => {
+              singOut({ token: cookie.get('token') })
+                .then(res => {
+                  console.log(res.data)
+                  if (res.data.success === ERR_OK) {
+                    this.$toast(res.data.msg)
+                    this.DEL_TOKEN()
+                    this.$router.push('/loginpage')
+                  } else {
+                  }
+                })
+                .catch(() => {})
+            })
+            .catch(error => {
+              console.log(error, 222)
+            })
         } else {
           this.$router.push(val.path)
         }
       }
     },
-    filter (data) {
+    filter(data) {
       if (data.length > 0) {
         data = JSON.parse(data)
         // 获取未读消息
@@ -226,8 +227,12 @@ export default {
     },
     getStudentData() {
       studentData().then(res => {
-        this.nickName = res.data.data.nick_name ? res.data.data.nick_name : this.nickName
-        this.labelName = res.data.data.label ? res.data.data.label : this.labelName
+        this.nickName = res.data.data.nick_name
+          ? res.data.data.nick_name
+          : this.nickName
+        this.labelName = res.data.data.label
+          ? res.data.data.label
+          : this.labelName
         this.userImg = res.data.data.image ? res.data.data.image : this.userImg
       })
     }
@@ -241,7 +246,7 @@ export default {
     ...mapState({
       number: state => state.home.number,
       message: state => state.login.message,
-      countPlusLocalState (state) {
+      countPlusLocalState(state) {
         return this.filter(state.login.message)
       }
     })
@@ -260,63 +265,81 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
-  @import "~styles/index.less";
-  @import "~styles/variable.less";
-  .page-content {
-    .mb(98);
-    // * {
-    //   touch-action: pan-y;
-    // }
+@import "~styles/index.less";
+@import "~styles/variable.less";
+.page-content {
+  .mb(98);
+  // * {
+  //   touch-action: pan-y;
+  // }
+}
+.user-main {
+  .h(300);
+  .pt(20);
+  background: #f5f5f5;
+  .user-nick-name {
+    .fs(@base-header-size);
+    color: @base-font-color;
   }
-  .user-main {
-    .h(300);
-    .pt(20);
-    background: #f5f5f5;
-    .user-nick-name {
-      .fs(@base-header-size);
-      color: @base-font-color;
-    }
-    .user-label-name {
-      .fs(18);
-      color: #000;
-      .margin(20, 100, 20, 100);
-      .pt(10);
-      .pb(10);
-      .b-radius(50);
-      background: #bfbfbf;
-    }
+  .user-label-name {
+    .fs(18);
+    color: #000;
+    .margin(20, 100, 20, 100);
+    .pt(10);
+    .pb(10);
+    .b-radius(50);
+    background: #bfbfbf;
   }
-  .user-list {
-    .user-img {
-      .w(260);
-      .h(260);
-      .mt(-100);
-      .mb(40);
-      .b-radius(500);
-      border: 10px solid #f5f5f5;
-    }
-    li {
-      .divTips{
-        position: relative;
-        .mt(30);
-        .mr(60);
-        .ml(60);
-        .pt(20);
-        .pb(20);
-        .b-radius(30);
-        text-align: center;
-        .tips {
-          position: absolute;
-          .right(20);
-          .top(-10);
-          color: #fff;
-          background: #14a5ae;
-          .w(40);
-          .h(40);
-          .lh(40);
-          .b-radius(100);
-        }
+}
+.user-list {
+  // .register-logoborder {
+  //   .w(300);
+  //   .h(300);
+  //   // .mb(40);
+  //   .b-radius(500);
+  //   // background: linear-gradient(to right, #af002a, #e5d200);
+  //   /*! autoprefixer: off */
+  //   background: -webkit-linear-gradient(right, #af002a, #e5d200);
+  //   /* autoprefixer: on */
+  //   background: -moz-linear-gradient(right, #af002a, #e5d200);
+  //   background: -o-linear-gradient(right, #af002a, #e5d200);
+  //   background: linear-gradient(right, #af002a, #e5d200);
+  //   margin: 0 auto;
+  //   // margin:0 auto 0 auto
+  //   display: flex;
+  //   justify-content: center;
+  //   align-items: center;
+  // }
+  .user-img {
+    .w(260);
+    .h(260);
+    .mt(-100);
+    .mb(40);
+    .b-radius(500);
+    border: 10px solid #f5f5f5;
+  }
+  li {
+    .divTips {
+      position: relative;
+      .mt(30);
+      .mr(60);
+      .ml(60);
+      .pt(20);
+      .pb(20);
+      .b-radius(30);
+      text-align: center;
+      .tips {
+        position: absolute;
+        .right(20);
+        .top(-10);
+        color: #fff;
+        background: #14a5ae;
+        .w(40);
+        .h(40);
+        .lh(40);
+        .b-radius(100);
       }
     }
   }
+}
 </style>
