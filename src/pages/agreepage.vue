@@ -18,7 +18,7 @@
 <script>
 import { fetchGet } from 'config/index'
 import commonHeader from 'common/common-header'
-
+import cookie from 'vue-cookies'
 export default {
   components: {
     commonHeader
@@ -38,7 +38,11 @@ export default {
           message: '请阅读并确认条款'
         })
       } else {
-        this.$router.push({name: 'Task', params: {id: this.$route.query.id.id}, query: {agreepage: true}})
+        if (cookie.get('user_type') === '1') {
+          this.$emit('agreepageChange', true)
+        } else {
+          this.$router.push({name: 'Task', params: {id: this.$route.query.id.id}, query: {agreepage: true}})
+        }
       }
     },
     check(val) {
@@ -118,4 +122,5 @@ export default {
     .pt(20);
   }
 }
+
 </style>

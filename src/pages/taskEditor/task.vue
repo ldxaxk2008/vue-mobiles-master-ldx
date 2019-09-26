@@ -96,6 +96,9 @@
     <div class="evaluate-footer">
       <button class="evaluate-footer--btn" @click="publish">发布</button>
     </div>
+    <div class="agreepage_box" v-if="agreepageShow">
+      <agreepage @agreepageChange='agreepageChange'/>
+    </div>
   </div>
 </template>
 <script>
@@ -103,13 +106,16 @@ import commonHeader from 'common/common-header'
 import software from '@/pages/skillCommon/software'
 import { publishtask, gettype, edittask } from 'api/task-api'
 import { taskDetails } from 'api/home-api'
+import agreepage from '@/pages/agreepage'
 
 import { ERR_OK } from 'config/index'
 
 export default {
   components: {
     commonHeader,
-    software
+    software,
+    agreepage
+
   },
   data() {
     return {
@@ -126,6 +132,8 @@ export default {
         tool_list: []
       },
       Invalue: '',
+      agreepage: false,
+      agreepageShow: false,
       invalue: '',
       minDate: new Date(),
       currentDate: new Date(),
@@ -141,6 +149,10 @@ export default {
     }
   },
   methods: {
+    agreepageChange(val) {
+      this.agreepage = val
+      this.agreepageShow = false
+    },
     Enter() {
       this.valueData.task_type = this.Invalue
     },
@@ -329,6 +341,11 @@ export default {
         this.$toast({
           message: '请选择时间'
         })
+        return
+      }
+      if (!this.agreepage) {
+        this.$toast('请同意协议')
+        this.agreepageShow = true
         return
       }
       if (this.$route.params.id === 'create') {
@@ -575,5 +592,13 @@ export default {
     max-height: 30%;
     color: #323233;
   }
+}
+.agreepage_box{
+  position: absolute;
+  top:0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 999;
 }
 </style>

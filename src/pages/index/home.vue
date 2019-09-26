@@ -25,7 +25,7 @@
                 <currentList :currentList="currentList" :dmore="dmore" @more="more()" />
               </div>
               <div slot="title">
-                价格<van-icon style="margin-left:5px;" :name="this.sort === '-payment' ? 'arrow-up' : 'arrow-down'" />
+                价格<van-icon style="margin-left:5px;" :name="this.sort === 'payment' ? 'arrow-up' : 'arrow-down'" />
               </div>
             </van-tab>
             <van-tab title="发布日期">
@@ -33,7 +33,7 @@
                 <currentList :currentList="currentList" :dmore="dmore" @more="more" />
               </div>
               <div slot="title">
-                发布日期<van-icon style="margin-left:5px;" :name="this.sort === '-created_time' ? 'arrow-up' : 'arrow-down'" />
+                发布日期<van-icon style="margin-left:5px;" :name="this.sort === 'created_time' ? 'arrow-up' : 'arrow-down'" />
               </div>
             </van-tab>
             <van-tab title="截止日期">
@@ -41,7 +41,7 @@
                 <currentList :currentList="currentList" :dmore="dmore" @more="more" />
               </div>
               <div slot="title">
-                截止日期<van-icon style="margin-left:5px;" :name="this.sort === '-end_date' ? 'arrow-up' : 'arrow-down'" />
+                截止日期<van-icon style="margin-left:5px;" :name="this.sort === 'end_date' ? 'arrow-up' : 'arrow-down'" />
               </div>
             </van-tab>
           </van-tabs>
