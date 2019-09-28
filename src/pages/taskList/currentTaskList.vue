@@ -4,7 +4,7 @@
       <div class="task-main">
         <div class="task-main-head">
           <div class="task-title">{{item.title}}<img v-if="!done" style="margin-left:10px;"  :src="imgUrl"/></div>
-          <div class="deadline"><span v-if="!done">{{item.apply_num}} 人正在申请</span> {{item.payment}}RMB</div>
+          <div class="deadline"><span v-if="!done"><span style="color:#FBBE84;font-size:14px;">{{item.apply_num}}</span> 人正在申请</span> <span style="color:#c54f8b;font-size:14px;">￥{{item.payment}}</span></div>
         </div>
         <div class="task-main-container">任务要求：{{item.desc}}</div>
         <div class="task-labels">
@@ -12,8 +12,8 @@
           <span>{{item.task_type}}</span>
         </div>
         <div class="days">
+          <div v-if="!done">距离截至日期还有：<span style="color:#FBBE84;font-size:14px;">{{item.rest_day}}</span> 天</div>
           <div class="task-time">发布日期：{{item.publish_time}}</div>
-          <div v-if="!done">距离截至日期还有：{{item.rest_day}} 天</div>
         </div>
       </div>
       <span class="done" v-if="done"><img src="@/assets/imgs/done.png" alt=""></span>

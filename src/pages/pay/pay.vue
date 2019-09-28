@@ -32,6 +32,7 @@
 <script>
 import { mapMutations, mapGetters, mapState } from 'vuex'
 import commonHeader from 'common/common-header'
+import {getAlipay} from 'api/task-api'
 // import * as homeApi from 'api/home-api'
 // import { ERR_OK } from 'config/index'
 export default {
@@ -86,6 +87,12 @@ export default {
     pay() {
       // 调支付接口，成功后执行下面操作
       // this.$router.push({name: 'evaluate', params: {task_user_id: id || ''}})
+      let data = {
+        app_id: '2014072300007148'
+      }
+      getAlipay(data).then((res) => {
+        console.log(res)
+      })
       this.$router.push('/success/' + this.taskId)
     },
     todetail() {
