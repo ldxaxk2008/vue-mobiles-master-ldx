@@ -70,14 +70,24 @@
           <div>
             <p class="tool-input--time">截止日期</p>
             <div class="task-tool__input">
-              <input
+              <van-field
+                right-icon="arrow-down"
+                class="task-editor--input"
+                readonly
+                v-model="valueData.end_date"
+                type="text"
+                @focus="popup"
+                ref="timeinput"
+              />
+              <!-- <input
+                style="width:auto"
                 class="task-editor--input"
                 v-model="valueData.end_date"
                 type="text"
                 @focus="popup"
                 ref="timeinput"
               />
-              <van-icon class="task-editor-secicon" name="arrow-down" />
+              <van-icon class="task-editor-secicon" name="arrow-down" /> -->
               <van-popup v-model="disabled" position="bottom" :overlay="true">
                 <van-datetime-picker
                   v-model="currentDate"
@@ -540,11 +550,11 @@ export default {
       .mb(20);
     }
     .task-tool__input {
-      .padding(10, 20, 10, 10);
+      .padding(5, 15, 5, 15);
       display: flex;
-      flex: 1;
-      justify-content: space-between;
-      align-items: center;
+      // flex: 1;
+      // justify-content: space-between;
+      // align-items: center;
       .b-radius(50);
       background-color: #e7e7e7;
       .task-editor--input {
