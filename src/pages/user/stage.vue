@@ -16,7 +16,7 @@
       <button v-if="pay" class="deliver" @click="taskpay">任务交付</button>
       <button v-if="cpay" class="deliver" @click="taskpay">确认任务完成</button>
     </div>
-    <FileDown :showUpload="showUpload" :down="down" :taskObj="taskList"/>
+    <FileDown @resetFileList="resetFileList" :showUpload="showUpload" :down="down" :taskObj="taskList"/>
     <vantDialog :progress="progress" :type="type" ref="dialog" @confirmDialog="confirmDialog"/>
   </div>
 </template>
@@ -61,6 +61,9 @@ export default {
     }
   },
   methods: {
+    resetFileList(val) {
+      this.$emit('resetFileList', val)
+    },
     taskpay() {
       this.$refs['dialog'].show = true
       this.type = 'task_pay'

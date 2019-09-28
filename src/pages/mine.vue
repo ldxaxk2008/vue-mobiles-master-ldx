@@ -8,7 +8,7 @@
             <currentList ref="more" :currentList="currentList" :dmore="dmore" @more="more" />
           </div>
         </van-tab>
-        <van-tab title="未完成">
+        <van-tab title="进行中">
           <div class="page-map--tab">
             <currentList ref="more" :currentList="currentList" :dmore="dmore" @more="more" />
           </div>

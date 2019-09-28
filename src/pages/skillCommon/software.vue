@@ -69,7 +69,7 @@ export default {
         event.target.className = ''
         let h = 0
         this.selectList.forEach((item, index) => {
-          if (item === val.title) {
+          if (item.target === val.title) {
             h = 1
             this.selectList.splice(index, 1)
           }
@@ -84,7 +84,7 @@ export default {
         event.target.className = 'colors'
         let j = 0
         this.selectList.forEach((item, index) => {
-          if (item === val.title) {
+          if (item.target === val.title) {
             j = 1
             this.selectList.splice(index, 1)
           }
@@ -96,6 +96,7 @@ export default {
           })
         }
       }
+      console.log(this.selectList)
     },
     onSelect(item) {
       // 点击选项时默认不会关闭菜单，可以手动关闭
@@ -155,6 +156,7 @@ export default {
       this.$emit('softwareChange', data)
     },
     softwareListData() {
+      this.artList = []
       softwareList({resource_type: 2}).then((res) => {
         if (res.data.success === ERR_OK) {
           let arr = res.data.data.results
