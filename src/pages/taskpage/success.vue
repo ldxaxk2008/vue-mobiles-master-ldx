@@ -1,6 +1,6 @@
 <template>
   <div class="taskpage-success">
-    <common-header :tittle="tittle" :showback="true" :showmore="false"></common-header>
+    <common-header :pushUrl="pushUrl" :tittle="tittle" :showback="true" :showmore="false"></common-header>
     <div style="flex:1;">
       <div class="taskpage-success--img">
         <img src="@/assets/imgs/network.png" alt />
@@ -24,7 +24,8 @@ export default {
   data() {
     return {
       taskId: '',
-      tittle: ''
+      tittle: '',
+      pushUrl: '/'
     }
   },
   methods: {

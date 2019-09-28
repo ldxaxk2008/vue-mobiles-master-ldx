@@ -1,6 +1,6 @@
 <template>
   <div class="task-box">
-    <common-header :tittle="tittle" :showmore="false"></common-header>
+    <common-header :pushUrl="pushUrl" :tittle="tittle" :showmore="false"></common-header>
     <div class="task-content">
       <taskSynopsis :agreepage="agreepage" @taskSele="handelClick" :information="information" :userId="userId" :companyList="companyList" @handelEdit="handelEdit"></taskSynopsis>
       <taskStage @resetFileList="resetFileList" :taskList='information' :information="companyList" :status="status" :down="down" @stageChange="stageChange"></taskStage>
@@ -42,6 +42,7 @@ export default {
   data() {
     return {
       agreepage: false,
+      pushUrl: '',
       rules: {},
       textData: {},
       status: 1,
@@ -259,6 +260,7 @@ export default {
     agreepage(val) {
       if (val) {
         this.handelClick('applyTask')
+        this.pushUrl = `/mine/${cookie.get('user_id')}`
       }
     }
   }

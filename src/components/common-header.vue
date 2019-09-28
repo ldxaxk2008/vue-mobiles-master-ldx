@@ -29,6 +29,10 @@ export default {
     }
   },
   props: {
+    pushUrl: {
+      type: String,
+      default: ''
+    },
     headerColor: {
       type: String,
       default: '#f5f5f5'
@@ -61,7 +65,11 @@ export default {
   methods: {
     ...mapMutations(['DEL_TOKEN']),
     back() {
-      this.$router.goBack()
+      if (this.pushUrl && this.pushUrl.length) {
+        this.$router.push(this.pushUrl)
+      } else {
+        this.$router.goBack()
+      }
     },
     search(val) {
       this.$emit('search', val)
