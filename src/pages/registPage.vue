@@ -19,7 +19,10 @@
             placeholder="重复输入密码"
           /> -->
           <div><input type="text" v-model="registerlist.phone" placeholder="注册手机号"></div>
-          <div><input type="text" v-model="registerlist.sms" placeholder="验证码"><button class="regist-input--btn">发送验证码</button></div>
+          <div class="flexs">
+            <input type="text" v-model="registerlist.sms" placeholder="验证码">
+            <span class="regist-input--btn">发送验证码</span>
+          </div>
           <div><input type="password" v-model="registerlist.password" placeholder="新密码"></div>
           <div><input type="password" v-model="registerlist.confirm_password" placeholder="重复输入密码"></div>
         </div>
@@ -54,6 +57,15 @@ export default {
   },
   mounted() {
     console.log(this.registerlist)
+    if (/Android/gi.test(navigator.userAgent)) {
+      window.addEventListener('resize', function () {
+        if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') {
+          window.setTimeout(function () {
+            document.activeElement.scrollIntoViewIfNeeded()
+          }, 0)
+        }
+      })
+    }
   },
   methods: {
     confirm() {
@@ -112,6 +124,10 @@ export default {
   // * {
   //   touch-action: pan-y;
   // }
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top:0;left:0;
   color: #f5f5f5;
    /*! autoprefixer: off */
   background: -webkit-linear-gradient(bottom, #b92671 0%, #f9ce20 90%, #f9ce20 100%);
@@ -187,6 +203,19 @@ export default {
     .pb(100);
     letter-spacing: 10px;
     .fs(10);
+  }
+}
+.flexs{
+  display: flex !important;
+  input{
+    width: 1px;
+    flex:4 !important;
+  }
+  span{
+    flex:2 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
   }
 }
 </style>

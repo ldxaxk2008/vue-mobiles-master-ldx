@@ -1,6 +1,6 @@
 <template>
   <div class="content-box">
-    <common-header :tittle="tittle" :showback="true" :showmore="true"></common-header>
+    <common-header :tittle="tittle" :showback="false" :showmore="true"></common-header>
     <div class="user-main">
       <h4 class="user-nick-name" @click="reset(nickName,'nickName', '昵称')">{{nickName}}</h4>
       <div class="user-label-name" @click="reset(labelName,'labelName', '标签')">{{labelName}}</div>

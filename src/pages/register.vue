@@ -35,7 +35,7 @@
             <van-field v-model="registerlist.school_name" placeholder="学校" />
             <van-field v-model="registerlist.grades" placeholder="请选择年级" @click="popup" />
             <van-field v-model="registerlist.phone" placeholder="联系电话">
-              <van-button slot="button" class="register-btn" size="small" type="primary">发送验证码</van-button>
+              <p slot="button" class="register-btn" size="small" type="primary">发送验证码</p>
             </van-field>
             <van-field v-model="registerlist.code" placeholder="验证码" />
             <van-field v-model="registerlist.username" placeholder="登录用户名" />
@@ -343,13 +343,15 @@ export default {
       }
       .register-btn {
         .mr(0);
-        .padding(5, 30, 5, 30);
+        .padding(9, 30, 9, 30);
         border-top-right-radius: 15px;
         border-bottom-right-radius: 15px;
         border-top-left-radius: 0px;
         border-bottom-left-radius: 0px;
         border: solid 1px #c54f8b;
-        height: 34px;
+        background:  #c54f8b;
+        color:#f5f5f5;
+        // height: 34px;
       }
     }
     // div:nth-child(3){
