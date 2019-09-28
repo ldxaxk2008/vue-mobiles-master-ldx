@@ -351,7 +351,8 @@ export default {
       if (this.$route.params.id === 'create') {
         publishtask(this.valueData).then(res => {
           if (res.data.success === ERR_OK) {
-            this.$router.push('/pay/' + res.data.data.id)
+            // this.$router.push('/pay/' + res.data.data.id)
+            this.$router.push({path: `/pay/${res.data.data.id}`, query: {pay: this.valueData}})
           } else {
             this.$toast(res.data.msg)
             this.$router.push('/error')

@@ -3,7 +3,7 @@
     <common-header :tittle="tittle" :showmore="false"></common-header>
     <div class="task-content">
       <taskSynopsis :agreepage="agreepage" @taskSele="handelClick" :information="information" :userId="userId" :companyList="companyList" @handelEdit="handelEdit"></taskSynopsis>
-      <taskStage :taskList='information' :information="companyList" :status="status" :down="down" @stageChange="stageChange"></taskStage>
+      <taskStage @resetFileList="resetFileList" :taskList='information' :information="companyList" :status="status" :down="down" @stageChange="stageChange"></taskStage>
     </div>
     <div class="task-footer" v-if="show">
       <ul>
@@ -80,6 +80,9 @@ export default {
     ...mapMutations(['SET_TASK_ID']),
     tohome() {
       this.$router.goBack()
+    },
+    resetFileList(val) {
+      this.getPortfolio()
     },
     connect(data) {
       console.log(data)

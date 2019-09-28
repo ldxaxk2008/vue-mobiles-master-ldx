@@ -15,7 +15,7 @@
       </div>
       <div class="img-view">
         <imgView :imgList="imgList"/>
-        <fileDown :showUpload="showUpload" :down="down" :taskObj="information"/>
+        <fileDown @resetFileList="resetFileList" :showUpload="showUpload" :down="down" :taskObj="information"/>
       </div>
       <div class="evaluate-list">
         <div v-if="!showE" class="hideEvaluate">暂无评价</div>
@@ -90,6 +90,9 @@ export default {
     }
   },
   methods: {
+    resetFileList(val) {
+      // alert()
+    },
     cancel() {
       this.$router.push('/chat/' + this.userId)
     },
