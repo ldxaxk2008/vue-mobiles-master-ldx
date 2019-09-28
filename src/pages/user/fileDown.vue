@@ -13,13 +13,12 @@
         <!-- <img class="img" src="" alt=""> -->
         <van-icon name="send-gift-o" />
         <span class="title">{{item.title}}</span>
-        <a class="down-click"  target="_blank" :href="item.link" :download="item.title">点击下载</a>
+        <a class="down-click" target="_blank" :href="item.link" :download="item.title">点击下载</a>
       </li>
     </ul>
-    <span class="more">
-      <van-icon name="ellipsis" />
-      查看更多
-    </span>
+    <!-- <span class="more">
+      <van-icon name="ellipsis" />查看更多
+    </span> -->
   </div>
 </template>
 
@@ -86,53 +85,56 @@ export default {
 <style scoped lang="less">
 @import "~styles/index.less";
 @import "~styles/variable.less";
-.down{
+.down {
   .b-radius(30);
   background: #fafafa;
   color: #000;
   text-align: left;
-  .padding(20,20,20,20);
+  .padding(20, 20, 20, 20);
   display: flex;
   flex-direction: column;
-  .up-file{
-     .mt(20);
-     li{
-       .mb(0);
-     }
+  .up-file {
+    .mt(20);
+    li {
+      .mb(0);
+    }
   }
-  ul{
+  ul {
     .mb(20);
     .mt(20);
-    li{
+    li {
       display: flex;
       align-items: center;
       .mb(20);
-      .van-icon{
+      .van-icon {
         .fs(40);
         .mr(30);
       }
-      .title{
-        flex:1;
+      .title {
+        flex: 1;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
       }
-      .up-click{
+      .up-click {
         .b-radius(30);
-        background:#18acb6;
+        background: #18acb6;
         color: #fff;
-        .padding(4,20,4,20);
+        .padding(4, 20, 4, 20);
       }
-      .down-click{
+      .down-click {
         .b-radius(30);
-        background:#b1b1b1;
+        background: #b1b1b1;
         color: #fff;
-        .padding(4,20,4,20);
+        .padding(4, 20, 4, 20);
       }
     }
   }
-  .more{
+  .more {
     display: flex;
     align-items: center;
     color: #b1b1b1;
-    .van-icon{
+    .van-icon {
       .fs(40);
     }
   }

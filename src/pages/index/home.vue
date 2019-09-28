@@ -74,7 +74,23 @@ export default {
       offset: 0,
       type: '',
       searchVal: '',
-      hotlist: [],
+      hotlist: [
+        {
+          title: 'txx1',
+          id: 1,
+          disabled: true
+        },
+        {
+          title: 'txx2',
+          id: 2,
+          disabled: false
+        },
+        {
+          title: 'txx3',
+          id: 3,
+          disabled: false
+        }
+      ],
       maplist: [
         {
           name: '文案',
@@ -234,8 +250,6 @@ export default {
             }
           } else {
             this.currentList = res.data.data.results
-            this.hotlist = this.currentList.slice(1, 5)
-            this.hotlist[0].disabled = true
             this.count = res.data.data.count
             if (this.count > 10) {
               this.dmore = true
@@ -357,7 +371,7 @@ export default {
   .page-map--tag{
     .padding(5,10,5,10);
     .mr(10);
-    border: 1px solid #c54f8b;
+    border: 1px solid #f5f5f5;
   }
   .vanAct{
     background-color:#c54f8b;
