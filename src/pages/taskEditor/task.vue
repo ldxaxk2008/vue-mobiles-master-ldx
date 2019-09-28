@@ -428,6 +428,13 @@ export default {
     }
     this.getType()
     this.getDesign()
+  },
+  watch: {
+    agreepage(val) {
+      if (val) {
+        this.publish()
+      }
+    }
   }
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div class="content-box">
-    <common-header @search="search" :showinput="true" :headerColor="headerColor" :showback="false"></common-header>
+    <common-header ref="xx" @search="search" :showinput="true" :headerColor="headerColor" :showback="false"></common-header>
     <div class="page-content">
       <!-- <mt-button @click="todetail">home</mt-button> -->
       <div class="page-map">
@@ -136,6 +136,7 @@ export default {
       })
       this.hotlist[index].disabled = true
       this.search(val)
+      this.$refs['xx'].$children[0].value = ''
     },
     orderingType() {
       return this.active === 0 ? '-payment' : this.active === 1 ? '-created_time' : '-end_date'

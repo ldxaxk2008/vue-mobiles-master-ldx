@@ -17,7 +17,7 @@ export default {
   watch: {
     $route() {
       if (this.$router.isleft) {
-        this.transitionName = 'slideleft'
+        this.transitionName = 'slideright'
       }
       if (this.$router.isright) {
         this.transitionName = 'slideright'
