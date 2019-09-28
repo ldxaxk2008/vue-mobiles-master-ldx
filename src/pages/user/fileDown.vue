@@ -52,15 +52,17 @@ export default {
     afterRead(file) {
       var formdata = new FormData()
       formdata.append('file', file.file)
+      let _this = this
       let data = {
         task_id: this.fileObj.id,
         attach_type: cookie.get('user_type') === '0' ? '1' : '0',
         data: formdata
       }
       fileUp(data).then((res) => {
-        console.log(res.data, 111111111111111111111)
+        console.log(res.data, 22222222222222222)
         if (res.data.success === ERR_OK) {
           this.$toast(res.data.msg)
+          _this.$emit('resetFileList', true)
         } else {
         }
       }).catch(() => {
