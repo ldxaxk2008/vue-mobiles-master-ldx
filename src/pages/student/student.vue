@@ -128,13 +128,13 @@ export default {
           val.splice(index, 1)
         }
       })
-      this.softwareLists = val
       // studentinfor((this.$route.params.id && this.$route.params.id.id) ? this.$route.params.id.id : cookie.get('user_id'), {tool_list: val}).then((res) => {
       studentinfor(this.userId ? this.userId : cookie.get('user_id'), {tool_list: val}).then((res) => {
         console.log(res.data)
         if (res.data.success === ERR_OK) {
           this.student()
-          window.location.reload()
+          this.softwareLists = val
+          // window.location.reload()
         } else {
         }
       }).catch(() => {
@@ -170,7 +170,8 @@ export default {
           this.information = res.data.data
           this.skillList = res.data.data.skill_list
           let arr = res.data.data.tool_list
-          if (res.data.data.id === cookie.get('user_id')) {
+          console.log(JSON.stringify(res.data.data.id) === cookie.get('user_id'), 'cookie')
+          if (JSON.stringify(res.data.data.id) === cookie.get('user_id')) {
             arr.splice(parseInt(arr.length / 2), 0, '+')
           }
           this.softwareLists = arr
