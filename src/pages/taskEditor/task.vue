@@ -59,6 +59,7 @@
           <software
             @softwareChange="softwareChange"
             :softwareLists="softwareLists"
+            :api="false"
             class="skill-user"
           />
         </div>

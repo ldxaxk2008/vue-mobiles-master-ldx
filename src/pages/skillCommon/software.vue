@@ -31,6 +31,10 @@ import {softwareList} from 'api/software-api'
 import { ERR_OK } from 'config/index'
 export default {
   props: {
+    api: {
+      type: Boolean,
+      default: true
+    },
     addShow: {
       type: Boolean,
       default: true
@@ -57,31 +61,57 @@ export default {
   },
   methods: {
     remove(val) {
-      // this.actions.forEach((item, index) => {
-      //   if (item === val) {
-      //     this.actions.splice(index, 1)
-      //   }
-      // })
-      this.confirm()
+      if (!this.api) {
+        this.actions.forEach((item, index) => {
+          if (item === val) {
+            this.actions.splice(index, 1)
+          }
+        })
+        this.selectList.forEach((item, index) => {
+          if (item.target === val) {
+            this.selectList.splice(index, 1)
+          }
+        })
+      } else {
+        this.actions.forEach((item, index) => {
+          if (item === val) {
+            this.actions.splice(index, 1)
+          }
+        })
+        this.artList.map((item) => {
+          if (item.title === val) {
+            item.select = false
+          }
+        })
+        this.selectList.forEach((item, index) => {
+          if (item.target === val) {
+            this.selectList.splice(index, 1)
+          }
+        })
+        this.confirm()
+      }
     },
     artClick(event, val) {
       if (event.target.className === 'colors') {
         event.target.className = ''
-        let h = 0
         this.selectList.forEach((item, index) => {
           if (item.target === val.title) {
-            h = 1
             this.selectList.splice(index, 1)
           }
         })
-        if (!h) {
-          this.selectList.push({
-            target: val.title,
-            type: -1
-          })
-        }
+        this.artList.map((item) => {
+          if (item.title === val.title) {
+            item.select = false
+          }
+        })
+        console.log(this.selectList)
       } else {
         event.target.className = 'colors'
+        this.artList.map((item) => {
+          if (item.title === val.title) {
+            item.select = true
+          }
+        })
         let j = 0
         this.selectList.forEach((item, index) => {
           if (item.target === val.title) {
@@ -124,35 +154,53 @@ export default {
     },
     confirm() {
       let data = []
-      this.artList.map((item) => {
-        if (item.select) {
-          data.push(item.title)
-        }
-      })
-      this.selectList.map((value) => {
-        if (value.type === -1) {
-          data.forEach((item, index) => {
-            if (item === value.target) {
-              data.splice(index, 1)
+      console.log(this.action, this.selectList)
+      if (!this.api) {
+        // this.action = this.selectList
+        let b = false
+        this.selectList.map((item) => {
+          for (var i in this.action) {
+            if (this.action[i] === item.target) {
+              b = true
             }
-          })
-        } else {
-          data.push(value.target)
+          }
+          if (!b) {
+            data.push(item.target)
+          }
+        })
+      } else {
+        this.artList.map((item) => {
+          if (item.select) {
+            data.push(item.title)
+          }
+        })
+        this.selectList.map((value) => {
+          if (value.type === -1) {
+            data.forEach((item, index) => {
+              if (item === value.target) {
+                data.splice(index, 1)
+              }
+            })
+          } else {
+            data.push(value.target)
+          }
+        })
+        this.softwareList.forEach(item => {
+          if (item.value !== '') {
+            data.push(item.value)
+          }
+        })
+        if (this.selectList.length >= 9) {
+          this.$toast('软件最多选/填8个')
+          data = []
+          return
         }
-      })
-      this.softwareList.forEach(item => {
-        if (item.value !== '') {
-          data.push(item.value)
-        }
-      })
-      if (this.selectList.length >= 9) {
-        this.$toast('软件最多选/填8个')
-        data = []
-        return
+        // this.softwareList = []
+        // this.show = false
+        // // this.actions = []
+        // this.$emit('softwareChange', data)
       }
-      // this.softwareList = []
       this.show = false
-      // this.actions = []
       this.$emit('softwareChange', data)
     },
     softwareListData() {
@@ -167,15 +215,15 @@ export default {
               }
             })
           })
-          arr.map((item) => {
-            this.selectList.map((val) => {
-              if (item.title === val.target && val.type === 1) {
-                item['select'] = false
-              } else if (item.title === val.target && val.type === -1) {
-                item['select'] = true
-              }
-            })
-          })
+          // arr.map((item) => {
+          //   this.selectList.map((val) => {
+          //     if (item.title === val.target && val.type === 1) {
+          //       item['select'] = false
+          //     } else if (item.title === val.target && val.type === -1) {
+          //       item['select'] = true
+          //     }
+          //   })
+          // })
           this.artList = arr
         }
       }).catch(() => {

@@ -6,7 +6,7 @@
         <companyIntorduce :information="information" :imgShow="true" @handelEdit="handelEdit" :isStudent="isStudent"/>
         <div class="skill-main">
           <skill @skillChage="skillChage" :addShow="addShow" :skillList="skillList" class="software"></skill>
-          <software @softwareChange="softwareChange" :addShow="addShow" :softwareLists="softwareLists" class="skill-user"/>
+          <software @softwareChange="softwareChange" :api="true" :addShow="addShow" :softwareLists="softwareLists" class="skill-user"/>
         </div>
       </div>
       <div class="done-task">
