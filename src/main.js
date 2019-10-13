@@ -84,7 +84,7 @@ router.beforeEach((to, from, next) => {
       next()
   } else {
     console.log(to.name)
-    if (to.path === '/loginpage'||to.path === '/registpage'||to.name === 'experience'||to.name==='Register'||to.name==='Registercom') { //这就是跳出循环的关键
+    if (to.path === '/loginpage'||to.path === '/registpage'||to.name === 'experience'||to.name==='Register'||to.name==='Registercom'||to.name==='selectways') { //这就是跳出循环的关键
       next()
     } else {
       next('/loginpage')

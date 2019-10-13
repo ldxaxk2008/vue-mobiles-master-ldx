@@ -50,7 +50,8 @@ export default {
   methods: {
     ...mapMutations(['SET_TOKEN']),
     hanleclick() {
-      this.$router.push('/registpage')
+      // this.$router.push('/registpage')
+      this.$router.push('/password/selectways')
     },
     login() {
       // var codeReg = /^(?![A-Z]+$)(?![a-z]+$)(?!\d+$)\S{8,}$/

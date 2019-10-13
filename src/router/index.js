@@ -63,6 +63,18 @@ export default new Router({
     },
     {
       path: '/',
+      name: 'password', // 找回密码
+      component: (resolve) => require(['@/pages/findPassword/selectWays'], resolve),
+      redirect: '/password/selectways/',
+      children: [
+        {
+          path: '/password/:id',
+          name: 'selectways',
+          component: (resolve) => require(['@/pages/findPassword/selectWays'], resolve)
+        }]
+    },
+    {
+      path: '/',
       name: 'login',
       component: (resolve) => require(['@/pages/loginPage'], resolve),
       redirect: '/loginPage',

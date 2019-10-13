@@ -6,19 +6,20 @@
         <input class="task-editor--input" v-model="invalue" type="text" placeholder="请选择任务所处行业/领域" />
         <van-icon class="task-editor-secicon" name="arrow-down" @click="changedata" />
         <van-action-sheet v-model="show" :actions="actions" @select="onSelect" />
-      </div> -->
+      </div>-->
       <div class="task-editor--select">
         <input
-        style="flex:1; background: none;outline: none;"
+          style="flex:1; background: none;outline: none;"
           id="datashow"
           type="text"
           v-model="Invalue"
           ref="input_van"
           placeholder="请选择任务所处行业/领域"
-         @change="Enter" @keyup.enter="Enter"
+          @change="Enter"
+          @keyup.enter="Enter"
         />
-         <select
-         class="task-editor-secicons"
+        <select
+          class="task-editor-secicons"
           style="opacity:0;width:20px;position:absolute;right:10px;z-index:100;"
           id="select"
           v-model="selectItem"
@@ -26,7 +27,7 @@
         >
           <option v-for="item in actions" :value="item.name" :key="item.id">{{item.name}}</option>
         </select>
-          <van-icon  class="task-editor-secicon" name="arrow-down" />
+        <van-icon class="task-editor-secicon" name="arrow-down" />
       </div>
       <div class="task-editor--describe">
         <input
@@ -46,7 +47,7 @@
         ></textarea>
       </div>
       <div class="task-editor--filed">
-        <button class="evaluate-footer--btn" ref="tabBtn">{{desctab}}</button>
+        <!-- <button class="evaluate-footer--btn" ref="tabBtn">{{desctab}}</button> -->
         <ul class="page-map--ul">
           <li v-for="(item,index) in maplist" :key="index" @click="hanleclick(item,index)">
             <svg-icon :name="item.icons" size="60" ref="svg_icon"></svg-icon>
@@ -88,7 +89,7 @@
                 @focus="popup"
                 ref="timeinput"
               />
-              <van-icon class="task-editor-secicon" name="arrow-down" /> -->
+              <van-icon class="task-editor-secicon" name="arrow-down" />-->
               <van-popup v-model="disabled" position="bottom" :overlay="true">
                 <van-datetime-picker
                   v-model="currentDate"
@@ -103,12 +104,15 @@
           </div>
         </div>
       </div>
+      <div class="task-editor--upload">
+        <fileDown @resetFileList="resetFileList" :showUpload="showUpload" />
+      </div>
     </div>
     <div class="evaluate-footer">
       <button class="evaluate-footer--btn" @click="publish">发布</button>
     </div>
     <div class="agreepage_box" v-if="agreepageShow">
-      <agreepage @agreepageChange='agreepageChange'/>
+      <agreepage @agreepageChange="agreepageChange" />
     </div>
   </div>
 </template>
@@ -118,6 +122,7 @@ import software from '@/pages/skillCommon/software'
 import { publishtask, gettype, edittask } from 'api/task-api'
 import { taskDetails } from 'api/home-api'
 import agreepage from '@/pages/agreepage'
+import fileDown from '@/pages/user/fileDown'
 
 import { ERR_OK } from 'config/index'
 
@@ -125,8 +130,8 @@ export default {
   components: {
     commonHeader,
     software,
-    agreepage
-
+    agreepage,
+    fileDown
   },
   data() {
     return {
@@ -156,7 +161,8 @@ export default {
       tittle: '返回首页',
       maplist: [],
       selectItem: '',
-      inputItem: ''
+      inputItem: '',
+      showUpload: true
     }
   },
   methods: {
@@ -241,8 +247,8 @@ export default {
       })
       this.maplist[index].disable = true
       this.valueData.design_id = data.value
-      this.desctab = this.maplist[index].name
-      this.$refs.tabBtn.style.background = this.maplist[index].color
+      // this.desctab = this.maplist[index].name
+      // this.$refs.tabBtn.style.background = this.maplist[index].color
     },
     // 获取选择类型
     getType() {
@@ -363,7 +369,10 @@ export default {
         publishtask(this.valueData).then(res => {
           if (res.data.success === ERR_OK) {
             // this.$router.push('/pay/' + res.data.data.id)
-            this.$router.push({path: `/pay/${res.data.data.id}`, query: {pay: this.valueData}})
+            this.$router.push({
+              path: `/pay/${res.data.data.id}`,
+              query: { pay: this.valueData }
+            })
           } else {
             this.$toast(res.data.msg)
             this.$router.push('/error')
@@ -410,13 +419,17 @@ export default {
           }
         })
       })
-    }
+    },
+    resetFileList() {}
   },
   mounted() {
     if (/Android/gi.test(navigator.userAgent)) {
-      window.addEventListener('resize', function () {
-        if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') {
-          window.setTimeout(function () {
+      window.addEventListener('resize', function() {
+        if (
+          document.activeElement.tagName === 'INPUT' ||
+          document.activeElement.tagName === 'TEXTAREA'
+        ) {
+          window.setTimeout(function() {
             document.activeElement.scrollIntoViewIfNeeded()
           }, 0)
         }
@@ -443,7 +456,6 @@ export default {
 @import "~styles/index.less";
 @import "~styles/variable.less";
 .task-editor {
-
   // * {
   //   touch-action: pan-y;
   // }
@@ -521,10 +533,10 @@ export default {
       li {
         text-align: center;
       }
-      img {
-        box-sizing: border-box;
-        width: 80%;
-      }
+      // img {
+      //   box-sizing: border-box;
+      //   width: 80%;
+      // }
       .page-map--p {
         .fs(25);
         color: #898798;
@@ -576,6 +588,9 @@ export default {
       }
     }
   }
+  .task-editor--upload {
+    .margin(0, 20, 40, 20);
+  }
   .evaluate-footer {
     .pt(30);
     .pb(30);
@@ -612,9 +627,9 @@ export default {
     color: #323233;
   }
 }
-.agreepage_box{
+.agreepage_box {
   position: absolute;
-  top:0;
+  top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
