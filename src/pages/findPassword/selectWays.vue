@@ -99,7 +99,7 @@ export default {
           return
         }
         this.$router.push('/password/password')
-      } else {
+      } else if (this.$route.params.id === 'email') {
         if (this.form.email === '') {
           this.$toast({
             message: '请输入邮箱'
@@ -112,6 +112,8 @@ export default {
           })
         }
         this.$router.push('/password/password')
+      } else {
+        console.log(99999)
       }
     },
     find(type) {
