@@ -2,7 +2,7 @@
   <div class="down">
     <span class="down-file">附属文件</span>
     <ul>
-      <li v-if="show">
+      <li v-if="show || taskShow">
         <van-icon name="send-gift-o" />
         <span class="title"></span>
         <van-uploader class="up-click" accept="*" name="ldx" :after-read="afterRead">
@@ -39,6 +39,10 @@ export default {
     showUpload: {
       type: [String, Number, Boolean],
       default: ''
+    },
+    taskShow: {
+      type: [Boolean],
+      default: false
     }
   },
   data() {
@@ -77,7 +81,7 @@ export default {
     }
   },
   mounted() {
-    console.log(this.down)
+    console.log(this.showUpload)
   }
 }
 </script>

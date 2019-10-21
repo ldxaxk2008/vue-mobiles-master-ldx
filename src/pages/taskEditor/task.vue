@@ -105,7 +105,7 @@
         </div>
       </div>
       <div class="task-editor--upload">
-        <fileDown @resetFileList="resetFileList" :showUpload="showUpload" />
+        <fileDown @resetFileList="resetFileList" :taskShow="taskShow" />
       </div>
     </div>
     <div class="evaluate-footer">
@@ -162,7 +162,7 @@ export default {
       maplist: [],
       selectItem: '',
       inputItem: '',
-      showUpload: true
+      taskShow: true
     }
   },
   methods: {
