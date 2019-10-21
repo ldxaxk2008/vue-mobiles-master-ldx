@@ -37,7 +37,11 @@
             <van-field v-model="registerlist.phone" placeholder="联系电话">
               <p slot="button" class="register-btn" size="small" type="primary">发送验证码</p>
             </van-field>
-            <van-field v-model="registerlist.code" placeholder="验证码" />
+            <van-field v-model="registerlist.pcode" placeholder="验证码" />
+            <van-field v-model="registerlist.email" placeholder="邮箱">
+              <p slot="button" class="register-btn" size="small" type="primary">发送验证码</p>
+            </van-field>
+            <van-field v-model="registerlist.ecode" placeholder="验证码" />
             <van-field v-model="registerlist.username" placeholder="登录用户名" />
             <van-field v-model="registerlist.password" type="password" placeholder="登录密码" />
             <van-field
@@ -96,7 +100,9 @@ export default {
         grade: 1,
         grades: '',
         phone: '',
-        code: '',
+        pcode: '',
+        email: '',
+        ecode: '',
         user_type: 0,
         password: '',
         confirm_password: ''
@@ -129,7 +135,8 @@ export default {
       this.show = true
     },
     addlevel() {
-      var phoneReg = /^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,3,5-8])|(18[0-9])|166|198|199|(147))\d{8}$/
+      var phoneReg = /^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,3,5-8])|(18[0-9])|166|198|199|(147))\d{8}$/ // 手机校验
+      var emailReg = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,6}))$/ // 邮箱验证
       var codeReg = /^(?![A-Z]+$)(?![a-z]+$)(?!\d+$)\S{8,}$/ // 密码校验
       var nameReg = /^(?![^a-zA-Z]+$)(?!\D+$)(?![^_]+$).{3,16}$/
       if (this.registerlist.name === '') {
@@ -158,6 +165,17 @@ export default {
       } else if (!phoneReg.test(this.registerlist.phone)) {
         this.$toast({
           message: '请输入电话号码正确格式'
+        })
+        return
+      }
+      if (this.registerlist.email === '') {
+        this.$toast({
+          message: '请输入邮箱'
+        })
+        return
+      } else if (!emailReg.test(this.registerlist.email)) {
+        this.$toast({
+          message: '请输入邮箱正确格式'
         })
         return
       }
@@ -209,6 +227,7 @@ export default {
       formdata.append('school_name', this.registerlist.school_name)
       formdata.append('grade', this.registerlist.grade)
       formdata.append('phone', this.registerlist.phone)
+      formdata.append('email', this.registerlist.email)
       formdata.append('user_type', this.registerlist.user_type)
       formdata.append('password', this.registerlist.password)
       formdata.append('confirm_password', this.registerlist.confirm_password)

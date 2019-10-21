@@ -84,11 +84,26 @@ export default {
     }
   },
   methods: {
+    // 找回方式
+    find(type) {
+      if (type === 'phone') {
+        this.$router.push('/password/phone')
+      } else {
+        this.$router.push('/password/email')
+      }
+    },
+    // 下一步
     next() {
       if (this.$route.params.id === 'phone') {
+        var phoneReg = /^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,3,5-8])|(18[0-9])|166|198|199|(147))\d{8}$/ // 手机校验
         if (this.form.phone === '') {
           this.$toast({
             message: '请输入手机号'
+          })
+          return
+        } else if (!phoneReg.test(this.form.phone)) {
+          this.$toast({
+            message: '请输入手机号正确格式'
           })
           return
         }
@@ -100,9 +115,15 @@ export default {
         }
         this.$router.push('/password/password')
       } else if (this.$route.params.id === 'email') {
+        var emailReg = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,6}))$/ // 邮箱验证
         if (this.form.email === '') {
           this.$toast({
             message: '请输入邮箱'
+          })
+          return
+        } else if (!emailReg.test(this.form.email)) {
+          this.$toast({
+            message: '请输入邮箱正确格式'
           })
           return
         }
@@ -116,13 +137,7 @@ export default {
         console.log(99999)
       }
     },
-    find(type) {
-      if (type === 'phone') {
-        this.$router.push('/password/phone')
-      } else {
-        this.$router.push('/password/email')
-      }
-    },
+    // 加入level up
     jionLevel() {
       if (this.newPassoerd === '') {
         this.$toast({
@@ -143,6 +158,7 @@ export default {
       }
       this.$router.push('/password/returnLevel')
     },
+    // 返回登录页
     returnLevel() {
       this.$router.push('/loginpage')
     },
