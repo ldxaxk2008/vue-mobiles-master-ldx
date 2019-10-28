@@ -58,7 +58,7 @@ import { mapMutations, mapGetters, mapState } from 'vuex'
 import commonHeader from 'common/common-header'
 import currentList from '@/pages/taskList/currentTaskList'
 import {gettype} from 'api/task-api'
-import {taskList, getHotList, setHot} from 'api/home-api'
+import {taskList, getHotList} from 'api/home-api'
 import { ERR_OK } from 'config/index'
 export default {
   data() {
@@ -140,7 +140,7 @@ export default {
     getHotList() {
       getHotList().then(response => {
         if (response.data.success) {
-          response.data.task_label_list && response.data.task_label_list.map((item)=>{
+          response.data.task_label_list && response.data.task_label_list.map((item) => {
             let obj = {}
             obj['disabled'] = false
             obj['title'] = item
