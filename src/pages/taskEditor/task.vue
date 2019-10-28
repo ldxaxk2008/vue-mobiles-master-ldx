@@ -105,7 +105,27 @@
         </div>
       </div>
       <div class="task-editor--upload">
-        <fileDown @resetFileList="resetFileList" :taskShow="taskShow" />
+        <div class="down">
+          <span class="down-file">附属文件</span>
+          <ul>
+            <li>
+              <van-icon name="send-gift-o" />
+              <span class="title"></span>
+              <van-uploader class="up-click" accept="*" name="ldx" :after-read="afterRead">
+                <span>点击上传</span>
+              </van-uploader>
+            </li>
+            <li v-for="(item,index) in down" :key="index">
+              <!-- <img class="img" src="" alt=""> -->
+              <van-icon name="send-gift-o" />
+              <span class="title">{{item}}</span>
+<!--              <a class="down-click" target="_blank" :href="item.link" :download="item.title">点击下载</a>-->
+            </li>
+          </ul>
+          <!-- <span class="more">
+            <van-icon name="ellipsis" />查看更多
+          </span> -->
+        </div>
       </div>
     </div>
     <div class="evaluate-footer">
@@ -122,7 +142,7 @@ import software from '@/pages/skillCommon/software'
 import { publishtask, gettype, edittask } from 'api/task-api'
 import { taskDetails } from 'api/home-api'
 import agreepage from '@/pages/agreepage'
-import fileDown from '@/pages/user/fileDown'
+import { taskFileUp } from 'api/file-api'
 
 import { ERR_OK } from 'config/index'
 
@@ -130,12 +150,12 @@ export default {
   components: {
     commonHeader,
     software,
-    agreepage,
-    fileDown
+    agreepage
   },
   data() {
     return {
       softwareLists: [],
+      down: [],
       desctab: '文案',
       valueData: {
         // task_type_id: '',
@@ -145,7 +165,8 @@ export default {
         desc: '',
         payment: null,
         end_date: '',
-        tool_list: []
+        tool_list: [],
+        attachment_list: []
       },
       Invalue: '',
       agreepage: false,
@@ -420,7 +441,24 @@ export default {
         })
       })
     },
-    resetFileList() {}
+    afterRead(file) {
+      console.log(file.file.name, 333333333333)
+      var formdata = new FormData()
+      formdata.append('file', file.file)
+      let data = {
+        data: formdata
+      }
+      taskFileUp(data).then((res) => {
+        console.log(res.data, 22222222222222222)
+        if (res.data.success) {
+          this.down.push(file.file.name)
+          this.valueData.attachment_list.push(res.data.file_id)
+          this.$toast(res.data.msg)
+        } else {
+        }
+      }).catch(() => {
+      })
+    }
   },
   mounted() {
     if (/Android/gi.test(navigator.userAgent)) {
@@ -634,5 +672,59 @@ export default {
   width: 100vw;
   height: 100vh;
   z-index: 999;
+}
+.down {
+  .b-radius(30);
+  background: #fafafa;
+  color: #000;
+  text-align: left;
+  .padding(20, 20, 20, 20);
+  display: flex;
+  flex-direction: column;
+  .up-file {
+    .mt(20);
+    li {
+      .mb(0);
+    }
+  }
+  ul {
+    .mb(20);
+    .mt(20);
+    li {
+      display: flex;
+      align-items: center;
+      .mb(20);
+      .van-icon {
+        .fs(40);
+        .mr(30);
+      }
+      .title {
+        flex: 1;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+      .up-click {
+        .b-radius(30);
+        background: #18acb6;
+        color: #fff;
+        .padding(4, 20, 4, 20);
+      }
+      .down-click {
+        .b-radius(30);
+        background: #b1b1b1;
+        color: #fff;
+        .padding(4, 20, 4, 20);
+      }
+    }
+  }
+  .more {
+    display: flex;
+    align-items: center;
+    color: #b1b1b1;
+    .van-icon {
+      .fs(40);
+    }
+  }
 }
 </style>

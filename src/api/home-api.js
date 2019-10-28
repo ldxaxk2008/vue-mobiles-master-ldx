@@ -22,3 +22,11 @@ export function applyTask(params) {
 export function cancelTask(params) {
   return fetchPost(`${baseUrl}/api/task/apply/cancel/`, params)
 }
+export function getHotList() {
+  // return fetchGet(`${baseUrl}/api/task/resource/type/`, params)
+  return fetchGet(`${baseUrl}/api/task/label/achieve/`)
+}
+export function setHot(data) {
+  // return fetchGet(`${baseUrl}/api/task/resource/type/`, params)
+  return fetchPost(`${baseUrl}/api/task/label/upload/`, data)
+}

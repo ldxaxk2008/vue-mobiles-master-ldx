@@ -58,7 +58,7 @@ import { mapMutations, mapGetters, mapState } from 'vuex'
 import commonHeader from 'common/common-header'
 import currentList from '@/pages/taskList/currentTaskList'
 import {gettype} from 'api/task-api'
-import {taskList} from 'api/home-api'
+import {taskList, getHotList, setHot} from 'api/home-api'
 import { ERR_OK } from 'config/index'
 export default {
   data() {
@@ -74,23 +74,7 @@ export default {
       offset: 0,
       type: '',
       searchVal: '',
-      hotlist: [
-        {
-          title: 'txx1',
-          id: 1,
-          disabled: true
-        },
-        {
-          title: 'txx2',
-          id: 2,
-          disabled: false
-        },
-        {
-          title: 'txx3',
-          id: 3,
-          disabled: false
-        }
-      ],
+      hotlist: [],
       maplist: [
         {
           name: '文案',
@@ -131,15 +115,40 @@ export default {
       setNum: 'SET_NUM'
     }),
     hotClick(val, index) {
+      // setHot({title: 'ldx'}).then((res) => {
+      //   if (res.data.success === ERR_OK) {
+      //   } else {
+      //   }
+      // }).catch(() => {
+      // })
+      let is = this.hotlist[index].disabled
       this.hotlist.map(res => {
         res.disabled = false
       })
-      this.hotlist[index].disabled = true
-      this.search(val)
-      this.$refs['xx'].$children[0].value = ''
+      if (!is) {
+        this.hotlist[index].disabled = true
+        this.search(val)
+        this.$refs['xx'].$children[0].value = ''
+      } else {
+        this.search('')
+        this.hotlist[index].disabled = false
+      }
     },
     orderingType() {
       return this.active === 0 ? '-payment' : this.active === 1 ? '-created_time' : '-end_date'
+    },
+    getHotList() {
+      getHotList().then(response => {
+        if (response.data.success) {
+          response.data.task_label_list && response.data.task_label_list.map((item)=>{
+            let obj = {}
+            obj['disabled'] = false
+            obj['title'] = item
+            this.hotlist.push(obj)
+          })
+          console.log(response.data.task_label_list)
+        }
+      })
     },
     // 获取选择类型
     getType() {
@@ -264,6 +273,7 @@ export default {
   },
   mounted() {
     this.getType()
+    this.getHotList()
   },
   components: {
     commonHeader,
